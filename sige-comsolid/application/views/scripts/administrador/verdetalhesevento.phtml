@@ -1,0 +1,66 @@
+<!--<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'index'));?>">Incrições</a>  
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'buscacaravanaadministrador'));?>">Caravanas</a>  
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'buscaatividadeadministrador'));?>">Atividades</a>  
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'relatoriosadministrador'));?>">Relatórios</a>-->
+
+
+<br><br>
+<a href="<? echo $this->baseUrl('/administrador/buscaatividadeadministrador')?>">Voltar</a>
+<br>
+<a href="<? echo $this->baseUrl('/administrador/validaevento/id_evento/'.$this->idEvento)?>">Validar</a>
+<a href="<? echo $this->baseUrl('/administrador/invalidaevento/id_evento/'.$this->idEvento)?>">Invalidar</a>
+<br><br>
+<?php echo $this->form;
+
+?>
+<br><br>
+
+Arquivos:<br>
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+<thead>
+<tr>
+	<th>Arquivos</th>
+	<th>Remover Arquivo</th>
+</tr>
+</thead>
+<tbody>
+</tbody> 
+</table>
+<br><br>
+
+Horários:<br>
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+<thead>
+<tr>
+	<th>Descrição</th>
+	<th>Data</th>
+	<th>Hora Início</th>
+	<th>Hora Fim</th>
+	<th>Sala</th>
+	<th>Remover Hórario</th>
+</tr>
+</thead>
+<tbody>
+<? foreach ( $this->horarios as $item ) {?>
+ 
+  <tr>
+
+    <td><?echo $item["descricao"];?></td>
+    <td><? echo $item["data"];?></td>
+    <td><? echo $item["inicio"];?></td>
+    <td><? echo $item["fim"];?></td>
+    <td><? echo $item["nome_sala"];?></td>
+    <td><a href="<? echo $this->baseUrl('/administrador/excluihorario/id_horario/'.$item["evento"].'/id_evento/'.$this->idEvento);?>">Remover</a></td>
+  </tr>
+  	
+  <?}
+  
+  ?>
+</tbody> 
+</table>
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'adicionarhorario', 'nome_evento' =>$this->nomeEvento, 'id_evento'=>$this->idEvento));?>">Adicionar Horário</a>

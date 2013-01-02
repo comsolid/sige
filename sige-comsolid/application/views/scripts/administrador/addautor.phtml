@@ -1,0 +1,24 @@
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'index'));?>">Incrições</a>  
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'buscacaravanaadministrador'));?>">Caravanas</a>  
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'buscaatividadeadministrador'));?>">Atividades</a>  
+<a href="<?php echo $this->url(array('controller'=>'administrador',
+'action'=>'relatoriosadministrador'));?>">Relatórios</a>
+<form action="<?=$this->url() ?>" method="post">
+	
+
+<input type="hidden"  name="idautor" value="<?=$this>idautor?>"  />
+
+<select name="evento">
+	<?if (isset ($this->eventos))
+			foreach ($this->eventos as $value) {?>
+				
+				<option value="<?=$value['id_evento']?>"><?=$value['nome_evento']." Tipo : ".$value['nome_tipo_evento']?></option>
+				
+
+			<?}?>
+</select>
+<input type="submit" class="submit button" name="submite" value="Confirmar" />
+</form>

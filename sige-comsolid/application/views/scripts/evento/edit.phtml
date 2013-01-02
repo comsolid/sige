@@ -1,0 +1,24 @@
+<br>
+<br>
+
+<?php echo $this->form;?>
+
+<?if(count($this->realizacao)>0){?>
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0">
+	<thead>
+		<TH> Data </TH><TH> Hora Início </TH><TH> Hora Fim</TH><TH> Sala </TH>
+	</thead>
+	<tbody> 
+	  <?foreach($this->realizacao as $linha){?>
+	  <tr>
+	    <td><?=$linha["data"]?>   </td>
+	    <td><?=$linha["hora_inicio"]?>   </td>
+	    <td><?=$linha["hora_fim"]?> </td>
+	    <td><?=$linha["nome_sala"]?>  </td>
+	  </tr>
+	  <?}?>
+	</tbody>
+</table>
+<br>
+
+<?}?>

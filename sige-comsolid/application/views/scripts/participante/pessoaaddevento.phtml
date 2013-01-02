@@ -1,0 +1,34 @@
+ <div id="id">
+ <input type="hidden"  name="idEncontro" id="idEncontro" value="<?=$this->idEncontro?>" />
+ <input type="hidden"  name="idPessoa" id="idPessoa" value="<?=$this->idPessoa?>" />
+ <input type="radio" class="radio" name="data_evento" id="data_evento" value="todas" checked="checked" /><label>Todos</label><br>
+<? foreach ( $this->listaEvento as $evento ) {foreach ( $evento  as $data_submissao ) {?>
+<input type="radio" class="radio"  name="data_evento" id="data_evento"  value="<?=str_replace('/','-',$data_submissao)?>" /><label><?=$data_submissao?></label><br>
+<? }}
+?>
+</div>
+ <input type="radio" class="radio" name="tipo_evento" id="tipo_evento" value="0" checked="checked" /><label>Todos</label><br>
+<? foreach ( $this->tipoEvento as $tipoEvento ) {?>
+       <input type="radio" class="radio"  name="tipo_evento" id="tipo_evento" value="<?=$tipoEvento->id_tipo_evento?>" /><label><?=$tipoEvento->nome_tipo_evento?></label><br>
+
+<?}
+?>
+Buscar Evento: <input type="text" class="text" name="nome_evento" id="nome_evento" value="" size="50" maxlength="50" />
+<br>Interesse em Eventos:
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0"  >
+		<thead>
+			<tr>
+				<th>Tipo Evento</th>
+				<th>Descrição</th>
+				<th>Dia</th>
+				<th>Horário Início</th>
+				<th>Horário Fim</th>
+				<th>add</th>	
+			</tr>
+		</thead>
+		<tbody id="resultado">
+		</tbody>
+</table>
+
+
+

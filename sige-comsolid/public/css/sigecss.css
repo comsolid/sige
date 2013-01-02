@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* CSS Document */
+html{	
+	background-image:url(../imagens/layout/topo_sige.png);
+	background-repeat:no-repeat;
+	margin-top: 20px;
+}
+.fl_left{
+	float: left;
+	}
+.fl_right{
+	float: right;
+	}
+.cl_left{
+	clear: left;
+	}
+.cl_right{
+	clear: right;
+	}
+body{
+	font-family:  Arial,Helvetica,sans-serif;
+	
+}
+#principal{
+	margin: 137px 0 0 37px;
+	width:927px;
+	display:table;
+/**	margin-bottom:10px;
+	margin-top:100px;**/
+	clear:both;
+		
+}
+#corpo{
+	background-image:url(../imagens/layout/bg_corpo_sige.png);
+	background-repeat:no-repeat;
+	margin-top: 13px;
+}
+	#corpo a{
+		font-size: 11px;
+		color: #f48533;
+			
+	}
+	
+#conteudo{
+	padding: 27px;
+}
+#info_usu{
+	float:right;
+	font-size: 11px;
+	margin-right: 17px;
+}
+	#info_usu span{
+		color: #f48533;	
+		font-weight: bold;
+	}
+	
+	#info_usu .apelido{
+		font-weight: normal;
+		color: #359324;
+		text-decoration: underline;
+	}
+
+/*MENU*/
+#menu{
+	background-color: #450e3d;
+	width: 100%;
+	-moz-border-radius:5px 5px 5px 5px;
+	height: 43px;
+	margin-bottom: 20px;
+}
+.inativo{
+	background-color: #f0f0f0 !important;
+}
+	#menu a{
+		height: 100%;
+		float: left;
+	}
+	#menu a,#menu img{
+		text-decoration: none;
+		border: none;
+	}
+	#menu img{
+		padding: 0 28px;
+	}
+	#menu a.verde{
+		-moz-border-radius:5px 5px 5px 5px;
+		background-color: #359324;
+	}
+	#menu a:hover{
+		background-color: #359324;
+		-moz-border-radius:5px 5px 5px 5px;
+	}
+/*FIM MENU*/
+
+/*RODAPE*/
+#rodape {
+	background-image:url("../imagens/layout/bg_rodape_sige.png");
+	height:69px;
+	width:927px;
+	margin-top: 44px;
+}
+	#rodape div {
+		padding: 0px 33px;
+	}
+	#rodape p {
+		font-size: 9px;
+		color:white;
+		text-align: center;
+		margin: 21px 18%;
+	}
+	#rodape img {
+		
+		padding: 9px;
+	}
+/*FIM RODAPE*/

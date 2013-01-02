@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+dl.detalhes dd {
+    color: #9d3e8e;
+	margin-left: 20px;
+    /*font-size: 18px;*/
+}
+dl.detalhes dt {
+    color: #828282;
+    /* font-size: 18px;*/
+}
+dl.detalhes dt {
+text-align: right;
+    width: 100px;
+	margin-left: 20px;
+	clear: left;
+    float: left;
+}
+dl.detalhes label {
+
+	margin-left: 5px;
+	
+}
+div.acoes {
+	float: right;
+}
+.fieldset {
+	border-color: #f6f6f6;
+}

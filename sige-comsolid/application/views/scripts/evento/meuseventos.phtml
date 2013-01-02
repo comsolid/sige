@@ -1,0 +1,34 @@
+
+
+<?if(count($this->meusEventos)>0){?>
+
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0" >
+	<thead>
+		<tr>
+			<TH>Tipo Evento </TH><TH> Evento </TH><TH> Validada </TH><TH> Data Submissão </TH><TH> Ação </TH>
+		</tr>
+	</thead> 
+	<tbody> 
+	  <?foreach($this->meusEventos as $linha){?>
+	  <tr>
+	    <td><?=$linha["nome_tipo_evento"]?></td>
+	    <td><?=$linha["nome_evento"]?>   </td>
+	    <td><?=$linha["validada"]?> </td>
+	    <td><?=$linha["data_submissao"]?>  </td>
+	    <td><a href="<?php echo $this->url(array('controller'=>'evento','action'=>'edit', 'id_evento'=>$linha['id_evento']));?>">Editar</a></td>
+	  </tr>
+	  <?}?>
+	</tbody>
+</table>
+<br>
+
+<a href="<?php echo $this->url(array('controller'=>'evento',
+'action'=>'add'));?>">Adicionar novo evento</a>
+
+
+<?}else{?>
+<br><br>Você não possui eventos cadastrados.
+	<a href="
+	<?echo $this->url(array('controller'=>'evento',
+	'action'=>'add'));?>">Cadastre um evento!</a>
+<?}?>

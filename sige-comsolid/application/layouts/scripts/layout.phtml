@@ -1,0 +1,43 @@
+  
+<html>
+   <head>
+	   <!--<link href="/css/sigecss.css" rel="stylesheet" type="text/css"></link>-->
+ 
+	   	<? $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css')); ?>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>COMSOLiD+5 - SiGE</title>
+	
+	
+	<?= $this->headScript() ?>
+	<?= $this->headLink() ?>
+	<?= $this->headStyle() ?>
+	<link rel="shortcut icon" href="<? echo $this->baseUrl('imagens/layout/favicon_sige.png');?>" type="image/x-icon" />
+  	</head>
+	<body>
+		<div id="principal">
+			<div id="info_usu"><?php $this->usuaLogado = Zend_Auth :: getInstance()->getIdentity();if(!empty($this->usuaLogado)){?>
+				<span>Bem-Vindo(a) :</span><a href="<?php echo $this->url(array('controller'=>'participante','action'=>'edit'));?>"> <span class="apelido"><?=$this->usuaLogado['apelido']?></span></a> 
+				<a href="<?php echo $this->url(array('controller'=>'login','action'=>'logout'));?>">Sair</a>
+				<?}?>
+			</div>
+					 
+			<div id="corpo">
+				
+				
+				<div id="conteudo">
+					<?=(is_object($this->menu))?$this->menu->getView():""?>
+				<?//php echo  $this->render('menu.phtml')?>
+				
+					<?php echo $this->layout()->content ?>
+				</div>
+			</div>
+		    
+			<div id="rodape">
+		   		<?php echo  $this->render('rodape.phtml')?>
+			</div>
+	    
+	    </div>
+	</body>
+		
+	
+</html>
