@@ -25,24 +25,23 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
                'onUpdate'=> self::RESTRICT),
                
               );
-  public function gerarSenha()
-	{
-	   try
-		{ $qryIsValid = $this->getAdapter()->quoteInto("SELECT funcGerarSenha(?) AS c ", $this->email);
-	    $senha=$this->getAdapter()->query($qryIsValid)->fetch();
-	    $this->senha= $senha['c'];
+
+	public function gerarSenha() {
+	   try {
+			$qryIsValid = $this->getAdapter()->quoteInto("SELECT funcGerarSenha(?) AS c ", $this->email);
+			$senha=$this->getAdapter()->query($qryIsValid)->fetch();
+			$this->senha= $senha['c'];
 	     
-	    return $senha['c']; 
-		}catch (Exception $ex)
-			    {
-			    	
-			    }
+			return $senha['c']; 
+		}catch (Exception $ex) {
+		  	
+		}
 	}
 	
 	public function avaliaLogin($login, $senha) {
 
 		$select = $this->select()
-			  		    ->from('pessoa',array("id_pessoa", "administrador", "apelido","(senha=md5('$senha')) AS valido"))
+			  		    ->from('pessoa', array("id_pessoa", "administrador", "apelido","(senha=md5('$senha')) AS valido"))
 			  		   ->where("email = ?", $login);
 			  
 		$result= $this->fetchAll($select);
@@ -109,8 +108,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 	public function atualizaEncontro($encontro){
 		$select = "insert into encontro_participante(id_encontro, id_pessoa,id_instituicao,id_municipio,id_caravana,id_tipo_usuario) values(?,?,?,?,?,?)";
 		
-	    return $this->getAdapter()->fetchAll($select,$encontro);
-		
+	   return $this->getAdapter()->fetchAll($select,$encontro);
 	}
 	
 	

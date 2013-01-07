@@ -32,7 +32,7 @@ class Application_Form_Caravana extends Zend_Form
    
 
    $ins = new Application_Model_Instituicao();
-   $listaIns  = $ins->fetchAll(null, 'nome_instiuicao');
+   $listaIns  = $ins->fetchAll(null, 'nome_instituicao');
       									 
    $instituicao = $this->createElement('select', 'id_instituicao',array('label' => 'Instituição: '));
    foreach($listaIns as $item)

@@ -1,20 +1,22 @@
 <?php
 
-class Application_Form_EventoEditar extends Zend_Form
-{
-  public function init(){
-  	
-    $this->setAction('/evento/edit')
-           ->setMethod('post');
+class Application_Form_EventoEditar extends Zend_Form {
+
+	public function init() {
            
-           
-    $responsavel = $this->createElement('hidden', 'responsavel');
+		$responsavel = $this->createElement('hidden', 'responsavel');
          
-    $nome = $this->createElement('text', 'nome',array('label' => 'Autor: '))->setAttrib('readonly','readonly');
+		$nome = $this->createElement('text', 'nome',array('label' => 'Autor: '))
+			->setAttrib('readonly','readonly')
+			->setAttrib('disabled', 'disabled');
   	
-  	$validada = $this->createElement('text', 'validada',array('label' => 'Validada: '))->setAttrib('readonly','readonly');
+		$validada = $this->createElement('text', 'validada',array('label' => 'Validada: '))
+			->setAttrib('readonly','readonly')
+			->setAttrib('disabled', 'disabled');
   	
-  	$data_submissao =  $this->createElement('text', 'data_submissao',array('label' => 'Data: '))->setAttrib('readonly','readonly');  	
+		$data_submissao =  $this->createElement('text', 'data_submissao',array('label' => 'Data: '))
+			->setAttrib('readonly','readonly')
+			->setAttrib('disabled', 'disabled');
 
    	$nome_evento = $this->createElement('text', 'nome_evento',array('label' => 'Titulo: '));
    	$nome_evento->addValidator('regex', false, array('/^[ 0-9 a-zA-Z á é í ó ú à ì ò ù ã ẽ ĩ õ ũ â ê î ô û ä ë ï ö ü ç ]*$/'))
@@ -24,15 +26,15 @@ class Application_Form_EventoEditar extends Zend_Form
           		->addErrorMessage("Campo contém caracteres invalidos e/ou é muito pequeno.");
 
 
-    $perfil_minimo = $this->createElement('textarea', 'perfil_minimo',array('label' => 'Perfil Minimo: '));
-   	$perfil_minimo->setAttrib('COLS', '40')
+		$perfil_minimo = $this->createElement('textarea', 'perfil_minimo',array('label' => 'Perfil Minimo: '));
+   	$perfil_minimo->setAttrib('COLS', '80')
     			  ->setAttrib('ROWS', '4')
    				  ->setAllowEmpty(false)
           		  ->setRequired(true)
           		  ->addValidator('stringLength', false, array(10))
           		  ->addErrorMessage("Perfil com número insuficiente de caracteres.");
           		  
-    $curriculum = $this->createElement('textarea', 'curriculum',array('label' => 'Curriculum: '));
+		$curriculum = $this->createElement('textarea', 'curriculum',array('label' => 'Curriculum: '));
    	$curriculum->setAttrib('COLS', '40')
     		->setAttrib('ROWS', '4')
    			->setAllowEmpty(false)
@@ -40,7 +42,7 @@ class Application_Form_EventoEditar extends Zend_Form
   			->addValidator('stringLength', false, array(10))
           	->addErrorMessage("Curriculum com número insuficiente de caracteres.");
           		  
-	$resumo = $this->createElement('textarea', 'resumo',array('label' => 'Resumo: '));
+		$resumo = $this->createElement('textarea', 'resumo',array('label' => 'Resumo: '));
    	$resumo->setAttrib('COLS', '40')
     		->setAttrib('ROWS', '4')
    			->setAllowEmpty(false)
@@ -48,17 +50,14 @@ class Application_Form_EventoEditar extends Zend_Form
           	->addValidator('stringLength', false, array(10))
           	->addErrorMessage("Resumo com número insuficiente de caracteres.");
           	
-          	
- 	$tipo_evento = new Application_Model_TipoEvento();
+		$tipo_evento = new Application_Model_TipoEvento();
    	$tipo_evento = $tipo_evento->fetchAll();
    	$nome_tipo_evento = $this->createElement('select', 'id_tipo_evento',array('label' => 'Tipo Atividade: '));
-   	
    	
    	foreach($tipo_evento as $item)
    	{
    		$nome_tipo_evento->addMultiOptions(array($item->id_tipo_evento => $item->nome_tipo_evento));	
    	}
-   	
    	
    	$dificuldade_evento = new Application_Model_DificuldadeEvento();
    	$listaDificuldade  = $dificuldade_evento->fetchAll();
@@ -67,14 +66,10 @@ class Application_Form_EventoEditar extends Zend_Form
    	{
    		$descricao_dificuldade_evento->addMultiOptions(array($item->id_dificuldade_evento => $item->descricao_dificuldade_evento));	
    	}
+   	
+		$encontro = $this->createElement('hidden', 'id_encontro');
     
-   
-    $encontro = $this->createElement('hidden', 'id_encontro');
-  
-    			
-    
-    
-    $this->addElement($nome_evento)
+		$this->addElement($nome_evento)
     	 ->addElement($nome)
     	 ->addElement($nome_tipo_evento)
     	 ->addElement($data_submissao)
@@ -86,11 +81,10 @@ class Application_Form_EventoEditar extends Zend_Form
     	 ->addElement($resumo)
     	 ->addElement($responsavel);
     	 
-	    $botao = $this->createElement('submit', 'confirmar')->removeDecorator('DtDdWrapper');
+	   $botao = $this->createElement('submit', 'confirmar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
 		$botao = $this->createElement('submit', 'cancelar')->removeDecorator('DtDdWrapper');
 		$botao->setAttrib('class','submitCancelar');
 		$this->addElement($botao);
-        
 	}
 }

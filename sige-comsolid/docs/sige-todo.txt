@@ -1,0 +1,35 @@
+SiGE - TODO
+--------------------------------------------------------------------------------
+
+01. padronizar nomes das actions
+02. melhorar navegação do site
+03. criar manual de instalação detalhado
+04. criar tela de certificados
+05. ao realizar buscar via ajax mostrar gif carregamento (telas do admin)
+06. melhorar visualização dos dados com máscaras.
+07. criar páginas de ajuda e sobre.
+08. criar página de visualização do usuário, e.g. sige.comsolid.org/u/atilacamurca
+09. identar o código!
+10. Implementar flashMessage
+11. Menu usuario sem imagens com texto.
+12. atualizar e colocar jquery no layout
+13. remover chamadas de css e js do controller, a menos que seja realmente necessário.
+14. atualizar dataTable a adaptar as cores com as cores do sistema.
+15. i18n os formularios com os recursos do proprio zend
+16. não salvar o @ do twitter
+17. colocar envio de email ao cadastrar novo participante na transação
+
+
+Future releases
+--------------------------------------------------------------------------------
+
+01. criar upload de fotos do usuario
+02. criar referencias para usuarios com @, e.g. @atilacamurca estilo twitter.
+03. criar a página seja um voluntario
+04. montar a grade de eventos no proprio sige
+05. mudar layout para twitter bootstrap ou zurb foundation (resonsive layout).
+06. i18n o projeto
+07. permitir mais de um palestrante.
+08. permitir upload de material de apoio
+09. implementar comentários em algumas páginas
+10. integrar com redes sociais

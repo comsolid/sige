@@ -4,11 +4,8 @@ class AdministradorController extends Zend_Controller_Action {
 	public function init() {
 		if (! Zend_Auth::getInstance ()->hasIdentity ()) {
 			return $this->_helper->redirector->goToRoute ( array ('controller' => 'login', 'action' => 'login' ), null, true );
-		
 		}
-		
-		$this->autenticacao ();
-	
+		$this->autenticacao();
 	}
 	
 	public function autenticacao() {

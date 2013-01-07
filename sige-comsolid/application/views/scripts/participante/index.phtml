@@ -1,48 +1,36 @@
 
-<? if($this->administrador == false){?>
-<hr>  </hr>
-<br>
-<br>
-<!--
-
-<table  class="display" cellpadding="0" cellspacing="0" border="0" >
-<thead><TH> Caravana </TH><TH> Município </TH><TH> Instituição</TH><TH> Responsável </TH></thead>
-  <tbody><tr>
-    <td><?=$this->caravana?>   </td>
-    <td><?=$this->municipio->nome_municipio?>   </td>
-    <td><?=$this->instituicao->apelido_instituicao?> </td>
-    <td><?=$this->participante->nome?>  </td>
-  </tr>
- </tbody>
-</table>
--->
-<br>
-
-
 <fieldset>
-    <legend>Interesse em eventos:</legend>
-    <a title="Adicionar Evento" style="flout:right;clear:right;"href="<? echo $this->baseUrl('participante/pessoaaddevento');?>"><img src="<? echo $this->baseUrl('imagens/layout/bt_adicionar.png');?>"></a>
-<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
-<thead>
-<tr><TH> Tipo evento </TH><TH> Descrição </TH><TH> Dia </TH><TH> Hora Início </TH><TH> Hora Fim </TH><TH> Excluir </TH></tr>
-   </thead>
-   <tbody>
-   <? foreach ( $this->listaParticipanteEventoTabela as $item ) {?>
- 
-  <tr>
-
-    <td><?echo $item["nome_tipo_evento"];?></td>
-    <td><? echo $item["nome_evento"];?></td>
-    <td><? echo $item["data"];?></td>
-    <td><? echo $item["hora_inicio"];?></td>
-    <td><? echo $item["hora_fim"];?></td>
-    <td><a href="<? echo $this->baseUrl('/participante/excluievento/evento/'.$item["evento"]);?>">Excluir</a></td>
-  </tr>
-  	
-  <?}
-  
-  ?></tbody>
- 
-</table>
+   <legend>Interesse em eventos:</legend>
+   <a title="Adicionar Evento" style="float:right; clear:right;"
+			href="<?=$this->url(array('action' => 'pessoaaddevento')) ?>">
+		<img src="<? echo $this->baseUrl('imagens/layout/bt_adicionar.png');?>" border="0">
+	</a>
+	<table class="display" cellpadding="0" cellspacing="0" border="0">
+		<thead>
+			<tr>
+				<th>Tipo evento</th>
+				<th>Descrição</th>
+				<th>Dia</th>
+				<th>Hora Início</th>
+				<th>Hora Fim</th>
+				<th>Excluir</th>
+			</tr>
+		</thead>
+		<tbody>
+		<? foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
+			<tr>
+				<td><?echo $item["nome_tipo_evento"];?></td>
+				<td><? echo $item["nome_evento"];?></td>
+				<td><? echo $item["data"];?></td>
+				<td><? echo $item["hora_inicio"];?></td>
+				<td><? echo $item["hora_fim"];?></td>
+				<td>
+					<a href="<?=$this->url(array('action' => 'excluirevento',
+						'evento' => $item["evento"])) ?>"></a>
+					<!--<a href="<?// echo $this->baseUrl('/participante/excluievento/evento/'.$item["evento"]);?>">Excluir</a>-->
+				</td>
+		  </tr>
+		<? endforeach; ?>
+		</tbody>
+	</table>
 </fieldset>
-<?}?>

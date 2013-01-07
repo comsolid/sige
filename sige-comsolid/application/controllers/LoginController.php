@@ -3,16 +3,14 @@ class LoginController extends Zend_Controller_Action {
 
 	public function init() {
 		/* Initialize action controller here */
-	
-		
 	}
 
 	public function indexAction() {
 		// action body
-
 	}
 
 	public function loginAction() {
+		$this->deprecated("login", "login");
 		$form = new Application_Form_Login();
 		$form->setAction($this->view->url());
           // ->setMethod('post');
@@ -99,6 +97,7 @@ class LoginController extends Zend_Controller_Action {
 	}
 
 	public function logoutAction() {
+		$this->deprecated("login", "logout");
 		$auth = Zend_Auth :: getInstance();
 		$storage = $auth->clearIdentity();
 
@@ -109,6 +108,7 @@ class LoginController extends Zend_Controller_Action {
 	}
 
 	public function recuperarsenhaAction() {
+		$this->deprecated("login", "recuperarsenha");
 		//$this->view->menu=new Application_Form_Menu($this->view,'alterarsenha');
 		$form = new Application_Form_RecuperarSenha();
 		$form->setAction($this->view->url(array('controller'=>'login','action'=>'recuperarsenha')));
@@ -144,5 +144,9 @@ class LoginController extends Zend_Controller_Action {
 			}
 
 		}
+	}
+
+	private function deprecated($controller, $view) {
+		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
 	}
 }

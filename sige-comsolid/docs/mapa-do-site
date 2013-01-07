@@ -1,0 +1,51 @@
+Mapa do site
+============
+
+Legenda
+ - action atual
+ + mudar para
+
+[em andamento...]
+- /login/login
++ /login
+
+- /login/logout
++ /logout
+
+- /login/recuperarsenha
++ /recuperar-senha
+
+[ok]
+- /evento/meuseventos
++ /evento/submissao
+
+[ok]
+- /evento/add
++ /evento/submeter
+
+[ok]
+- /evento/edit/id_evento/<int>
++ /evento/editar/id/<int>
+
+- /participante/add
++ /participante/criar
+
+[ok]
+- /participante/alterarsenha
++ /participante/alterar-senha
+
+[ok]
+- /participante/edit
++ /participante/editar
+
+- /caravana/add
++ /caravana/criar
+
+Criar
+=====
+
++ /u/<usuario>
+	redireciona para /participante/visualizar/<usuario>
+
++ /sobre
+	mostrar detalhes do projeto, quem está envolvido, etc.

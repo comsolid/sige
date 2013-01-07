@@ -56,3 +56,7 @@ dl.zend_form input,dl.zend_form TEXTAREA{
 	width: 267px;
 }
 
+dl.zend_form input[type="radio"] {
+	width: 25px;
+	height: 14px;
+}

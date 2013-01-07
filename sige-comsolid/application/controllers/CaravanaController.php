@@ -4,7 +4,7 @@ class CaravanaController extends Zend_Controller_Action {
 	
 	 public function init()
     {
-       $this->view->menu=new Application_Form_Menu($this->view,'caravana');
+      $this->view->menu=new Application_Form_Menu($this->view,'caravana');
 		if (!Zend_Auth :: getInstance()->hasIdentity()) {
 			return $this->_helper->redirector->goToRoute(array (
 				'controller' => 'login',

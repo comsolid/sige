@@ -6,10 +6,9 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
 
 	public function autenticacaoAction() {
-		/* Initialize action controller here */
 		if (!Zend_Auth :: getInstance()->hasIdentity()) {
 			return $this->_helper->redirector->goToRoute(array (
-				'controller' => 'login',
+				'controller' => 'index',
 				'action' => 'login'
 			), null, true);
 		}
@@ -22,7 +21,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
 	   
 		$this->autenticacaoAction();
-		$sessao = Zend_Auth :: getInstance()->getIdentity();
+		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
 		$idEncontro = $sessao["idEncontro"];
 		$administrador = $sessao["administrador"];
@@ -32,42 +31,25 @@ class ParticipanteController extends Zend_Controller_Action {
 					'controller' => 'administrador',
 					'action' => 'index'
 				), null, true);
-				
 		} else {
-			$pessoa = new Application_Model_Pessoa();
-			$pessoa = $pessoa->find($idPessoa);
-			$this->view->pessoa = $pessoa[0];
-/*
-			$participante = new Application_Model_Participante();
-			$participante = $participante->find($idPessoa, $idEncontro);
-			$participante = $participante[0];
+			//$pessoa = new Application_Model_Pessoa();
+			//$pessoa = $pessoa->find($idPessoa);
+			//$this->view->pessoa = $pessoa[0];
 
-			$this->view->participante = $participante->findDependentRowset('Application_Model_Pessoa')->current();
-
-			if ($participante->id_caravana != null) {
-				$this->view->caravana = $participante->findDependentRowset('Application_Model_Caravana')->current()->apelido_caravana;
-			}
-
-			$this->view->instituicao = $participante->findDependentRowset('Application_Model_Instituicao')->current();
-			$this->view->municipio = $participante->findDependentRowset('Application_Model_Municipio')->current();
-
-			$sexo = new Application_Model_Pessoa();
-			$sexo = $sexo->find($idPessoa);
-			$sexo = $sexo[0];
-			$this->view->sexo = $sexo->findDependentRowset('Application_Model_Sexo')->current();
-*/
 			$eventoDemanda = new Application_Model_EventoDemanda();
 			$select = $eventoDemanda->select();
 			$eventoParticipante = $eventoDemanda->getMeusEvento(array($idEncontro, $idPessoa));
 			$this->view->listaParticipanteEventoTabela =$eventoParticipante;
 		}
-
 	}
 
+	/**
+	 * @Deprecated
+	 */
 	public function addAction() {
+		$this->deprecated("participante", "add");
 		$this->view->menu="";
 		$form = new Application_Form_Pessoa();
-		$form->setAction($this->view->url(array('controller'=>'participante','action'=>'add')));
 		$this->view->form = $form;
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		$data = $this->getRequest()->getPost();
@@ -81,7 +63,7 @@ class ParticipanteController extends Zend_Controller_Action {
 			$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 			$idEncontro = $config->encontro->codigo;
 
-			$idPessoa = 0;
+			//$idPessoa = 0;
 			//id_encontro
 			$data2 = array (
 				'id_encontro' => $idEncontro,
@@ -122,22 +104,20 @@ class ParticipanteController extends Zend_Controller_Action {
 					$pessoa->update($data, $where);
 				}
 			} catch (Zend_Db_Exception $ex) {
-
 				echo $ex->getMessage();
-				//throw $ex;
 			}
-			if ($sentinela == 0)
+
+			if ($sentinela == 0) {
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
 					'action' => 'sucesso'
 				), null, true);
-
+			}
 		}
-
 	}
 
-	public function editAction() {
-	$this->autenticacaoAction();
+	public function editarAction() {
+		$this->autenticacaoAction();
 
 		$sessao = Zend_Auth :: getInstance()->getIdentity();
 		
@@ -145,7 +125,6 @@ class ParticipanteController extends Zend_Controller_Action {
 		$idEncontro = $sessao["idEncontro"];
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		$form = new Application_Form_PessoaEdit();
-		$form->setAction($this->view->url(array('controller'=>'participante','action'=>'edit')));
 		$this->view->form = $form;
 
 		$pessoa = new Application_Model_Pessoa();
@@ -153,6 +132,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
 		$result = $pessoa->find($idPessoa);
 		$linha = $result[0];
+		// FIXME: primeiro tira, depois linha#146 bota?
 		$linha->twitter = str_replace('@', "", $linha->twitter);
 
 		$result = $participante->find($idPessoa, $idEncontro);
@@ -208,24 +188,28 @@ class ParticipanteController extends Zend_Controller_Action {
 				), null, true);
 			}
 		}
-
 	}
 
 	public function sucessoAction() {
 		$this->view->menu="";
 	}
-
-	public function alterarsenhaAction() {
+	
+	public function alterarSenhaAction() {
 		//echo $this->getBaseURL();
 		$this->view->menu->setAtivo('alterarsenha');
 		$this->autenticacaoAction();
 		
 		$form = new Application_Form_AlterarSenha();
-		$form->setAction($this->view->url(array('controller'=>'participante','action'=>'alterarsenha')));
 		$this->view->form = $form;
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
 		$data = $this->getRequest()->getPost();
+		if (isset ($data['cancelar'])) {
+			return $this->_helper->redirector->goToRoute(array (
+				'controller' => 'participante'
+			), null, true);
+			return;
+		}
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
@@ -247,21 +231,16 @@ class ParticipanteController extends Zend_Controller_Action {
 						$pessoa->update($novaSennha, $where);
 
 						return $this->_helper->redirector->goToRoute(array (
-							'controller' => 'participante',
-							'action' => 'index'
+							'controller' => 'participante'
 						), null, true);
-
 					} else {
-
+						// TODO: colocar erro em flashMessage
 						echo "nova senha não confere!";
 					}
-
 				} else {
 					echo "senha antiga incorreta!";
 				}
-
 			}
-
 		}
 	}
 
@@ -329,4 +308,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		
 	}
 
+	private function deprecated($controller, $view) {
+		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
+	}
 }

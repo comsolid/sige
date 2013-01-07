@@ -1,0 +1,38 @@
+
+<a href="<?php echo $this->url(array('controller'=>'evento',
+'action'=>'submeter'));?>">+ Submeter trabalho</a><br/><br/>
+
+<?if(count($this->meusEventos)>0){?>
+
+<table class="display" cellpadding="0" cellspacing="0" border="0" >
+	<thead>
+		<tr>
+			<th>Tipo Evento</th>
+			<th>Evento</th>
+			<th>Validada</th>
+			<th>Data Submissão</th>
+			<th>Ação</th>
+		</tr>
+	</thead> 
+	<tbody> 
+	  <?foreach($this->meusEventos as $linha){?>
+	  <tr>
+	    <td><?=$linha["nome_tipo_evento"]?></td>
+	    <td><?=$linha["nome_evento"]?>   </td>
+	    <td><?=$linha["validada"]?> </td>
+	    <td><?=$linha["data_submissao"]?>  </td>
+	    <td>
+			<a href="<?php echo $this->url(array('controller'=>'evento',
+				'action'=>'editar',
+				'id'=>$linha['id_evento']));?>">Editar</a>
+		 </td>
+	  </tr>
+	  <?}?>
+	</tbody>
+</table>
+<br>
+
+
+<?}else{?>
+<br>Que tal submeter um trabalho e participar?
+<?}?>
