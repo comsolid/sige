@@ -45,7 +45,7 @@ Criar
 =====
 
 + /u/<usuario>
-	redireciona para /participante/visualizar/<usuario>
+	redireciona para /participante/ver/<usuario>
 
 + /sobre
 	mostrar detalhes do projeto, quem está envolvido, etc.

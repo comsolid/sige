@@ -6,11 +6,8 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
 
 	public function autenticacaoAction() {
-		if (!Zend_Auth :: getInstance()->hasIdentity()) {
-			return $this->_helper->redirector->goToRoute(array (
-				'controller' => 'index',
-				'action' => 'login'
-			), null, true);
+		if (!Zend_Auth::getInstance()->hasIdentity()) {
+			return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
 	}
 
@@ -30,7 +27,7 @@ class ParticipanteController extends Zend_Controller_Action {
 			return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'administrador',
 					'action' => 'index'
-				), null, true);
+				), 'default', true);
 		} else {
 			//$pessoa = new Application_Model_Pessoa();
 			//$pessoa = $pessoa->find($idPessoa);
@@ -111,7 +108,7 @@ class ParticipanteController extends Zend_Controller_Action {
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
 					'action' => 'sucesso'
-				), null, true);
+				), 'default', true);
 			}
 		}
 	}
@@ -185,7 +182,7 @@ class ParticipanteController extends Zend_Controller_Action {
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
 					'action' => 'index'
-				), null, true);
+				), 'default', true);
 			}
 		}
 	}
@@ -207,7 +204,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		if (isset ($data['cancelar'])) {
 			return $this->_helper->redirector->goToRoute(array (
 				'controller' => 'participante'
-			), null, true);
+			), 'default', true);
 			return;
 		}
 
@@ -232,7 +229,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
 						return $this->_helper->redirector->goToRoute(array (
 							'controller' => 'participante'
-						), null, true);
+						), 'default', true);
 					} else {
 						// TODO: colocar erro em flashMessage
 						echo "nova senha não confere!";
@@ -305,8 +302,13 @@ class ParticipanteController extends Zend_Controller_Action {
 		$eventoDemanda->remover($data);
 		
 		return $this->_helper->redirector->goToRoute(array ('controller' => 'participante','action' => 'index'), null, true);
-		
 	}
+   
+   public function verAction() {
+      $id = $this->_getParam('id');
+      $model = new Application_Model_Pessoa();
+      $this->view->user = $model->fetchRow('id_pessoa = ' . $id);
+   }
 
 	private function deprecated($controller, $view) {
 		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";

@@ -70,7 +70,7 @@ class IndexController extends Zend_Controller_Action
 					return $this->_helper->redirector->goToRoute(array (
 						'controller' => 'participante',
 						'action' => 'index'
-					), null, true);
+					), 'default', true);
 
 				} else {
 					echo "<br><br>senha inválida.";

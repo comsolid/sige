@@ -12,11 +12,11 @@ class Application_Form_Menu extends Zend_Form
 	
 	public function __construct($base,$ativo) {
 		$this->control=$base;
-		$this->participanteAlteSenha=$this->control->url(array('controller'=>'participante','action'=>'alterar-senha'), null, true); 
-		$this->participanteIndexInicio=$this->control->url(array('controller'=>'participante','action'=>'index'), null, true);
-		$this->submissao=$this->control->url(array('controller'=>'evento','action'=>'index'), null, true);
+		$this->participanteAlteSenha=$this->control->url(array('controller'=>'participante','action'=>'alterar-senha'), 'default', true); 
+		$this->participanteIndexInicio=$this->control->url(array('controller'=>'participante','action'=>'index'), 'default', true);
+		$this->submissao=$this->control->url(array(), 'submissao', true);
 		$this->setAtivo($ativo);
-		$this->caravana=$this->control->url(array('controller'=>'caravana','action'=>'index'), null, true);
+		$this->caravana=$this->control->url(array('controller'=>'caravana','action'=>'index'), 'default', true);
 	}
 	
 	public function init(){
