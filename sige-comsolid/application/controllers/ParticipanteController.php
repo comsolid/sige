@@ -40,11 +40,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		}
 	}
 
-	/**
-	 * @Deprecated
-	 */
-	public function addAction() {
-		$this->deprecated("participante", "add");
+	public function criarAction() {
 		$this->view->menu="";
 		$form = new Application_Form_Pessoa();
 		$this->view->form = $form;
@@ -53,7 +49,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
-			$data['twitter'] = '@' . $data['twitter'];
+			// $data['twitter'] = '@' . $data['twitter'];
 			$pessoa = new Application_Model_Pessoa();
 			$participante = new Application_Model_Participante();
 
@@ -130,7 +126,8 @@ class ParticipanteController extends Zend_Controller_Action {
 		$result = $pessoa->find($idPessoa);
 		$linha = $result[0];
 		// FIXME: primeiro tira, depois linha#146 bota?
-		$linha->twitter = str_replace('@', "", $linha->twitter);
+      // SOLUÇÂO: não usar @, pois na view participante/ver é usado para montar url.
+		//$linha->twitter = str_replace('@', "", $linha->twitter);
 
 		$result = $participante->find($idPessoa, $idEncontro);
 		$linha1 = $result[0];
@@ -141,7 +138,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
-			$data['twitter'] = '@' . $data['twitter'];
+			// $data['twitter'] = '@' . $data['twitter'];
 
 			$data2 = array (
 				'id_encontro' => $idEncontro,
@@ -254,7 +251,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		//$this->view->headScript()->appendFile('/js/jquery-1.6.2.min.js');
 		
 		$eventos = new Application_Model_Evento();
-		$this->view->listaEvento = $eventos->getEventos(1);
+		$this->view->listaEvento = $eventos->getEventos($idEncontro);
 		$this->view->idEncontro = $idEncontro;
 		$this->view->idPessoa = $idPessoa;
 		
@@ -290,7 +287,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	public function excluieventoAction(){
 		$this->autenticacaoAction();
 
-		$sessao = Zend_Auth :: getInstance()->getIdentity();
+		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
 		
 		$idEvento = intval($this->_request->getParam("evento"));
@@ -305,9 +302,30 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
    
    public function verAction() {
-      $id = $this->_getParam('id');
       $model = new Application_Model_Pessoa();
-      $this->view->user = $model->fetchRow('id_pessoa = ' . $id);
+      $id = $this->_getParam('id', "");
+      if (! empty($id)) {
+         if (is_numeric($id)) {
+            $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $id);
+         } else {
+            $sql = $model->getAdapter()->quoteInto('twitter = ?', $id);
+         }
+      } else if (Zend_Auth::getInstance()->hasIdentity()) {
+         $sessao = Zend_Auth::getInstance()->getIdentity();
+         if (! empty($sessao["twitter"])) {
+            $sql = $model->getAdapter()->quoteInto('twitter = ?', $sessao["twitter"]);
+            $id = $sessao["twitter"];
+         } else {
+            $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $sessao["idPessoa"]);
+            $id = $sessao["idPessoa"];
+         }
+      } else {
+         // TODO: colocar erro em flashMessage
+         echo "Participante não encontrado.";
+         return;
+      }
+      $this->view->id = $id;
+      $this->view->user = $model->fetchRow($sql);
    }
 
 	private function deprecated($controller, $view) {

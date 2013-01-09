@@ -41,7 +41,11 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 	public function avaliaLogin($login, $senha) {
 
 		$select = $this->select()
-			  		    ->from('pessoa', array("id_pessoa", "administrador", "apelido","(senha=md5('$senha')) AS valido"))
+			  		    ->from('pessoa', array("id_pessoa",
+                       "administrador",
+                       "apelido",
+                       "(senha=md5('$senha')) AS valido",
+                       'twitter'))
 			  		   ->where("email = ?", $login);
 			  
 		$result= $this->fetchAll($select);

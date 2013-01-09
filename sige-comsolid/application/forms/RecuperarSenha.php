@@ -3,10 +3,8 @@
 class Application_Form_RecuperarSenha extends Zend_Form {
 	
 	public function init() {
-		$this->setAction('/login/recuperarsenha')
-           ->setMethod('post');
        
-    $login = $this->createElement('text', 'email',array('label' => 'Login/E-mail: '));
+    $login = $this->createElement('text', 'email',array('label' => 'E-mail: '));
     $login->setRequired(true)
           ->addValidator('EmailAddress')
           ->addErrorMessage("E-mail invalido");

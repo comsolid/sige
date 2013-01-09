@@ -4,7 +4,7 @@ class IndexController extends Zend_Controller_Action
 {
 
    public function init() {
-      /* Initialize action controller here */
+
    }
 
    public function indexAction() {
@@ -30,6 +30,7 @@ class IndexController extends Zend_Controller_Action
 					$idPessoa = $resultadoConsulta[0]->id_pessoa;
 					$administrador = $resultadoConsulta[0]->administrador;
 					$apelido = $resultadoConsulta[0]->apelido;
+               $twitter = $resultadoConsulta[0]->twitter;
 					
 					$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 					$idEncontro = $config->encontro->codigo;
@@ -64,7 +65,8 @@ class IndexController extends Zend_Controller_Action
 						"idPessoa" => $idPessoa,
 						"administrador" => $administrador,
 						"apelido" => $apelido,
-						"idEncontro" => $idEncontro
+						"idEncontro" => $idEncontro,
+                   'twitter' => $twitter
 					));
 
 					return $this->_helper->redirector->goToRoute(array (
@@ -86,9 +88,38 @@ class IndexController extends Zend_Controller_Action
 		$auth = Zend_Auth :: getInstance();
 		$storage = $auth->clearIdentity();
 
-		return $this->_helper->redirector->goToRoute(array (
-			'controller' => 'index',
-			'action' => 'login'
-		), null, true);
+		return $this->_helper->redirector->goToRoute(array(), 'login', true);
 	}
+   
+   public function recuperarSenhaAction() {
+      $form = new Application_Form_RecuperarSenha();
+      $this->view->form = $form;
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+
+      $data = $this->getRequest()->getPost();
+
+      if ($this->getRequest()->isPost() && $form->isValid($data)) {
+         $data = $form->getValues();
+
+         $pessoa = new Application_Model_Pessoa();
+
+         $select = $pessoa->select()->from('pessoa', array(
+                     "id_pessoa"
+                 ))->where("email = ?", $data['email']);
+
+         $resultado = $pessoa->fetchAll($select);
+
+         if (sizeof($resultado) > 0) {
+
+            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+            $idEncontro = $config->encontro->codigo;
+
+            $mail = new Application_Model_EmailConfirmacao();
+            $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro);
+            echo "E-mail enviado com sucesso, verifique seu e-mail.";
+         } else {
+            echo "E-mail não cadastrado.";
+         }
+      }
+   }
 }

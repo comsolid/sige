@@ -19,11 +19,10 @@
                if(!empty($this->usuaLogado)){ ?>
                <span>Bem-Vindo(a) :</span>
                   <a href="<?php echo $this->url(array('controller'=>'participante',
-                      'action'=>'editar'), 'default');?>">
+                      'action'=>'ver'), 'default');?>">
                      <span class="apelido"><?=$this->usuaLogado['apelido']?></span>
                   </a> 
-               <a href="<?php echo $this->url(array('controller'=>'index',
-                   'action'=>'logout'), 'default');?>">Sair</a>
+               <a href="<?php echo $this->url(array(), 'logout');?>">Sair</a>
 				<? } ?>
 			</div>
 					 

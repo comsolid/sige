@@ -5,13 +5,15 @@ Legenda
  - action atual
  + mudar para
 
-[em andamento...]
+[ok]
 - /login/login
 + /login
 
+[ok]
 - /login/logout
 + /logout
 
+[ok]
 - /login/recuperarsenha
 + /recuperar-senha
 
@@ -27,8 +29,9 @@ Legenda
 - /evento/edit/id_evento/<int>
 + /evento/editar/id/<int>
 
+[ok]
 - /participante/add
-+ /participante/criar
++ /participante/criar (/participar)
 
 [ok]
 - /participante/alterarsenha
@@ -44,8 +47,10 @@ Legenda
 Criar
 =====
 
+[ok]
 + /u/<usuario>
 	redireciona para /participante/ver/<usuario>
+   usar id_pessoa ou twitter.
 
 + /sobre
 	mostrar detalhes do projeto, quem está envolvido, etc.

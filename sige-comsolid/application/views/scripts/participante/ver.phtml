@@ -1,4 +1,26 @@
 <?php
 
 ?>
+<? if (! empty($this->user)): ?>
+<p>
+   <a href="<?=$this->url(array('id' => $this->id),
+        'ver') ?>">Página de <?=$this->user->nome ?></a> |
+   <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'editar'), 'default');?>">
+      Editar
+   </a>
+</p>
 <p><?=$this->user->nome ?></p>
+<?
+if (! empty($this->user->twitter)) {
+   $twitter = "Me siga no <a href='https://twitter.com/#!/{$this->user->twitter}'
+>Twitter</a>.";
+} else {
+   $twitter = "Ainda não possuo <a href='https://twitter.com'>Twitter</a>.";
+}
+?>
+<p><?=$twitter ?></p>
+
+<? else: ?>
+<p>Participante não encontrado.</p>
+<? endif; ?>

@@ -18,6 +18,7 @@ SiGE - TODO
 15. i18n os formularios com os recursos do proprio zend
 16. não salvar o @ do twitter
 17. colocar envio de email ao cadastrar novo participante na transação
+18. implementar not found page
 
 
 Future releases

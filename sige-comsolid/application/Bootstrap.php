@@ -16,6 +16,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       $router->addRoute('login', $route);
       
       $route = new Zend_Controller_Router_Route_Static(
+         '/logout',
+         array(
+             'controller' => 'index',
+             'action' => 'logout'
+         )
+      );
+      $router->addRoute('logout', $route);
+      
+      $route = new Zend_Controller_Router_Route_Static(
          '/submissao',
          array(
              'controller' => 'evento',
@@ -23,6 +32,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('submissao', $route);
+      
+      $route = new Zend_Controller_Router_Route_Static(
+         '/participar',
+         array(
+             'controller' => 'participante',
+             'action' => 'criar'
+         )
+      );
+      $router->addRoute('participar', $route);
+      
+      $route = new Zend_Controller_Router_Route_Static(
+         '/recuperar-senha',
+         array(
+             'controller' => 'index',
+             'action' => 'recuperar-senha'
+         )
+      );
+      $router->addRoute('recuperar-senha', $route);
       
       // TODO: criar username contendo apenas caracteres 0-9a-z_
       $route = new Zend_Controller_Router_Route(
@@ -32,7 +59,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
              'action' => 'ver'
          )
       );
-      $router->addRoute('verUsuario', $route);
+      $router->addRoute('ver', $route);
    }
 }
 
