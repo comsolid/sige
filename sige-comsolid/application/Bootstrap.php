@@ -7,6 +7,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       $router = $frontController->getRouter();
       
       $route = new Zend_Controller_Router_Route_Static(
+         '/inscricoes',
+         array(
+             'module' => 'admin',
+             'controller' => 'participante',
+             'action' => 'index'
+         )
+      );
+      $router->addRoute('inscricoes', $route);
+      
+      $route = new Zend_Controller_Router_Route_Static(
          '/login',
          array(
              'controller' => 'index',
@@ -51,7 +61,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       );
       $router->addRoute('recuperar-senha', $route);
       
-      // TODO: criar username contendo apenas caracteres 0-9a-z_
       $route = new Zend_Controller_Router_Route(
          '/u/:id',
          array(
@@ -60,6 +69,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('ver', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+         '/u/confirmar/:id',
+         array(
+             'module' => 'admin',
+             'controller' => 'participante',
+             'action' => 'presenca',
+             'confirmar' => 't'
+         )
+      );
+      $router->addRoute('confirmar_participante', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+         '/u/desfazer-confirmar/:id',
+         array(
+             'module' => 'admin',
+             'controller' => 'participante',
+             'action' => 'presenca',
+             'confirmar' => 'f'
+         )
+      );
+      $router->addRoute('des_confirmar_participante', $route);
    }
 }
 

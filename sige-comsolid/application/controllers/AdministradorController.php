@@ -43,7 +43,7 @@ class AdministradorController extends Zend_Controller_Action {
 		}
 	}
 	public function indexAction() {
-		
+		$this->deprecated("administrador", "index");
 		$sessao = Zend_Auth::getInstance ()->getIdentity ();
 		$idEncontro = $sessao ["idEncontro"];
 		
@@ -201,15 +201,15 @@ class AdministradorController extends Zend_Controller_Action {
 	}
 	
 	public function buscaatividadeadministradorAction() {
+      $this->deprecated("administrador", "buscaatividadeadministrador");
 		$this->view->headLink ()->appendStylesheet ( $this->view->baseUrl ( 'css/tabela_sort.css' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery-1.6.2.min.js' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery.dataTables.js' ) );
 		// $this->view->headScript()->appendFile($this->view->baseUrl('/js/caravana/inicio.js'));
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( '/js/evento/busca_evento_admin.js' ) );
 		
-		$tipoEventos = new Application_Model_TipoEvento ();
-		$this->view->tipoEvento = $tipoEventos->fetchAll ();
-	
+		$tipoEventos = new Application_Model_TipoEvento();
+		$this->view->tipoEvento = $tipoEventos->fetchAll();
 	}
 	
 	public function relatoriosadministradorAction() {
@@ -346,9 +346,7 @@ class AdministradorController extends Zend_Controller_Action {
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery-1.6.2.min.js' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery.dataTables.js' ) );
 		$this->view->headLink ()->appendStylesheet ( $this->view->baseUrl ( 'css/form.css' ) );
-		// $this->view->headScript()->appendFile($this->view->baseUrl('/js/caravana/inicio.js'));
 		
-
 		$idEvento = $this->_request->getParam ( 'id_evento' );
 		$nomeEvento = $this->_request->getParam ( 'nome_evento' );
 		
@@ -365,11 +363,18 @@ class AdministradorController extends Zend_Controller_Action {
 		$this->view->horariosEventos = $evento->getAdapter()->fetchAll($select,$idEvento);
 		
 		
-		$data = $this->getRequest ()->getPost ();
-		if ($this->getRequest ()->isPost () && $form->isValid ( $data )) {
-			$data = $form->getValues ();
+		$data = $this->getRequest()->getPost();
+		if ($this->getRequest()->isPost() && $form->isValid( $data )) {
+			$data = $form->getValues();
+			unset($data['horarios']);
+			$data['id_evento'] = $idEvento;
+			$id = $evento->insert( $data );
+
+			if ($id > 0) {
+				return $this->_helper->redirector->goToRoute ( array ('controller' => 'administrador', 'action' => 'verdetalhesevento', 'id_evento' => $idEvento ), 'default', true );
+			}
 			
-			$dataHorario = array ();
+			/*$dataHorario = array ();
 			
 			foreach ( $data as $chave => $item ) {
 				if ($chave != "descricao" && $chave != "salas" && $chave != "data" && $item != "0") {
@@ -410,17 +415,14 @@ class AdministradorController extends Zend_Controller_Action {
 					$evento->getAdapter ()->fetchAll ($select, array($id,$data["data"],$horarios [0],$horarios [1]));
 					
 					
-			        echo "O evento $nomeEvento foi adicinado no hórario de $horarios[0] às $horarios[1] no dia $item->data<br>";
-					
-				    
-				    
+			      echo "O evento $nomeEvento foi adicinado no hórario de $horarios[0] às $horarios[1] no dia $item->data<br>";
 				} 
 			
 			}
 			
 			if ($confirmaHorario) {
 				return $this->_helper->redirector->goToRoute ( array ('controller' => 'administrador', 'action' => 'verdetalhesevento', 'id_evento' => $idEvento ), null, true );
-			}
+			}*/
 		
 		}
 	
@@ -504,4 +506,7 @@ class AdministradorController extends Zend_Controller_Action {
 		return $this->_helper->redirector->goToRoute ( array ('controller' => 'administrador', 'action' => 'index' ), null, true );
 	}
 
+   private function deprecated($controller, $view) {
+		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
+	}
 }

@@ -73,9 +73,8 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 			}
 		}
 		unset($data[2]);	 
-		$select = $select.' limit 100';
+		$select = $select.' limit 20';
 		return $this->getAdapter()->fetchAll($select,$data);
-		
 	}
 	
 	public function buscaPessoasCoordenacao($data){

@@ -244,7 +244,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/busca_evento.js'));
 	   $this->autenticacaoAction();
-		$sessao = Zend_Auth :: getInstance()->getIdentity();
+		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idEncontro = $sessao["idEncontro"];
 		$idPessoa = $sessao["idPessoa"];
 

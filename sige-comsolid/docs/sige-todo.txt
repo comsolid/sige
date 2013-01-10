@@ -19,6 +19,7 @@ SiGE - TODO
 16. não salvar o @ do twitter
 17. colocar envio de email ao cadastrar novo participante na transação
 18. implementar not found page
+19. mover controller administrador para module admin
 
 
 Future releases
