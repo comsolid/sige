@@ -24,10 +24,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		$administrador = $sessao["administrador"];
 
 		if ($administrador) {
-			return $this->_helper->redirector->goToRoute(array (
-					'controller' => 'administrador',
-					'action' => 'index'
-				), 'default', true);
+			return $this->_helper->redirector->goToRoute(array(), 'inscricoes', true);
 		} else {
 			//$pessoa = new Application_Model_Pessoa();
 			//$pessoa = $pessoa->find($idPessoa);

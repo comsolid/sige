@@ -1,25 +1,26 @@
 SiGE - TODO
 --------------------------------------------------------------------------------
 
-01. padronizar nomes das actions
+01. padronizar nomes das actions [in progress]
 02. melhorar navegação do site
 03. criar manual de instalação detalhado
 04. criar tela de certificados
 05. ao realizar buscar via ajax mostrar gif carregamento (telas do admin)
 06. melhorar visualização dos dados com máscaras.
 07. criar páginas de ajuda e sobre.
-08. criar página de visualização do usuário, e.g. sige.comsolid.org/u/atilacamurca
-09. identar o código!
+08. criar página de visualização do usuário, e.g. sige.comsolid.org/u/atilacamurca [ok]
+09. identar o código! [in progress]
 10. Implementar flashMessage
 11. Menu usuario sem imagens com texto.
 12. atualizar e colocar jquery no layout
 13. remover chamadas de css e js do controller, a menos que seja realmente necessário.
 14. atualizar dataTable a adaptar as cores com as cores do sistema.
 15. i18n os formularios com os recursos do proprio zend
-16. não salvar o @ do twitter
+16. não salvar o @ do twitter [ok]
 17. colocar envio de email ao cadastrar novo participante na transação
 18. implementar not found page
-19. mover controller administrador para module admin
+19. mover controller administrador para module admin [in progress]
+20. colocar captcha na inscrição
 
 
 Future releases

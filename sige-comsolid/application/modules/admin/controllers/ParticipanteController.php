@@ -15,6 +15,10 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       }
    }
 
+   /**
+    * Mapeada como
+    *    /inscricoes 
+    */
    public function indexAction() {
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idEncontro = $sessao ["idEncontro"];
@@ -43,9 +47,9 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       foreach ($data as $value) {
          if ($value['confirmado']) {
             $isValidado = "Confimado!";
-            $acao = '<a href=' . $this->view->baseUrl('/u/desfazer-confirmar/' . $value["id_pessoa"]) . '>Invalidar</a>';
+            $acao = '<a href=' . $this->view->baseUrl('/u/desfazer-confirmar/' . $value["id_pessoa"]) . '>Desfazer</a>';
          } else {
-            $acao = '<a href=' . $this->view->baseUrl('/u/confirmar/' . $value["id_pessoa"]) . '>Validar</a>';
+            $acao = '<a href=' . $this->view->baseUrl('/u/confirmar/' . $value["id_pessoa"]) . '>Confirmar</a>';
             $isValidado = "Não confimado!";
          }
          $json->aaData[] = array(
@@ -66,9 +70,14 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       header("Cache-Control: no-cache, must-revalidate");
       header("Content-type: text/json");
       echo json_encode($json);
-      return;
    }
    
+   /**
+    * Mapeada como:
+    *    /u/confirmar/:id
+    *    /u/desfazer-confirmar/:id
+    * @return type 
+    */
    public function presencaAction() {
       $id = $this->_getParam('id', 0);
       $confirmar = $this->_getParam('confirmar', 'f');

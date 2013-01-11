@@ -1,0 +1,117 @@
+
+<a href="<? echo $this->url(array('module' => 'admin',
+        'controller' => 'evento', 'action' => 'index'), 'default', true) ?>">Voltar</a> |
+
+<a href="<?=$this->url_situacao ?>">
+   <?=$this->msg_situacao ?>
+</a>
+
+<br><br>
+
+<div class="container">
+   <div class="span-2">
+      Título:
+   </div>
+   <div class="span-10">
+      <?=$this->evento['nome_evento'] ?>
+   </div>
+</div>
+
+<hr/>
+
+<div class="container">
+   <div class="span-2">
+      Autor:
+   </div>
+   <div class="span-6">
+      <?=$this->evento['nome'] ?>
+   </div>
+   <div class="span-1">
+      Tipo:
+   </div>
+   <div class="span-6">
+      <?=$this->evento['nome_tipo_evento'] ?>
+   </div>
+</div>
+
+<br/>
+
+<div class="container">
+   <div class="span-2">
+      Submissão:
+   </div>
+   <div class="span-6">
+      <?=$this->evento['data_submissao'] ?>
+   </div>
+   <div class="span-1">
+      Nível:
+   </div>
+   <div class="span-4">
+      <?=$this->evento['descricao_dificuldade_evento'] ?>
+   </div>
+   <div class="span-2">
+      Validada?:
+   </div>
+   <div class="span-2">
+      <?=($this->evento['validada'] ? "Sim" : "Não") ?>
+   </div>
+</div>
+
+<br/>
+
+<div class="container">
+   <div class="span-2">
+      Resumo:
+   </div>
+   <div class="span-10">
+      <?=$this->evento['resumo'] ?>
+   </div>
+</div>
+
+<br><br>
+
+Arquivos:<br>
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+   <thead>
+      <tr>
+         <th>Arquivos</th>
+         <th>Remover Arquivo</th>
+      </tr>
+   </thead>
+   <tbody>
+   </tbody> 
+</table>
+<br><br>
+
+Horários:<br>
+<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+   <thead>
+      <tr>
+         <th>Descrição</th>
+         <th>Data</th>
+         <th>Hora Início</th>
+         <th>Hora Fim</th>
+         <th>Sala</th>
+         <th>Remover Hórario</th>
+      </tr>
+   </thead>
+   <tbody>
+<? foreach ($this->horarios as $item) { ?>
+
+         <tr>
+
+            <td><? echo $item["descricao"]; ?></td>
+            <td><? echo $item["data"]; ?></td>
+            <td><? echo $item["inicio"]; ?></td>
+            <td><? echo $item["fim"]; ?></td>
+            <td><? echo $item["nome_sala"]; ?></td>
+            <td><a href="<? echo $this->baseUrl('/administrador/excluihorario/id_horario/' . $item["evento"] . '/id_evento/' . $this->idEvento); ?>">Remover</a></td>
+         </tr>
+
+<? }
+?>
+   </tbody> 
+</table>
+<a href="<?php echo $this->url(array('controller' => 'administrador',
+    'action' => 'adicionarhorario', 'nome_evento' => $this->nomeEvento, 'id_evento' => $this->idEvento));
+?>">Adicionar Horário</a>

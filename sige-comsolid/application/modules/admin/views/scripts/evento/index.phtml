@@ -1,30 +1,35 @@
 <?php echo $this->partial('menu.phtml'); ?>
 
-<input type="radio" class="radio" name="tipo_evento" id="tipo_evento" value="0" checked="checked" /><label>Todos</label><br>
+<input type="radio" class="radio tipo_evento" name="tipo_evento" value="0" checked="checked" /><label>Todos</label><br>
 <? foreach ( $this->tipoEvento as $tipoEvento ) {?>
-       <input type="radio" class="radio"  name="tipo_evento" id="tipo_evento" value="<?=$tipoEvento->id_tipo_evento?>" /><label><?=$tipoEvento->nome_tipo_evento?></label><br>
+       <input type="radio" class="radio tipo_evento"  name="tipo_evento" value="<?=$tipoEvento->id_tipo_evento?>" /><label><?=$tipoEvento->nome_tipo_evento?></label><br>
 
 <?}
 ?>
 <br>
-<input type="radio" class="radio" name="atividades" id="atividades" value="0" checked="checked" /><label>Todos</label><br>
-<input type="radio" class="radio" name="atividades" id="atividades" value="1"  /><label>Validadas</label><br>
-<input type="radio" class="radio" name="atividades" id="atividades" value="2"  /><label>Não-Validadas</label><br>
+<input type="radio" class="radio situacao" name="atividades" value="0" checked="checked"/><label>Todos</label><br>
+<input type="radio" class="radio situacao" name="atividades" value="1"/><label>Validadas</label><br>
+<input type="radio" class="radio situacao" name="atividades" value="2"/><label>Não-Validadas</label><br>
 
 
-<br>Buscar Atividade: <input type="text" class="text" name="nome_evento" id="nome_evento" value="" size="50" maxlength="50" />
+<br>
 
-<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0"  >
-		<thead>
-			<tr>
-				<th>Tipo Evento</th>
-				<th>Evento</th>
-				<th>Validada</th>
-				<th>Data Submissão</th>
-				<th>Responsável</th>
-				<th>Detalhes<th>
-			</tr>
-		</thead>
-		<tbody id="resultadoAtividades">
-		</tbody>
+<input type="text" class="text" name="termo" id="termo"
+       placeholder="Buscar evento" size="30" maxlength="50" style="float: left;" />
+<img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
+     style="display: none; float: left;" />
+
+<table id="eventos" class="display" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th>Evento</th>
+         <th style="width: 250px;">Evento</th>
+         <th style="width: 20px;">Validada</th>
+         <th>Data Submissão</th>
+         <th>Responsável</th>
+         <th>Detalhes</th>
+      </tr>
+   </thead>
+   <tbody>
+   </tbody>
 </table>

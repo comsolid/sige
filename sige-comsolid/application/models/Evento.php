@@ -53,50 +53,53 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
                 return $this->getAdapter()->fetchAll($select,$where);
       }
       
-      public function buscaEventosAdmin($data){
-      	$select="SELECT id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) WHERE id_encontro = ?";
-      	$auxCont=0;
-        $where[$auxCont]=$data[0];
-        
-      	if($data[1] != NULL){
-			$data[1] = "%".$data[1]."%";
-         	$select = $select.'  AND nome_evento ilike ? ';
-         	$auxCont=$auxCont+1;
-         	$where[$auxCont]=$data[1];
-		}else{
-			unset($data[1]);	
-		}
-		
-		if($data[2] != 0){
-         	$select = $select . ' AND e.id_tipo_evento = ?';
-         	$auxCont=$auxCont+1;
-         	$where[$auxCont]=$data[2];
-      
-       	}else{
-         	unset($data[2]);
-         	
-        }
-        
-        if($data[3] != 0){
-        	if($data[3] == 1){
-        		$data[3] = 'T';
-        	}else if($data[3] == 2){
-        		
-        		$data[3] = 'F';
-        	}
-        	$select = $select .' AND e.validada = ?';
-        	$auxCont=$auxCont+1;
-         	$where[$auxCont]=$data[3];
-        } 
-			
-		//$select = $select.' limit 50';
-		
-		return $this->getAdapter()->fetchAll($select,$where);
+   public function buscaEventosAdmin($data) {
+      $select = "SELECT id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) WHERE id_encontro = ?";
+      $auxCont = 0;
+      $where[$auxCont] = $data[0];
+
+      if ($data[1] != NULL) {
+         $data[1] = "%" . $data[1] . "%";
+         $select = $select . '  AND nome_evento ilike ? ';
+         $auxCont = $auxCont + 1;
+         $where[$auxCont] = $data[1];
+      } else {
+         unset($data[1]);
       }
+
+      if ($data[2] != 0) {
+         $select = $select . ' AND e.id_tipo_evento = ? ';
+         $auxCont = $auxCont + 1;
+         $where[$auxCont] = $data[2];
+      } else {
+         unset($data[2]);
+      }
+
+      if ($data[3] != 0) {
+         if ($data[3] == 1) {
+            $data[3] = 'T';
+         } else if ($data[3] == 2) {
+
+            $data[3] = 'F';
+         }
+         $select = $select . ' AND e.validada = ? ';
+         $auxCont = $auxCont + 1;
+         $where[$auxCont] = $data[3];
+      }
+
+      //$select = $select.' limit 50';
+
+      return $this->getAdapter()->fetchAll($select, $where);
+   }
       
       public function buscaEventoPessoa($idEvento){
-      	$select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome, resumo, curriculum, perfil_minimo, descricao_dificuldade_evento FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) INNER JOIN dificuldade_evento de ON (de.id_dificuldade_evento = e.id_dificuldade_evento) WHERE e.id_evento = ?;
-      	";
+      	$select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, 
+            validada, data_submissao, nome, resumo, curriculum, perfil_minimo, 
+            descricao_dificuldade_evento FROM evento e 
+            INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
+            INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) 
+            INNER JOIN dificuldade_evento de ON (de.id_dificuldade_evento = e.id_dificuldade_evento) 
+            WHERE e.id_evento = ? ";
       	
       	return $this->getAdapter()->fetchAll($select,$idEvento);
       }

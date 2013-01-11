@@ -91,6 +91,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('des_confirmar_participante', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+            '/admin/evento/validar/:id',
+            array(
+               'module' => 'admin',
+               'controller' => 'evento',
+               'action' => 'situacao',
+               'validar' => 't'
+            )
+      );
+      $router->addRoute('validar_evento', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+            '/admin/evento/invalidar/:id',
+            array(
+               'module' => 'admin',
+               'controller' => 'evento',
+               'action' => 'situacao',
+               'validar' => 'f'
+            )
+      );
+      $router->addRoute('invalidar_evento', $route);
    }
 }
 

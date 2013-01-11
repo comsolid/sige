@@ -1,3 +1,7 @@
+/**
+ * @deprecated use /js/admin/evento/index.js
+ */
+
 $(document).ready( function() {
 	getValores();
 	$("#nome_evento").keyup(function () {

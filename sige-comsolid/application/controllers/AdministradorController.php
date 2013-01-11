@@ -217,12 +217,13 @@ class AdministradorController extends Zend_Controller_Action {
 	}
 	
 	public function verdetalheseventoAction() {
+      $this->deprecated("administrador", "verdetalhesevento");
 		$this->view->headLink ()->appendStylesheet ( $this->view->baseUrl ( 'css/tabela_sort.css' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery-1.6.2.min.js' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( '/js/administrador/teste.js' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery.dataTables.js' ) );
 		$this->view->headLink ()->appendStylesheet ( $this->view->baseUrl ( 'css/form.css' ) );
-	    $this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/altera_palestrante.js'));
+	   $this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/altera_palestrante.js'));
 		
 
 		$data = $this->getRequest()->getPost ();
