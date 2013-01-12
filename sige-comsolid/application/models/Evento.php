@@ -92,39 +92,45 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
       return $this->getAdapter()->fetchAll($select, $where);
    }
       
-      public function buscaEventoPessoa($idEvento){
-      	$select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, 
+   public function buscaEventoPessoa($idEvento) {
+      $select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, 
             validada, data_submissao, nome, resumo, curriculum, perfil_minimo, 
             descricao_dificuldade_evento FROM evento e 
             INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
             INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) 
             INNER JOIN dificuldade_evento de ON (de.id_dificuldade_evento = e.id_dificuldade_evento) 
             WHERE e.id_evento = ? ";
-      	
-      	return $this->getAdapter()->fetchAll($select,$idEvento);
-      }
-      
-      public function validaEvento($idEvento){
-      	$select = "UPDATE evento SET validada = 'T' WHERE id_evento = ?";
-      	
-      	return $this->getAdapter()->fetchAll($select,$idEvento);
-      }
-      
-      public function invalidaEvento($idEvento){
-      	$select = "UPDATE evento SET validada = 'F'  WHERE id_evento = ?";
-      	
-      	return $this->getAdapter()->fetchAll($select,$idEvento);
-      	
-      }
-      
-        public function addResponsavel($data){
-      	$select = "UPDATE evento SET  responsavel=?  WHERE  id_evento = ?";
-      	
-      	return $this->getAdapter()->fetchAll($select,$data);
-      	
-      }
-      
-      
-      
- 
+
+      return $this->getAdapter()->fetchAll($select, $idEvento);
+   }
+
+   public function validaEvento($idEvento) {
+      $select = "UPDATE evento SET validada = 'T' WHERE id_evento = ?";
+
+      return $this->getAdapter()->fetchAll($select, $idEvento);
+   }
+
+   public function invalidaEvento($idEvento) {
+      $select = "UPDATE evento SET validada = 'F'  WHERE id_evento = ?";
+
+      return $this->getAdapter()->fetchAll($select, $idEvento);
+   }
+
+   public function addResponsavel($data) {
+      $select = "UPDATE evento SET  responsavel=?  WHERE  id_evento = ?";
+
+      return $this->getAdapter()->fetchAll($select, $data);
+   }
+   
+   public function programacao($id_encontro) {
+      $sql = "SELECT er.id_evento, nome_tipo_evento, nome_evento,
+         nome, nome_sala, data, hora_inicio, hora_fim, resumo FROM evento e 
+         INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
+         INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
+         INNER JOIN evento_realizacao er on e.id_evento = er.id_evento
+         INNER JOIN sala s on er.id_sala = s.id_sala
+         WHERE id_encontro = ? and validada = true
+         ORDER BY data asc, hora_inicio asc";
+      return $this->getAdapter()->fetchAll($sql, array($id_encontro));
+   }
 }

@@ -113,6 +113,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('invalidar_evento', $route);
+      
+      $route = new Zend_Controller_Router_Route_Static(
+         '/programacao',
+         array(
+             'controller' => 'evento',
+             'action' => 'programacao'
+         )
+      );
+      $router->addRoute('programacao', $route);
    }
 }
 

@@ -1,6 +1,8 @@
 
 <a href="<?php echo $this->url(array('controller'=>'evento',
-'action'=>'submeter'), 'default');?>">+ Submeter trabalho</a><br/><br/>
+'action'=>'submeter'), 'default');?>">+ Submeter trabalho</a> |
+<a href="<?=$this->url(array(), 'programacao', true) ?>">Programação</a>
+<br/><br/>
 
 <?if(count($this->meusEventos)>0){?>
 

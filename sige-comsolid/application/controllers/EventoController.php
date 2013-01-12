@@ -453,6 +453,14 @@ class EventoController extends Zend_Controller_Action {
 			}
 		}
 	}
+   
+   public function programacaoAction() {
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $model = new Application_Model_Evento();
+      $this->view->lista = $model->programacao($sessao["idEncontro"]);
+   }
 
 	private function deprecated($controller, $view) {
 		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";

@@ -1,0 +1,17 @@
+<h3>Programação</h3>
+
+<? foreach ($this->lista as $item): ?>
+<div class="container">
+   <div class="span-2">
+      <?=$item['data'] ?>
+   </div>
+   <div class="span-14">
+      <div style="font-size: 12.5pt;"><?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?></div>
+      <div>em Sala <?=$item['nome_sala'] ?></div>
+      <div><?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
+      <hr/>
+      <div>por <?=$item['nome'] ?></div>
+      <p><?=$item['resumo'] ?></p>
+   </div>
+</div>
+<? endforeach; ?>
