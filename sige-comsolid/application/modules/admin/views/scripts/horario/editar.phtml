@@ -1,0 +1,35 @@
+
+<a href="<?=$this->url(array('controller' => 'evento',
+    'action' => 'detalhes',
+    'id' => $this->idEvento)) ?>">Voltar</a>
+
+<h2>Editar horário</h2>
+
+<?
+echo $this->form;
+?>
+
+
+<table class="display" cellpadding="0" cellspacing="0" border="0;" >
+   <thead>
+      <tr>
+         <th>Data</th>
+         <th>Hora Início</th>
+         <th>Hora Fim</th>
+
+      </tr>
+   </thead>
+   <tbody>
+      <? foreach ($this->horariosEventos as $horario) { ?>
+
+         <tr>
+
+            <td><? echo $horario["data"] ?></td>
+            <td><? echo $horario["hora_inicio"] ?></td>
+            <td><? echo $horario["hora_fim"] ?></td>
+         </tr>
+
+      <? }
+      ?>
+   </tbody>
+</table>

@@ -1,7 +1,7 @@
 <?php
 
-class Application_Form_Horarios extends Zend_Form
-{
+class Application_Form_Horarios extends Zend_Form {
+   
 	private  $descricao;
 	const HORA_INI = 'hora_inicio';
 	const HORA_FIM = 'hora_fim';
@@ -23,10 +23,7 @@ class Application_Form_Horarios extends Zend_Form
 
 	public function init(){
   
-  
 	}
-  
-  
   
    public function cria(){
   	
@@ -43,31 +40,12 @@ class Application_Form_Horarios extends Zend_Form
 		foreach ($salas->fetchAll() as $sala){
 			$salasForm->addMultiOptions(array($sala->id_sala => $sala->nome_sala));
 		}
-		
-		/*$data = $this->createElement('radio', 'data',array('label' => 'Data: '));
-		$data->addMultiOptions(array('2012-12-06' => '06/12/2012',
-											  '2012-12-07' => '07/12/2012',
-									'2012-12-08' => '08/12/2012'))
-			->setRequired(true)->addErrorMessage("Escolha uma data para realização do evento");*/
 
 		$this->addElement($descricao)
 	      ->addElement($salasForm)
 	      ->addElement($this->_data())
 	      ->addElement($this->_hora(self::HORA_INI, 'Horário Inicio:'))
 	      ->addElement($this->_hora(self::HORA_FIM, 'Horário Término:'));
-		
-		/*$horario = $this->createElement('checkbox', 'horarios', array('label'=>'Horário'));
-		
-		//$select = "SELECT TO_CHAR(hora_inicial, 'HH24:MI:SS') as hora_inicio, TO_CHAR(hora_final, 'HH24:MI:SS') as hora_fim FROM encontro_horario  WHERE id_encontro_horario NOT IN (2,7) ORDER BY hora_inicial";
-		$select = "SELECT TO_CHAR(hora_inicial, 'HH24:MI:SS') as hora_inicio, TO_CHAR(hora_final, 'HH24:MI:SS') as hora_fim FROM encontro_horario  ORDER BY hora_inicial";
-		$x=0;
-		foreach ($salas->getAdapter()->fetchAll($select) as $h){
-			$horario = $this->createElement('checkbox', "horario$x", array('label'=>$h['hora_inicio'] .' às '. $h['hora_fim']));
-			$horario->setCheckedValue($h['hora_inicio'] ."_". $h['hora_fim']);
-			
-			$this->addElement($horario);
-			$x++;
-		}*/
 		
 		$botao = $this->createElement('submit', 'confimar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
@@ -106,7 +84,7 @@ class Application_Form_Horarios extends Zend_Form
 				$hora_aux->add(1, Zend_Date::HOUR);
 				continue;
 			}
-			$element->addMultiOption($hora_aux->toString('HH:mm'), $hora_aux->toString('HH:mm'));
+			$element->addMultiOption($hora_aux->toString('HH:mm:ss'), $hora_aux->toString('HH:mm'));
 			$hora_aux->add(1, Zend_Date::HOUR);
 		}
 		return $element;

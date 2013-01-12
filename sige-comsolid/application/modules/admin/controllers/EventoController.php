@@ -8,6 +8,7 @@ class Admin_EventoController extends Zend_Controller_Action {
 
    public function indexAction() {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       // $this->view->headScript()->appendFile($this->view->baseUrl('/js/caravana/inicio.js'));
@@ -93,12 +94,20 @@ class Admin_EventoController extends Zend_Controller_Action {
       $json->itens = array();
       
       foreach($rs as $value) {
+         if ($value['validada']) {
+            $validada = "Sim";
+         } else {
+            $validada = "Não";
+         }
+         
+         $date = new Zend_Date($value['data_submissao']);
+         
          $url = '<a href=' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"]) . '>Detalhes</a>';
          $json->itens[] = array(
-             "{$value['nome_tipo_evento']}",
+             substr($value['nome_tipo_evento'], 0, 1),
              "{$value['nome_evento']}",
-             "{$value['validada']}",
-             "{$value['data_submissao']}",
+             "{$validada}",
+             "{$date->toString("dd/MM/YYYY HH:mm")}",
              "{$value['nome']}",
              $url
          );

@@ -343,6 +343,7 @@ class AdministradorController extends Zend_Controller_Action {
 
 	
 	public function adicionarhorarioAction() {
+      $this->deprecated("administrador", "adicionarhorario");
 		$this->view->headLink ()->appendStylesheet ( $this->view->baseUrl ( 'css/tabela_sort.css' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery-1.6.2.min.js' ) );
 		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery.dataTables.js' ) );

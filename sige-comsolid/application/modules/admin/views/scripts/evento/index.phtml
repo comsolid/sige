@@ -1,16 +1,32 @@
 <?php echo $this->partial('menu.phtml'); ?>
 
-<input type="radio" class="radio tipo_evento" name="tipo_evento" value="0" checked="checked" /><label>Todos</label><br>
-<? foreach ( $this->tipoEvento as $tipoEvento ) {?>
-       <input type="radio" class="radio tipo_evento"  name="tipo_evento" value="<?=$tipoEvento->id_tipo_evento?>" /><label><?=$tipoEvento->nome_tipo_evento?></label><br>
+<div class="container">
+   <div class="span-6 border">
+      Evento:<br/>
+      <input type="radio" class="radio tipo_evento" name="tipo_evento"
+             id="tipo_evento_0" value="0" checked="checked" />
+      <label for="tipo_evento_0">Todos</label><br>
+      <? foreach ($this->tipoEvento as $tipoEvento): ?>
+         <input type="radio" class="radio tipo_evento" name="tipo_evento"
+                id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
+                value="<?= $tipoEvento->id_tipo_evento ?>" />
+         <label for="tipo_evento<?= $tipoEvento->id_tipo_evento ?>">
+            <?= $tipoEvento->nome_tipo_evento ?>
+         </label><br>
+      <? endforeach; ?>
+   </div>
+   
+   <div class="span-6">
+      Situação:<br/>
+      <input type="radio" class="radio situacao" name="atividades" 
+             id="sit_todos" value="0" checked="checked"/><label for="sit_todos">Todos</label><br>
+      <input type="radio" class="radio situacao" name="atividades"
+             id="sit_validadas" value="1"/><label for="sit_validadas">Validadas</label><br>
+      <input type="radio" class="radio situacao" name="atividades"
+             id="sit_nao_validadas" value="2"/><label for="sit_nao_validadas">Não-Validadas</label><br>
 
-<?}
-?>
-<br>
-<input type="radio" class="radio situacao" name="atividades" value="0" checked="checked"/><label>Todos</label><br>
-<input type="radio" class="radio situacao" name="atividades" value="1"/><label>Validadas</label><br>
-<input type="radio" class="radio situacao" name="atividades" value="2"/><label>Não-Validadas</label><br>
-
+   </div>
+</div>
 
 <br>
 
@@ -22,12 +38,12 @@
 <table id="eventos" class="display" cellpadding="0" cellspacing="0" border="0">
    <thead>
       <tr>
-         <th>Evento</th>
+         <th style="width: 10px;">Ev.</th>
          <th style="width: 250px;">Evento</th>
          <th style="width: 20px;">Validada</th>
-         <th>Data Submissão</th>
+         <th style="width: 80px;">Submissão</th>
          <th>Responsável</th>
-         <th>Detalhes</th>
+         <th>Ação</th>
       </tr>
    </thead>
    <tbody>
