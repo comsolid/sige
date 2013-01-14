@@ -3,20 +3,20 @@ class AdministradorController extends Zend_Controller_Action {
 	
 	public function init() {
 		if (! Zend_Auth::getInstance ()->hasIdentity ()) {
-			return $this->_helper->redirector->goToRoute ( array ('controller' => 'login', 'action' => 'login' ), null, true );
+			return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
 		$this->autenticacao();
 	}
 	
 	public function autenticacao() {
-		
-		$sessao = Zend_Auth::getInstance ()->getIdentity ();
-		
-		if (! $sessao ["administrador"]) {
-			return $this->_helper->redirector->goToRoute ( array ('controller' => 'participante', 'action' => 'index' ), null, true );
-		}
-	
-	}
+
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+
+      if (!$sessao ["administrador"]) {
+         return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
+      }
+   }
+   
 	public function addautorAction() {
 		if (! Zend_Auth::getInstance ()->hasIdentity ()) {
 			return $this->_helper->redirector->goToRoute ( array ('controller' => 'login', 'action' => 'login' ), null, true );

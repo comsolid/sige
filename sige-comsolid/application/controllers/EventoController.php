@@ -4,10 +4,7 @@ class EventoController extends Zend_Controller_Action {
 	public function init() {
 		//Initialize action controller here 
 		if (!Zend_Auth :: getInstance()->hasIdentity()) {
-			return $this->_helper->redirector->goToRoute(array (
-				'controller' => 'index',
-				'action' => 'login'
-			), null, true);
+			return $this->_helper->redirector->goToRoute(array (), 'login', true);
 		}
 		$this->view->menu = new Application_Form_Menu($this->view, 'inicio');
 	}

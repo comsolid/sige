@@ -3,7 +3,15 @@
 class Admin_EventoController extends Zend_Controller_Action {
 
    public function init() {
-      /* Initialize action controller here */
+      if (!Zend_Auth::getInstance()->hasIdentity()) {
+         return $this->_helper->redirector->goToRoute(array(), 'login', true);
+      }
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      if (! $sessao["administrador"]) {
+         return $this->_helper->redirector->goToRoute(array('controller' => 'participante',
+             'action' => 'index'), 'default', true);
+      }
    }
 
    public function indexAction() {

@@ -3,7 +3,15 @@
 class Admin_HorarioController extends Zend_Controller_Action {
 
    public function init() {
-      /* Initialize action controller here */
+      if (!Zend_Auth::getInstance()->hasIdentity()) {
+         return $this->_helper->redirector->goToRoute(array(), 'login', true);
+      }
+
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      if (!$sessao["administrador"]) {
+         return $this->_helper->redirector->goToRoute(array('controller' => 'participante',
+                     'action' => 'index'), 'default', true);
+      }
    }
 
    public function criarAction() {
@@ -58,56 +66,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
          } catch (Exception $e) {
             echo $e->getMessage();
          }
-         
-         /* $dataHorario = array ();
-
-           foreach ( $data as $chave => $item ) {
-           if ($chave != "descricao" && $chave != "salas" && $chave != "data" && $item != "0") {
-           $dataHorario [] = $item;
-           }
-           }
-
-           $confirmaHorario = true;
-
-           foreach ( $dataHorario as $h ) {
-           $ok = true;
-           $horarios = split ( "_", $h );
-
-           $horariosConfirmado = $evento->fetchAll ();
-
-           foreach ( $horariosConfirmado as $item ) {
-
-           if ($item->id_sala == $data ["salas"] && $item->data == $data ["data"] && $item->hora_inicio == $horarios [0]) {
-           $confirmaHorario = false;
-           $ok = false;
-           $sala = $item->findDependentRowset('Application_Model_Sala')->current()->nome_sala;
-           $e = $item->findDependentRowset('Application_Model_Evento')->current()->nome_evento;
-
-           echo "O evento $nomeEvento no hórario de $horarios[0] às $horarios[1] no dia $item->data<br>, não pode ser escolhido, já haverá o evento $e nesse hórario<br><br>";
-
-           break;
-           }
-
-           }
-
-           if ($ok) {
-           $dadosEvento = array ('id_evento' => $idEvento, 'id_sala' => $data ["salas"], 'data' => $data ["data"], 'hora_inicio' => $horarios [0], 'hora_fim' => $horarios [1], 'descricao' => $nomeEvento );
-
-           $id = $evento->insert ( $dadosEvento );
-
-           $select = "INSERT INTO evento_realizacao_multipla (evento, data, hora_inicio, hora_fim) VALUES (?,?,?,?)";
-
-           $evento->getAdapter ()->fetchAll ($select, array($id,$data["data"],$horarios [0],$horarios [1]));
-
-
-           echo "O evento $nomeEvento foi adicinado no hórario de $horarios[0] às $horarios[1] no dia $item->data<br>";
-           }
-
-           }
-
-           if ($confirmaHorario) {
-           return $this->_helper->redirector->goToRoute ( array ('controller' => 'administrador', 'action' => 'verdetalhesevento', 'id_evento' => $idEvento ), null, true );
-           } */
       }
    }
 
