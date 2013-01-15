@@ -1,5 +1,41 @@
+<?
+   $this->headScript()
+      ->prependFile($this->baseUrl('js/jquery.xdomainajax.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery.isotope.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery.socialist.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery-1.8.3.min.js'),'text/javascript');
+   
+   $this->headLink()
+           ->prependStylesheet($this->baseUrl('css/jquery.socialist.css'));
+?>
+
 <div>
 	Se você ja participou clique em
 	<a href="<?=$this->url(array(), 'login', true) ?>">Entrar</a>. Se não clique em
 	<a href="<?=$this->url(array('controller' => 'participante', 'action' => 'add')) ?>">Quero participar!</a>.
 </div>
+
+<h3>COMSOLiD e amigos</h3>
+<div id="socialist"></div>
+<script type="text/javascript">
+   $(function() {
+      $('#socialist').socialist({
+         networks: [
+            {name:'rss',id:'http://www.comsolid.org/feed'},
+            {name:'twitter',id:'comsolid'},
+            {name:'twitter',id:'mad3linux'},
+            {name:'twitter',id:'EspiritoLivre'},
+            {name:'twitter',id:'atilacamurca'},
+            {name:'twitter',id:'darlildo'},
+            {name:'twitter',id:'iTICDIGITAL'},
+            {name:'facebook',id:'COMS0LiD'}
+         ],
+         isotope:true,
+         random:true,
+         size: 'large',
+         fields:['source','heading','text','date','image','followers','likes'], 
+         maxResults:3,
+         width:250
+      });
+   });
+</script>

@@ -44,21 +44,27 @@ body{
 #conteudo{
 	padding: 27px;
 }
+
 #info_usu{
 	float:right;
 	font-size: 11px;
 	margin-right: 17px;
 }
-	#info_usu span{
-		color: #f48533;	
-		font-weight: bold;
-	}
-	
-	#info_usu .apelido{
-		font-weight: normal;
-		color: #359324;
-		text-decoration: underline;
-	}
+
+#info_usu span{
+   color: #f48533;	
+   font-weight: bold;
+}
+
+#info_usu .apelido{
+   font-weight: normal;
+   color: #359324;
+   text-decoration: underline;
+}
+
+#socialist a {
+   color: white;
+}
 
 /*MENU*/
 #menu{

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated use somente form Evento 
+ */
 class Application_Form_EventoEditar extends Zend_Form {
 
 	public function init() {
@@ -45,9 +48,11 @@ class Application_Form_EventoEditar extends Zend_Form {
 		$resumo = $this->createElement('textarea', 'resumo',array('label' => 'Resumo: '));
    	$resumo->setAttrib('COLS', '40')
     		->setAttrib('ROWS', '4')
+            ->setAttrib('class', 'ckeditor')
    			->setAllowEmpty(false)
           	->setRequired(true)
           	->addValidator('stringLength', false, array(10))
+            ->addFilter(new Sige_Filter_HTMLPurifier)
           	->addErrorMessage("Resumo com número insuficiente de caracteres.");
           	
 		$tipo_evento = new Application_Model_TipoEvento();

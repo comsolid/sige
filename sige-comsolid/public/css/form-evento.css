@@ -1,0 +1,79 @@
+/* 
+    Document   : form-evento
+    Created on : 15/01/2013, 09:57:36
+    Author     : atila
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@CHARSET "UTF-8";
+dl.zend_form dl,dl.zend_form dd{
+   padding: 6px;
+}
+dl.zend_form dt,dl.zend_form dd{
+
+   color:#828282;
+   font-size: 13px;
+}
+
+dl.zend_form label {
+   color:#828282;
+   font-size: 15px;
+   margin-bottom: 6px;
+}
+
+dl.zend_form dt { 
+   clear:left;
+   float:left;
+   /*min-width:100px;*/
+   margin: 10px 0 10px 0;
+
+}
+dl.zend_form input{
+   height: 23px;
+}
+dl.zend_form SELECT{
+   height: 28px;
+   width: 275px;
+}
+
+dl.zend_form input[type=text]:FOCUS{
+   background-color: #f2ffd8;
+}
+
+/** BOTOES **/
+dl.zend_form input[type=submit],dl.zend_form input[type=reset]{
+
+   width: 150px;
+   height: 36px;
+   border: none;
+   color: white;
+   font-weight: bold;
+
+}
+
+dl.zend_form input[type=submit] {
+   background-image: url(../imagens/layout/b_ok.png);
+   margin: 20px 0 0 0;
+}
+dl.zend_form input[type=reset]{
+   background-image: url(../imagens/layout/b_cancel.png);
+}	
+.submitCancelar{
+   background-image: url(../imagens/layout/b_cancel.png) !important;
+}
+/** FIM BOTOES **/	
+dl.zend_form input,dl.zend_form TEXTAREA{
+   border: #afed3d solid 1px;
+   -moz-border-radius:5px 5px 5px 5px;
+   padding: 3px;
+}
+
+dl.zend_form input[type="radio"] {
+   width: 25px;
+   height: 14px;
+}
+
+.small {width:70px;}
+.normal {width:310px;}
+.large {width:470px;}

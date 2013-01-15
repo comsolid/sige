@@ -324,6 +324,37 @@ class ParticipanteController extends Zend_Controller_Action {
       $this->view->id = $id;
       $this->view->user = $model->fetchRow($sql);
    }
+   
+   public function certificadoPalestranteAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      // include auto-loader class
+      require_once 'Zend/Loader/Autoloader.php';
+
+      // register auto-loader
+      $loader = Zend_Loader_Autoloader::getInstance();
+      
+      $pdf = new Zend_Pdf();
+      $page1 = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+      $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+      $page1->setFont($font, 12);
+      
+      $image = Zend_Pdf_Image::imageWithPath(dirname(__FILE__)
+                      . '/../../public/img/bg-certificado.png');
+      $page1->drawImage($image, 10, 60, 960, 436);
+      
+      $page1->drawText('Certificamos que Júlio Neves participou do COMSOLiD+5', 120, 350, 'UTF-8');
+      
+      $pdf->pages[] = ($page1);
+      $pdf->save(dirname(__FILE__) . '/../../tmp/certificado-palestrante.pdf');
+      // Get PDF document as a string 
+      $pdfData = $pdf->render();
+      
+      header("Content-Disposition: inline; filename=certificado-palestrante.pdf");
+      header("Content-type: application/x-pdf");
+      echo $pdfData;
+   }
 
 	private function deprecated($controller, $view) {
 		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
