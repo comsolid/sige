@@ -1,9 +1,10 @@
 var oTablePes;
 $(document).ready(function() {
 	
-	/*getValoresCoordenacao();
+   $("#nome_pessoa").select();
+	getValoresCoordenacao();
 	getValoresOrganizacao();
-	$("#nome_pessoa").keyup(function() {
+	/*$("#nome_pessoa").keyup(function() {
 		getValores();
 		
 	});*/
@@ -18,6 +19,7 @@ $(document).ready(function() {
 });
 
 function getValores() {
+   $("#loading").show();
 	var idEncontro = $("#id_encontro").val();
 	var nomePessoa = $("#nome_pessoa").val();
 	var tipo_busca="";
@@ -33,6 +35,8 @@ function getValores() {
       if(json.size>0) {
          oTablePes.fnAddData(json.aaData);
       }
+   }).complete(function() {
+      $("#loading").hide();
    });
 }
 
@@ -42,7 +46,7 @@ function getValoresCoordenacao(){
 	$.ajax( {
 		
 		type : "POST",
-		url : "administrador/buscacoordenacao/idEncontro/"+idEncontro,
+		url : "/administrador/buscacoordenacao/idEncontro/"+idEncontro,
 
 		// data:
 		// "/5/acao/busca/nome_evento/"+descEvento+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento+"/idEncontro/"+$("#idEncontro").val(),
@@ -65,7 +69,7 @@ function getValoresOrganizacao(){
 	
 	$.ajax( {
 		type : "POST",
-		url : "administrador/buscaorganizacao/idEncontro/"+idEncontro,
+		url : "/administrador/buscaorganizacao/idEncontro/"+idEncontro,
 
 		// data:
 		// "/5/acao/busca/nome_evento/"+descEvento+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento+"/idEncontro/"+$("#idEncontro").val(),

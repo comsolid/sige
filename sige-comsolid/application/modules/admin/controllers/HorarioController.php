@@ -15,16 +15,11 @@ class Admin_HorarioController extends Zend_Controller_Action {
    }
 
    public function criarAction() {
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-
       $idEvento = $this->_request->getParam('id');
-      $nomeEvento = $this->_request->getParam('nome_evento');
+      //$nomeEvento = $this->_request->getParam('nome_evento');
 
       $form = new Application_Form_Horarios();
-      $form->setDescricao($nomeEvento);
+      //$form->setDescricao($nomeEvento);
       $form->cria();
       $this->view->form = $form;
 
@@ -70,11 +65,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
    }
 
    public function editarAction() {
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-
       $form = new Application_Form_Horarios();
       $form->cria();
       $this->view->form = $form;
@@ -100,7 +90,8 @@ class Admin_HorarioController extends Zend_Controller_Action {
                   $data['hora_fim']
                ));
                
-               if (! $existe) {
+               // se id for igual ao id existe, pode atualizar, pois se trata do mesmo evento
+               if (! $existe or ($id == $existe)) {
                   $model->update($data, 'evento = ' . $id);
                   return $this->_helper->redirector->goToRoute(array(
                               'module' => 'admin',

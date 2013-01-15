@@ -1,7 +1,18 @@
+<?
+   echo $this->headScript()
+        ->prependFile($this->baseUrl('js/admin/horario/salvar.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/jquery.dataTables.js'))
+        ->prependFile($this->baseUrl('js/jquery-1.6.2.min.js'));
+   
+   echo $this->headLink()
+           ->appendStylesheet($this->baseUrl('css/form.css'))
+           ->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+?>
 
-<a href="<?=$this->url(array('controller' => 'evento',
+<a href="<?=$this->url(array('module' => 'admin',
+    'controller' => 'evento',
     'action' => 'detalhes',
-    'id' => $this->idEvento)) ?>">Voltar</a>
+    'id' => $this->idEvento), 'default', true) ?>">Voltar</a>
 
 <h2>Editar horário</h2>
 

@@ -30,7 +30,8 @@ class Application_Form_Horarios extends Zend_Form {
 		$this->setMethod("post");
 		
 		$descricao = $this->createElement('text', 'descricao', array('label' => 'Descrição: '));
-		$descricao->setValue($this->getDescricao());
+		$descricao->setValue($this->getDescricao())
+              ->setAttrib('placeholder', 'Turma 1 ou Parte 1...');
 
 		$salas = new Application_Model_Sala();
 		$salas->fetchAll();

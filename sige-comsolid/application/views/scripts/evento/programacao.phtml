@@ -6,11 +6,24 @@
       <?=$item['data'] ?>
    </div>
    <div class="span-14">
-      <div style="font-size: 12.5pt;"><?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?></div>
-      <div>em Sala <?=$item['nome_sala'] ?></div>
+      <div style="font-size: 12.5pt;">
+         <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
+         <? if (! empty($item['descricao'])) : ?>
+         (<?=$item['descricao'] ?>)
+         <? endif; ?>
+      </div>
+      <div>Sala <?=$item['nome_sala'] ?></div>
       <div><?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
       <hr/>
-      <div>por <?=$item['nome'] ?></div>
+      <?
+      if (! empty($item['twitter'])) {
+         $id = $item['twitter'];
+      } else {
+         $id = $item['id_pessoa'];
+      }
+      ?>
+      <div>por <a href="<?=$this->url(array('id' => $id),
+              'ver', true) ?>" target="blank"><?=$item['nome'] ?></a></div>
       <p><?=$item['resumo'] ?></p>
    </div>
 </div>

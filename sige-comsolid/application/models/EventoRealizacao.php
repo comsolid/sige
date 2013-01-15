@@ -26,7 +26,7 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
          AND hora_fim = ?";
       $rs = $this->getAdapter()->fetchAll($sql, $data);
       if (count($rs) > 0) {
-         return true;
+         return $rs[0]['evento'];
       }
       return false;
    }

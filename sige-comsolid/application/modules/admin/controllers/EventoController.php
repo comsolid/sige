@@ -40,9 +40,12 @@ class Admin_EventoController extends Zend_Controller_Action {
 
       $idEvento = $this->_request->getParam('id', 0);
 
-      $evento = new Application_Model_Evento ();
+      $evento = new Application_Model_Evento();
       $data = $evento->buscaEventoPessoa($idEvento);
       $this->view->evento = $data[0];
+      
+      $date = new Zend_Date($this->view->evento['data_submissao']);
+      $this->view->evento['data_submissao'] = $date->toString('dd/MM/YYYY HH:mm:ss');
 
       $this->view->idEvento = $idEvento;
       $this->view->nomeEvento = $data [0] ['nome_evento'];

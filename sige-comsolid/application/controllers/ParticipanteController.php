@@ -5,7 +5,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		$this->view->menu=new Application_Form_Menu($this->view,'inicio');
 	}
 
-	public function autenticacaoAction() {
+	private function autenticacao() {
 		if (!Zend_Auth::getInstance()->hasIdentity()) {
 			return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
@@ -17,7 +17,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
 	   
-		$this->autenticacaoAction();
+		$this->autenticacao();
 		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
 		$idEncontro = $sessao["idEncontro"];
@@ -107,7 +107,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
 
 	public function editarAction() {
-		$this->autenticacaoAction();
+		$this->autenticacao();
 
 		$sessao = Zend_Auth :: getInstance()->getIdentity();
 		
@@ -188,7 +188,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	public function alterarSenhaAction() {
 		//echo $this->getBaseURL();
 		$this->view->menu->setAtivo('alterarsenha');
-		$this->autenticacaoAction();
+		$this->autenticacao();
 		
 		$form = new Application_Form_AlterarSenha();
 		$this->view->form = $form;
@@ -240,7 +240,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/busca_evento.js'));
-	   $this->autenticacaoAction();
+	   $this->autenticacao();
 		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idEncontro = $sessao["idEncontro"];
 		$idPessoa = $sessao["idPessoa"];
@@ -282,7 +282,7 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
 	
 	public function excluieventoAction(){
-		$this->autenticacaoAction();
+		$this->autenticacao();
 
 		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
@@ -307,6 +307,7 @@ class ParticipanteController extends Zend_Controller_Action {
          } else {
             $sql = $model->getAdapter()->quoteInto('twitter = ?', $id);
          }
+         $this->view->mostrarEditar = false;
       } else if (Zend_Auth::getInstance()->hasIdentity()) {
          $sessao = Zend_Auth::getInstance()->getIdentity();
          if (! empty($sessao["twitter"])) {
@@ -316,6 +317,7 @@ class ParticipanteController extends Zend_Controller_Action {
             $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $sessao["idPessoa"]);
             $id = $sessao["idPessoa"];
          }
+         $this->view->mostrarEditar = true;
       } else {
          // TODO: colocar erro em flashMessage
          echo "Participante não encontrado.";
