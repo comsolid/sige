@@ -9,6 +9,10 @@ class EventoController extends Zend_Controller_Action {
 		$this->view->menu = new Application_Form_Menu($this->view, 'inicio');
 	}
 
+   /**
+    * Mapeada como
+    *    /submissao 
+    */
 	public function indexAction() {
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
@@ -372,20 +376,11 @@ class EventoController extends Zend_Controller_Action {
 	public function editarAction() {
 		$this->view->menu->setAtivo('submissao');
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-		//$this->view->headScript()->appendFile($this->view->baseUrl('js/evento/inicio.js'));
 		
 		$data = $this->getRequest()->getPost();
-		
-		if (isset ($data['cancelar'])) {
-			return $this->_helper->redirector->goToRoute(array (
-				'controller' => 'evento'
-			), null, true);
-		}
-
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
-
 
 		$idEvento = $this->_request->getParam('id', 0);
 		$form = new Application_Form_Evento();
@@ -408,15 +403,29 @@ class EventoController extends Zend_Controller_Action {
 			$this->view->realizacao[] = $concatena;
 		}
       
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $idPessoa = $sessao["idPessoa"];
+      $admin = $sessao["administrador"]; // boolean
+      
+  		if (isset($data['cancelar'])) {
+         return $this->redirecionar($admin, $idEvento);
+      }
+      
 		if ($this->getRequest()->isPost()) {
          if ($form->isValid($data)) {
             $data = $form->getValues();
             $select = $evento->getAdapter()->quoteInto('id_evento = ?', $idEvento);
             try {
-               $evento->update($data, $select);
-               $this->_helper->flashMessenger->addMessage(
-                       array('success' => 'Evento atualizado com sucesso.'));
-               return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
+               if ($idPessoa != $data['responsavel'] and ! $admin) {
+                  $this->_helper->flashMessenger->addMessage(
+                          array('error' => 'Somente o autor pode editar o Evento.'));
+                  return $this->redirecionar();
+               } else {
+                  $evento->update($data, $select);
+                  $this->_helper->flashMessenger->addMessage(
+                        array('success' => 'Evento atualizado com sucesso.'));
+                  return $this->redirecionar($admin, $idEvento);
+               }
             } catch (Zend_Db_Exception $ex) {
                // DONE: colocar erro em flashMessage
                $this->_helper->flashMessenger->addMessage(
@@ -431,22 +440,20 @@ class EventoController extends Zend_Controller_Action {
          if (! is_null($row)) {
             $array = $row->toArray();
             // verificar se ao editar o id_pessoa da sessão é o mesmo do evento
-            $sessao = Zend_Auth::getInstance()->getIdentity();
-            $idPessoa = $sessao["idPessoa"];
-            if ($idPessoa != $array['responsavel']) {
+            // e se não é admin, sendo admin é permitido editar
+            
+            if ($idPessoa != $array['responsavel'] and ! $admin) {
                // DONE: colocar erro em flashMessage
                $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Somente o autor pode editar o Evento.'));
-               return $this->_helper->redirector->goToRoute(array(
-                       'controller' => 'evento'), null, true);
-            } else if (!is_null($row)) {
+               return $this->redirecionar();
+            } else {
                $form->populate($row->toArray());
             }
          } else {
             $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Evento não encontrado.'));
-            return $this->_helper->redirector->goToRoute(array(
-                    'controller' => 'evento'), null, true);
+            return $this->redirecionar($admin, $idEvento);
          }
       }
    }
@@ -459,8 +466,20 @@ class EventoController extends Zend_Controller_Action {
       $model = new Application_Model_Evento();
       $this->view->lista = $model->programacao($sessao["idEncontro"]);
    }
+   
+   private function redirecionar($admin = false, $id = 0) {
+      if ($admin) {
+         $this->_helper->redirector->goToRoute(array(
+             'module' => 'admin',
+             'controller' => 'evento',
+             'action' => 'detalhes',
+             'id' => $id), 'default', true);
+      } else {
+         $this->_helper->redirector->goToRoute(array(), 'submissao', true);
+      }
+   }
 
-	private function deprecated($controller, $view) {
+   private function deprecated($controller, $view) {
 		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
 	}
 }

@@ -32,6 +32,9 @@ class Application_Form_Evento extends Zend_Form {
           $this->_preferencia_horario(),
       ));
       
+      $responsavel = $this->createElement('hidden', 'responsavel');
+      $this->addElement($responsavel);
+      
       $botao = $this->createElement('submit', 'confimar')->removeDecorator('DtDdWrapper');
       $this->addElement($botao);
       $botao = $this->createElement('submit', 'cancelar')->removeDecorator('DtDdWrapper');

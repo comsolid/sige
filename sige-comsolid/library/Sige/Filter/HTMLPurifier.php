@@ -16,6 +16,7 @@ class Sige_Filter_HTMLPurifier implements Zend_Filter_Interface {
       $config = HTMLPurifier_Config::createDefault();
       $config->set('HTML.Strict', true);
       $config->set('Attr.EnableID', true);
+      $config->set('Attr.AllowedFrameTargets', array('_blank' => true));
       $this->purifier = new HTMLPurifier($config);
    }
 

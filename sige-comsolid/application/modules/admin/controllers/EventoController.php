@@ -47,8 +47,8 @@ class Admin_EventoController extends Zend_Controller_Action {
       $date = new Zend_Date($this->view->evento['data_submissao']);
       $this->view->evento['data_submissao'] = $date->toString('dd/MM/YYYY HH:mm:ss');
 
-      $this->view->idEvento = $idEvento;
-      $this->view->nomeEvento = $data [0] ['nome_evento'];
+      // $this->view->idEvento = $idEvento;
+      // $this->view->nomeEvento = $data [0] ['nome_evento'];
       
       if ($data[0]['validada']) {
          $this->view->msg_situacao = "Invalidar";

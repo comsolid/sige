@@ -5,6 +5,9 @@
 <a href="<?=$this->url_situacao ?>">
    <?=$this->msg_situacao ?>
 </a> |
+<a href="<?=$this->url(array('controller' => 'evento',
+        'action' => 'editar',
+        'id' => $this->evento['id_evento']), 'default', true) ?>">Editar</a> |
 <a href="#">Apresentado</a>
 
 <br><br>
@@ -113,8 +116,8 @@ Horários:<br>
                    'controller' => 'horario',
                    'action' => 'editar',
                    'id' => $item['evento'],
-                   'evento' => $this->idEvento), 'default', true) ?>">Editar</a> |
-               <a href="<? echo $this->baseUrl('/administrador/excluihorario/id_horario/' . $item["evento"] . '/id_evento/' . $this->idEvento); ?>">Remover</a>
+                   'evento' => $this->evento['id_evento']), 'default', true) ?>">Editar</a> |
+               <a href="<? echo $this->baseUrl('/administrador/excluihorario/id_horario/' . $item["evento"] . '/id_evento/' . $this->evento['id_evento']); ?>">Remover</a>
             </td>
          </tr>
 
@@ -125,8 +128,7 @@ Horários:<br>
 <a href="<?php echo $this->url(array(
     'controller' => 'horario',
     'action' => 'criar',
-    'id' => $this->idEvento,
-    'nome_evento' => $this->nomeEvento));
+    'id' => $this->evento['id_evento']));
 ?>">+ Novo Horário</a>
 
 <br><br><hr/>
