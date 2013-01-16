@@ -35,6 +35,7 @@
 					<? if (! empty($this->deprecated)): ?>
 						<p style="color: red;"><?=$this->deprecated ?></p>
 					<? endif; ?>
+               <?=$this->flashMessages(); ?>
 					<?php echo $this->layout()->content ?>
 				</div>
 			</div>

@@ -46,15 +46,12 @@ class ParticipanteController extends Zend_Controller_Action {
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
-			// $data['twitter'] = '@' . $data['twitter'];
 			$pessoa = new Application_Model_Pessoa();
 			$participante = new Application_Model_Participante();
 
 			$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 			$idEncontro = $config->encontro->codigo;
 
-			//$idPessoa = 0;
-			//id_encontro
 			$data2 = array (
 				'id_encontro' => $idEncontro,
 				'id_municipio' => $data['municipio'],
@@ -63,28 +60,34 @@ class ParticipanteController extends Zend_Controller_Action {
 			unset ($data['municipio']);
 			unset ($data['instituicao']);
 			// inseri no banco ... e mantem uma trasacao 
+         $adapter = $pessoa->getAdapter();
 			try {
-				$adapter = $pessoa->getAdapter();
 				$adapter->beginTransaction();
 				$idPessoa = $pessoa->insert($data);
 				$data2['id_pessoa'] = $idPessoa;
 				$participante->insert($data2);
-				$adapter->commit();
 
 			} catch (Zend_Db_Exception $ex) {
+            // DONE: colocar erro em flashMessage
 				$adapter->rollBack();
 				$sentinela = 1;
 				//$form->getElement('email')->addErrorMessage('e-mail ja cadastrado');
 				
-				// 23505UNIQUE VIOLATION
-				echo $ex->getMessage() . $ex->getCode();
-				//throw $ex;
-				//echo "E-mail ja cadastrado!";
+				// echo $ex->getMessage() . $ex->getCode();
+            // 23505 UNIQUE VIOLATION
+            if ($ex->getCode() == 23505) {
+               $this->_helper->flashMessenger->addMessage(
+                       array('error' => 'E-mail já cadastrado.'));
+            } else {
+               $this->_helper->flashMessenger->addMessage(
+                        array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                           . $ex->getMessage()));
+            }
 			}
 			// codigo responsavel por enviar email para confirmacao 
 			//echo "ID PESSOA" . $idPessoa;
 			try {
-				if ($idPessoa > 0) {
+				if (! empty($idPessoa) and $idPessoa > 0) {
 					$mail = new Application_Model_EmailConfirmacao();
 					$mail->send($idPessoa, $idEncontro);
 					$data = array (
@@ -93,11 +96,18 @@ class ParticipanteController extends Zend_Controller_Action {
 					$where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
 					$pessoa->update($data, $where);
 				}
-			} catch (Zend_Db_Exception $ex) {
-				echo $ex->getMessage();
+			} catch (Exception $ex) {
+            $adapter->rollBack();
+				$sentinela = 1;
+            // DONE: colocar erro em flashMessage
+				// echo $ex->getMessage();
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado ao enviar e-mail.<br/>Detalhes: '
+                         . $ex->getMessage()));
 			}
 
 			if ($sentinela == 0) {
+            $adapter->commit();
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
 					'action' => 'sucesso'
@@ -122,9 +132,6 @@ class ParticipanteController extends Zend_Controller_Action {
 
 		$result = $pessoa->find($idPessoa);
 		$linha = $result[0];
-		// FIXME: primeiro tira, depois linha#146 bota?
-      // SOLUÇÂO: não usar @, pois na view participante/ver é usado para montar url.
-		//$linha->twitter = str_replace('@', "", $linha->twitter);
 
 		$result = $participante->find($idPessoa, $idEncontro);
 		$linha1 = $result[0];
@@ -135,7 +142,6 @@ class ParticipanteController extends Zend_Controller_Action {
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
-			// $data['twitter'] = '@' . $data['twitter'];
 
 			$data2 = array (
 				'id_encontro' => $idEncontro,
@@ -146,28 +152,30 @@ class ParticipanteController extends Zend_Controller_Action {
 			unset ($data['id_municipio']);
 			unset ($data['id_instituicao']);
 			//alterar no banco ... e mantem uma trasacao 
+         $adapter = $pessoa->getAdapter();
 			try {
-
-				$adapter = $pessoa->getAdapter();
 				$adapter->beginTransaction();
-
+            
 				$where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
 				$pessoa->update($data, $where);
-
 				$data2['id_pessoa'] = $idPessoa;
-
-				$where = $participante->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa) . $participante->getAdapter()->quoteInto(' AND id_encontro = ? ', $idEncontro);
-
+				$where = $participante->getAdapter()
+                        ->quoteInto('id_pessoa = ?', $idPessoa)
+                    . $participante->getAdapter()
+                        ->quoteInto(' AND id_encontro = ? ', $idEncontro);
 				$participante->update($data2, $where);
-
 				$adapter->commit();
 
 			} catch (Zend_Db_Exception $ex) {
+            // DONE: colocar erro em flashMessage
 				$adapter->rollBack();
 				$sentinela = 1;
 				$form->getElement('email')->setAttrib('mensagem', 'e-mail invalido');
 				// 23505UNIQUE VIOLATION
-				echo $ex->getMessage() . $ex->getCode();
+				// echo $ex->getMessage() . $ex->getCode();
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                        . $ex->getMessage()));
 				//throw $ex;
 			}
 			// codigo responsavel por enviar email para confirmacao 
@@ -225,11 +233,15 @@ class ParticipanteController extends Zend_Controller_Action {
 							'controller' => 'participante'
 						), 'default', true);
 					} else {
-						// TODO: colocar erro em flashMessage
-						echo "nova senha não confere!";
+						// DONE: colocar erro em flashMessage
+						// echo "nova senha não confere!";
+                  $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Nova senha não confere!'));
 					}
 				} else {
-					echo "senha antiga incorreta!";
+					// echo "senha antiga incorreta!";
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Senha antiga incorreta!'));
 				}
 			}
 		}
@@ -319,8 +331,10 @@ class ParticipanteController extends Zend_Controller_Action {
          }
          $this->view->mostrarEditar = true;
       } else {
-         // TODO: colocar erro em flashMessage
-         echo "Participante não encontrado.";
+         // DONE: colocar erro em flashMessage
+         // echo "Participante não encontrado.";
+         $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Participante não encontrado.'));
          return;
       }
       $this->view->id = $id;

@@ -86,7 +86,9 @@ class Application_Form_Pessoa extends Zend_Form {
 
 		// TODO: usar máscara para ano nascimento, usar numeric(4) para guardar
 		$anoNascimento = $this->createElement('select', 'nascimento',array('label' => 'Ano Nascimento: '));
-		for($i=2011;$i>1899;$i--){
+		$date = new Zend_Date();
+      $ano = (int) $date->toString('YYYY');
+      for($i = $ano; $i > 1899; $i--) {
 			 $anoNascimento->addMultiOptions(array("1/1/$i" => "$i"));
 		}
 

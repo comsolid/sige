@@ -256,19 +256,21 @@ class EventoController extends Zend_Controller_Action {
 			$evento = new Application_Model_Evento();
 			$data = $form->getValues();
 			try {
-				//$m_encontro = new Application_Model_Encontro();
-
-				//$data['id_encontro'] = $m_encontro->getEncontroAtual();
 				$data['id_encontro'] = $idEncontro;
 				$data['responsavel'] = $idPessoa;
 				$evento->insert($data);
-
+            
+            $this->_helper->flashMessenger->addMessage(
+                    array('success' => 'Trabalho submetido. Aguarde contato por e-mail.'));
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'evento'
 				), null, true);
 			} catch (Zend_Db_Exception $ex) {
-				// TODO: colocar erro em flashMessage
-				echo $ex->getMessage() . $ex->getCode();
+				// DONE: colocar erro em flashMessage
+				// echo $ex->getMessage() . $ex->getCode();
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                         . $ex->getMessage()));
 			}
 		}
 	}
@@ -405,30 +407,52 @@ class EventoController extends Zend_Controller_Action {
 			$concatena = array_merge($linha->toArray(), $sala->toArray());
 			$this->view->realizacao[] = $concatena;
 		}
-
+      
 		if ($this->getRequest()->isPost()) {
          if ($form->isValid($data)) {
             $data = $form->getValues();
             $select = $evento->getAdapter()->quoteInto('id_evento = ?', $idEvento);
             try {
                $evento->update($data, $select);
+               $this->_helper->flashMessenger->addMessage(
+                       array('success' => 'Evento atualizado com sucesso.'));
                return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
             } catch (Zend_Db_Exception $ex) {
-               // TODO: colocar erro em flashMessage
-               echo $ex->getMessage() . $ex->getCode();
+               // DONE: colocar erro em flashMessage
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                         . $ex->getMessage()));
             }
          } else {
             $form->populate($data);
          }
       } else {
          $row = $evento->fetchRow($select->where('id_evento = ?', $idEvento));
-         if (!is_null($row)) {
-            $form->populate($row->toArray());
+         if (! is_null($row)) {
+            $array = $row->toArray();
+            // verificar se ao editar o id_pessoa da sessão é o mesmo do evento
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $idPessoa = $sessao["idPessoa"];
+            if ($idPessoa != $array['responsavel']) {
+               // DONE: colocar erro em flashMessage
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Somente o autor pode editar o Evento.'));
+               return $this->_helper->redirector->goToRoute(array(
+                       'controller' => 'evento'), null, true);
+            } else if (!is_null($row)) {
+               $form->populate($row->toArray());
+            }
+         } else {
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Evento não encontrado.'));
+            return $this->_helper->redirector->goToRoute(array(
+                    'controller' => 'evento'), null, true);
          }
       }
    }
    
    public function programacaoAction() {
+      $this->view->menu->setAtivo('submissao');
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $sessao = Zend_Auth::getInstance()->getIdentity();

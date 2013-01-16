@@ -32,11 +32,10 @@ class Admin_HorarioController extends Zend_Controller_Action {
       $data = $this->getRequest()->getPost();
       if ($this->getRequest()->isPost() && $form->isValid($data)) {
          $data = $form->getValues();
-         //unset($data['horarios']);
          $data['id_evento'] = $idEvento;
          
          try {
-            // TODO: verificar se já existem horários no mesmo dia, na mesma sala
+            // DONE: verificar se já existem horários no mesmo dia, na mesma sala
             // antes de salvar.
             $sessao = Zend_Auth::getInstance()->getIdentity();
             $idEncontro = $sessao ["idEncontro"];
@@ -102,8 +101,11 @@ class Admin_HorarioController extends Zend_Controller_Action {
                   echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
                }
             } catch (Exception $e) {
-               // TODO: colocar erro em flashMessage
-               echo $e->getMessage();
+               // DONE: colocar erro em flashMessage
+               //echo $e->getMessage();
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                         . $e->getMessage()));
             }
          } else {
             $form->populate($formData);

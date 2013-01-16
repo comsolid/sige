@@ -75,11 +75,15 @@ class IndexController extends Zend_Controller_Action
 					), 'default', true);
 
 				} else {
-					echo "<br><br>senha inválida.";
+					// echo "<br><br>senha inválida.";
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Senha está incorreta.'));
 				}
 
 			} else {
-				echo "<br><br>usuário ou senha incorretos.";
+				// echo "<br><br>usuário ou senha incorretos.";
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Login está incorreto.'));
 			}
 		}
 	}
@@ -116,9 +120,13 @@ class IndexController extends Zend_Controller_Action
 
             $mail = new Application_Model_EmailConfirmacao();
             $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro);
-            echo "E-mail enviado com sucesso, verifique seu e-mail.";
+            // echo "E-mail enviado com sucesso, verifique seu e-mail.";
+            $this->_helper->flashMessenger->addMessage(
+                     array('success' => 'E-mail enviado com sucesso, verifique seu e-mail.'));
          } else {
-            echo "E-mail não cadastrado.";
+            // echo "E-mail não cadastrado.";
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'E-mail não cadastrado.'));
          }
       }
    }
