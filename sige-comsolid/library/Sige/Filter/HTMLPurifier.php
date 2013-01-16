@@ -18,6 +18,9 @@ class Sige_Filter_HTMLPurifier implements Zend_Filter_Interface {
       $config->set('HTML.Strict', true);
       $config->set('Attr.EnableID', true);
       $config->set('HTML.TargetBlank', true);
+      // vídeos do youtube e object's do HTML
+      $config->set('HTML.SafeObject', true);
+      $config->set('Output.FlashCompat', true);
       $this->purifier = new HTMLPurifier($config);
    }
 

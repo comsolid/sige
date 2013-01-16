@@ -461,7 +461,10 @@ class EventoController extends Zend_Controller_Action {
    public function programacaoAction() {
       $this->view->menu->setAtivo('submissao');
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $model = new Application_Model_Evento();
       $this->view->lista = $model->programacao($sessao["idEncontro"]);
