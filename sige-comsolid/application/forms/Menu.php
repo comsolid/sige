@@ -82,7 +82,7 @@ class Application_Form_Menu extends Zend_Form
 	   $menu.="\" href=\"".$this->getCaravana()."\"><img src=\"".$this->control->baseUrl('imagens/layout/btmenu_caravana.png')."\"></img></a>";
 	   $menu.="<a class=\"".$this->menuAtivo['submissao'];
 	   $menu.="\" href=\"".$this->getSubmissao()."\"><img src=\"".$this->control->baseUrl('imagens/layout/btmenu_meuseventos.png')."\"></img></a>";
- 		$menu.=" <a  class=\"".$this->menuAtivo['caravana'];
+ 		$menu.=" <a  class=\"";
  		$menu.=" \" href=\"#\" class=\"fl_right\"><img src=\"".$this->control->baseUrl('imagens/layout/bt_sejavoluntario.png')."\"></img></a></div>";
 		return $menu;
 	}

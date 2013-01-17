@@ -54,7 +54,81 @@ class EventoController extends Zend_Controller_Action {
 		$tipoEventos = new Application_Model_TipoEvento();
 		$this->view->tipoEvento = $tipoEventos->fetchAll();
 	}
+   
+   public function ajaxBuscarAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $idPessoa = $sessao["idPessoa"];
+      $idEncontro = $sessao["idEncontro"];
+      
+      $eventos = new Application_Model_Evento();
+      $data = array(
+          $idEncontro,
+          $idPessoa,
+          $idPessoa,
+          $this->_request->getParam("data"),
+          intval($this->_request->getParam("id_tipo_evento")),
+          $this->_request->getParam("termo")
+      );
+      $rs = $eventos->buscaEventos($data);
+      
+      $json = new stdClass;
+      $json->size = count($rs);
+      $json->itens = array();
+      
+      foreach($rs as $value) {
+         $json->itens[] = array(
+             "{$value['nome_tipo_evento']}",
+             "{$value['nome_evento']}",
+             "{$value['data']}",
+             "{$value['h_inicio']} - {$value['h_fim']}",
+             "<a id=\"{$value['evento']}\" class=\"marcar\">Marcar</a>"
+         );
+      }
+      
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
+   
+   public function ajaxInteresseAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $idPessoa = $sessao["idPessoa"];
+      
+      $json = new stdClass;
+      try {
+         $eventoDemanda = new Application_Model_EventoDemanda();
+         $data = array(
+             'evento' => intval($this->_request->getParam("id")),
+             'id_pessoa' => $idPessoa
+         );
+         $eventoDemanda->insert($data);
+         $json->ok = true;
+      } catch (Zend_Db_Exception $ex) {
+         // $e = '{ erro:true,"size":' . count($data) . ',"aaData":[]}';
+         // echo $e;
+         $json->ok = false;
+         $json->erro = "Ocorreu um erro inesperado ao marcar interesse em evento.<br/>Detalhes"
+                 . $ex->getMessage();
+      }
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
 
+   /**
+    * @deprecated use ajaxBuscarAction
+    * @return type 
+    */
 	public function buscaAction() {
 		$this->_helper->layout()->disableLayout();
 		$sessao = Zend_Auth :: getInstance()->getIdentity();
@@ -468,6 +542,54 @@ class EventoController extends Zend_Controller_Action {
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $model = new Application_Model_Evento();
       $this->view->lista = $model->programacao($sessao["idEncontro"]);
+   }
+   
+   public function interesseAction() {
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      //$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/bootstrap.css'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/busca_evento.js'));
+
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $idEncontro = $sessao["idEncontro"];
+      $idPessoa = $sessao["idPessoa"];
+
+      $eventos = new Application_Model_Evento();
+      // usada para mostrar dias que possuem eventos
+      $this->view->listaEvento = $eventos->getEventos($idEncontro);
+      $this->view->idEncontro = $idEncontro;
+      $this->view->idPessoa = $idPessoa;
+
+      $tipoEventos = new Application_Model_TipoEvento();
+      $this->view->tipoEvento = $tipoEventos->fetchAll();
+
+      $eventoRealizacao = new Application_Model_EventoRealizacao();
+      $eventoRealizacao = $eventoRealizacao->fetchAll();
+
+      $this->view->eventosTabela = array();
+      foreach ($eventoRealizacao as $item) {
+
+         $eventoItem = $item->findDependentRowset('Application_Model_Evento')->current();
+         $tipoItem = $eventoItem->findDependentRowset('Application_Model_TipoEvento')->current();
+
+         $this->view->eventosTabela[] = array_merge($item->toArray(), $eventoItem->toArray(), $tipoItem->toArray());
+      }
+
+      $form = new Application_Form_PessoaAddEvento();
+      $this->view->form = $form;
+
+      $form->criarFormulario($this->view->eventosTabela);
+
+      $data = $this->getRequest()->getPost();
+
+      if ($this->getRequest()->isPost() && $form->isValid($data)) {
+         $data = $form->getValues();
+      }
    }
    
    private function redirecionar($admin = false, $id = 0) {

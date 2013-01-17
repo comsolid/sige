@@ -131,3 +131,5 @@ body{
 .success a {color:#264409;}
 .info a {color:#205791;}
 .error h4, .alert h4, .notice h4, .success h4, .info h4 {height: 10px; font-size: 11pt;}
+
+a {cursor: pointer;}

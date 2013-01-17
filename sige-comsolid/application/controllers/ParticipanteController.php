@@ -247,7 +247,11 @@ class ParticipanteController extends Zend_Controller_Action {
 		}
 	}
 
+   /**
+    * @deprecated use evento/interesse
+    */
 	public function pessoaaddeventoAction() {
+      $this->deprecated("participante", "pessoaaddevento");
 	   $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
@@ -260,6 +264,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		//$this->view->headScript()->appendFile('/js/jquery-1.6.2.min.js');
 		
 		$eventos = new Application_Model_Evento();
+      // usada para mostrar dias que possuem eventos
 		$this->view->listaEvento = $eventos->getEventos($idEncontro);
 		$this->view->idEncontro = $idEncontro;
 		$this->view->idPessoa = $idPessoa;

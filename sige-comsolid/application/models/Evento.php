@@ -20,38 +20,46 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
 	}  
 	
 	
-	public function buscaEventos($data){
- 		 $select="SELECT er.evento, nome_tipo_evento, nome_evento, TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH:MM') AS h_inicio, TO_CHAR(hora_fim, 'HH:MM') AS h_fim FROM evento_realizacao er INNER JOIN evento e ON (er.id_evento = e.id_evento) INNER JOIN tipo_evento te ON (e.id_tipo_evento = te.id_tipo_evento) WHERE  e.id_encontro =? AND e.validada AND evento NOT IN (SELECT evento FROM evento_demanda WHERE id_pessoa = ?) ";
-         $auxCont=0;
-         $where[$auxCont]=$data[0];
-         $auxCont++;
-         $where[$auxCont]=$data[1];
-        if($data[2]!='todas'){
-         	$select=$select.' AND data=?';
-         	$auxCont=$auxCont+1;
-         	$where[$auxCont]=$data[2];
-         }else{
-         	unset($data[2]);
-         	
-         } 
-         if($data[3]>0){
-         	$auxCont=$auxCont+1;
-         	$where[$auxCont]=$data[3];
-         	$select=$select.' AND te.id_tipo_evento=?';
-         }else{
-         	unset($data[3]);
-         }
-          if($data[4]!=NULL){
-          	$auxCont=$auxCont+1;
-         	$where[$auxCont]='%'.$data[4].'%';
-         	$select=$select.'  AND nome_evento ilike ?';
-         }else{
-         	unset($data[4]);
-         }
-        
-        
-                return $this->getAdapter()->fetchAll($select,$where);
+	public function buscaEventos($data) {
+      $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
+         TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH:MM') AS h_inicio,
+         TO_CHAR(hora_fim, 'HH:MM') AS h_fim
+         FROM evento_realizacao er
+         INNER JOIN evento e ON (er.id_evento = e.id_evento)
+         INNER JOIN tipo_evento te ON (e.id_tipo_evento = te.id_tipo_evento)
+         INNER JOIN pessoa p ON e.responsavel = p.id_pessoa
+         WHERE e.id_encontro = ? AND e.validada AND e.responsavel <> ? AND evento
+            NOT IN (SELECT evento FROM evento_demanda WHERE id_pessoa = ?) ";
+      $auxCont = 0;
+      $where[$auxCont] = $data[0];
+      $auxCont++;
+      $where[$auxCont] = $data[1];
+      $auxCont++;
+      $where[$auxCont] = $data[2];
+      if ($data[3] != 'todas') {
+         $select = $select . ' AND data=?';
+         $auxCont = $auxCont + 1;
+         $where[$auxCont] = $data[3];
+      } else {
+         unset($data[3]);
       }
+      if ($data[4] > 0) {
+         $auxCont = $auxCont + 1;
+         $where[$auxCont] = $data[4];
+         $select = $select . ' AND te.id_tipo_evento=?';
+      } else {
+         unset($data[4]);
+      }
+      if ($data[5] != NULL) {
+         $auxCont = $auxCont + 1;
+         $where[$auxCont] = '%' . $data[5] . '%';
+         $select = $select . '  AND nome_evento ilike ?';
+      } else {
+         unset($data[5]);
+      }
+      $select .= " LIMIT 100";
+      return $this->getAdapter()->fetchAll($select, $where);
+   }
       
    public function buscaEventosAdmin($data) {
       $select = "SELECT id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) WHERE id_encontro = ?";
