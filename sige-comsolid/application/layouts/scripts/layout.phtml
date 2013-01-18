@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html>
    <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>COMSOLiD - SiGE</title>
-		<? $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css')); ?>
-	
-		<?= $this->headScript() ?>
-		<?= $this->headLink() ?>
-		<?= $this->headStyle() ?>
-		<link rel="shortcut icon" href="<? echo $this->baseUrl('imagens/layout/favicon_sige.png');?>" type="image/x-icon" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>COMSOLiD - SiGE</title>
+      <?
+      $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css'));
+      $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
+      $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
+      ?>
+      <?= $this->headLink() ?>
+      <?= $this->headStyle() ?>
+      <link rel="shortcut icon" href="<? echo $this->baseUrl('imagens/layout/favicon_sige.png'); ?>" type="image/x-icon" />
   	</head>
-	<body>
-		<div id="principal">
-			<div id="info_usu">
+   <body>
+      <div id="principal">
+         <div id="info_usu">
             <?php
                $this->usuaLogado = Zend_Auth::getInstance()->getIdentity();
-               if(!empty($this->usuaLogado)){ ?>
+               if (!empty($this->usuaLogado)) {
+            ?>
                <span>Bem-Vindo(a) :</span>
-                  <a href="<?php echo $this->url(array('controller'=>'participante',
-                      'action'=>'ver'), 'default');?>">
-                     <span class="apelido"><?=$this->usuaLogado['apelido']?></span>
-                  </a> 
-               <a href="<?php echo $this->url(array(), 'logout');?>">Sair</a>
-				<? } ?>
-			</div>
-					 
-			<div id="corpo">
-				
-				
-				<div id="conteudo">
-					<?=(is_object($this->menu))?$this->menu->getView():""?>
-				<?//php echo  $this->render('menu.phtml')?>
-					<? if (! empty($this->deprecated)): ?>
-						<p style="color: red;"><?=$this->deprecated ?></p>
-					<? endif; ?>
-               <?=$this->flashMessages(); ?>
-					<?php echo $this->layout()->content ?>
-				</div>
-			</div>
-		    
-			<div id="rodape">
-		   		<?php echo  $this->render('rodape.phtml')?>
-			</div>
-	    
-	    </div>
-	</body>
-		
-	
+               <a href="<?php echo $this->url(array('controller' => 'participante',
+                   'action' => 'ver'), 'default'); ?>">
+                  <span class="apelido"><?= $this->usuaLogado['apelido'] ?></span>
+               </a> 
+               <a href="<?php echo $this->url(array(), 'logout'); ?>">Sair</a>
+            <? } ?>
+         </div>
+
+         <div id="corpo">
+
+            <div id="conteudo">
+               <?= (is_object($this->menu)) ? $this->menu->getView() : "" ?>
+               <? //php echo  $this->render('menu.phtml')?>
+               <? if (!empty($this->deprecated)): ?>
+                  <p style="color: red;"><?= $this->deprecated ?></p>
+               <? endif; ?>
+               <?= $this->flashMessages(); ?>
+               <?php echo $this->layout()->content ?>
+            </div>
+         </div>
+
+         <div id="rodape">
+            <?php echo $this->render('rodape.phtml') ?>
+         </div>
+
+      </div>
+<?= $this->headScript() ?>
+   </body>
 </html>

@@ -1,14 +1,16 @@
 
 <a href="<? echo $this->url(array('module' => 'admin',
-        'controller' => 'evento', 'action' => 'index'), 'default', true) ?>">Voltar</a> |
+   'controller' => 'evento',
+   'action' => 'index'), 'default', true) ?>"
+   class="no-bottom"><i class="icon-reply"></i> Voltar</a>&nbsp;&nbsp;&nbsp;
 
-<a href="<?=$this->url_situacao ?>">
-   <?=$this->msg_situacao ?>
-</a> |
+<?=$this->url_situacao ?>&nbsp;&nbsp;&nbsp;
+
 <a href="<?=$this->url(array('controller' => 'evento',
-        'action' => 'editar',
-        'id' => $this->evento['id_evento']), 'default', true) ?>">Editar</a> |
-<a href="#">Apresentado</a>
+   'action' => 'editar',
+   'id' => $this->evento['id_evento']), 'default', true) ?>"
+   class="no-bottom"><i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;&nbsp;
+<a href="#" class="no-bottom"><i class="icon-eye-open"></i> Apresentado</a>
 
 <br><br>
 
@@ -24,23 +26,20 @@
 <hr/>
 
 <div class="container">
-   <div class="span-2">
-      Autor:
-   </div>
    <div class="span-6">
+      Autor:
       <?=$this->evento['nome'] ?>
    </div>
-   <div class="span-1">
-      Tipo:
-   </div>
    <div class="span-4">
+      Tipo:
       <?=$this->evento['nome_tipo_evento'] ?>
    </div>
-   <div class="span-3">
-      Enviar e-mail:
-   </div>
-   <div class="span-4">
-      <a href="mailto:<?=$this->evento['email'] ?>" target="_blank"><?=$this->evento['email'] ?></a>
+   <div class="span-8">
+      Enviar e-mail:&nbsp;
+      <a href="mailto:<?=$this->evento['email'] ?>"
+         target="_blank" class="no-bottom">
+         <i class="icon-envelope"></i> <?=$this->evento['email'] ?>
+      </a>
    </div>
 </div>
 
@@ -87,60 +86,67 @@
    </div>
 </div>
 
-<br><br><hr/>
+<br><br>
 
-Horários:<br>
-<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
-   <thead>
-      <tr>
-         <th>Descrição</th>
-         <th>Data</th>
-         <th>Hora Início</th>
-         <th>Hora Fim</th>
-         <th>Sala</th>
-         <th>Remover Hórario</th>
-      </tr>
-   </thead>
-   <tbody>
-<? foreach ($this->horarios as $item) { ?>
-
+<fieldset>
+   <i class="icon-time"></i> Horários:
+   <a href="<?php echo $this->url(array(
+      'controller' => 'horario',
+      'action' => 'criar',
+      'id' => $this->evento['id_evento']));
+   ?>" class="no-bottom" style="float: right"><i class="icon-plus"></i>  Novo Horário</a><br>
+   <table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+      <thead>
          <tr>
-
-            <td><? echo $item["descricao"]; ?></td>
-            <td><? echo $item["data"]; ?></td>
-            <td><? echo $item["inicio"]; ?></td>
-            <td><? echo $item["fim"]; ?></td>
-            <td><? echo $item["nome_sala"]; ?></td>
-            <td>
-               <a href="<?=$this->url(array('module' => 'admin',
-                   'controller' => 'horario',
-                   'action' => 'editar',
-                   'id' => $item['evento'],
-                   'evento' => $this->evento['id_evento']), 'default', true) ?>">Editar</a> |
-               <a href="<? echo $this->baseUrl('/administrador/excluihorario/id_horario/' . $item["evento"] . '/id_evento/' . $this->evento['id_evento']); ?>">Remover</a>
-            </td>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Hora Início</th>
+            <th>Hora Fim</th>
+            <th>Sala</th>
+            <th>Ações</th>
          </tr>
+      </thead>
+      <tbody>
+      <? foreach ($this->horarios as $item): ?>
+            <tr>
+               <td><? echo $item["descricao"]; ?></td>
+               <td><? echo $item["data"]; ?></td>
+               <td><? echo $item["inicio"]; ?></td>
+               <td><? echo $item["fim"]; ?></td>
+               <td><? echo $item["nome_sala"]; ?></td>
+               <td>
+                  <a href="<?=$this->url(array('module' => 'admin',
+                     'controller' => 'horario',
+                     'action' => 'editar',
+                     'id' => $item['evento'],
+                     'evento' => $this->evento['id_evento']), 'default', true) ?>"
+                     class="no-bottom"><i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;
+                  <a href="<?=$this->url(array('module' => 'admin',
+                     'controller' => 'horario',
+                     'action' => 'deletar',
+                     'id' => $item['evento'],
+                     'evento' => $this->evento['id_evento']), 'default', true) ?>"
+                     class="no-bottom"><i class="icon-remove"></i> Remover</a>
+               </td>
+            </tr>
 
-<? }
-?>
-   </tbody> 
-</table>
-<a href="<?php echo $this->url(array(
-    'controller' => 'horario',
-    'action' => 'criar',
-    'id' => $this->evento['id_evento']));
-?>">+ Novo Horário</a>
+      <? endforeach; ?>
+      </tbody> 
+   </table>
+   
+</fieldset>
+<br>
 
-<br><br><hr/>
-
-Arquivos:<br>
-<table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
-   <thead>
-      <tr>
-         <th>Arquivos</th>
-         <th>Remover Arquivo</th>
-      </tr>
-   </thead>
-   <tbody>
-   </tbody> 
-</table>
+<fieldset>
+   <i class="icon-file"></i> Arquivos (em desenvolvimento):<br>
+   <table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+      <thead>
+         <tr>
+            <th>Arquivos</th>
+            <th>Remover Arquivo</th>
+         </tr>
+      </thead>
+      <tbody>
+      </tbody> 
+   </table>
+</fieldset>

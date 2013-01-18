@@ -13,9 +13,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
 	public function indexAction() {
 	   $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/font-awesome.min.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/font-awesome-ie7.min.css'));
-	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
 	   

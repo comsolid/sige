@@ -51,11 +51,14 @@ class Admin_EventoController extends Zend_Controller_Action {
       // $this->view->nomeEvento = $data [0] ['nome_evento'];
       
       if ($data[0]['validada']) {
-         $this->view->msg_situacao = "Invalidar";
-         $this->view->url_situacao = "/admin/evento/invalidar/{$idEvento}";
+         $this->view->url_situacao = "<a href=\"/admin/evento/invalidar/{$idEvento}\" 
+                 class=\"no-bottom\"><i class=\"icon-remove\"></i> Invalidar</a>";
+         //$this->view->url_situacao = "/admin/evento/invalidar/{$idEvento}";
       } else {
-         $this->view->msg_situacao = "Validar";
-         $this->view->url_situacao = "/admin/evento/validar/{$idEvento}";
+         //$this->view->msg_situacao = "Validar";
+         //$this->view->url_situacao = "/admin/evento/validar/{$idEvento}";
+         $this->view->url_situacao = "<a href=\"/admin/evento/validar/{$idEvento}\" 
+                 class=\"no-bottom\"><i class=\"icon-ok\"></i> Validar</a>";
       }
 
       $select = "SELECT evento, descricao, TO_CHAR(data, 'DD/MM/YYYY') AS data, TO_CHAR(hora_inicio, 'HH24:MI') as inicio, TO_CHAR(hora_fim, 'HH24:MI') as fim, nome_sala FROM evento_realizacao er INNER JOIN sala s ON (er.id_sala = s.id_sala) WHERE id_evento = ?";
@@ -113,7 +116,9 @@ class Admin_EventoController extends Zend_Controller_Action {
          
          $date = new Zend_Date($value['data_submissao']);
          
-         $url = '<a href=' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"]) . '>Detalhes</a>';
+         $url = '<a href='
+            . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
+            . ' class="no-bottom"><i class="icon-plus"></i> Detalhes</a>';
          $json->itens[] = array(
              substr($value['nome_tipo_evento'], 0, 1),
              "{$value['nome_evento']}",

@@ -76,7 +76,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
          if ($form->isValid($formData)) {
             $id = $this->_request->getParam('id', 0);
             $data = $form->getValues();
-            $data['id_evento'] = $evento;
+            //$data['id_evento'] = $evento;
 
             try {
                $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -125,5 +125,49 @@ class Admin_HorarioController extends Zend_Controller_Action {
       $this->view->horariosEventos = $model->getAdapter()->fetchAll($select, $evento);
    }
 
+   public function deletarAction() {
+      $model = new Admin_Model_EventoRealizacao();
+      $evento = $this->_request->getParam('evento', 0);
+      
+      if ($this->getRequest()->isPost()) {
+         $del = $this->getRequest()->getPost('del');
+         $id = (int) $this->getRequest()->getPost('id');
+         if (!isset($id)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Horário não encontrado.'));
+         } else if ($del == "confimar") {
+            try {
+               $where = array(
+                   "evento = ?" => $id
+               );
+               $model->delete($where);
+               $this->_helper->flashMessenger->addMessage(
+                        array('success' => 'Horário deletado com sucesso.'));
+            } catch (Zend_Db_Exception $e) {
+               if ($e->getCode() == 23503){
+                  $this->_helper->flashMessenger->addMessage(
+                          array('error' => 'Esse hórario não pode ser removido, pois já existem participantes inscritos.'));
+               } else {
+                  $this->_helper->flashMessenger->addMessage(
+                        array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                              . $e->getMessage()));
+               }
+            }
+         }
+         return $this->_helper->redirector->goToRoute(array(
+                     'module' => 'admin',
+                     'controller' => 'evento',
+                     'action' => 'detalhes',
+                     'id' => $evento), 'default', true);
+      } else {
+         $id = $this->_getParam('id', 0);
+         try {
+            $this->view->horario = $model->ler($id);
+         } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => $e->getMessage()));
+         }
+      }
+   }
 }
 
