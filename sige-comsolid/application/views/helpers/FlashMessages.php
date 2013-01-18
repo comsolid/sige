@@ -27,7 +27,7 @@ class Zend_View_Helper_FlashMessages extends Zend_View_Helper_Abstract {
             $output .= '<h4>';
             switch (key($message)) {
                case 'notice':
-                  $output .= 'Cuidado!';
+                  $output .= 'Atenção!';
                   break;
                case 'info':
                   $output .= 'Mantenha-se informado!';

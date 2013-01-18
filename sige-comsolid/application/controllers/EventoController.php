@@ -15,6 +15,8 @@ class EventoController extends Zend_Controller_Action {
     */
 	public function indexAction() {
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/font-awesome.min.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/font-awesome-ie7.min.css'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/evento/inicio.js'));
@@ -33,7 +35,11 @@ class EventoController extends Zend_Controller_Action {
 
 		foreach ($rows as $linha) {
 			$tipo_evento = $linha->findDependentRowset('Application_Model_TipoEvento')->current();
-			($linha->validada) ? $linha->validada = 'Sim' : $linha->validada = 'Não';
+			
+         ($linha->validada) ?
+            $linha->validada = '<i class="icon-thumbs-up"></i> Sim' :
+            $linha->validada = '<i class="icon-thumbs-down"></i> Não';
+         
 			$linha->data_submissao = date('d/m/Y', strtotime($linha->data_submissao));
 
 			$this->view->meusEventos[] = array_merge($tipo_evento->toArray(), $linha->toArray());
@@ -84,7 +90,8 @@ class EventoController extends Zend_Controller_Action {
              "{$value['nome_evento']}",
              "{$value['data']}",
              "{$value['h_inicio']} - {$value['h_fim']}",
-             "<a id=\"{$value['evento']}\" class=\"marcar\">Marcar</a>"
+             "<a id=\"{$value['evento']}\" class=\"marcar no-bottom\">
+                  <i class=\"icon-bookmark\"></i> Marcar</a>"
          );
       }
       
@@ -549,7 +556,8 @@ class EventoController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-      //$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/bootstrap.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/font-awesome.min.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/font-awesome-ie7.min.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
@@ -589,6 +597,52 @@ class EventoController extends Zend_Controller_Action {
 
       if ($this->getRequest()->isPost() && $form->isValid($data)) {
          $data = $form->getValues();
+      }
+   }
+   
+   public function desfazerInteresseAction() {
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $idPessoa = $sessao["idPessoa"];
+      
+      $model = new Application_Model_EventoDemanda();
+      
+      if ($this->getRequest()->isPost()) {
+         $del = $this->getRequest()->getPost('del');
+         $id = (int) $this->getRequest()->getPost('id');
+         
+         if (!isset($id)) {
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Evento não encontrado.'));
+            
+         } else if ($del == "confimar") {
+            
+            try {
+               $where = array(
+                   "evento = ?"    => $id,
+                   "id_pessoa = ?" => $idPessoa);
+               $model->delete($where);
+               $this->_helper->flashMessenger->addMessage(
+                        array('success' => 'Evento desmarcado com sucesso.'));
+            } catch (Exception $e) {
+               $this->_helper->flashMessenger->addMessage(
+                       array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                           . $e->getMessage()));
+            }
+         }
+         $this->_helper->redirector->goToRoute(array(
+             'controller' => 'participante',
+             'action' => 'index'), 'default', true);
+      } else {
+         $id = $this->_getParam('id', 0);
+         $idEncontro = $sessao["idEncontro"];
+         $where = array($idEncontro, $idPessoa, $id);
+         try {
+            $this->view->evento = $model->lerEvento($where);
+         } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                       array('error' => $e->getMessage()));
+         }
       }
    }
    

@@ -1,14 +1,16 @@
 <?php
-
+   $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
+   $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
 ?>
 <? if (! empty($this->user)): ?>
 <p>
    <a href="<?=$this->url(array('id' => $this->id),
-        'ver') ?>">Página de <?=$this->user->nome ?></a>
+        'ver') ?>" class="no-bottom"><i class='icon-user'></i> Página de <?=$this->user->nome ?></a>
    <? if ($this->mostrarEditar) : ?>
-   | <a href="<?php echo $this->url(array('controller'=>'participante',
-         'action'=>'editar'), 'default');?>">
-      Editar
+   &nbsp;&nbsp;&nbsp;
+   <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'editar'), 'default');?>" class="no-bottom">
+      <i class='icon-edit'></i> Editar
    </a>
    <? endif; ?>
 </p>
@@ -18,10 +20,11 @@
 </p>
 <?
 if (! empty($this->user->twitter)) {
-   $twitter = "Me siga no <a href='https://twitter.com/#!/{$this->user->twitter}'
->Twitter</a>.";
+   $twitter = "Me siga no  <a href='https://twitter.com/#!/{$this->user->twitter}'
+class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
 } else {
-   $twitter = "Ainda não possuo <a href='https://twitter.com'>Twitter</a>.";
+   $twitter = "Ainda não possuo <a href='https://twitter.com' class='no-bottom' 
+      target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
 }
 ?>
 <p><?=$twitter ?></p>

@@ -3,8 +3,8 @@
         'default') ?>">Certificado Palestrante</a><br/><br/>
 
 <fieldset>
-   <legend>Interesse em eventos:</legend>
-   <a title="Adicionar Evento" style="float:right; clear:right;"
+   <legend>Eventos do seu interesse:</legend>
+   <a title="Adicionar interesse em Evento" style="float:right; clear:right;"
 			href="<?=$this->url(array('controller' => 'evento',
              'action' => 'interesse')) ?>">
 		<img src="<? echo $this->baseUrl('imagens/layout/bt_adicionar.png');?>" border="0">
@@ -29,8 +29,11 @@
 				<td><? echo $item["hora_inicio"];?></td>
 				<td><? echo $item["hora_fim"];?></td>
 				<td>
-					<a href="<?=$this->url(array('action' => 'excluirevento',
-						'evento' => $item["evento"])) ?>"></a>
+					<a href="<?=$this->url(array(
+                   'controller' => 'evento',
+                   'action' => 'desfazer-interesse',
+                   'id' => $item["evento"])) ?>" class="no-bottom">
+                  <i class="icon-reply"></i> Desfazer</a>
 					<!--<a href="<?// echo $this->baseUrl('/participante/excluievento/evento/'.$item["evento"]);?>">Excluir</a>-->
 				</td>
 		  </tr>

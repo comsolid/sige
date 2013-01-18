@@ -133,3 +133,9 @@ body{
 .error h4, .alert h4, .notice h4, .success h4, .info h4 {height: 10px; font-size: 11pt;}
 
 a {cursor: pointer;}
+a.no-bottom {text-decoration: none}
+
+fieldset {padding:0 1.4em 1.4em 1.4em;margin:0 0 1.5em 0;border:1px solid #ccc;}
+legend {font-size:1.2em;margin-top:-0.2em;margin-bottom:1em;}
+fieldset, #IE8#HACK {padding-top:1.4em;}
+legend, #IE8#HACK {margin-top:0;margin-bottom:0;}

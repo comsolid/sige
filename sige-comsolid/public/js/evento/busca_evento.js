@@ -55,9 +55,10 @@ function addEvento(id) {
          } else if (json.erro != null) {
             mostrarMensagem("div.error", json.erro);
          }
+      }).complete(function() {
+         getValores();
       });
    }
-   getValores();
 }
 
 function mostrarMensagem( id, msg ) {

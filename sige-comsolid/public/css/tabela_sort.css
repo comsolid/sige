@@ -188,7 +188,9 @@ table.display td.center {
  */
  
 table.display td {
-	border: 1px solid white; 
+	border: 1px solid white;
+   padding: 8px;
+   line-height: 20px;
 }
 
 table.display tr.odd.gradeA {
@@ -233,7 +235,7 @@ table.display tr.even.gradeU {
 
 
 tr.odd {
-	background-color: #E2E4FF;
+	background-color: #eee;
 }
 
 tr.even {
@@ -470,10 +472,10 @@ tr.even.gradeU td.sorting_2 {
 }
 /***HOVER****/
 tr.even:HOVER{
-	background-color: #e7d5aa;
+	background-color: #ccc;
 }
 tr.odd:HOVER{
-	background-color: #e7d5aa;
+	background-color: #ccc;
 }
 
 
