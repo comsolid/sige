@@ -34,25 +34,25 @@ class Application_Model_Caravana extends Zend_Db_Table_Abstract {
     
 
 	public function busca($data) {
-		$select = "SELECT c.id_caravana, nome_caravana, apelido_caravana, nome,  nome_municipio, apelido_instituicao, validada, COUNT(*) FROM caravana_encontro ce INNER JOIN caravana c ON (ce.id_caravana = c.id_caravana) INNER JOIN municipio m ON (c.id_municipio = m.id_municipio) INNER JOIN pessoa p ON (ce.responsavel = p.id_pessoa) LEFT OUTER JOIN instituicao i ON (c.id_instituicao = i.id_instituicao) WHERE ce.id_encontro = ?";
+		$select = "SELECT c.id_caravana, nome_caravana, apelido_caravana, nome, 
+         nome_municipio, apelido_instituicao, validada, COUNT(*)
+         FROM caravana_encontro ce INNER JOIN caravana c ON (ce.id_caravana = c.id_caravana)
+         INNER JOIN municipio m ON (c.id_municipio = m.id_municipio)
+         INNER JOIN pessoa p ON (ce.responsavel = p.id_pessoa)
+         LEFT OUTER JOIN instituicao i ON (c.id_instituicao = i.id_instituicao)
+         WHERE ce.id_encontro = ? ";
 		
-		if($data[1] != NULL){
-			$data[1] = "%".$data[1]."%";
-         	$select = $select.'  AND nome_caravana ilike ? GROUP BY c.id_caravana, nome_caravana, apelido_caravana, nome,  nome_municipio, apelido_instituicao, validada';
-		}else{
+		if ($data[1] != NULL) {
+			$data[1] = "%{$data[1]}%";
+         $select = "{$select} AND nome_caravana ilike ?
+            GROUP BY c.id_caravana, nome_caravana, apelido_caravana, nome,
+            nome_municipio, apelido_instituicao, validada";
+		} else {
 			unset($data[1]);
-			$select = $select . " GROUP BY c.id_caravana, nome_caravana, apelido_caravana, nome,  nome_municipio, apelido_instituicao, validada";
-		}		 
-		
-		//$select = $select.' limit 50';
-		
+			$select = "{$select} GROUP BY c.id_caravana, nome_caravana,
+            apelido_caravana, nome, nome_municipio, apelido_instituicao, validada";
+		}
 		return $this->getAdapter()->fetchAll($select,$data);
-
 	}
-	
-	 
-	
-	
-
 }
 ?>

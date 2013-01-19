@@ -20,6 +20,8 @@ class CaravanaController extends Zend_Controller_Action {
 
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/caravana/index.css'));
       $participante = new Application_Model_Participante();
+      
+      // @deprecated use sairAction
       if ($this->_request->getParam("sair") == 'caravana') {
          //echo $sessao["idEncontro"] . "rererere" . $sessao["idPessoa"];
          $participante->sairDaCaravana(array($sessao["idEncontro"], $sessao["idPessoa"]));
@@ -35,6 +37,14 @@ class CaravanaController extends Zend_Controller_Action {
    }
 
    public function participantesAction() {
+      $cancelar = $this->getRequest()->getPost('cancelar');
+      if (isset($cancelar)) {
+         return $this->_helper->redirector->goToRoute(array(
+                     'controller' => 'caravana',
+                     'action' => 'index'
+                         ), null, true);
+      }
+      
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idPessoa = $sessao["idPessoa"];
       $idEncontro = $sessao["idEncontro"];
@@ -50,11 +60,15 @@ class CaravanaController extends Zend_Controller_Action {
          if ($del == "confimar") {
             $array_id_pessoas = explode(",", $this->getRequest()->getPost('array_id_pessoas'));
             // se existirem e-mail a serem adicionados a caravana
-            if (count($array_id_pessoas) > 0) {
+            // explode retorna array(0 => "") http://php.net/manual/pt_BR/function.explode.php
+            if (count($array_id_pessoas) == 1 && empty($array_id_pessoas[0])) {
+               $this->_helper->flashMessenger->addMessage(
+                        array('notice' => 'Nenhum participante foi selecionado.'));
+            } else {
                $where = array(
-                  $this->view->caravana['id_caravana'],
-                  $sessao["idEncontro"],
-                  $sessao["idEncontro"], // id_encontro usado em subquery
+                   $this->view->caravana['id_caravana'],
+                   $sessao["idEncontro"],
+                   $sessao["idEncontro"], // id_encontro usado em subquery
                );
                $where = array_merge($where, $array_id_pessoas);
                try {
@@ -63,12 +77,9 @@ class CaravanaController extends Zend_Controller_Action {
                           array('success' => 'Participantes adicionados à caravana com sucesso.'));
                } catch (Exception $e) {
                   $this->_helper->flashMessenger->addMessage(
-                       array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
-                           . $e->getMessage()));
+                          array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                              . $e->getMessage()));
                }
-            } else {
-               $this->_helper->flashMessenger->addMessage(
-                        array('notice' => 'Nenhum participante foi selecionado.'));
             }
          }
       }
@@ -114,6 +125,54 @@ class CaravanaController extends Zend_Controller_Action {
       echo json_encode($json);
    }
    
+   public function deletarParticipanteAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $pessoa = $this->_getParam('pessoa', 0);
+      if ($pessoa > 0) {
+         $sessao = Zend_Auth::getInstance()->getIdentity();
+         $where = array(
+             $sessao["idEncontro"],
+             $pessoa
+         );
+         $model = new Application_Model_CaravanaEncontro();
+         try {
+            $model->removeParticipanteNaCaravana($where);
+            $this->_helper->flashMessenger->addMessage(
+                             array('success' => 'Participante removido da caravana com sucesso.'));
+         } catch (Exception $e) {
+               $this->_helper->flashMessenger->addMessage(
+                       array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                           . $e->getMessage()));
+         }
+      } else {
+         $this->_helper->flashMessenger->addMessage(
+                        array('notice' => 'Nenhum participante foi selecionado.'));
+      }
+      $this->_helper->redirector->goToRoute(array('controller' => 'caravana',
+          'action' => 'participantes'), 'default', true);
+   }
+   
+   public function sairAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $model = new Application_Model_Participante();
+      try {
+         $model->sairDaCaravana(array($sessao["idEncontro"], $sessao["idPessoa"]));
+         $this->_helper->flashMessenger->addMessage(
+                 array('success' => 'Participante removido da caravana com sucesso.'));
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(
+                 array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                     . $e->getMessage()));
+      }
+      $this->_helper->redirector->goToRoute(array('controller' => 'caravana',
+              'action' => 'index'), null, true);
+   }
+
    /**
     * @deprecated 
     */
@@ -179,35 +238,29 @@ class CaravanaController extends Zend_Controller_Action {
       $this->view->caravanaPartici = $caravanaEncontro->buscaParticipantes($this->view->item['id_caravana'], $sessao["idEncontro"]);
    }
 
-   public function addAction() {
+   public function criarAction() {
 
       $data = $this->getRequest()->getPost();
       if (isset($data['cancelar'])) {
          return $this->_helper->redirector->goToRoute(array(
-                     'controller' => 'participante',
+                     'controller' => 'caravana',
                      'action' => 'index'
                          ), null, true);
       }
-
-      $sessao = Zend_Auth :: getInstance()->getIdentity();
-
+      $sessao = Zend_Auth::getInstance()->getIdentity();
       $idPessoa = $sessao["idPessoa"];
-
       $idEncontro = $sessao["idEncontro"];
+      
       $caravana = new Application_Model_Caravana();
 
       if ($caravana->verificaCaravana($idPessoa, $idEncontro)) {
-
-         // $this->editAction();
          return $this->_helper->redirector->goToRoute(array(
                      'controller' => 'caravana',
-                     'action' => 'edit'
-                         ), null, true);
+                     'action' => 'editar'), null, true);
       } else {
 
-
          $form = new Application_Form_Caravana();
-         $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'add')));
+         $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'criar')));
 
          $this->view->form = $form;
          $data = $this->getRequest()->getPost();
@@ -218,10 +271,10 @@ class CaravanaController extends Zend_Controller_Action {
             $caravana = new Application_Model_Caravana();
             $caravana_encontro = new Application_Model_CaravanaEncontro();
             $data = $form->getValues();
-
-
-
+            
+            $adapter = $caravana->getAdapter();
             try {
+               $adapter->beginTransaction();
                $m_encontro = new Application_Model_Encontro();
                $data['criador'] = $idPessoa;
 
@@ -232,29 +285,33 @@ class CaravanaController extends Zend_Controller_Action {
 
 
                $caravana_encontro->insert($data2);
-
+               $adapter->commit();
                return $this->_helper->redirector->goToRoute(array(
                            'controller' => 'caravana',
                            'action' => 'index'
                                ), null, true);
             } catch (Zend_Db_Exception $ex) {
-
-
-
+               $adapter->rollBack();
                // 23505UNIQUE VIOLATION
-               echo $ex->getMessage() . $ex->getCode();
-               //throw $ex;
+               if ($ex->getCode() == 23505) {
+                  $this->_helper->flashMessenger->addMessage(
+                          array('error' => 'Já existe uma caravana com esta descrição.'));
+               } else {
+                  $this->_helper->flashMessenger->addMessage(
+                          array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                              . $ex->getMessage()));
+               }
             }
          }
       }
    }
 
-   public function editAction() {
+   public function editarAction() {
 
       $data = $this->getRequest()->getPost();
       if (isset($data['cancelar'])) {
          return $this->_helper->redirector->goToRoute(array(
-                     'controller' => 'participante',
+                     'controller' => 'caravana',
                      'action' => 'index'
                          ), null, true);
       }
@@ -264,8 +321,8 @@ class CaravanaController extends Zend_Controller_Action {
       $idEncontro = $sessao["idEncontro"];
 
 
-      $form = new Application_Form_CaravanaEditar();
-      $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'edit')));
+      $form = new Application_Form_Caravana();
+      $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'editar')));
       $this->view->form = $form;
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
@@ -303,18 +360,22 @@ class CaravanaController extends Zend_Controller_Action {
          $select = $caravana->getAdapter()->quoteInto('id_caravana = ?', $dados_caravana['id_caravana']);
 
          try {
-            unset($data['participantes']);
             $caravana->update($data, $select);
 
             return $this->_helper->redirector->goToRoute(array(
-                        'controller' => 'participante',
+                        'controller' => 'caravana',
                         'action' => 'index'
                             ), null, true);
          } catch (Zend_Db_Exception $ex) {
-            // 23505UNIQUE VIOLATION
-
-            echo $ex->getMessage() . $ex->getCode();
-            //throw $ex;
+            // 23505 UNIQUE VIOLATION
+            if ($ex->getCode() == 23505) {
+               $this->_helper->flashMessenger->addMessage(
+                       array('error' => 'Já existe uma caravana com esta descrição.'));
+            } else {
+               $this->_helper->flashMessenger->addMessage(
+                       array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                           . $ex->getMessage()));
+            }
          }
       }
    }
@@ -345,16 +406,16 @@ class CaravanaController extends Zend_Controller_Action {
             $idCaravana = $value['id_caravana'];
 
             $e .= '<tr>
-								<td>' . $value['nome_caravana'] . '</td>
-								<td>' . $value['apelido_caravana'] . '</td>
-								<td>' . $value['nome'] . '</td>
-								<td>' . $value['nome_municipio'] . '</td>
-								<td>' . $value['apelido_instituicao'] . '</td>
-								<td>' . $validadaCaravana . '</td>
-								<td>' . $value['count'] . '</td>
-								<td><a href=' . $this->view->baseUrl('/administrador/validacaravana/id_caravana/' . $value["id_caravana"]) . '>Validar</a><td>		
-								<td><a href=' . $this->view->baseUrl('/administrador/invalidacaravana/id_caravana/' . $value["id_caravana"]) . '>invalidar</a><td>		
-							</tr>';
+                    <td>' . $value['nome_caravana'] . '</td>
+                    <td>' . $value['apelido_caravana'] . '</td>
+                    <td>' . $value['nome'] . '</td>
+                    <td>' . $value['nome_municipio'] . '</td>
+                    <td>' . $value['apelido_instituicao'] . '</td>
+                    <td>' . $validadaCaravana . '</td>
+                    <td>' . $value['count'] . '</td>
+                    <td><a href=' . $this->view->baseUrl('/administrador/validacaravana/id_caravana/' . $value["id_caravana"]) . '>Validar</a><td>		
+                    <td><a href=' . $this->view->baseUrl('/administrador/invalidacaravana/id_caravana/' . $value["id_caravana"]) . '>invalidar</a><td>		
+                </tr>';
 
             //<a href="<? echo $this->baseUrl('/administrador/validaCaravana/id_caravana/'.$value['id_caravana'])
             //	echo $value['nome_tipo_evento'];

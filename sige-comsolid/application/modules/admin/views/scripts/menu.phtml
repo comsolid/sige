@@ -1,8 +1,9 @@
 <a href="<?php echo $this->url(array(), 'inscricoes', true);
 ?>" class="no-bottom"><i class="icon-pencil"></i> Incrições</a>&nbsp;&nbsp;&nbsp;
 
-<a href="<?php echo $this->url(array('controller' => 'administrador',
-       'action' => 'buscacaravanaadministrador'), 'default', true);
+<a href="<?php echo $this->url(array('module' => 'admin',
+    'controller' => 'caravana',
+    'action' => 'index'), 'default', true);
 ?>" class="no-bottom"><i class="icon-plane"></i> Caravanas</a>&nbsp;&nbsp;&nbsp;
 
 <a href="<?php echo $this->url(array(

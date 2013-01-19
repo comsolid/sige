@@ -37,7 +37,10 @@
                          'action' => 'deletar-participante',
                          'pessoa' => $participante['id_pessoa'],
                          'caravana' => $this->caravana['id_caravana']));
-                     ?>" class="no-bottom"><i class="icon-remove"></i> Deletar</a>
+                     ?>" class="no-bottom"
+                     onclick="return confirm('Tem certeza que deseja deletar o participante da caravana?')">
+                        <i class="icon-remove"></i> Deletar
+               </a>
             </td>
          </tr>
    <? endforeach; ?>
