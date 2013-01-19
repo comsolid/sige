@@ -607,9 +607,12 @@ class EventoController extends Zend_Controller_Action {
          $del = $this->getRequest()->getPost('del');
          $id = (int) $this->getRequest()->getPost('id');
          
-         if (!isset($id)) {
+         if (!isset($id) || $id == 0) {
             $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Evento não encontrado.'));
+            $this->_helper->redirector->goToRoute(array(
+             'controller' => 'participante',
+             'action' => 'index'), 'default', true);
             
          } else if ($del == "confimar") {
             
@@ -631,13 +634,25 @@ class EventoController extends Zend_Controller_Action {
              'action' => 'index'), 'default', true);
       } else {
          $id = $this->_getParam('id', 0);
-         $idEncontro = $sessao["idEncontro"];
-         $where = array($idEncontro, $idPessoa, $id);
-         try {
-            $this->view->evento = $model->lerEvento($where);
-         } catch (Exception $e) {
+         if ($id == 0) {
             $this->_helper->flashMessenger->addMessage(
-                       array('error' => $e->getMessage()));
+                     array('error' => 'Evento não encontrado.'));
+            $this->_helper->redirector->goToRoute(array(
+             'controller' => 'participante',
+             'action' => 'index'), 'default', true);
+            
+         } else {
+            $idEncontro = $sessao["idEncontro"];
+            $where = array($idEncontro, $idPessoa, $id);
+            try {
+               $this->view->evento = $model->lerEvento($where);
+            } catch (Exception $e) {
+               $this->_helper->flashMessenger->addMessage(
+                        array('error' => $e->getMessage()));
+               $this->_helper->redirector->goToRoute(array(
+                  'controller' => 'participante',
+                  'action' => 'index'), 'default', true);
+            }
          }
       }
    }

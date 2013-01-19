@@ -37,6 +37,25 @@ class Application_Model_CaravanaEncontro extends Zend_Db_Table_Abstract {
   		return $this->getAdapter()->fetchAll($select,$data);
 	  	
 	  }
+     
+	  public function updateParticipantesCaravana($where) {
+	  	  	
+	  	  	$select= "UPDATE encontro_participante SET id_caravana = ? WHERE id_encontro = ?
+	  	  			AND id_pessoa IN
+                  (SELECT p.id_pessoa FROM pessoa p 
+                  INNER JOIN encontro_participante ep ON (p.id_pessoa = ep.id_pessoa)
+	  	  			WHERE id_encontro = ? AND id_caravana IS NULL AND p.id_pessoa IN (? ";
+			  	
+         $quant = count($where);
+         $numParam = 4;
+         // concatena os id_pessoa que vem de $data
+			for ($i = $numParam; $i < $quant; $i = $i + 1) {
+            $select .= ", ?";
+         }
+         $select .= ")) ";
+         return $this->getAdapter()->fetchAll($select,$where);
+	  }
+     
 	  public function removeParticipanteNaCaravana($data){
 	  	  	$select= "UPDATE encontro_participante SET id_caravana = NULL WHERE id_encontro = ?   AND id_pessoa =? ";
   		return $this->getAdapter()->fetchAll($select,$data);

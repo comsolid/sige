@@ -1,25 +1,31 @@
 
 
 
-<fieldset class="fieldset">
-    <legend>Está cadastrado nesta caravana</legend>
-    <?if(isset($this->participante['nome_municipio'])){?>
-    <div class="acoes"><a title="Sair desta caravana"  href="<?php echo $this->url(array('controller'=>'caravana','action'=>'index','sair'=>'caravana'));?>"><img src="<? echo $this->baseUrl('imagens/layout/bt_sairexcluir.png');?>">Sair Caravana</a></div>
-<?}?>
+<fieldset>
+   <legend><i class="icon-plane"></i> Está cadastrado nesta caravana</legend>
+   <?if(isset($this->participante['nome_municipio'])){?>
+   <div class="acoes">
+      <a title="Sair desta caravana" 
+         href="<?php echo $this->url(array('controller'=>'caravana',
+             'action'=>'index','sair'=>'caravana'));?>">
+         <img src="<? echo $this->baseUrl('imagens/layout/bt_sairexcluir.png');?>" alt="Sair"/>
+      </a>
+   </div>
+   <?}?>
 
-<dl class="detalhes">
-<dt id="nome_caravana-label"><label class="required" for="nome_caravana">Caravana:</label></dt>
-<dd id="nome_caravana-element">
-<label class="required" for="nome_caravana"><?=$this->participante['apelido_caravana']?></label></dd>
-<dt id="id_municipio-label"><label class="optional" for="id_municipio">Município:</label></dt>
-<dd id="id_municipio-element">
-<label class="required" for="nome_caravana"><?=$this->participante['nome_municipio']?></label></dd>
-<dt id="id_instituicao-label"><label class="optional" for="id_instituicao">Instituição:</label></dt>
-<dd id="id_instituicao-element">
-<label class="required" for="nome_caravana"><?=$this->participante['apelido_instituicao']?></label></dd>
-<dt id="id_instituicao-label"><label class="optional" for="id_instituicao">Responsável:</label></dt>
-<dd id="id_instituicao-element"><label ><?=$this->participante['nome']?></label></dd>
-</dl>
+   <dl class="detalhes">
+      <dt><label>Caravana:</label></dt>
+      <dd><label><?=$this->participante['apelido_caravana']?></label></dd>
+
+      <dt><label>Município:</label></dt>
+      <dd><label><?=$this->participante['nome_municipio']?></label></dd>
+
+      <dt><label>Instituição:</label></dt>
+      <dd><label><?=$this->participante['apelido_instituicao']?></label></dd>
+
+      <dt><label>Responsável:</label></dt>
+      <dd><label><?=$this->participante['nome']?></label></dd>
+   </dl>
 </fieldset>
 
 <fieldset>
@@ -41,8 +47,15 @@
 <dt id="id_instituicao-label"><label class="optional" for="id_instituicao">Responsável:</label></dt>
 <dd id="id_instituicao-element"><label ><?=$item["nome"];?></label></dd>
 </dl>
- <?} if(count($this->caravanaResponsavel)>0){?>
- <a title="Adicionar Caravana"  href="<? echo $this->baseUrl('caravana/addparticipante');?>">Adicionar Participante</a>
-  <?}?>
+<? }
+   
+   if(count($this->caravanaResponsavel)>0): ?>
+   <a title="Adicionar participantes" 
+      href="<?=$this->url(array(
+          'controller' => 'caravana',
+          'action' => 'participantes'),
+              'default', true) ?>" class="no-bottom">
+      <i class="icon-plus"></i> Adicionar Participantes</a>
+<? endif; ?>
 </fieldset>
 
