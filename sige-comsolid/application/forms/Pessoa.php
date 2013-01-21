@@ -104,11 +104,45 @@ class Application_Form_Pessoa extends Zend_Form {
 						->addElement($site)
 						->addElement($municipio)
 						->addElement($instituicao)
-						->addElement($anoNascimento);
+						->addElement($anoNascimento)
+                  ->addElement($this->_captcha());
 					  
 		$botao = $this->createElement('submit', 'confimar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
 		$botao = $this->createElement('reset', 'cancelar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
 	}
+   
+   private function _captcha() {
+      // instalar: sudo apt-get install php5-gd
+      $e = new Zend_Form_Element_Captcha('captcha', array(
+          'label' => 'Prove que você é humano, digite os caracteres abaixo',
+          'required' => true,
+          'captcha' => array(
+              'captcha' => 'Image',
+              'font' => APPLICATION_PATH.'/../public/font/FreeSans.ttf',
+              'wordLen' => 6,
+              'height' => 50,
+              'width' => 150,
+              'timeout' => 300,
+              'imgDir' => APPLICATION_PATH.'/../public/captcha',
+              'imgUrl' => Zend_Controller_Front::getInstance()->getBaseUrl().'/captcha',
+              'dotNoiseLevel' => 10,
+              'lineNoiseLevel' => 2,
+              'messages' => array(
+                  'badCaptcha' => 'Valor digitado não é válido.'
+              )
+          )
+      ));
+      //$e->addErrorMessage("Valor digitado não é válido.");
+      
+      $e->setDecorators(array(
+         //'ViewHelper',
+         'Description',
+         'Errors',
+         array('HtmlTag', '<dd/>'),
+         array('Label', '<dt/>'),
+      ));
+      return $e;
+   }
 }

@@ -68,6 +68,7 @@ class ParticipanteController extends Zend_Controller_Action {
 			);
 			unset ($data['municipio']);
 			unset ($data['instituicao']);
+         unset ($data['captcha']);
 			// inseri no banco ... e mantem uma trasacao 
          $adapter = $pessoa->getAdapter();
 			try {

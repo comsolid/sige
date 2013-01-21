@@ -60,3 +60,8 @@ dl.zend_form input[type="radio"] {
 	width: 25px;
 	height: 14px;
 }
+
+label[for=captcha-input] {
+   color: #828282;
+   font-size: 13px;
+}
