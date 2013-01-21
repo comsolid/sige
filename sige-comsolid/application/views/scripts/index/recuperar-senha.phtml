@@ -1,4 +1,5 @@
-<a href="<?php echo $this->url(array(), 'login');?>">Entrar</a> 
-	<br>
+<a href="<?=$this->url(array(), 'login', true) ?>"
+      class="no-bottom"><i class="icon-signin"></i> Login</a>
+<br/>
 <?php
 	echo $this->form;

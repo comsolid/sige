@@ -81,11 +81,16 @@ class EventoController extends Zend_Controller_Action {
       $json = new stdClass;
       $json->size = count($rs);
       $json->itens = array();
-      
-      foreach($rs as $value) {
+
+		foreach($rs as $value) {
+			$descricao = $value['nome_evento'];
+			if (! empty($value['descricao'])) {
+				$descricao = "{$descricao} ({$value['descricao']})";
+			}
+			
          $json->itens[] = array(
              "{$value['nome_tipo_evento']}",
-             "{$value['nome_evento']}",
+             "{$descricao}",
              "{$value['data']}",
              "{$value['h_inicio']} - {$value['h_fim']}",
              "<a id=\"{$value['evento']}\" class=\"marcar no-bottom\">

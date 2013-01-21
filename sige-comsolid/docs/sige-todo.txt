@@ -21,6 +21,9 @@ SiGE - TODO
 18. implementar not found page
 19. mover controller administrador para module admin [in progress]
 20. colocar captcha na inscrição
+21. login pode sofrer ataques sql injection
+22. não permitir que responsável crie mais de uma caravana, banco permite mas sige ainda não!
+23. implementar uma espécie de timeline, que notifica eventos externos em que o participante foi apontado.
 
 
 Future releases

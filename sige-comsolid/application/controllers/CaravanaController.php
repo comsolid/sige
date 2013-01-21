@@ -239,7 +239,12 @@ class CaravanaController extends Zend_Controller_Action {
    }
 
    public function criarAction() {
-
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+		
       $data = $this->getRequest()->getPost();
       if (isset($data['cancelar'])) {
          return $this->_helper->redirector->goToRoute(array(
@@ -264,8 +269,6 @@ class CaravanaController extends Zend_Controller_Action {
 
          $this->view->form = $form;
          $data = $this->getRequest()->getPost();
-
-         $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
          if ($this->getRequest()->isPost() && $form->isValid($data)) {
             $caravana = new Application_Model_Caravana();
@@ -307,6 +310,10 @@ class CaravanaController extends Zend_Controller_Action {
    }
 
    public function editarAction() {
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
 
       $data = $this->getRequest()->getPost();
       if (isset($data['cancelar'])) {

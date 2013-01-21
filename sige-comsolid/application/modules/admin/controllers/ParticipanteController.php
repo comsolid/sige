@@ -25,14 +25,18 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
 
       //$select = "SELECT p.id_pessoa, nome, apelido, email, twitter, nome_municipio, apelido_instituicao, nome_caravana FROM encontro_participante ep INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa) LEFT OUTER JOIN instituicao i ON (ep.id_instituicao = i.id_instituicao) INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio) LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana) WHERE id_encontro = ? AND id_tipo_usuario = 3;";
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/inicio.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/administrador/busca_pessoas.js'));
       $this->view->idEncontro = $idEncontro;
    }
 
-   public function ajaxBuscaAction() {
+   public function ajaxBuscarAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
       $pessoas = new Application_Model_Pessoa ();

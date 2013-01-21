@@ -47,7 +47,7 @@ body{
 
 #info_usu{
 	float:right;
-	font-size: 11px;
+	font-size: 14px;
 	margin-right: 17px;
 }
 
@@ -59,7 +59,7 @@ body{
 #info_usu .apelido{
    font-weight: normal;
    color: #359324;
-   text-decoration: underline;
+   text-decoration: none;
 }
 
 #socialist a {

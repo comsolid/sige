@@ -15,6 +15,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('inscricoes', $route);
+
+      $route = new Zend_Controller_Router_Route_Static(
+         '/admin',
+         array(
+             'module' => 'admin',
+             'controller' => 'participante',
+             'action' => 'index'
+         )
+      );
+      $router->addRoute('admin', $route);
       
       $route = new Zend_Controller_Router_Route_Static(
          '/login',
@@ -122,6 +132,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('programacao', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+         '/c/validar/:id',
+         array(
+             'module' => 'admin',
+             'controller' => 'caravana',
+             'action' => 'situacao',
+             'validar' => 't'
+         )
+      );
+      $router->addRoute('validar_caravana', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+         '/c/invalidar/:id',
+         array(
+             'module' => 'admin',
+             'controller' => 'caravana',
+             'action' => 'situacao',
+             'validar' => 'f'
+         )
+      );
+      $router->addRoute('invalidar_caravana', $route);
    }
    
    public function _initTranslate() {

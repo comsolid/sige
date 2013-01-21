@@ -69,6 +69,7 @@ class Application_Form_Pessoa extends Zend_Form {
 		$listaCiddades  = $cidade->fetchAll(null, 'nome_municipio');
 			  
 		$municipio = $this->createElement('select', 'municipio',array('label' => 'Município: '));
+		$municipio->setAttrib("class", "select2");
 		foreach($listaCiddades as $item)
 		{
 			 $municipio->addMultiOptions(array($item->id_municipio => $item->nome_municipio));   
@@ -79,6 +80,7 @@ class Application_Form_Pessoa extends Zend_Form {
 		$listaIns  = $ins->fetchAll(null,'nome_instituicao');
 															  
 		$instituicao = $this->createElement('select', 'instituicao',array('label' => 'Instituição: '));
+		$instituicao->setAttrib("class", "select2");
 		foreach($listaIns as $item)
 		{
 			$instituicao->addMultiOptions(array($item->id_instituicao => $item->nome_instituicao));   
@@ -86,6 +88,7 @@ class Application_Form_Pessoa extends Zend_Form {
 
 		// TODO: usar máscara para ano nascimento, usar numeric(4) para guardar
 		$anoNascimento = $this->createElement('select', 'nascimento',array('label' => 'Ano Nascimento: '));
+		$anoNascimento->setAttrib("class", "select2");
 		$date = new Zend_Date();
       $ano = (int) $date->toString('YYYY');
       for($i = $ano; $i > 1899; $i--) {

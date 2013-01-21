@@ -4,7 +4,8 @@ $(function() {
    $('#radioset_data, #radioset_tipo').buttonset();
    
    oTable = $('table').dataTable({
-      "bProcessing": true
+      "bProcessing": true,
+      "aaSorting": [ [1, 'asc'] ]
    });
    
    getValores();

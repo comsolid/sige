@@ -28,13 +28,20 @@ class Admin_EventoController extends Zend_Controller_Action {
 
    public function detalhesAction() {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/teste.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-      //$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/print.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/altera_palestrante.js'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+      //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/teste.js')); // deprecated
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
+      //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/altera_palestrante.js')); // deprecated
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/evento/detalhes.js'));
 
       $data = $this->getRequest()->getPost();
 

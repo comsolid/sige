@@ -55,25 +55,52 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 	}
 	
 	public function buscaPessoas($data){
-		 $select="SELECT p.id_pessoa, p.nome, p.cadastro_validado, apelido, email, twitter, nome_municipio, apelido_instituicao, nome_caravana, ep.confirmado FROM encontro_participante ep INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa) LEFT OUTER JOIN instituicao i ON (ep.id_instituicao = i.id_instituicao) INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio) LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana) WHERE id_encontro = ? AND id_tipo_usuario = 3 ";
+		 $select="SELECT p.id_pessoa, p.nome, p.cadastro_validado, apelido, email, twitter,
+			nome_municipio, apelido_instituicao, nome_caravana, ep.confirmado
+			FROM encontro_participante ep INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa)
+			LEFT OUTER JOIN instituicao i ON (ep.id_instituicao = i.id_instituicao)
+			INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio)
+			LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana)
+			WHERE id_encontro = ? AND id_tipo_usuario = 3 "; // 3: participante
 		
 		if($data[2]=="nome"){
 			if($data[1] != NULL){
 				$data[1] = "%".$data[1]."%";
-	         	$select = $select.'  AND p.nome ilike ? ORDER BY p.data_cadastro DESC';
+	         	$select = $select.' AND p.nome ilike ? ';
+			}else{
+				unset($data[1]);
+			}
+		} else if ($data[2] == "municipio") {
+			if($data[1] != NULL){
+				$data[1] = $data[1]."%";
+	         	$select = $select.' AND nome_municipio ilike ? ';
+			}else{
+				unset($data[1]);
+			}
+		} else if ($data[2] == "caravana") {
+			if($data[1] != NULL){
+				$data[1] = $data[1]."%";
+	         	$select = $select.' AND nome_caravana ilike ? ';
+			}else{
+				unset($data[1]);
+			}
+		} else if ($data[2] == "instituicao") {
+			if($data[1] != NULL){
+				$data[1] = $data[1]."%";
+	         	$select = $select.' AND apelido_instituicao ilike ? ';
 			}else{
 				unset($data[1]);
 			}
 		}else{
 			if($data[1] != NULL){
 				$data[1] = $data[1]."%";
-	         	$select = $select.'  AND p.email ilike ? ORDER BY p.data_cadastro DESC';
+	         	$select = $select.' AND p.email ilike ? ';
 			}else{
 				unset($data[1]);
 			}
 		}
 		unset($data[2]);	 
-		$select = $select.' limit 20';
+		$select = $select.' ORDER BY p.data_cadastro DESC LIMIT 20';
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
 	

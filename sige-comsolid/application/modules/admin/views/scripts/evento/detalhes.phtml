@@ -95,51 +95,48 @@
       'action' => 'criar',
       'id' => $this->evento['id_evento']));
    ?>" class="no-bottom" style="float: right"><i class="icon-plus"></i>  Novo Horário</a><br>
-   <table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+   <table id="horarios" class="display" cellpadding="0" cellspacing="0" border="0">
       <thead>
          <tr>
             <th>Descrição</th>
-            <th>Data</th>
-            <th>Hora Início</th>
-            <th>Hora Fim</th>
+            <th style="width: 50px;">Data</th>
+            <th style="width: 60px;">Horário</th>
             <th>Sala</th>
-            <th>Ações</th>
+            <th style="width: 100px;">Ações</th>
          </tr>
       </thead>
       <tbody>
       <? foreach ($this->horarios as $item): ?>
-            <tr>
-               <td><? echo $item["descricao"]; ?></td>
-               <td><? echo $item["data"]; ?></td>
-               <td><? echo $item["inicio"]; ?></td>
-               <td><? echo $item["fim"]; ?></td>
-               <td><? echo $item["nome_sala"]; ?></td>
-               <td>
-                  <a href="<?=$this->url(array('module' => 'admin',
-                     'controller' => 'horario',
-                     'action' => 'editar',
-                     'id' => $item['evento'],
-                     'evento' => $this->evento['id_evento']), 'default', true) ?>"
-                     class="no-bottom"><i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;
-                  <a href="<?=$this->url(array('module' => 'admin',
-                     'controller' => 'horario',
-                     'action' => 'deletar',
-                     'id' => $item['evento'],
-                     'evento' => $this->evento['id_evento']), 'default', true) ?>"
-                     class="no-bottom"><i class="icon-remove"></i> Remover</a>
-               </td>
-            </tr>
-
+			<tr>
+				<td><? echo $item["descricao"]; ?></td>
+				<td><? echo $item["data"]; ?></td>
+				<td><? echo $item["inicio"]; ?> - <? echo $item["fim"]; ?></td>
+				<td><? echo $item["nome_sala"]; ?></td>
+				<td>
+					<a href="<?=$this->url(array('module' => 'admin',
+						'controller' => 'horario',
+						'action' => 'editar',
+						'id' => $item['evento'],
+						'evento' => $this->evento['id_evento']), 'default', true) ?>"
+						class="btn no-bottom" title="Editar"><i class="icon-edit"></i></a>
+					<a href="<?=$this->url(array('module' => 'admin',
+						'controller' => 'horario',
+						'action' => 'deletar',
+						'id' => $item['evento'],
+						'evento' => $this->evento['id_evento']), 'default', true) ?>"
+						class="btn no-bottom" title="Deletar"><i class="icon-remove"></i></a>
+				</td>
+			</tr>
       <? endforeach; ?>
       </tbody> 
    </table>
    
 </fieldset>
-<br>
+<br/>
 
 <fieldset>
    <i class="icon-file"></i> Arquivos (em desenvolvimento):<br>
-   <table id="compra" class="display" cellpadding="0" cellspacing="0" border="0;" >
+   <table class="display" cellpadding="0" cellspacing="0" border="0" >
       <thead>
          <tr>
             <th>Arquivos</th>

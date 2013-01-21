@@ -23,7 +23,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
 	public function buscaEventos($data) {
       $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
          TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH:MM') AS h_inicio,
-         TO_CHAR(hora_fim, 'HH:MM') AS h_fim
+         TO_CHAR(hora_fim, 'HH:MM') AS h_fim, er.descricao
          FROM evento_realizacao er
          INNER JOIN evento e ON (er.id_evento = e.id_evento)
          INNER JOIN tipo_evento te ON (e.id_tipo_evento = te.id_tipo_evento)

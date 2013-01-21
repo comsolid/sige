@@ -9,6 +9,8 @@ $(document).ready(function() {
       "aaSorting": [ ],
       "bFilter": false
    });
+
+   $("#termo").focus();
     
    getValores();
 	

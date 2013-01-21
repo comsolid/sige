@@ -2,19 +2,28 @@ var oTablePes;
 $(document).ready(function() {
 	
    $("#nome_pessoa").select();
+	$('#radioset_tipo_busca').buttonset();
+   
 	getValoresCoordenacao();
 	getValoresOrganizacao();
-	/*$("#nome_pessoa").keyup(function() {
-		getValores();
-		
-	});*/
+	
 	oTablePes = $('#pessoas').dataTable( {
 		"sPaginationType" : "full_numbers",
-		"aaSorting": [  ]
+		"aaSorting": [  ],
+		"bFilter": false
 	});
-	$("#nome_pessoa").keyup(function() {
-		getValores();
+
+	$("#nome_pessoa").autocomplete({
+		source: function() {
+			getValores();
+		}
 	});
+	
+   $('input:radio').click(function() {
+		$("#nome_pessoa").select();
+      getValores();
+   });
+
 	getValores();
 });
 
@@ -22,15 +31,9 @@ function getValores() {
    $("#loading").show();
 	var idEncontro = $("#id_encontro").val();
 	var nomePessoa = $("#nome_pessoa").val();
-	var tipo_busca="";
-	if($("#b_nome").is(":checked")){
-		tipo_busca="nome";
-	}
-	if($("#b_email").is(":checked")){
-		tipo_busca="email";
-	}
+	var tipo_busca= $('input:radio[name=t_busca]:checked').val();
    
-   $.getJSON("/admin/participante/ajax-busca/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa, function(json){
+   $.getJSON("/admin/participante/ajax-buscar/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa, function(json){
       oTablePes.fnClearTable();
       if(json.size>0) {
          oTablePes.fnAddData(json.aaData);
@@ -86,23 +89,3 @@ function getValoresOrganizacao(){
 		}
 	});
 }
-
-/*
- * $.ajax({ type: "GET", url:
- * "/evento/busca/nome_evento/"+descEvento+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento+"/idEncontro/"+$("#idEncontro").val(),
- * //data:
- * "/5/acao/busca/nome_evento/"+descEvento+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento+"/idEncontro/"+$("#idEncontro").val(),
- * success: function(AJAX_RESPONSE_OK){
- * 
- * 
- * $(AJAX_RESPONSE_OK).find("busca").each(function(){
- * 
- * ///document.getElementById('idnota').value=$(this).find("produto").attr("value");
- * //document.getElementById('descbusca').focus();
- * //alert($(this).find("produto").text());totaitens
- * $('#resultado').html($(this).find("thead").text());
- * $('a').click(function(event) { addEvento($(this).attr('id')); });
- * 
- * }); //close each(
- *  } });
- */

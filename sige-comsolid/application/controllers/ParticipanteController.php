@@ -37,11 +37,20 @@ class ParticipanteController extends Zend_Controller_Action {
 		}
 	}
 
+	/**
+	 * Mapeada como
+	 * 	/participar
+	 */
 	public function criarAction() {
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/salvar.js'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
+		
 		$this->view->menu="";
 		$form = new Application_Form_Pessoa();
 		$this->view->form = $form;
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		$data = $this->getRequest()->getPost();
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
@@ -118,12 +127,17 @@ class ParticipanteController extends Zend_Controller_Action {
 
 	public function editarAction() {
 		$this->autenticacao();
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/salvar.js'));
+
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
 
 		$sessao = Zend_Auth :: getInstance()->getIdentity();
 		
 		$idPessoa = $sessao["idPessoa"];
 		$idEncontro = $sessao["idEncontro"];
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		$form = new Application_Form_PessoaEdit();
 		$this->view->form = $form;
 
