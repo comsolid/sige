@@ -154,6 +154,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('invalidar_caravana', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+         '/e/:id',
+         array(
+             'controller' => 'evento',
+             'action' => 'ver'
+         )
+      );
+      $router->addRoute('ver_evento', $route);
    }
    
    public function _initTranslate() {

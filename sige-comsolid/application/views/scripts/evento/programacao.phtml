@@ -1,30 +1,49 @@
 <h3>Programação</h3>
-
+<hr/>
+<? $data_atual = null; ?>
 <? foreach ($this->lista as $item): ?>
 <div class="container">
    <div class="span-2">
-      <?=$item['data'] ?>
-   </div>
-   <div class="span-14">
-      <div style="font-size: 12.5pt;">
-         <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
-         <? if (! empty($item['descricao'])) : ?>
-         (<?=$item['descricao'] ?>)
-         <? endif; ?>
-      </div>
-      <div>Sala <?=$item['nome_sala'] ?></div>
-      <div><?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
-      <hr/>
       <?
-      if (! empty($item['twitter'])) {
-         $id = $item['twitter'];
+      if ($item['data'] != $data_atual) {
+         $date = new Zend_Date($item['data']);
+         echo $date->toString('dd/MM/YYYY');
+         $data_atual = $item['data'];
       } else {
-         $id = $item['id_pessoa'];
+         echo "&nbsp;";
       }
       ?>
-      <div>por <a href="<?=$this->url(array('id' => $id),
-              'ver', true) ?>" target="blank"><?=$item['nome'] ?></a></div>
-      <p><?=$item['resumo'] ?></p>
+   </div>
+   <div class="span-18">
+      <div class="acc-evento">
+         <div class="header3">
+            <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
+            <? if (! empty($item['descricao'])) : ?>
+            (<?=$item['descricao'] ?>)
+            <? endif; ?>
+         </div>
+         <div>
+            <div>Sala <?=$item['nome_sala'] ?></div>
+            <div><?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
+            <hr/>
+            <?
+            if (! empty($item['twitter'])) {
+               $id = $item['twitter'];
+            } else {
+               $id = $item['id_pessoa'];
+            }
+            ?>
+            <div>por <a href="<?=$this->url(array('id' => $id),
+                    'ver', true) ?>" target="blank"><?=$item['nome'] ?></a></div>
+            <p><?=$item['resumo'] ?></p>
+         </div>
+      </div>
+   </div>
+   <div class="span-1">
+      <a href="<?=$this->url(array('id' => $item['id_evento']),
+              'ver_evento', true) ?>" class="no-bottom" title="Ver e publicar comentários">
+              <i class="icon-comments-alt"></i>
+      </a>
    </div>
 </div>
 <? endforeach; ?>

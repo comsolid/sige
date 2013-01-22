@@ -1,0 +1,96 @@
+<? if (!empty($this->evento)): ?>
+   <div id="fb-root"></div>
+   <script>(function(d, s, id) {
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) return;
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=336256479809348";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));</script>
+
+   <div class="container">
+      <div class="span-13">
+         <h3><strong><?= $this->evento['nome_evento'] ?></strong></h3>
+      </div>
+      <div class="span-social">
+         <!-- twitter button -->
+         <a href="https://twitter.com/share" class="twitter-share-button"
+            data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
+              'ver_evento', true) ?>"
+              data-text="<?= $this->evento['nome_evento'] ?> por <?= $this->evento['nome'] ?>"
+              data-via="comsolid" data-lang="pt" data-hashtags="comsolid6">Tweetar</a>
+         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </div>
+      <div class="span-social">   
+         <!-- facebook button -->
+         <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
+              'ver_evento', true) ?>" data-send="false" data-layout="button_count"
+              data-width="450" data-show-faces="false"></div>
+      </div>
+      <div class="span-social">
+         <!-- Place this tag in your head or just before your close body tag. -->
+         <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+           {lang: 'pt-BR'}
+         </script>
+
+         <!-- Place this tag where you want the +1 button to render. -->
+         <div class="g-plusone" data-size="medium" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
+              'ver_evento', true) ?>"></div>
+      </div>
+      <hr/>
+   </div>
+
+   <div class="container">
+      <div class="span-8">
+         Palestrante:
+         <?= $this->evento['nome'] ?>
+      </div>
+      <div class="span-4">
+         Tipo:
+         <?= $this->evento['nome_tipo_evento'] ?>
+      </div>
+   </div>
+
+   <br/>
+
+   <div class="container">
+      <div class="span-2">
+         Submissão:
+      </div>
+      <div class="span-6">
+         <?= $this->evento['data_submissao'] ?>
+      </div>
+      <div class="span-1">
+         Nível:
+      </div>
+      <div class="span-4">
+         <?= $this->evento['descricao_dificuldade_evento'] ?>
+      </div>
+   </div>
+
+   <br/>
+
+   <div class="container">
+      <div class="span-20 prepend-2" id="tabs">
+         <ul>
+            <li><a href="#tab-1">Resumo</a></li>
+            <li><a href="#tab-2">Perfil</a></li>
+            <li><a href="#tab-3">Bio</a></li>
+         </ul>
+         <div id="tab-1">
+            <?= $this->evento['resumo'] ?>
+         </div>
+         <div id="tab-2">
+            <?= $this->evento['perfil_minimo'] ?>
+         </div>
+         <div id="tab-3">
+            <?= $this->evento['bio'] ?>
+         </div>
+      </div>
+   </div>
+   <br/><hr/>
+   
+   <div class="fb-comments" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
+              'ver_evento', true) ?>" data-width="650" data-num-posts="5"></div>
+<? endif; ?>
+

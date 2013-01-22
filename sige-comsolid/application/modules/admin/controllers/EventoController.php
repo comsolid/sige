@@ -43,7 +43,7 @@ class Admin_EventoController extends Zend_Controller_Action {
       //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/altera_palestrante.js')); // deprecated
       $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/evento/detalhes.js'));
 
-      $data = $this->getRequest()->getPost();
+      //$data = $this->getRequest()->getPost();
 
       $idEvento = $this->_request->getParam('id', 0);
 
@@ -51,8 +51,8 @@ class Admin_EventoController extends Zend_Controller_Action {
       $data = $evento->buscaEventoPessoa($idEvento);
       $this->view->evento = $data[0];
       
-      $date = new Zend_Date($this->view->evento['data_submissao']);
-      $this->view->evento['data_submissao'] = $date->toString('dd/MM/YYYY HH:mm:ss');
+      //$date = new Zend_Date($this->view->evento['data_submissao']);
+      //$this->view->evento['data_submissao'] = $date->toString('dd/MM/YYYY HH:mm:ss');
 
       // $this->view->idEvento = $idEvento;
       // $this->view->nomeEvento = $data [0] ['nome_evento'];

@@ -543,12 +543,17 @@ class EventoController extends Zend_Controller_Action {
    }
    
    public function programacaoAction() {
-      $this->view->menu->setAtivo('submissao');
+      $this->view->menu->setAtivo('programacao');
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/programacao.js'));
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $model = new Application_Model_Evento();
       $this->view->lista = $model->programacao($sessao["idEncontro"]);
@@ -559,6 +564,7 @@ class EventoController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
@@ -653,12 +659,47 @@ class EventoController extends Zend_Controller_Action {
                $this->view->evento = $model->lerEvento($where);
             } catch (Exception $e) {
                $this->_helper->flashMessenger->addMessage(
-                        array('error' => $e->getMessage()));
+                       array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                           . $e->getMessage()));
                $this->_helper->redirector->goToRoute(array(
                   'controller' => 'participante',
                   'action' => 'index'), 'default', true);
             }
          }
+      }
+   }
+   
+   /**
+    * Mapeada como
+    *    /e/:id 
+    */
+   public function verAction() {
+      $this->view->menu->setAtivo('programacao');
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/ver.js'));
+      
+      try {
+         $idEvento = $this->_request->getParam('id', 0);
+         $evento = new Application_Model_Evento();
+         $data = $evento->buscaEventoPessoa($idEvento);
+         if (empty($data)) {
+            $this->_helper->flashMessenger->addMessage(
+                        array('notice' => 'Evento não encontrado.'));
+         } else {
+            $this->view->evento = $data[0];
+         }
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(
+                       array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                           . $e->getMessage()));
       }
    }
    

@@ -24,13 +24,12 @@ class IndexController extends Zend_Controller_Action
 			$resultadoConsulta = $pessoa->avaliaLogin($data['email'], $data['senha']);
 
 			if (sizeof($resultadoConsulta) > 0) {
+				if ($resultadoConsulta['valido']) {
 
-				if ($resultadoConsulta[0]->valido) {
-
-					$idPessoa = $resultadoConsulta[0]->id_pessoa;
-					$administrador = $resultadoConsulta[0]->administrador;
-					$apelido = $resultadoConsulta[0]->apelido;
-               $twitter = $resultadoConsulta[0]->twitter;
+					$idPessoa = $resultadoConsulta['id_pessoa'];
+					$administrador = $resultadoConsulta['administrador'];
+					$apelido = $resultadoConsulta['apelido'];
+               $twitter = $resultadoConsulta['twitter'];
 					
 					$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 					$idEncontro = $config->encontro->codigo;

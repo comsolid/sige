@@ -77,25 +77,30 @@ body{
 .inativo{
 	background-color: #f0f0f0 !important;
 }
-	#menu a{
-		height: 100%;
-		float: left;
-	}
-	#menu a,#menu img{
-		text-decoration: none;
-		border: none;
-	}
-	#menu img{
-		padding: 0 28px;
-	}
-	#menu a.verde{
-		-moz-border-radius:5px 5px 5px 5px;
-		background-color: #359324;
-	}
-	#menu a:hover{
-		background-color: #359324;
-		-moz-border-radius:5px 5px 5px 5px;
-	}
+
+#menu a{
+   height: 100%;
+   float: left;
+   line-height:3em;
+   text-align: center;
+   color: white;
+   padding: 0 18px;
+}
+#menu a,#menu img{
+   text-decoration: none;
+   border: none;
+}
+/*#menu img{
+   padding: 0 18px;
+}*/
+#menu a.verde{
+   -moz-border-radius:5px 5px 5px 5px;
+   background-color: #359324;
+}
+#menu a:hover{
+   background-color: #359324;
+   -moz-border-radius:5px 5px 5px 5px;
+}
 /*FIM MENU*/
 
 /*RODAPE*/
@@ -105,19 +110,21 @@ body{
 	width:927px;
 	margin-top: 44px;
 }
-	#rodape div {
-		padding: 0px 33px;
-	}
-	#rodape p {
-		font-size: 9px;
-		color:white;
-		text-align: center;
-		margin: 21px 18%;
-	}
-	#rodape img {
-		
-		padding: 9px;
-	}
+
+#rodape div {
+   padding: 0px 33px;
+}
+
+#rodape p {
+   font-size: 9px;
+   color:white;
+   text-align: center;
+   margin: 21px 18%;
+}
+
+#rodape img {   
+   padding: 9px;
+}
 /*FIM RODAPE*/
 
 /* mensagens de erro - tmp */
@@ -139,3 +146,11 @@ fieldset {padding:0 1.4em 1.4em 1.4em;margin:0 0 1.5em 0;border:1px solid #ccc;}
 legend {font-size:1.2em;margin-top:-0.2em;margin-bottom:1em;}
 fieldset, #IE8#HACK {padding-top:1.4em;}
 legend, #IE8#HACK {margin-top:0;margin-bottom:0;}
+
+div.header3 {
+   font-size: 12.5pt;
+   font-weight: bold;
+   padding-left: 25px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+}
