@@ -1,0 +1,50 @@
+/* 
+    Document   : programacao
+    Created on : 22/01/2013, 19:37:24
+    Author     : atila
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.prog-date {
+	width: 60px; height: 35px;
+	background: #fcfcfc; 
+	background: linear-gradient(top, #fcfcfc 0%,#dad8d8 100%); 
+	background: -moz-linear-gradient(top, #fcfcfc 0%, #dad8d8 100%); 
+	background: -webkit-linear-gradient(top, #fcfcfc 0%,#dad8d8 100%);
+   border: 1px solid #d2d2d2;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.prog-date p {
+	font-family: Helvetica, sans-serif; 
+	font-size: 20px; text-align: center; color: #777; 
+}
+
+.prog-date p span {
+	background: #d10000; 
+	background: linear-gradient(top, #d10000 0%, #7a0909 100%);
+	background: -moz-linear-gradient(top, #d10000 0%, #7a0909 100%);
+	background: -webkit-linear-gradient(top, #d10000 0%, #7a0909 100%);
+   font-size: 15px; font-weight: bold; color: #fff; text-transform: uppercase; 	
+	display: block;
+   border-top: 2px solid #a13838;
+	border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+	padding: 3px 0 3px 0;
+}
+
+@-moz-document url-prefix() {
+    .prog-date {
+        padding: 4px 0 0 0;
+    }
+    .prog-date p span {
+    	padding: 3px 0 3px 0;
+    }
+}

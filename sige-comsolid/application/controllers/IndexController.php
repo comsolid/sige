@@ -65,7 +65,7 @@ class IndexController extends Zend_Controller_Action
 						"administrador" => $administrador,
 						"apelido" => $apelido,
 						"idEncontro" => $idEncontro,
-                   'twitter' => $twitter
+                  "twitter" => $twitter
 					));
 
 					return $this->_helper->redirector->goToRoute(array (

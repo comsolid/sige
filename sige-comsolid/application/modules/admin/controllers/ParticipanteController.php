@@ -13,6 +13,8 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
              'controller' => 'participante',
              'action' => 'index'), 'default', true);
       }
+      $this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
+      
    }
 
    /**

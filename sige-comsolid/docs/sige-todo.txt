@@ -24,6 +24,7 @@ SiGE - TODO
 21. login pode sofrer ataques sql injection // senha: ') or ('1'='1
 22. não permitir que responsável crie mais de uma caravana, banco permite mas sige ainda não!
 23. implementar uma espécie de timeline, que notifica eventos externos em que o participante foi apontado.
+24. usar csso para mimificar css (http://bem.info/tools/csso/)
 
 
 Future releases

@@ -12,6 +12,7 @@ class Admin_CaravanaController extends Zend_Controller_Action {
          return $this->_helper->redirector->goToRoute(array('controller' => 'participante',
                      'action' => 'index'), 'default', true);
       }
+      $this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
    }
 
    public function indexAction() {

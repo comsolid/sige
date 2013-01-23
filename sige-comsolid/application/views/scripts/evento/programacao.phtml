@@ -1,13 +1,18 @@
 <h3>Programação</h3>
 <hr/>
-<? $data_atual = null; ?>
-<? foreach ($this->lista as $item): ?>
+<? $data_atual = null;
+   foreach ($this->lista as $item): ?>
 <div class="container">
    <div class="span-2">
       <?
       if ($item['data'] != $data_atual) {
          $date = new Zend_Date($item['data']);
-         echo $date->toString('dd/MM/YYYY');
+         //echo $date->toString('dd/MM/YYYY');
+      ?>
+      <div class="prog-date">
+         <p><?=$date->toString('dd') ?> <span><?=$date->toString('MMM') ?></span></p>
+      </div>
+      <?
          $data_atual = $item['data'];
       } else {
          echo "&nbsp;";
@@ -23,8 +28,8 @@
             <? endif; ?>
          </div>
          <div>
-            <div>Sala <?=$item['nome_sala'] ?></div>
-            <div><?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
+            <div>Sala <?=$item['nome_sala'] ?> de
+            <?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
             <hr/>
             <?
             if (! empty($item['twitter'])) {

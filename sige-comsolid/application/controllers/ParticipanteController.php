@@ -2,7 +2,8 @@
 class ParticipanteController extends Zend_Controller_Action {
 
 	public function init() {
-		$this->view->menu=new Application_Form_Menu($this->view,'inicio');
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+		$this->view->menu=new Application_Form_Menu($this->view,'inicio', $sessao['administrador']);
 	}
 
 	private function autenticacao() {
@@ -21,20 +22,11 @@ class ParticipanteController extends Zend_Controller_Action {
 		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
 		$idEncontro = $sessao["idEncontro"];
-		$administrador = $sessao["administrador"];
 
-		if ($administrador) {
-			return $this->_helper->redirector->goToRoute(array(), 'inscricoes', true);
-		} else {
-			//$pessoa = new Application_Model_Pessoa();
-			//$pessoa = $pessoa->find($idPessoa);
-			//$this->view->pessoa = $pessoa[0];
-
-			$eventoDemanda = new Application_Model_EventoDemanda();
-			$select = $eventoDemanda->select();
-			$eventoParticipante = $eventoDemanda->getMeusEvento(array($idEncontro, $idPessoa));
-			$this->view->listaParticipanteEventoTabela =$eventoParticipante;
-		}
+      $eventoDemanda = new Application_Model_EventoDemanda();
+      $select = $eventoDemanda->select();
+      $eventoParticipante = $eventoDemanda->getMeusEvento(array($idEncontro, $idPessoa));
+      $this->view->listaParticipanteEventoTabela =$eventoParticipante;
 	}
 
 	/**

@@ -2,11 +2,14 @@
 class EventoController extends Zend_Controller_Action {
 
 	public function init() {
-		//Initialize action controller here 
-		if (!Zend_Auth :: getInstance()->hasIdentity()) {
-			return $this->_helper->redirector->goToRoute(array (), 'login', true);
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+		$this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+	}
+   
+   private function autenticacao() {
+		if (!Zend_Auth::getInstance()->hasIdentity()) {
+			return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
-		$this->view->menu = new Application_Form_Menu($this->view, 'inicio');
 	}
 
    /**
@@ -14,6 +17,7 @@ class EventoController extends Zend_Controller_Action {
     *    /submissao 
     */
 	public function indexAction() {
+      $this->autenticacao();
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
@@ -60,6 +64,7 @@ class EventoController extends Zend_Controller_Action {
 	}
    
    public function ajaxBuscarAction() {
+      $this->autenticacao();
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
       
@@ -106,6 +111,7 @@ class EventoController extends Zend_Controller_Action {
    }
    
    public function ajaxInteresseAction() {
+      $this->autenticacao();
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
       
@@ -326,6 +332,7 @@ class EventoController extends Zend_Controller_Action {
 	}
 
 	public function submeterAction() {
+      $this->autenticacao();
 		$this->view->menu->setAtivo('submissao');
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
 		$data = $this->getRequest()->getPost();
@@ -458,6 +465,7 @@ class EventoController extends Zend_Controller_Action {
 	}
 
 	public function editarAction() {
+      $this->autenticacao();
 		$this->view->menu->setAtivo('submissao');
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
@@ -548,18 +556,23 @@ class EventoController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/evento/programacao.css'));
       
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/programacao.js'));
-      $sessao = Zend_Auth::getInstance()->getIdentity();
+      
+      $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+		$idEncontro = $config->encontro->codigo;
+      //$sessao = Zend_Auth::getInstance()->getIdentity();
       $model = new Application_Model_Evento();
-      $this->view->lista = $model->programacao($sessao["idEncontro"]);
+      $this->view->lista = $model->programacao($idEncontro);
    }
    
    public function interesseAction() {
+      $this->autenticacao();
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
@@ -608,7 +621,7 @@ class EventoController extends Zend_Controller_Action {
    }
    
    public function desfazerInteresseAction() {
-      
+      $this->autenticacao();
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idPessoa = $sessao["idPessoa"];
       
