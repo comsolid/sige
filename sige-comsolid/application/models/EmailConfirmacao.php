@@ -24,11 +24,11 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
 		$emailText = $this->getMsgConfirmacao($idEncrontro);
 
-		$emailText->mensagem = str_replace('<nome>', utf8_decode ($linha->nome), $emailText->mensagem);
+		$emailText->mensagem = str_replace('{nome}', utf8_decode ($linha->nome), $emailText->mensagem);
 
-		$emailText->mensagem = str_replace('<email>', $linha->email, $emailText->mensagem);
-		$emailText->mensagem = str_replace('<senha>', $pessoa->senha, $emailText->mensagem);
-		$emailText->mensagem = str_replace('<href_link>', $emailText->link, $emailText->mensagem);
+		$emailText->mensagem = str_replace('{email}', $linha->email, $emailText->mensagem);
+		$emailText->mensagem = str_replace('{senha}', $pessoa->senha, $emailText->mensagem);
+		$emailText->mensagem = str_replace('{href_link}', $emailText->link, $emailText->mensagem);
 		$mail->setBodyHtml($emailText->mensagem);
 		$mail->addTo($linha->email, $linha->nome);
 		$mail->setSubject($emailText->assunto);
@@ -47,11 +47,11 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
 		$emailText = $this->getMsgCorrecao($idEncrontro);
 
-		$emailText->mensagem = str_replace('<nome>', $linha->nome, $emailText->mensagem);
+		$emailText->mensagem = str_replace('{nome}', $linha->nome, $emailText->mensagem);
 
-		$emailText->mensagem = str_replace('<email>', $linha->email, $emailText->mensagem);
-		$emailText->mensagem = str_replace('<senha>', $pessoa->senha, $emailText->mensagem);
-		$emailText->mensagem = str_replace('<href_link>', 'http://www.google.com', $emailText->mensagem);
+		$emailText->mensagem = str_replace('{email}', $linha->email, $emailText->mensagem);
+		$emailText->mensagem = str_replace('{senha}', $pessoa->senha, $emailText->mensagem);
+		$emailText->mensagem = str_replace('{href_link}', $emailText->link, $emailText->mensagem);
 		$mail->setBodyHtml($emailText->mensagem);
 		$mail->addTo($linha->email, $linha->nome);
 		$mail->setSubject($emailText->assunto);
