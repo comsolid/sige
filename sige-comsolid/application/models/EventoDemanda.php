@@ -27,7 +27,7 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
    public function getMeusEvento($data) {
       $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
          TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH:MM') AS hora_inicio,
-         TO_CHAR(hora_fim, 'HH:MM') AS hora_fim
+         TO_CHAR(hora_fim, 'HH:MM') AS hora_fim, validada
          FROM evento_demanda ed INNER JOIN evento_realizacao er ON (ed.evento = er.evento)
          INNER JOIN evento e ON (er.id_evento = e.id_evento)
          INNER JOIN tipo_evento te ON (e.id_tipo_evento = te.id_tipo_evento)

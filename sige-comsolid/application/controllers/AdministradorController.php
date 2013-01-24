@@ -1,4 +1,7 @@
 <?php
+/**
+ * @deprecated use module admin 
+ */
 class AdministradorController extends Zend_Controller_Action {
 	
 	public function init() {

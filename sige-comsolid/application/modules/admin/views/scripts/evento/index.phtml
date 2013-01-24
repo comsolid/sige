@@ -1,29 +1,29 @@
 <?php echo $this->partial('menu.phtml'); ?>
 
 <div class="container">
-   <div class="span-6 border">
-      Evento:<br/>
+   <div class="span-10" id="radioset_evento">
+      <i class="icon-star"></i> Evento:<br/>
       <input type="radio" class="radio tipo_evento" name="tipo_evento"
              id="tipo_evento_0" value="0" checked="checked" />
-      <label for="tipo_evento_0">Todos</label><br>
+      <label for="tipo_evento_0">Todos</label>
       <? foreach ($this->tipoEvento as $tipoEvento): ?>
          <input type="radio" class="radio tipo_evento" name="tipo_evento"
                 id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
                 value="<?= $tipoEvento->id_tipo_evento ?>" />
          <label for="tipo_evento<?= $tipoEvento->id_tipo_evento ?>">
             <?= $tipoEvento->nome_tipo_evento ?>
-         </label><br>
+         </label>
       <? endforeach; ?>
    </div>
-   
-   <div class="span-6">
-      Situação:<br/>
+
+   <div class="span-10" id="radioset_situacao">
+      <i class="icon-filter"></i> Situação:<br/>
       <input type="radio" class="radio situacao" name="atividades" 
-             id="sit_todos" value="0" checked="checked"/><label for="sit_todos">Todos</label><br>
+             id="sit_todos" value="0" checked="checked"/><label for="sit_todos">Todos</label>
       <input type="radio" class="radio situacao" name="atividades"
-             id="sit_validadas" value="1"/><label for="sit_validadas">Validadas</label><br>
+             id="sit_validadas" value="1"/><label for="sit_validadas">Validadas</label>
       <input type="radio" class="radio situacao" name="atividades"
-             id="sit_nao_validadas" value="2"/><label for="sit_nao_validadas">Não-Validadas</label><br>
+             id="sit_nao_validadas" value="2"/><label for="sit_nao_validadas">Não-Validadas</label>
 
    </div>
 </div>
@@ -31,7 +31,7 @@
 <br>
 
 <input type="text" class="text" name="termo" id="termo"
-       placeholder="Buscar evento" size="30" maxlength="50" style="float: left;" />
+       placeholder="Buscar evento" size="50" maxlength="50" style="float: left;" />
 <img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
      style="display: none; float: left;" />
 

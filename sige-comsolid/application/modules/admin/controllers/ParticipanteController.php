@@ -53,10 +53,14 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       foreach ($data as $value) {
          if ($value['confirmado']) {
             $isValidado = "Confimado!";
-            $acao = '<a href=' . $this->view->baseUrl('/u/desfazer-confirmar/' . $value["id_pessoa"]) . '>Desfazer</a>';
+            // $acao = '<a href=' . $this->view->baseUrl('/u/desfazer-confirmar/' . $value["id_pessoa"]) . '>Desfazer</a>';
+            $acao = "<a class=\"situacao\" 
+               data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">Desfazer</a>";
          } else {
-            $acao = '<a href=' . $this->view->baseUrl('/u/confirmar/' . $value["id_pessoa"]) . '>Confirmar</a>';
             $isValidado = "Não confimado!";
+            //$acao = '<a href=' . $this->view->baseUrl('/u/confirmar/' . $value["id_pessoa"]) . '>Confirmar</a>';
+            $acao = "<a class=\"situacao\"
+               data-url=\"/u/confirmar/{$value["id_pessoa"]}\">Confirmar</a>";
          }
          $json->aaData[] = array(
              "{$value ['nome']}",
@@ -85,20 +89,39 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
     * @return type 
     */
    public function presencaAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
       $id = $this->_getParam('id', 0);
       $confirmar = $this->_getParam('confirmar', 'f');
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idEncontro = $sessao ["idEncontro"];
       $model = new Application_Model_Pessoa();
-      if ($confirmar == 't') {
-         $data = 'now()';
-      } else {
-         $data = 'null';
-      }
-      $select = "UPDATE encontro_participante SET confirmado = ?, 
+      
+      $json = new stdClass;
+      try {
+         if ($confirmar == 't') {
+            $data = 'now()';
+            $json->msg = "Participante confirmado.";
+         } else {
+            $data = 'null';
+            $json->msg = "Desfazer confirmação participante com sucesso.";
+         }
+         $select = "UPDATE encontro_participante SET confirmado = ?, 
          data_confirmacao = {$data} where id_pessoa = ? AND id_encontro = ?";
-      $model->getAdapter()->fetchAll($select, array($confirmar, $id, $idEncontro));
-      return $this->_helper->redirector->goToRoute(array(), 'inscricoes', true);
+         $model->getAdapter()->fetchAll($select, array($confirmar, $id, $idEncontro));
+         $json->ok = true;
+      } catch (Exception $e) {
+         $json->ok = false;
+         $json->erro = "Ocorreu um erro inesperado ao marcar interesse em evento.<br/>Detalhes"
+                 . $ex->getMessage();
+      }
+
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
    }
 }
 

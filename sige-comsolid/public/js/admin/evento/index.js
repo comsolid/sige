@@ -6,15 +6,21 @@ $(function() {
       "bFilter": false
 	});
    
+   $("#termo").select();
+   $("#radioset_evento, #radioset_situacao").buttonset();
+   
    // buscar ao iniciar página.
    buscar();
    
-   $("#termo").keyup(function() {
-      buscar();
-   });
+   $("#termo").autocomplete({
+		source: function() {
+			buscar();
+		}
+	});
    
-   $("input:radio").change(function() {
+   $("input:radio").click(function() {
       buscar();
+      $("#termo").select();
    });
 });
 

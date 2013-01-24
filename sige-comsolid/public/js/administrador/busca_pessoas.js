@@ -4,6 +4,7 @@ $(document).ready(function() {
    $("#nome_pessoa").select();
 	$('#radioset_tipo_busca').buttonset();
    
+   getValores();
 	getValoresCoordenacao();
 	getValoresOrganizacao();
 	
@@ -24,7 +25,10 @@ $(document).ready(function() {
       getValores();
    });
 
-	getValores();
+	$(document).delegate('a.situacao', 'click', function() {
+      //console.log($(this).attr('data-url'));
+      presenca($(this).attr('data-url'));
+   });
 });
 
 function getValores() {
@@ -40,6 +44,18 @@ function getValores() {
       }
    }).complete(function() {
       $("#loading").hide();
+   });
+}
+
+function presenca(url) {
+   $.getJSON(url, function(json) {
+      if (json.ok) {
+         mostrarMensagem("div.success", json.msg);
+      } else if (json.erro != null) {
+         mostrarMensagem("div.error", json.erro);
+      }
+   }).complete(function() {
+      getValores();
    });
 }
 
@@ -88,4 +104,15 @@ function getValoresOrganizacao(){
 			}); // close each(
 		}
 	});
+}
+
+function mostrarMensagem( id, msg ) {
+   var aux = (msg != null) ? msg : "Erro desconhecido.";
+   $(id).html( aux ).show( "blind", 500, esconderMensagem(id) );
+}
+
+function esconderMensagem(id) {
+   setTimeout(function() {
+      $( id + ":visible" ).fadeOut();
+   }, 3000 );
 }

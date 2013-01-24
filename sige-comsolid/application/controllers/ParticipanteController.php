@@ -24,7 +24,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		$idEncontro = $sessao["idEncontro"];
 
       $eventoDemanda = new Application_Model_EventoDemanda();
-      $select = $eventoDemanda->select();
+      //$select = $eventoDemanda->select();
       $eventoParticipante = $eventoDemanda->getMeusEvento(array($idEncontro, $idPessoa));
       $this->view->listaParticipanteEventoTabela =$eventoParticipante;
 	}
@@ -159,6 +159,7 @@ class ParticipanteController extends Zend_Controller_Action {
 			unset ($data['id_municipio']);
 			unset ($data['id_instituicao']);
 			//alterar no banco ... e mantem uma trasacao 
+         $sentinela = 0;
          $adapter = $pessoa->getAdapter();
 			try {
 				$adapter->beginTransaction();

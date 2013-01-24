@@ -18,7 +18,10 @@ class Admin_EventoController extends Zend_Controller_Action {
    public function indexAction() {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       // $this->view->headScript()->appendFile($this->view->baseUrl('/js/caravana/inicio.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('/js/admin/evento/index.js'));
@@ -68,6 +71,16 @@ class Admin_EventoController extends Zend_Controller_Action {
          $this->view->url_situacao = "<a href=\"/admin/evento/validar/{$idEvento}\" 
                  class=\"no-bottom\"><i class=\"icon-ok\"></i> Validar</a>";
       }
+      
+      if ($data[0]['apresentado']) {
+         $this->view->url_apresentado = "<a href='{$this->view->url(array('id' => $idEvento),
+                 'evento_desfazer_apresentado', true)}' class='no-bottom'>
+                  <i class='icon-eye-close'></i> Desfazer Apresentado</a>";
+      } else {
+         $this->view->url_apresentado = "<a href='{$this->view->url(array('id' => $idEvento),
+                 'evento_apresentado', true)}' class='no-bottom'>
+                  <i class='icon-eye-open'></i> Apresentado</a>";
+      }
 
       $select = "SELECT evento, descricao, TO_CHAR(data, 'DD/MM/YYYY') AS data, TO_CHAR(hora_inicio, 'HH24:MI') as inicio, TO_CHAR(hora_fim, 'HH24:MI') as fim, nome_sala FROM evento_realizacao er INNER JOIN sala s ON (er.id_sala = s.id_sala) WHERE id_evento = ?";
       $data = $evento->getAdapter()->fetchAll($select, $idEvento);
@@ -81,16 +94,18 @@ class Admin_EventoController extends Zend_Controller_Action {
     *    /admin/evento/invalidar/:id
     */
    public function situacaoAction() {
-      $idEvento = $this->_request->getParam('id', 0);
+      $idEvento = $this->_getParam('id', 0);
       $validar = $this->_getParam('validar', 'f');
 
-      $evento = new Application_Model_Evento ();
-      if ($validar == 't') {
-         // TODO: criar apenas um método para validar ou invalidar
-         $data = $evento->validaEvento($idEvento);
-      } else {
-         $data = $evento->invalidaEvento($idEvento);
+      $evento = new Application_Model_Evento();
+      try {
+         $sql = "UPDATE evento SET validada = ? WHERE id_evento = ?";
+         $evento->getAdapter()->fetchAll($sql, array($validar, $idEvento));
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(array('error' =>
+             'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
       }
+
       $this->_helper->redirector->goToRoute(array(
           'module' => 'admin',
           'controller' => 'evento',
@@ -98,6 +113,31 @@ class Admin_EventoController extends Zend_Controller_Action {
           'id' => $idEvento), 'default');
    }
    
+   /**
+    * Mapeada como
+    *    /admin/evento/apresentado/:id
+    *    /admin/evento/desfazer-apresentado/:id
+    */
+   public function situacaoPosEventoAction() {
+      $idEvento = $this->_getParam('id', 0);
+      $apresentado = $this->_getParam('apresentado', 'f');
+
+      $evento = new Application_Model_Evento();
+      try {
+         $sql = "UPDATE evento SET apresentado = ? WHERE id_evento = ?";
+         $evento->getAdapter()->fetchAll($sql, array($apresentado, $idEvento));
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(array('error' =>
+             'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
+      }
+
+      $this->_helper->redirector->goToRoute(array(
+          'module' => 'admin',
+          'controller' => 'evento',
+          'action' => 'detalhes',
+          'id' => $idEvento), 'default');
+   }
+
    public function ajaxBuscarAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);

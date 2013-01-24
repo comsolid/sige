@@ -56,10 +56,14 @@ class Admin_HorarioController extends Zend_Controller_Action {
                            'action' => 'detalhes',
                            'id' => $idEvento), 'default', true);
             } else {
-               echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
+               // echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
             }
          } catch (Exception $e) {
-            echo $e->getMessage();
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                         . $e->getMessage()));
          }
       }
    }
@@ -99,7 +103,9 @@ class Admin_HorarioController extends Zend_Controller_Action {
                               'action' => 'detalhes',
                               'id' => $evento), 'default', true);
                } else {
-                  echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
+                  // echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
+                  $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
                }
             } catch (Exception $e) {
                // DONE: colocar erro em flashMessage

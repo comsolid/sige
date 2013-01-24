@@ -124,6 +124,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       );
       $router->addRoute('invalidar_evento', $route);
       
+      $route = new Zend_Controller_Router_Route(
+            '/admin/evento/apresentado/:id',
+            array(
+               'module' => 'admin',
+               'controller' => 'evento',
+               'action' => 'situacao-pos-evento',
+               'apresentado' => 't'
+            )
+      );
+      $router->addRoute('evento_apresentado', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+            '/admin/evento/desfazer-apresentado/:id',
+            array(
+               'module' => 'admin',
+               'controller' => 'evento',
+               'action' => 'situacao-pos-evento',
+               'apresentado' => 'f'
+            )
+      );
+      $router->addRoute('evento_desfazer_apresentado', $route);
+      
       $route = new Zend_Controller_Router_Route_Static(
          '/programacao',
          array(

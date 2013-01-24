@@ -1,4 +1,7 @@
 <?php
+/**
+ * @deprecated use controller index 
+ */
 class LoginController extends Zend_Controller_Action {
 
 	public function init() {

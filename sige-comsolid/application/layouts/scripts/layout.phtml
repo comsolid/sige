@@ -22,10 +22,10 @@
             ?>
                <span>Bem-Vindo(a) :</span>
                <a href="<?php echo $this->url(array('controller' => 'participante',
-                   'action' => 'ver'), 'default'); ?>" class="no-bottom">
+                   'action' => 'ver'), 'default', true); ?>" class="no-bottom">
                   <span class="apelido"><i class="icon-user"></i> <?= $this->usuaLogado['apelido'] ?></span>
                </a>&nbsp;
-               <a href="<?php echo $this->url(array(), 'logout'); ?>" class="no-bottom">
+               <a href="<?php echo $this->url(array(), 'logout', true); ?>" class="no-bottom">
 						<i class="icon-signout"></i> Sair</a>
             <? } ?>
          </div>
