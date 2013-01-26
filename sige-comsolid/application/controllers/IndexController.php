@@ -55,6 +55,8 @@ class IndexController extends Zend_Controller_Action
 							$encontro[] =  $r;
 						}
 					   $pessoa->atualizaEncontro($encontro);
+                  $this->_helper->flashMessenger->addMessage(
+                     array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!'));
 					}
 
 					$auth = Zend_Auth::getInstance();
@@ -128,5 +130,11 @@ class IndexController extends Zend_Controller_Action
                      array('error' => 'E-mail não cadastrado.'));
          }
       }
+   }
+   
+   public function sobreAction() {
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
    }
 }

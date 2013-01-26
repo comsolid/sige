@@ -4,7 +4,7 @@
 <a href="<?php echo $this->url(array('module' => 'admin',
     'controller' => 'caravana',
     'action' => 'index'), 'default', true);
-?>" class="no-bottom"><i class="icon-plane"></i> Caravanas</a>&nbsp;&nbsp;&nbsp;
+?>" class="no-bottom"><i class="icon-plane"></i> Caravana</a>&nbsp;&nbsp;&nbsp;
 
 <a href="<?php echo $this->url(array(
     'module' => 'admin',
@@ -13,5 +13,9 @@
 ?>" class="no-bottom"><i class="icon-star"></i> Evento</a>&nbsp;&nbsp;&nbsp;
 
 <a href="#" class="no-bottom"><i class="icon-bar-chart"></i> Relatórios</a>&nbsp;&nbsp;&nbsp;
-<a href="#" class="no-bottom"><i class="icon-cogs"></i> Configurações</a>
+<a href="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'config',
+    'action' => 'index'), 'default', true);
+?>" class="no-bottom"><i class="icon-cogs"></i> Configurações</a>
 <br><br>

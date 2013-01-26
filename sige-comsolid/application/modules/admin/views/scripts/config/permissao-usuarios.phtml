@@ -1,0 +1,43 @@
+<?php echo $this->partial('menu.phtml'); ?>
+
+<div id="radioset_tipo_busca">
+	<i class="icon-search"></i> Buscar por:
+	<input type="radio" id="b_nome" name="buscar_por" value="nome" checked="checked"/><label for="b_nome">Nome</label>
+	<input type="radio" id="b_email" name="buscar_por"  value="email"/><label for="b_email">E-mail</label>
+</div>
+<br/>
+
+<div class="container">
+   <div class="span-14">
+      <input type="text" class="text" name="termo" id="termo" value=""
+            placeholder="Buscar usuário..." size="50" maxlength="50" style="float: left;"/>
+      <img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
+           style="display: none; float: left;" />
+   </div>
+</div>
+<br/>
+
+<table class="display" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th>Nome</th>
+         <th>Apelido</th>
+         <th>E-mail</th>
+         <th>Permissões</th>
+         <th>Ação</th>
+      </tr>
+   </thead>
+   <tbody>
+      <?/* if (count($this->lista) > 0):
+            foreach ($this->lista as $value): ?>
+      <tr>
+         <td><?=$value['nome'] ?></td>
+         <td><?=$value['apelido'] ?></td>
+         <td><?=$value['email'] ?></td>
+         <td><?=$value['confirmado'] ?></td>
+         <td></td>
+      </tr>
+      <?    endforeach;
+         endif; */?>
+   </tbody>
+</table>

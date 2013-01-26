@@ -5,8 +5,6 @@ $(document).ready(function() {
 	$('#radioset_tipo_busca').buttonset();
    
    getValores();
-	getValoresCoordenacao();
-	getValoresOrganizacao();
 	
 	oTablePes = $('#pessoas').dataTable( {
 		"sPaginationType" : "full_numbers",
@@ -57,53 +55,6 @@ function presenca(url) {
    }).complete(function() {
       getValores();
    });
-}
-
-function getValoresCoordenacao(){
-	var idEncontro = $("#id_encontro").val();
-	
-	$.ajax( {
-		
-		type : "POST",
-		url : "/administrador/buscacoordenacao/idEncontro/"+idEncontro,
-
-		// data:
-		// "/5/acao/busca/nome_evento/"+descEvento+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento+"/idEncontro/"+$("#idEncontro").val(),
-		success : function(AJAX_RESPONSE_OK) {
-
-			$(AJAX_RESPONSE_OK).find("busca").each(function() {
-
-				// /document.getElementById('idnota').value=$(this).find("produto").attr("value");
-					// document.getElementById('descbusca').focus();
-					// alert($(this).find("produto").text());totaitens
-				$('#resultadoCoordenacao').html($(this).find("tbody").text());
-
-			}); // close each(
-		}
-	});
-}
-
-function getValoresOrganizacao(){
-	var idEncontro = $("#id_encontro").val();
-	
-	$.ajax( {
-		type : "POST",
-		url : "/administrador/buscaorganizacao/idEncontro/"+idEncontro,
-
-		// data:
-		// "/5/acao/busca/nome_evento/"+descEvento+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento+"/idEncontro/"+$("#idEncontro").val(),
-		success : function(AJAX_RESPONSE_OK) {
-
-			$(AJAX_RESPONSE_OK).find("busca").each(function() {
-
-				// /document.getElementById('idnota').value=$(this).find("produto").attr("value");
-					// document.getElementById('descbusca').focus();
-					// alert($(this).find("produto").text());totaitens
-				$('#resultadoOrganizacao').html($(this).find("tbody").text());
-
-			}); // close each(
-		}
-	});
 }
 
 function mostrarMensagem( id, msg ) {

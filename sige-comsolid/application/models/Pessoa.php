@@ -142,6 +142,36 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 	   return $this->getAdapter()->fetchAll($select,$encontro);
 	}
 	
-	
+	public function buscarPermissaoUsuarios($idEncontro, $termo = "",
+           $buscar_por = "nome", $tipo_usuario = 0) {
+      
+      $sql = "SELECT p.id_pessoa, p.nome, p.apelido,
+               p.email, p.administrador, tu.id_tipo_usuario, tu.descricao_tipo_usuario
+         FROM encontro_participante ep
+         INNER JOIN pessoa p ON ep.id_pessoa = p.id_pessoa
+         INNER JOIN tipo_usuario tu ON ep.id_tipo_usuario = tu.id_tipo_usuario
+         WHERE ep.id_encontro = ? ";
+      $where = array($idEncontro);
+      if (! empty($termo)) {
+         if ($buscar_por == "nome") {
+            $sql .= " AND p.nome ILIKE ? ";
+            $where[] = "%{$termo}%";
+         } else if ($buscar_por == "email") {
+            $sql .= " AND p.email ILIKE ? ";
+            $where[] = "%{$termo}%";
+         } else if ($buscar_por == "id_pessoa") {
+            $sql .= " AND p.id_pessoa = ? ";
+            $where[] = (int) $termo;
+         }
+      }
+      
+      if ($tipo_usuario > 0) {
+         $sql .= " AND tu.id_tipo_usuario = ? ";
+         $where[] = $tipo_usuario;
+      }
+      
+      $sql .= " ORDER BY p.nome LIMIT 50 ";
+      return $this->getAdapter()->fetchAll($sql, $where);
+   }
 
 }

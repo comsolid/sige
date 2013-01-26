@@ -1,11 +1,12 @@
 <div>
-	<img class="fl_left"  src="<?=$this->baseUrl('imagens/layout/icn_plixie.png')?>"></img>
-	<img class="fl_left cl_right" src="<?=$this->baseUrl('imagens/layout/icn_fidias.png')?>"></img>
-	
+	<img class="fl_left"  src="<?=$this->baseUrl('imagens/layout/icn_sige.png')?>"></img>
+   
 	<p  class="fl_left cl_right" align="center"> 
-	SIGE by COMSOLiD - @Copyright 2011
+      SIGE por <a href="http://comsolid.org" style="color: white">COMSOLiD</a> - @Copyleft <?=date('Y') ?> |
+      <a href="<?=$this->url(array('controller'=>'index',
+          'action' => 'sobre'), 'default', true) ?>" style="color: white">Sobre</a>
 	</p>
-	
-	<img class="fl_left cl_right"  src="<?=$this->baseUrl('imagens/layout/icn_sige.png')?>"></img>
-	<img class="fl_right cl_right"  src="<?=$this->baseUrl('imagens/layout/icn_comsolid.png')?>"></img>
+	<a href="http://comsolid.org/" target="_blank">
+      <img class="fl_right cl_right" src="<?= $this->baseUrl('imagens/layout/icn_comsolid.png') ?>" alt="COMSOLiD"/>
+   </a>
 </div>
