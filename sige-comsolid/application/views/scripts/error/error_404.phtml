@@ -1,19 +1,82 @@
+<style>
+   .inicio {
+      background-color: #0099CC;
+      color: white;
+      padding: 10px;
+   }
 
-  <h1>An error occurred</h1>
-  <h2><?php echo $this->message ?></h2>
+   .programacao {
+      background-color: #CC0000;
+      color: white;
+      padding: 10px;
+   }
 
-  <?php if (isset($this->exception)): ?>
+   .login {
+      background-color: #FF8800;
+      color: white;
+      padding: 10px;
+   }
 
-  <h3>Exception information:</h3>
-  <p>
+   .participar {
+      background-color: #669900;
+      color: white;
+      padding: 10px;
+   }
+
+   .span-4 h3, .span-4 a {
+      color: white !important;
+   }
+</style>
+
+
+<div class="container">
+   <div class="span-12 prepend-5">
+      <span style="font-size: 160px; font-weight: bold">404</span>
+      <h2><?php echo $this->message ?></h2>
+   </div>
+</div>
+
+<div class="container">
+   <div class="span-4 inicio">
+      <h3>Início</h3>
+      <hr/>
+      <a href="/">Clique aqui para voltar a página inicial.</a>
+   </div>
+   <div class="span-4 prepend-1 programacao">
+      <h3>Programação</h3>
+      <hr/>
+      <a href="<?= $this->url(array(), 'programacao', true) ?>">
+         Confira a programação do encontro que conta com Palestrar,
+         Minicursos e Oficinas.</a>
+   </div>
+   <div class="span-4 prepend-1 login">
+      <h3>Login</h3>
+      <hr/>
+      <a href="<?= $this->url(array(), 'login', true) ?>">Faça o login no SiGE para ter acesso a sua página
+         de interesses, submissão de trabalhos, etc.</a>
+   </div>
+   <div class="span-4 prepend-1 participar">
+      <h3>Participar</h3>
+      <hr/>
+      <a href="<?= $this->url(array(), 'participar', true) ?>">Junte-se a nós e participe do evento. Basta se cadastrar
+         e trazer 1 Kg de alimento no dia do evento.</a>
+   </div>
+</div>
+
+<?php if (isset($this->exception)): ?>
+
+   <h3>Exception information:</h3>
+   <p>
       <b>Message:</b> <?php echo $this->exception->getMessage() ?>
-  </p>
+   </p>
 
-  <h3>Stack trace:</h3>
-  <pre><?php echo $this->exception->getTraceAsString() ?>
-  </pre>
+   <h3>Stack trace:</h3>
+   <pre><?php echo $this->exception->getTraceAsString() ?>
+   </pre>
 
-  <h3>Request Parameters:</h3>
-  <pre><?php echo var_export($this->request->getParams(), true) ?>
-  </pre>
-  <?php endif ?>
+   <h3>Request Parameters:</h3>
+   <pre><?php echo var_export($this->request->getParams(), true) ?>
+   </pre>
+   <?php
+
+ endif ?>

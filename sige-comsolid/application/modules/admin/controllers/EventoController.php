@@ -20,10 +20,10 @@ class Admin_EventoController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      // $this->view->headScript()->appendFile($this->view->baseUrl('/js/caravana/inicio.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('/js/admin/evento/index.js'));
 
       $tipoEventos = new Application_Model_TipoEvento();
@@ -40,14 +40,10 @@ class Admin_EventoController extends Zend_Controller_Action {
 
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-      //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/teste.js')); // deprecated
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
-      //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/altera_palestrante.js')); // deprecated
       $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/evento/detalhes.js'));
-
-      //$data = $this->getRequest()->getPost();
 
       $idEvento = $this->_request->getParam('id', 0);
 
@@ -55,19 +51,10 @@ class Admin_EventoController extends Zend_Controller_Action {
       $data = $evento->buscaEventoPessoa($idEvento);
       $this->view->evento = $data[0];
       
-      //$date = new Zend_Date($this->view->evento['data_submissao']);
-      //$this->view->evento['data_submissao'] = $date->toString('dd/MM/YYYY HH:mm:ss');
-
-      // $this->view->idEvento = $idEvento;
-      // $this->view->nomeEvento = $data [0] ['nome_evento'];
-      
       if ($data[0]['validada']) {
          $this->view->url_situacao = "<a href=\"/admin/evento/invalidar/{$idEvento}\" 
                  class=\"no-bottom\"><i class=\"icon-remove\"></i> Invalidar</a>";
-         //$this->view->url_situacao = "/admin/evento/invalidar/{$idEvento}";
       } else {
-         //$this->view->msg_situacao = "Validar";
-         //$this->view->url_situacao = "/admin/evento/validar/{$idEvento}";
          $this->view->url_situacao = "<a href=\"/admin/evento/validar/{$idEvento}\" 
                  class=\"no-bottom\"><i class=\"icon-ok\"></i> Validar</a>";
       }
@@ -146,9 +133,10 @@ class Admin_EventoController extends Zend_Controller_Action {
 
       $eventos = new Application_Model_Evento();
       $data = array(
-          intval($idEncontro), $this->_request->getParam("termo"), intval($this->_request->getParam("tipo")), intval($this->_request->getParam("situacao")));
-
-      //var_dump($data);
+          intval($idEncontro), $this->_request->getParam("termo"),
+          intval($this->_request->getParam("tipo")),
+          intval($this->_request->getParam("situacao"))
+      );
 
       $rs = $eventos->buscaEventosAdmin($data);
       $json = new stdClass;

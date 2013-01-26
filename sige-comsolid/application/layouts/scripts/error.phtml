@@ -1,11 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Uoh!</title>
-</head>
-<body>
-   <img src="<?=$this->baseUrl('img/404.jpg') ?>"/>
-   <?php echo $this->layout()->content ?>
-</body>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>SiGE - Oh-ouh!</title>
+      <?
+      $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css'));
+      $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+      $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
+      $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
+      ?>
+      <?= $this->headLink() ?>
+   </head>
+   <body>
+      <div id="principal">
+         <div id="corpo">
+            <div id="conteudo">
+               <?php echo $this->layout()->content ?>
+            </div>
+            
+            <div id="rodape">
+               <?php echo $this->render('rodape.phtml') ?>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>

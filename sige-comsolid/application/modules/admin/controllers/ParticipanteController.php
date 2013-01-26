@@ -34,7 +34,7 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/inicio.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/administrador/busca_pessoas.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/participante/index.js'));
       $this->view->idEncontro = $idEncontro;
    }
 

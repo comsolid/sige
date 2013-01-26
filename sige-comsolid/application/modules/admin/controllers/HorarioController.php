@@ -17,10 +17,8 @@ class Admin_HorarioController extends Zend_Controller_Action {
 
    public function criarAction() {
       $idEvento = $this->_request->getParam('id');
-      //$nomeEvento = $this->_request->getParam('nome_evento');
 
       $form = new Application_Form_Horarios();
-      //$form->setDescricao($nomeEvento);
       $form->cria();
       $this->view->form = $form;
 
@@ -36,8 +34,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
          $data['id_evento'] = $idEvento;
          
          try {
-            // DONE: verificar se já existem horários no mesmo dia, na mesma sala
-            // antes de salvar.
             $sessao = Zend_Auth::getInstance()->getIdentity();
             $idEncontro = $sessao ["idEncontro"];
             $existe = $model->existeHorario(array(
@@ -56,7 +52,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
                            'action' => 'detalhes',
                            'id' => $idEvento), 'default', true);
             } else {
-               // echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
                $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
             }
@@ -81,7 +76,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
          if ($form->isValid($formData)) {
             $id = $this->_request->getParam('id', 0);
             $data = $form->getValues();
-            //$data['id_evento'] = $evento;
 
             try {
                $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -103,13 +97,10 @@ class Admin_HorarioController extends Zend_Controller_Action {
                               'action' => 'detalhes',
                               'id' => $evento), 'default', true);
                } else {
-                  // echo "Já existe um evento no mesmo dia, mesma sala e mesmo horário.";
                   $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
                }
             } catch (Exception $e) {
-               // DONE: colocar erro em flashMessage
-               //echo $e->getMessage();
                $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                          . $e->getMessage()));

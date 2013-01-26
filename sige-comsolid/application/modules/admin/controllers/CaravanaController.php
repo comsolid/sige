@@ -16,14 +16,13 @@ class Admin_CaravanaController extends Zend_Controller_Action {
    }
 
    public function indexAction() {
-      $this->view->headLink ()->appendStylesheet ( $this->view->baseUrl ( 'css/tabela_sort.css' ) );
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-      
-		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery-1.6.2.min.js' ) );
-		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( 'js/jquery.dataTables.js' ) );
-		// $this->view->headScript()->appendFile($this->view->baseUrl('/js/caravana/inicio.js'));
-		$this->view->headScript ()->appendFile ( $this->view->baseUrl ( '/js/admin/caravana/index.js' ) );
+
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('/js/admin/caravana/index.js'));
    }
 
    public function ajaxBuscarAction() {
@@ -60,8 +59,7 @@ class Admin_CaravanaController extends Zend_Controller_Action {
               "{$validada}",
               "{$value['num_h']}",
               "{$value['num_m']}",
-              $url,
-              //'<a href=' . $this->view->baseUrl('/administrador/invalidacaravana/id_caravana/' . $value["id_caravana"]) . '>invalidar</a>'
+              $url
          );
       }
       header("Pragma: no-cache");
