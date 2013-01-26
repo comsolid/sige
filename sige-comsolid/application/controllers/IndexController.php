@@ -1,7 +1,6 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
-{
+class IndexController extends Zend_Controller_Action {
 
    public function init() {
 
@@ -30,6 +29,14 @@ class IndexController extends Zend_Controller_Action
 					$administrador = $resultadoConsulta['administrador'];
 					$apelido = $resultadoConsulta['apelido'];
                $twitter = $resultadoConsulta['twitter'];
+               
+               $validaCadastroPessoa = $pessoa->find($idPessoa);
+
+               if ($validaCadastroPessoa[0]->cadastro_validado == false) {
+                  $where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+
+                  $pessoa->update(array('cadastro_validado' => true), $where);
+               }
 					
 					$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 					$idEncontro = $config->encontro->codigo;
@@ -37,10 +44,10 @@ class IndexController extends Zend_Controller_Action
 					// FIXME: seja lá o que seja isso
 					// pelo que dá pra perceber quando o usuário não está no encontro atual
 					// ele é adicionado ao encontro.
+               $rs = $pessoa->buscaUltimoEncontro($idPessoa);
+					$result = $rs[0];
 					if($pessoa->verificaEncontro($idEncontro, $idPessoa) == false) {
 						
-						$p = $pessoa->buscaUltimoEncontro($idPessoa);
-						$result = $p[0];
 						$result['id_encontro'] = intval($idEncontro);
 						// TODO: buscar apenas as colunas desejadas para evitar esses unset's em buscaUltimoEncontro
 						unset($result['data_cadastro']);
@@ -57,7 +64,16 @@ class IndexController extends Zend_Controller_Action
 					   $pessoa->atualizaEncontro($encontro);
                   $this->_helper->flashMessenger->addMessage(
                      array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!'));
-					}
+					} else if (! $result['validado']) {
+                  // se participante ainda não está validado no encontro
+                  // devemos validar
+                  // TODO: refazer este trecho!!!!
+                  $adapter = $pessoa->getAdapter();
+                  $adapter->fetchAll("UPDATE encontro_participante
+                     SET validado = 't', data_validacao = now()
+                     WHERE id_pessoa = {$result['id_pessoa']}
+                     AND id_encontro = {$idEncontro}");
+               }
 
 					$auth = Zend_Auth::getInstance();
 					$storage = $auth->getStorage();
@@ -76,13 +92,11 @@ class IndexController extends Zend_Controller_Action
 					), 'default', true);
 
 				} else {
-					// echo "<br><br>senha inválida.";
                $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Senha está incorreta.'));
 				}
 
 			} else {
-				// echo "<br><br>usuário ou senha incorretos.";
             $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Login está incorreto.'));
 			}
@@ -121,11 +135,9 @@ class IndexController extends Zend_Controller_Action
 
             $mail = new Application_Model_EmailConfirmacao();
             $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro);
-            // echo "E-mail enviado com sucesso, verifique seu e-mail.";
             $this->_helper->flashMessenger->addMessage(
                      array('success' => 'E-mail enviado com sucesso, verifique seu e-mail.'));
          } else {
-            // echo "E-mail não cadastrado.";
             $this->_helper->flashMessenger->addMessage(
                      array('error' => 'E-mail não cadastrado.'));
          }

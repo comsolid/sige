@@ -23,11 +23,6 @@ class CaravanaController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/caravana/index.css'));
       $participante = new Application_Model_Participante();
       
-      // @deprecated use sairAction
-      if ($this->_request->getParam("sair") == 'caravana') {
-         //echo $sessao["idEncontro"] . "rererere" . $sessao["idPessoa"];
-         $participante->sairDaCaravana(array($sessao["idEncontro"], $sessao["idPessoa"]));
-      }
       if ($this->_request->getParam("caravana_resp") == 'exclu' && intval($this->_request->getParam("idcaravana")) > 0) {
          $participante->excluirMinhaCaravanaResponsavel(array($sessao["idEncontro"], $this->_request->getParam("idcaravana")));
       }
@@ -175,71 +170,6 @@ class CaravanaController extends Zend_Controller_Action {
               'action' => 'index'), null, true);
    }
 
-   /**
-    * @deprecated 
-    */
-   public function addparticipanteAction() {
-      $this->deprecated("caravana", "addparticipante");
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/caravana/index.css'));
-      $emailInvalidos = null;
-      $sessao = Zend_Auth :: getInstance()->getIdentity();
-      $participante = new Application_Model_Participante();
-      $this->view->item = $participante->getMinhasCaravanaResponsavel(array($sessao["idEncontro"], $sessao["idPessoa"]));
-      $this->view->item = $this->view->item[0];
-      $caravanaEncontro = new Application_Model_CaravanaEncontro();
-      if (is_numeric($this->_request->ex)) {
-         $participa[0] = $sessao["idEncontro"];
-         $participa[1] = intVal($this->_request->ex);
-         $caravanaEncontro->removeParticipanteNaCaravana($participa);
-      }
-      $form = new Application_Form_AddPartCaravana();
-      $data = $this->getRequest()->getPost();
-
-      if ($this->getRequest()->isPost() && $form->isValid($data)) {
-
-         $arrayEmail = explode(",", $this->_request->participantes);
-
-         $validator = new Zend_Validate_EmailAddress();
-         $cont = 0;
-         $quant = count($arrayEmail);
-         for ($i = 0; $i < $quant; $i = $i + 1) {
-            if (!$validator->isValid($arrayEmail[$i])) {
-
-               $emailInvalidos[$cont] = $arrayEmail[$i];
-               unset($arrayEmail[$i]);
-               $cont = $cont + 1;
-            }
-         }
-         $participantes[0] = $this->view->item['id_caravana'];
-         $participantes[1] = $sessao["idEncontro"];
-         $participantes[2] = $sessao["idEncontro"];
-         $participantes = array_merge($participantes, $arrayEmail);
-         $participantes +=$arrayEmail;
-         if (count($arrayEmail) > 0)
-            $caravanaEncontro->addParticipantesNaCaravana($participantes);
-         if (count($emailInvalidos) > 0) {
-            $this->view->emailInvalidos = "<fieldset><legend>Esses email são inválidos</legend>";
-            foreach ($emailInvalidos as $email) {
-               $this->view->emailInvalidos.= "<span>$email</span><br/>";
-            }
-            $this->view->emailInvalidos.="</fieldset>";
-         }
-         $quant = count($arrayEmail);
-         for ($i = 0; $i < $quant; $i = $i + 1) {
-            if ($participante->isParticipantes(array($arrayEmail[$i]))) {
-               unset($arrayEmail[$i]);
-            }
-         }
-         if (count($arrayEmail) > 0) {
-            $form->getElement('participantes')->setDescription("Clique em confirmar para convidar essas pessoas");
-         }
-         $data['participantes'] = implode(',', $arrayEmail);
-         $form->populate($data);
-      }
-      $this->view->form = $form;
-      $this->view->caravanaPartici = $caravanaEncontro->buscaParticipantes($this->view->item['id_caravana'], $sessao["idEncontro"]);
-   }
-
    public function criarAction() {
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
@@ -297,7 +227,7 @@ class CaravanaController extends Zend_Controller_Action {
                                ), null, true);
             } catch (Zend_Db_Exception $ex) {
                $adapter->rollBack();
-               // 23505UNIQUE VIOLATION
+               // 23505 UNIQUE VIOLATION
                if ($ex->getCode() == 23505) {
                   $this->_helper->flashMessenger->addMessage(
                           array('error' => 'Já existe uma caravana com esta descrição.'));
@@ -388,58 +318,6 @@ class CaravanaController extends Zend_Controller_Action {
          }
       }
    }
-
-   public function buscaAction() {
-      $sessao = Zend_Auth :: getInstance()->getIdentity();
-      $idEncontro = $sessao["idEncontro"];
-      $this->_helper->layout()->disableLayout();
-
-      $caravana = new Application_Model_Caravana();
-
-      $data = array(intval($idEncontro), $this->_request->getParam("nome_caravana"));
-
-      //var_dump($data);
-      $dataCaravana = $caravana->busca($data);
-
-      //print_r($dataCaravana);
-      $e = '<?xml version="1.0"?><busca><tbody id="resultadoCaravana"><![CDATA[';
-      if (isset($dataCaravana))
-         foreach ($dataCaravana as $value) {
-            $validadaCaravana = "";
-            if ($value['validada']) {
-               $validadaCaravana = "TRUE";
-            } else {
-               $validadaCaravana = "FALSE";
-            }
-
-            $idCaravana = $value['id_caravana'];
-
-            $e .= '<tr>
-                    <td>' . $value['nome_caravana'] . '</td>
-                    <td>' . $value['apelido_caravana'] . '</td>
-                    <td>' . $value['nome'] . '</td>
-                    <td>' . $value['nome_municipio'] . '</td>
-                    <td>' . $value['apelido_instituicao'] . '</td>
-                    <td>' . $validadaCaravana . '</td>
-                    <td>' . $value['count'] . '</td>
-                    <td><a href=' . $this->view->baseUrl('/administrador/validacaravana/id_caravana/' . $value["id_caravana"]) . '>Validar</a><td>		
-                    <td><a href=' . $this->view->baseUrl('/administrador/invalidacaravana/id_caravana/' . $value["id_caravana"]) . '>invalidar</a><td>		
-                </tr>';
-
-            //<a href="<? echo $this->baseUrl('/administrador/validaCaravana/id_caravana/'.$value['id_caravana'])
-            //	echo $value['nome_tipo_evento'];
-         }//id="'.$value['id_caravana'].'"
-
-      $this->getResponse()->setHeader('Content-Type', 'text/xml');
-      $e .= ']]></tbody></busca>';
-
-      echo $e;
-   }
-
-   private function deprecated($controller, $view) {
-      $this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
-   }
-
 }
 
 ?>

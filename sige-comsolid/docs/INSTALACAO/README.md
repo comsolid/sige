@@ -113,7 +113,7 @@ senhas, etc. Ainda no arquivo `${SiGE}/application/configs/application.ini` edit
 
 ~~~
 resources.mail.transport.type = "smtp"; não precisa editar
-resources.mail.transport.host = "smtp.mail.com"
+resources.mail.transport.host = "smtp.esl.com"; servidor gmail: smtp.gmail.com
 resources.mail.transport.port = "587";465
 resources.mail.transport.ssl  = "tls"
 resources.mail.transport.auth = "login"; não precisa editar

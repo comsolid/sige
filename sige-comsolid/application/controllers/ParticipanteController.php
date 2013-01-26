@@ -70,13 +70,9 @@ class ParticipanteController extends Zend_Controller_Action {
 				$participante->insert($data2);
 
 			} catch (Zend_Db_Exception $ex) {
-            // DONE: colocar erro em flashMessage
 				$adapter->rollBack();
 				$sentinela = 1;
-				//$form->getElement('email')->addErrorMessage('e-mail ja cadastrado');
-				
-				// echo $ex->getMessage() . $ex->getCode();
-            // 23505 UNIQUE VIOLATION
+
             if ($ex->getCode() == 23505) {
                $this->_helper->flashMessenger->addMessage(
                        array('error' => 'E-mail já cadastrado.'));
@@ -87,7 +83,6 @@ class ParticipanteController extends Zend_Controller_Action {
             }
 			}
 			// codigo responsavel por enviar email para confirmacao 
-			//echo "ID PESSOA" . $idPessoa;
 			try {
 				if (! empty($idPessoa) and $idPessoa > 0) {
 					$mail = new Application_Model_EmailConfirmacao();
@@ -101,8 +96,6 @@ class ParticipanteController extends Zend_Controller_Action {
 			} catch (Exception $ex) {
             $adapter->rollBack();
 				$sentinela = 1;
-            // DONE: colocar erro em flashMessage
-				// echo $ex->getMessage();
             $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Ocorreu um erro inesperado ao enviar e-mail.<br/>Detalhes: '
                          . $ex->getMessage()));
@@ -175,19 +168,15 @@ class ParticipanteController extends Zend_Controller_Action {
 				$adapter->commit();
 
 			} catch (Zend_Db_Exception $ex) {
-            // DONE: colocar erro em flashMessage
 				$adapter->rollBack();
 				$sentinela = 1;
 				$form->getElement('email')->setAttrib('mensagem', 'e-mail invalido');
-				// 23505UNIQUE VIOLATION
-				// echo $ex->getMessage() . $ex->getCode();
             $this->_helper->flashMessenger->addMessage(
                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                         . $ex->getMessage()));
-				//throw $ex;
 			}
-			// codigo responsavel por enviar email para confirmacao 
-
+         
+			// codigo responsavel por enviar email para confirmacao
 			if ($sentinela == 0) {
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
@@ -202,7 +191,6 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
 	
 	public function alterarSenhaAction() {
-		//echo $this->getBaseURL();
 		$this->view->menu->setAtivo('alterarsenha');
 		$this->autenticacao();
 		
@@ -241,86 +229,15 @@ class ParticipanteController extends Zend_Controller_Action {
 							'controller' => 'participante'
 						), 'default', true);
 					} else {
-						// DONE: colocar erro em flashMessage
-						// echo "nova senha não confere!";
                   $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Nova senha não confere!'));
 					}
 				} else {
-					// echo "senha antiga incorreta!";
                $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Senha antiga incorreta!'));
 				}
 			}
 		}
-	}
-
-   /**
-    * @deprecated use evento/interesse
-    */
-	public function pessoaaddeventoAction() {
-      $this->deprecated("participante", "pessoaaddevento");
-	   $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
-	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-	   $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/busca_evento.js'));
-	   $this->autenticacao();
-		$sessao = Zend_Auth::getInstance()->getIdentity();
-		$idEncontro = $sessao["idEncontro"];
-		$idPessoa = $sessao["idPessoa"];
-
-		//$this->view->headScript()->appendFile('/js/jquery-1.6.2.min.js');
-		
-		$eventos = new Application_Model_Evento();
-      // usada para mostrar dias que possuem eventos
-		$this->view->listaEvento = $eventos->getEventos($idEncontro);
-		$this->view->idEncontro = $idEncontro;
-		$this->view->idPessoa = $idPessoa;
-		
-		$tipoEventos = new Application_Model_TipoEvento();
-		$this->view->tipoEvento = $tipoEventos->fetchAll();
-
-		$eventoRealizacao = new Application_Model_EventoRealizacao();
-		$eventoRealizacao = $eventoRealizacao->fetchALL();
-
-		$this->view->eventosTabela = array ();
-		foreach ($eventoRealizacao as $item) {
-
-			$eventoItem = $item->findDependentRowset('Application_Model_Evento')->current();
-			$tipoItem = $eventoItem->findDependentRowset('Application_Model_TipoEvento')->current();
-
-			$this->view->eventosTabela[] = array_merge($item->toArray(), $eventoItem->toArray(), $tipoItem->toArray());
-		}
-
-		$form = new Application_Form_PessoaAddEvento();
-		$this->view->form = $form;
-
-		$form->criarFormulario($this->view->eventosTabela);
-
-		$data = $this->getRequest()->getPost();
-
-		if ($this->getRequest()->isPost() && $form->isValid($data)) {
-			$data = $form->getValues();
-
-		}
-
-	}
-	
-	public function excluieventoAction(){
-		$this->autenticacao();
-
-		$sessao = Zend_Auth::getInstance()->getIdentity();
-		$idPessoa = $sessao["idPessoa"];
-		
-		$idEvento = intval($this->_request->getParam("evento"));
-		
-		
-		$data =array("evento = ? "=>$idEvento,"id_pessoa=? "=>$idPessoa);
-		
-		$eventoDemanda = new Application_Model_EventoDemanda();
-		$eventoDemanda->remover($data);
-		
-		return $this->_helper->redirector->goToRoute(array ('controller' => 'participante','action' => 'index'), null, true);
 	}
    
    public function verAction() {
@@ -344,8 +261,6 @@ class ParticipanteController extends Zend_Controller_Action {
          }
          $this->view->mostrarEditar = true;
       } else {
-         // DONE: colocar erro em flashMessage
-         // echo "Participante não encontrado.";
          $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Participante não encontrado.'));
          return;
@@ -354,6 +269,9 @@ class ParticipanteController extends Zend_Controller_Action {
       $this->view->user = $model->fetchRow($sql);
    }
    
+   /**
+    * certificado Teste 
+    */
    public function certificadoPalestranteAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
@@ -373,7 +291,7 @@ class ParticipanteController extends Zend_Controller_Action {
                       . '/../../public/img/bg-certificado.png');
       $page1->drawImage($image, 10, 60, 960, 436);
       
-      $page1->drawText('Certificamos que Júlio Neves participou do COMSOLiD+5', 120, 350, 'UTF-8');
+      $page1->drawText('Certificamos que {nome} participou do {encontro}', 120, 350, 'UTF-8');
       
       $pdf->pages[] = ($page1);
       $pdf->save(dirname(__FILE__) . '/../../tmp/certificado-palestrante.pdf');
@@ -384,8 +302,4 @@ class ParticipanteController extends Zend_Controller_Action {
       header("Content-type: application/x-pdf");
       echo $pdfData;
    }
-
-	private function deprecated($controller, $view) {
-		$this->view->deprecated = "You are using a deprecated controller/view: {$controller}/{$view}";
-	}
 }
