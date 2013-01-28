@@ -72,6 +72,7 @@ BEGIN
 END;
 $$;
 
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -1414,6 +1415,46 @@ ALTER TABLE ONLY mensagem_email
 ALTER TABLE ONLY encontro_participante
     ADD CONSTRAINT tipo_usuario_encontro_participante_fk FOREIGN KEY (id_tipo_usuario) REFERENCES tipo_usuario(id_tipo_usuario);
 
+
+CREATE OR REPLACE FUNCTION funcvalidausuario()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+IF NEW.cadastro_validado = 'T' THEN
+--    SELECT now() INTO NEW.data_validacao_cadastro;
+    NEW.data_validacao_cadastro = now();
+  END IF;
+  RETURN NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+CREATE OR REPLACE FUNCTION funcvalidaevento()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+IF NEW.validada = 'T' THEN
+    NEW.data_validacao = now();
+  END IF;
+  RETURN NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+CREATE TRIGGER trgrvalidaevento
+  BEFORE UPDATE
+  ON evento
+  FOR EACH ROW
+  EXECUTE PROCEDURE funcvalidaevento();
+  
+CREATE TRIGGER trgrvalidausuario
+  BEFORE UPDATE
+  ON pessoa
+  FOR EACH ROW
+  EXECUTE PROCEDURE funcvalidausuario();
 
 --
 -- TOC entry 2214 (class 0 OID 0)

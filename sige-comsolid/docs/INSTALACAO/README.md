@@ -1,13 +1,19 @@
-SiGE - Sistema de Gerência de Eventos
-=====================================
+% SiGE - Sistema de Gerência de Eventos
+% Equipe COMSOLiD
 
 Instalação
-----------
+==========
 
 Programas necessários:
 
 * PostgreSQL;
-* php5
+* Apache HTTP Server;
+* php5;
+* Zend Framework;
+* subversion (opcional);
+
+Base de dados
+-------------
 
 ### Schema da Base de dados
 
@@ -93,11 +99,89 @@ de acordo com seu encontro.
 TODO: demonstrar configuração do projeto, fazendo checkout e instalando o zend
 -->
 
+SiGE
+----
+
+### Zend
+
+A versão utilizada pelo SiGE é [Zend 1.12.1][Zend_1.12.1].
+
+[Zend_1.12.1]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.1"
+
+A instalação é bem simples. Basta copiarmos o Zend para um diretório de bibliotecas do sistema.
+Baixe o pacote Full, descompacte e siga as instruções em um terminal:
+
+~~~
+$ sudo su
+# mv ZendFramework-1.12.1 /usr/local/lib
+# cd /usr/local/lib
+# ln -s ZendFramework-1.11.11 zend
+# cd /usr/local/bin
+# ln -s /usr/local/lib/zend/bin/zf.sh zf
+~~~
+
+### Baixando SiGE do repositório SVN
+
+Para realizar checkout da última versão do SiGE:
+
+~~~
+$ svn checkout http://sige-comsolid.googlecode.com/svn/trunk/ sige-comsolid
+~~~
+
+**obs.:** é necessário instalar o svn. No Ubuntu podemos instalar através do comando:
+
+~~~
+$ sudo apt-get install subversion
+~~~
+
+**obs.:** instale a partir do repositório somente se você está interessado em contribuir,
+estudar o código ou apenas testando.
+
+### Configurando VirtualHost
+
+Para simular um host no mundo real que utiliza Zend precisamos criar um VirtualHost no apache.
+Com o Apache devidamente instalado, crie um arquivo em `/etc/apache2/sites-enable/`
+chamado `sige`. Nele copie o seguinte conteúdo, modificando conforme necessidade:
+
+~~~
+<VirtualHost *:80>
+   ServerName sige.local
+
+   DocumentRoot /var/www/sige-comsolid/public
+   <Directory "/var/www/sige-comsolid/public">
+      AllowOverride All
+   </Directory>
+</VirtualHost>
+~~~
+
+Adicionaremos o `ServerName` ao `/etc/hosts`:
+
+~~~
+127.0.0.1       localhost
+# adicione a linha abaixo
+127.0.0.1       sige.local
+~~~
+
+Reinicie o Apache: `$ sudo service apache2 restart`.
+
+### Instalar o Zend no SiGE
+
+A instalação é bem simples, apenas crie um link simbólico dentro do diretório do
+projeto (daqui para frente chamadado de `${SiGE}`) em `${SIGE}/library`:
+
+~~~
+$ sudo su
+# cd /var/www/sige-comsolid
+# mkdir library
+# cd library
+# ln -s /usr/local/lib/zend/library/Zend
+~~~
+
 ### Configurar conexão com base de dados
 
 Com o projeto configurado vamos editar os parâmetros de conexão com o PostgreSQL.
-Dentro do diretório do projeto (daqui para frente chamadado de `${SiGE}`) abra o
-arquivo `${SiGE}/application/configs/application.ini` e edite os parâmetros abaixo:
+Dentro do diretório do projeto abra o arquivo `${SiGE}/application/configs/application.ini`
+e edite os parâmetros abaixo:
 
 ~~~
 resources.db.params.host     = "localhost" 
