@@ -25,7 +25,6 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idEncontro = $sessao ["idEncontro"];
 
-      //$select = "SELECT p.id_pessoa, nome, apelido, email, twitter, nome_municipio, apelido_instituicao, nome_caravana FROM encontro_participante ep INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa) LEFT OUTER JOIN instituicao i ON (ep.id_instituicao = i.id_instituicao) INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio) LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana) WHERE id_encontro = ? AND id_tipo_usuario = 3;";
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
@@ -33,7 +32,6 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      //$this->view->headScript()->appendFile($this->view->baseUrl('/js/administrador/inicio.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/participante/index.js'));
       $this->view->idEncontro = $idEncontro;
    }
@@ -53,12 +51,10 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       foreach ($data as $value) {
          if ($value['confirmado']) {
             $isValidado = "Confimado!";
-            // $acao = '<a href=' . $this->view->baseUrl('/u/desfazer-confirmar/' . $value["id_pessoa"]) . '>Desfazer</a>';
             $acao = "<a class=\"situacao\" 
                data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">Desfazer</a>";
          } else {
             $isValidado = "Não confimado!";
-            //$acao = '<a href=' . $this->view->baseUrl('/u/confirmar/' . $value["id_pessoa"]) . '>Confirmar</a>';
             $acao = "<a class=\"situacao\"
                data-url=\"/u/confirmar/{$value["id_pessoa"]}\">Confirmar</a>";
          }
@@ -71,7 +67,6 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
              "{$value ['nome_caravana']}",
              $isValidado,
              $acao
-             /* TODO: concatenar com= ' <a title=\"Adicione esse autor ao evento desejado!\" href=\"' . $this->view->url(array('controller' => 'administrador', 'action' => 'addautor', 'idautor' => $value ['id_pessoa']), null, true) . '\" >Add Autor</a>' */
          );
       }
       

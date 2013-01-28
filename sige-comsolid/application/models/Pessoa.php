@@ -101,7 +101,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 			}
 		}
 		unset($data[2]);	 
-		$select = $select.' ORDER BY p.data_cadastro DESC LIMIT 20';
+		$select = $select.' ORDER BY p.nome ASC LIMIT 20';
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
 	

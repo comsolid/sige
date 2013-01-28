@@ -1,6 +1,10 @@
 
-<label>Cadastro realizado com sucesso, verifique seu e-mail!</label>
-<br>
+<div class="success">
+   <h3>Cadastro realizado com sucesso, verifique seu e-mail!</h3>
+   <p>Lá você encontrará sua senha padrão. Seu login será seu endereço de e-mail.</p>
+</div>
+
 <p>
-	Depois basta <a href="<?=$this->url(array(), 'login', true) ?>">Entrar</a>.
+	Depois basta <a href="<?=$this->url(array(),
+           'login', true) ?>" class="no-bottom"><i class="icon-signin"></i> Entrar</a>.
 </p>
