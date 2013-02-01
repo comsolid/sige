@@ -24,7 +24,7 @@ class Zend_View_Helper_FlashMessages extends Zend_View_Helper_Abstract {
       if (!empty($messages)) {
          foreach ($messages as $message) {
             $output .= '<div class="' . key($message) . '">';
-            $output .= '<h4>';
+            $output .= '<div class="msg-header">';
             switch (key($message)) {
                case 'notice':
                   $output .= 'Atenção!';
@@ -39,7 +39,7 @@ class Zend_View_Helper_FlashMessages extends Zend_View_Helper_Abstract {
                   $output .= 'Sucesso!';
                   break;
             }
-            $output .= '</h4>'. current($message) . '</div>';
+            $output .= '</div><div>'. current($message) . '</div></div>';
          }
       }
       return $output;

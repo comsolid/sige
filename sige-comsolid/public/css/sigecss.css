@@ -128,7 +128,7 @@ body{
 /*FIM RODAPE*/
 
 /* mensagens de erro - tmp */
-.error, .alert, .notice, .success, .info {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;font-size: 10pt;margin-top: 20px;}
+.error, .alert, .notice, .success, .info {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;font-size: 10pt;margin-top: 50px;}
 .error, .alert {background:#fbe3e4;color:#8a1f11;border-color:#fbc2c4;}
 .notice {background:#fff6bf;color:#514721;border-color:#ffd324;}
 .success {background:#e6efc2;color:#264409;border-color:#c6d880;}
@@ -137,7 +137,8 @@ body{
 .notice a {color:#514721;}
 .success a {color:#264409;}
 .info a {color:#205791;}
-.error h4, .alert h4, .notice h4, .success h4, .info h4 {height: 10px; font-size: 11pt;}
+.error div.msg-header, .alert div.msg-header, .notice div.msg-header,
+   .success div.msg-header, .info div.msg-header {font-size: 11pt; font-weight: bold;}
 
 a {cursor: pointer;}
 a.no-bottom {text-decoration: none}

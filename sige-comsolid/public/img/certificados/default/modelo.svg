@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="modelo.svg"
+   inkscape:export-filename="/home/atila/NetBeansProjects/sige-comsolid/public/img/certificados/default/modelo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3794">
+      <stop
+         style="stop-color:#ffe6d5;stop-opacity:1;"
+         offset="0"
+         id="stop3796" />
+      <stop
+         id="stop3802"
+         offset="0.43707761"
+         style="stop-color:#ffe6d5;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#284377;stop-opacity:0;"
+         offset="1"
+         id="stop3798" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.68227461"
+     inkscape:cx="526.05741"
+     inkscape:cy="372.08298"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="946"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="marcacao_inicial"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3024-7"
+       width="909.90497"
+       height="606.16541"
+       x="71.228607"
+       y="377.23224" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="background"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#ececec;fill-opacity:1;stroke:none"
+       id="rect3024"
+       width="898.1795"
+       height="594.43994"
+       x="77.091347"
+       y="74.827286" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="principal">
+    <text
+       xml:space="preserve"
+       style="font-size:87.14872742px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="92.490074"
+       y="172.24907"
+       id="text3019"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3021"
+         x="92.490074"
+         y="172.24907"
+         style="font-weight:bold">Certificado</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3874"
+       width="806.12701"
+       height="199.33322"
+       x="118.72053"
+       y="260.41827" />
+    <rect
+       y="472.91705"
+       x="120.98699"
+       height="136.9993"
+       width="246.99931"
+       id="rect3876"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.00069928;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.00069928;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3768"
+       width="246.99931"
+       height="136.9993"
+       x="398.00159"
+       y="472.91705" />
+    <rect
+       y="472.91705"
+       x="675.01611"
+       height="136.9993"
+       width="246.99931"
+       id="rect3770"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.00069928;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
+</svg>

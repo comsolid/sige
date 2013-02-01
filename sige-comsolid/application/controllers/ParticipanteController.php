@@ -269,6 +269,55 @@ class ParticipanteController extends Zend_Controller_Action {
       $this->view->user = $model->fetchRow($sql);
    }
    
+   public function certificadosAction() {
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $sessao = Zend_Auth :: getInstance()->getIdentity();
+		$idPessoa = $sessao["idPessoa"];
+      
+      $model = new Application_Model_Participante();
+      $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
+      $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
+   }
+   
+   public function certificadoParticipanteAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $sessao = Zend_Auth :: getInstance()->getIdentity();
+		$idPessoa = $sessao["idPessoa"];
+      $idEncontro = $this->_getParam('id_encontro', 0);
+      
+      $model = new Application_Model_Participante();
+      $rs = $model->listarCertificadosParticipante($idPessoa, $idEncontro);
+      
+      if (is_null($rs)) {
+         $this->_helper->flashMessenger->addMessage(
+                 array('error' => 'Você não participou deste Encontro.'));
+         return $this->_helper->redirector->goToRoute(array(
+                     'controller' => 'participante',
+                     'action' => 'certificados'), 'default', true);
+      }
+      
+      try {
+         $certificado = new Sige_Pdf_Certificado();
+         $pdfData = $certificado->participante(array(
+             'nome' => $rs['nome'],
+             'id_encontro' => $rs['id_encontro'], // serve para identificar o modelo
+             'encontro' => $rs['nome_encontro'],
+         ));
+         header("Content-Disposition: inline; filename=certificado-participante.pdf");
+         header("Content-type: application/x-pdf");
+         echo $pdfData;
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                        . $e->getMessage()));
+         return $this->_helper->redirector->goToRoute(array (
+                  'controller' => 'participante',
+                  'action' => 'certificados'), 'default', true);
+      }
+   }
+   
    /**
     * certificado Teste 
     */
@@ -276,30 +325,42 @@ class ParticipanteController extends Zend_Controller_Action {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
       
-      // include auto-loader class
-      require_once 'Zend/Loader/Autoloader.php';
+      $sessao = Zend_Auth :: getInstance()->getIdentity();
+		$idPessoa = $sessao["idPessoa"];
+      $idEvento = $this->_getParam('id', 0);
+      
+      $model = new Application_Model_Participante();
+      $rs = $model->listarCertificadosPalestrante($idPessoa, $idEvento);
+      
+      if (is_null($rs)) {
+         $this->_helper->flashMessenger->addMessage(
+                 array('error' => 'Você não apresentou esse trabalho neste Encontro.'));
+         return $this->_helper->redirector->goToRoute(array(
+                     'controller' => 'participante',
+                     'action' => 'certificados'), 'default', true);
+      }
+      
+      try {
+         $certificado = new Sige_Pdf_Certificado();
+         // Get PDF document as a string
+         $pdfData = $certificado->palestrante(array(
+             'nome' => $rs['nome'],
+             'id_encontro' => $rs['id_encontro'], // serve para identificar o modelo
+             'encontro' => $rs['nome_encontro'],
+             'tipo_evento' => $rs['nome_tipo_evento'],
+             'nome_evento' => $rs['nome_evento']
+         ));
 
-      // register auto-loader
-      $loader = Zend_Loader_Autoloader::getInstance();
-      
-      $pdf = new Zend_Pdf();
-      $page1 = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-      $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
-      $page1->setFont($font, 12);
-      
-      $image = Zend_Pdf_Image::imageWithPath(dirname(__FILE__)
-                      . '/../../public/img/bg-certificado.png');
-      $page1->drawImage($image, 10, 60, 960, 436);
-      
-      $page1->drawText('Certificamos que {nome} participou do {encontro}', 120, 350, 'UTF-8');
-      
-      $pdf->pages[] = ($page1);
-      $pdf->save(dirname(__FILE__) . '/../../tmp/certificado-palestrante.pdf');
-      // Get PDF document as a string 
-      $pdfData = $pdf->render();
-      
-      header("Content-Disposition: inline; filename=certificado-palestrante.pdf");
-      header("Content-type: application/x-pdf");
-      echo $pdfData;
+         header("Content-Disposition: inline; filename=certificado-participante.pdf");
+         header("Content-type: application/x-pdf");
+         echo $pdfData;
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                        . $e->getMessage()));
+         return $this->_helper->redirector->goToRoute(array (
+                  'controller' => 'participante',
+                  'action' => 'certificados'), 'default', true);
+      }
    }
 }

@@ -237,3 +237,68 @@ senha padrão foi enviado para você. Tente fazer um login.
 
 No banco de dados, na tebela `pessoa`, modifique a coluna `administrador` para `true`.
 
+Certificados
+------------
+
+Os arquivos relativos aos certificados, participante e palestrante, ficam localizados
+em `${SiGE}/public/img/certificados/`. Lá teremos um diretório `default/` que contém
+arquivos iniciais para que um certificado possa ser gerado sem nenhuma configuração.
+
+Para criar certificados para um determinado encontro devemos criar um diretório
+em `${SiGE}/public/img/certificados/` com o `id_encontro` do encontro. Por exemplo,
+se `id_encontro` for 1, criaremos o diretório `${SiGE}/public/img/certificados/1/`.
+
+Utilize os arquivos `modelo.svg` e `assinatura-modelo.svg` dentro de `${SiGE}/public/img/certificados/default/`
+como modelos para a criação de seus certificados. Eles possuem as marcações e os tamanhos
+específicos. Os tamanhos são:
+
+**Arquivo**            **Tamanho**
+-----------            -------------------------------------------------
+modelo.svg             1052x744 (mesmo tamanho de uma folha A4 paisagem)
+assinatura-modelo.svg  250x140
+
+**obs.:** o arquivo `modelo.svg` possui camadas para que ao trabalhar em cima do molde
+você não se atrapalhe com outros objetos. Usando Inkscape acesse as camadas com o comando
+*Shift + Ctrl + L*.
+
+Após finalização do modelo, exporte o arquivo para **JPG**. Como o Inkscape não
+exporta diretamente para essa extensão, utilize o GIMP para essa tarefa.
+
+O certificado do SiGE suporta até três assinaturas. Para isso você deve exportar o arquivo
+de assinatura da seguinte forma: `assinatura-1.png` - para que a assinatura apareça
+a esquerda do certificado, `assinatura-2.png` - para que a assinatura apareça no centro
+e `assinatura-3.png` - para que apareça a direita.
+
+As assinaturas são opcionais e podem ser usadas da maneira que você deseja. Por exemplo,
+se você possui um certificado que tenha algum detalhes no centro você pode optar por
+criar apenas as assinaturas `assinatura-1.png` e `assinatura-3.png`.
+
+**obs.:** Note que o arquivo de assinaturas possui a extensão **PNG**. Por ser uma
+imagem pequena e que necessita de *alpha*, optamos por usá-la.
+
+Abaixo uma simulação da árvore de diretórios `${SiGE}/public/img/certificados/`:
+
+~~~
+${SiGE}/public/img/certificados/
+|
++ -- 1/
+|    |
+|    + -- modelo.jpg
+|         assinatura-1.png
+|         assinatura-3.png
+|
++ -- default/
+     |
+     + -- modelo.jpg
+          modelo.svg
+          assinatura-modelo.png
+          assinatura-1.png
+~~~
+
+
+
+
+
+
+
+
