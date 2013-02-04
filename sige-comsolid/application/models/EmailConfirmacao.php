@@ -1,5 +1,6 @@
 <?php
 class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
+	
 	protected $_name = 'mensagem_email';
 	protected $_primary = array('id_encontro','id_tipo_mensagem_email');
 	

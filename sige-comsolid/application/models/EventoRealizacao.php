@@ -12,7 +12,7 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
            'onUpdate' => self::RESTRICT));
 
    /**
-    *
+    *	retorna true caso haja eventos no mesmo horário ou entre horários reservados, false caso contrário.
     * @param array $data com as colunas id_encontro, id_sala, data, hora_inicio e hora_fim
     */
    public function existeHorario($data) {

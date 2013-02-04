@@ -1,5 +1,6 @@
 <?php
 class Application_Model_Caravana extends Zend_Db_Table_Abstract {
+   
 	protected $_name = 'caravana';
 	protected $_primary = 'id_caravana';
 	protected $_referenceMap = array (
@@ -10,27 +11,20 @@ class Application_Model_Caravana extends Zend_Db_Table_Abstract {
 			'onDelete' => self :: CASCADE,
 			'onUpdate' => self :: RESTRICT
 		),
-
-		
 	);
 	
+	public function verificaCaravana($idPessoa,$idEncontro) {	
 	
-	  public function verificaCaravana($idPessoa,$idEncontro)
-      {	
-     
-	
-		$caravana_encontro = new Application_Model_CaravanaEncontro();	
-      	
-   	  	$select = $caravana_encontro->select();
+		$caravana_encontro = new Application_Model_CaravanaEncontro();
+     	$select = $caravana_encontro->select();
 		$rows = $caravana_encontro->fetchAll($select->where('responsavel = ?',$idPessoa)->where('id_encontro = ?', $idEncontro));
 				
 		if(count($rows)>0){	
 		 	return true;
-      	 }else{	
-      	    return false;  	
-       	 }
-       	     
+		} else {	
+      	return false;  	
       }
+   }
     
 
 	public function busca($data) {

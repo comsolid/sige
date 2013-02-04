@@ -7,4 +7,5 @@ $(function() {
 	});
 
 	$("a.btn").button();
+	$("#tabs").tabs();
 });

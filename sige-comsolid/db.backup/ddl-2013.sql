@@ -4,3 +4,6 @@ ALTER TABLE evento
 COMMENT ON COLUMN evento.apresentado IS 'indica que o palestrante realmente veio e participou';
 
 ALTER TABLE pessoa ADD COLUMN bio text;
+
+ALTER TABLE public.evento DROP COLUMN curriculum;
+ALTER TABLE public.evento ADD COLUMN tecnologias_envolvidas text;

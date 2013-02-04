@@ -1,11 +1,10 @@
 <?php
 
-class Application_Model_Pessoa extends Zend_Db_Table_Abstract
-{
-  protected $_name = 'pessoa';
-  protected $_primary = 'id_pessoa';
+class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
+	protected $_name = 'pessoa';
+	protected $_primary = 'id_pessoa';
   
- protected $_referenceMap = array(  
+	protected $_referenceMap = array(  
                array(  'refTableClass' => 'Application_Model_Participante',  
                'refColumns' => 'id_pessoa',  
                'columns' => 'id_pessoa',  
@@ -39,7 +38,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 	}
 	
 	public function avaliaLogin($login, $senha) {
-
+		// trecho antigo sujeito a SQL Injection: ') or ('1'='1
 		/*$select = $this->select()
 			  		    ->from('pessoa', array("id_pessoa",
                        "administrador",
@@ -106,39 +105,47 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract
 	}
 	
 	public function buscaPessoasCoordenacao($data){
-		$select = "SELECT p.id_pessoa, nome, apelido, email FROM encontro_participante ep INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa) WHERE id_encontro = ? AND id_tipo_usuario = 1";
-		
+		$select = "SELECT p.id_pessoa, nome, apelido, email FROM encontro_participante ep
+			INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa)
+			WHERE id_encontro = ? AND id_tipo_usuario = 1"; // 1: coordenação
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
 	
 	public function buscaPessoasOrganizacao($data){
-		$select = "SELECT p.id_pessoa, nome, apelido, email FROM encontro_participante ep INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa) WHERE id_encontro = ? AND id_tipo_usuario = 2";
-		
+		$select = "SELECT p.id_pessoa, nome, apelido, email FROM encontro_participante ep
+			INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa)
+			WHERE id_encontro = ? AND id_tipo_usuario = 2"; // 2: organização
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
 	
 	public function verificaEncontro($idEncontro, $idPessoa){
 		$select = "SELECT * from encontro_participante where id_encontro = ? AND id_pessoa= ?";
-		
 		$resp = $this->getAdapter()->fetchAll($select,array($idEncontro,$idPessoa));
-		
-		if(sizeof($resp) == 0){
+		if (sizeof($resp) == 0) {
 			return false;
 		}
-		
 		return true;
 	}
 	
-	
-	public function buscaUltimoEncontro($idPessoa){
-		$select =  "select * from encontro_participante where id_pessoa = ? order by id_pessoa desc limit 1";
+	public function buscarUltimoEncontro($idPessoa) {
+		$select =  "SELECT id_encontro, id_pessoa, id_instituicao, id_municipio, id_caravana, 
+				id_tipo_usuario FROM encontro_participante
+				WHERE id_pessoa = ? ORDER BY id_encontro DESC LIMIT 1";
 		
-		return $this->getAdapter()->fetchAll($select, $idPessoa);
+		// "select * from encontro_participante where id_pessoa = ? order by id_pessoa desc limit 1";
+		$rs = $this->getAdapter()->fetchAll($select, $idPessoa);
+		if (count($rs) > 0) {
+			return $rs[0];
+		}
+		return null;
 	}
 	
-	public function atualizaEncontro($encontro){
-		$select = "insert into encontro_participante(id_encontro, id_pessoa,id_instituicao,id_municipio,id_caravana,id_tipo_usuario) values(?,?,?,?,?,?)";
-		
+	/**
+	 * @deprecated
+	 */
+	public function atualizaEncontro($encontro) {
+		$select = "insert into encontro_participante(id_encontro, id_pessoa,id_instituicao,id_municipio,id_caravana,id_tipo_usuario)
+			values(?,?,?,?,?,?)";
 	   return $this->getAdapter()->fetchAll($select,$encontro);
 	}
 	

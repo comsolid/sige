@@ -16,8 +16,12 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
            'columns' => 'id_encontro',
            'onDelete' => self::RESTRICT,
            'onUpdate' => self::RESTRICT));
+   
    protected $_dependentTables = array('pessoa', 'encontro', 'municipio', 'tipo_usuario', 'caravana', 'instituicao');
 
+	/**
+	 * @deprecated use CaravanaEncontro#lerParticipanteCaravana
+	 */
    public function getMinhaCaravana($data) {
       $select = "SELECT c.id_caravana, apelido_caravana, nome_municipio, apelido_instituicao, p.nome
                      FROM caravana_encontro ce INNER JOIN pessoa p ON (ce.responsavel = p.id_pessoa)
@@ -31,6 +35,9 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
       return $this->getAdapter()->fetchAll($select, $data);
    }
 
+	/**
+	 * @deprecated use CaravanaEncontro#lerResponsavelCaravana
+	 */
    public function getMinhasCaravanaResponsavel($data) {
       $select = "SELECT c.id_caravana, apelido_caravana, nome_municipio, apelido_instituicao, p.nome
                   FROM caravana_encontro ce INNER JOIN pessoa p ON (ce.responsavel = p.id_pessoa)

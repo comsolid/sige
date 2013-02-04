@@ -21,16 +21,10 @@ class CaravanaController extends Zend_Controller_Action {
       $this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/index.js'));
 
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/caravana/index.css'));
-      $participante = new Application_Model_Participante();
+      $model = new Application_Model_CaravanaEncontro();
       
-      if ($this->_request->getParam("caravana_resp") == 'exclu' && intval($this->_request->getParam("idcaravana")) > 0) {
-         $participante->excluirMinhaCaravanaResponsavel(array($sessao["idEncontro"], $this->_request->getParam("idcaravana")));
-      }
-      $participante1 = $participante->getMinhaCaravana(array($sessao["idEncontro"], $sessao["idPessoa"]));
-      if (count($participante1) > 0) {
-         $this->view->participante = $participante1[0];
-      }
-      $this->view->caravanaResponsavel = $participante->getMinhasCaravanaResponsavel(array($sessao["idEncontro"], $sessao["idPessoa"]));
+      $this->view->participante = $model->lerParticipanteCaravana($sessao["idEncontro"], $sessao["idPessoa"]);
+      $this->view->caravanaResponsavel = $model->lerResponsavelCaravana($sessao["idEncontro"], $sessao["idPessoa"]);
    }
 
    public function participantesAction() {
@@ -38,8 +32,7 @@ class CaravanaController extends Zend_Controller_Action {
       if (isset($cancelar)) {
          return $this->_helper->redirector->goToRoute(array(
                      'controller' => 'caravana',
-                     'action' => 'index'
-                         ), null, true);
+                     'action' => 'index'), null, true);
       }
       
       $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -135,7 +128,7 @@ class CaravanaController extends Zend_Controller_Action {
          );
          $model = new Application_Model_CaravanaEncontro();
          try {
-            $model->removeParticipanteNaCaravana($where);
+            $model->deletarParticipante($where);
             $this->_helper->flashMessenger->addMessage(
                              array('success' => 'Participante removido da caravana com sucesso.'));
          } catch (Exception $e) {
@@ -190,7 +183,7 @@ class CaravanaController extends Zend_Controller_Action {
       
       $caravana = new Application_Model_Caravana();
 
-      if ($caravana->verificaCaravana($idPessoa, $idEncontro)) {
+      if ($caravana->verificaCaravana($idPessoa, $idEncontro)) { // previne que o mesmo usuário crie 2 caravanas
          return $this->_helper->redirector->goToRoute(array(
                      'controller' => 'caravana',
                      'action' => 'editar'), null, true);
@@ -217,14 +210,11 @@ class CaravanaController extends Zend_Controller_Action {
                $data2['responsavel'] = $idPessoa;
                $data2['id_caravana'] = $caravana->insert($data);
 
-
-
                $caravana_encontro->insert($data2);
                $adapter->commit();
                return $this->_helper->redirector->goToRoute(array(
                            'controller' => 'caravana',
-                           'action' => 'index'
-                               ), null, true);
+                           'action' => 'index'), null, true);
             } catch (Zend_Db_Exception $ex) {
                $adapter->rollBack();
                // 23505 UNIQUE VIOLATION
@@ -246,65 +236,59 @@ class CaravanaController extends Zend_Controller_Action {
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
       $data = $this->getRequest()->getPost();
       if (isset($data['cancelar'])) {
          return $this->_helper->redirector->goToRoute(array(
                      'controller' => 'caravana',
-                     'action' => 'index'
-                         ), null, true);
+                     'action' => 'index'), null, true);
       }
 
-      $sessao = Zend_Auth :: getInstance()->getIdentity();
+      $sessao = Zend_Auth::getInstance()->getIdentity();
       $idPessoa = $sessao["idPessoa"];
       $idEncontro = $sessao["idEncontro"];
-
 
       $form = new Application_Form_Caravana();
       $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'editar')));
       $this->view->form = $form;
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
       $caravana = new Application_Model_Caravana();
-      $participante = new Application_Model_Participante();
+      //$participante = new Application_Model_Participante();
       $caravana_encontro = new Application_Model_CaravanaEncontro();
-      $pessoa = new Application_Model_Pessoa();
+      //$pessoa = new Application_Model_Pessoa();
 
-      $pessoa = $pessoa->find($idPessoa); //mandar ainda  o nome do criador para a view	
+      //$pessoa = $pessoa->find($idPessoa); //mandar ainda  o nome do criador para a view	
       $select = $caravana_encontro->select();
       $rows = $caravana_encontro->fetchAll($select->where('responsavel = ?', $idPessoa)->where('id_encontro = ?', $idEncontro));
-      $rows = $rows[0];
+      $row = $rows[0];
 
       $select = $caravana->select();
-      $dados_caravana = $caravana->find($rows['id_caravana']);
+      $dados_caravana = $caravana->find($row['id_caravana']);
 
       $dados_caravana = $dados_caravana[0];
 
-      $idCaravana = $rows['id_caravana'];
+      /*$idCaravana = $rows['id_caravana'];
 
       $participantes = $caravana_encontro->buscaParticipantes($idCaravana, $idEncontro);
 
       $this->view->participantes = array();
-      $this->view->participantes[] = $participantes;
+      $this->view->participantes[] = $participantes;*/
 
       $form->populate($dados_caravana->toArray());
-
-
       $data = $this->getRequest()->getPost();
 
       if ($this->getRequest()->isPost() && $form->isValid($data)) {
 
          $data = $form->getValues();
-
-         $select = $caravana->getAdapter()->quoteInto('id_caravana = ?', $dados_caravana['id_caravana']);
+         $where = $caravana->getAdapter()->quoteInto('id_caravana = ?', $dados_caravana['id_caravana']);
 
          try {
-            $caravana->update($data, $select);
+            $caravana->update($data, $where);
 
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'caravana',
-                        'action' => 'index'
-                            ), null, true);
+                        'action' => 'index'), null, true);
          } catch (Zend_Db_Exception $ex) {
             // 23505 UNIQUE VIOLATION
             if ($ex->getCode() == 23505) {

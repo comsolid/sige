@@ -302,11 +302,11 @@ CREATE TABLE evento (
     responsavel integer NOT NULL,
     data_validacao timestamp without time zone,
     data_submissao timestamp without time zone DEFAULT now() NOT NULL,
-    curriculum text DEFAULT 'Curriculum Básico'::text NOT NULL,
     id_dificuldade_evento integer DEFAULT 1 NOT NULL,
     perfil_minimo text DEFAULT 'Perfil Mínimo do Participante'::text NOT NULL,
     preferencia_horario text,
-    apresentado boolean DEFAULT false NOT NULL
+    apresentado boolean DEFAULT false NOT NULL,
+    tecnologias_envolvidas text,
 );
 
 

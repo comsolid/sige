@@ -70,9 +70,11 @@ body{
 #menu{
 	background-color: #450e3d;
 	width: 100%;
-	-moz-border-radius:5px 5px 5px 5px;
 	height: 43px;
 	margin-bottom: 20px;
+	/*border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;*/
 }
 .inativo{
 	background-color: #f0f0f0 !important;
@@ -94,12 +96,11 @@ body{
    padding: 0 18px;
 }*/
 #menu a.verde{
-   -moz-border-radius:5px 5px 5px 5px;
    background-color: #359324;
 }
+
 #menu a:hover{
    background-color: #359324;
-   -moz-border-radius:5px 5px 5px 5px;
 }
 /*FIM MENU*/
 

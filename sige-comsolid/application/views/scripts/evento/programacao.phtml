@@ -6,6 +6,7 @@
    <div class="span-2">
       <?
       if ($item['data'] != $data_atual) {
+			// TODO: formatar data de maneira genérica.
          $date = new Zend_Date($item['data']);
          //echo $date->toString('dd/MM/YYYY');
       ?>

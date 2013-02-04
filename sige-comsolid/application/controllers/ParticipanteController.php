@@ -25,7 +25,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
       $eventoDemanda = new Application_Model_EventoDemanda();
       //$select = $eventoDemanda->select();
-      $eventoParticipante = $eventoDemanda->getMeusEvento(array($idEncontro, $idPessoa));
+      $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));
       $this->view->listaParticipanteEventoTabela =$eventoParticipante;
 	}
 

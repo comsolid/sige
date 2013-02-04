@@ -69,20 +69,21 @@
 <br/>
 
 <div class="container">
-   <div class="span-2">
-      Resumo:
-   </div>
-   <div class="span-10">
-      <?=$this->evento['resumo'] ?>
-   </div>
-</div>
-
-<div class="container">
-   <div class="span-2">
-      Preferência de horário:
-   </div>
-   <div class="span-10">
-      <?=$this->evento['preferencia_horario'] ?>
+   <div class="span-20 prepend-2" id="tabs">
+      <ul>
+			<li><a href="#tab-1">Resumo</a></li>
+			<li><a href="#tab-2">Preferência de horário</a></li>
+			<li><a href="#tab-3">Tecnologias Envolvidas</a></li>
+		</ul>
+		<div id="tab-1">
+			<?= $this->evento['resumo'] ?>
+		</div>
+		<div id="tab-2">
+			<?= $this->evento['preferencia_horario'] ?>
+		</div>
+		<div id="tab-3">
+			<?= $this->evento['tecnologias_envolvidas'] ?>
+		</div>
    </div>
 </div>
 

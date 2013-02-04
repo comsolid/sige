@@ -1,24 +1,22 @@
 <?php
 
-class Application_Model_Evento extends Zend_Db_Table_Abstract
-{
-  protected $_name = 'evento';
-  protected $_primary = 'id_evento';
+class Application_Model_Evento extends Zend_Db_Table_Abstract {
+	protected $_name = 'evento';
+	protected $_primary = 'id_evento';
   
-  protected $_referenceMap = array(  
-               array(  'refTableClass' => 'Application_Model_EventoRealizacao',  
+	protected $_referenceMap = array(  
+            array(  'refTableClass' => 'Application_Model_EventoRealizacao',  
                'refColumns' => 'id_evento',  
                'columns' => 'id_evento',  
                'onDelete'=> self::CASCADE,  
                'onUpdate'=> self::RESTRICT));
   
-  
-  
-  public function getEventos($idEncontro){
-  $select="SELECT DISTINCT(TO_CHAR(data, 'DD/MM/YYYY')) AS data FROM evento e INNER JOIN evento_realizacao er ON (e.id_evento = er.id_evento) WHERE id_encontro = ? ORDER BY TO_CHAR(data, 'DD/MM/YYYY')";
+	public function getEventos($idEncontro){
+		$select = "SELECT DISTINCT(TO_CHAR(data, 'DD/MM/YYYY')) AS data FROM evento e
+			INNER JOIN evento_realizacao er ON (e.id_evento = er.id_evento)
+			WHERE id_encontro = ? ORDER BY TO_CHAR(data, 'DD/MM/YYYY')";
 		return $this->getAdapter()->fetchAll($select,$idEncontro);
-	}  
-	
+	}
 	
 	public function buscaEventos($data) {
       $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
@@ -62,7 +60,10 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
    }
       
    public function buscaEventosAdmin($data) {
-      $select = "SELECT id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) WHERE id_encontro = ?";
+      $select = "SELECT id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome
+			FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
+			INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
+			WHERE id_encontro = ?";
       $auxCont = 0;
       $where[$auxCont] = $data[0];
 
@@ -102,7 +103,8 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
       
    public function buscaEventoPessoa($idEvento) {
       $select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, 
-            validada, TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MM') AS data_submissao, nome, resumo, curriculum, perfil_minimo, 
+            validada, TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MM') AS data_submissao, nome, resumo,
+            tecnologias_envolvidas, perfil_minimo, 
             descricao_dificuldade_evento, email, preferencia_horario, bio, apresentado FROM evento e 
             INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
             INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) 
@@ -112,18 +114,25 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract
       return $this->getAdapter()->fetchAll($select, $idEvento);
    }
 
+	/**
+	 * @deprecated
+	 */
    public function validaEvento($idEvento) {
       $select = "UPDATE evento SET validada = 'T' WHERE id_evento = ?";
-
       return $this->getAdapter()->fetchAll($select, $idEvento);
    }
 
+	/**
+	 * @deprecated
+	 */
    public function invalidaEvento($idEvento) {
       $select = "UPDATE evento SET validada = 'F'  WHERE id_evento = ?";
-
       return $this->getAdapter()->fetchAll($select, $idEvento);
    }
 
+	/**
+	 * @deprecated
+	 */
    public function addResponsavel($data) {
       $select = "UPDATE evento SET  responsavel=?  WHERE  id_evento = ?";
 

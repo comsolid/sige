@@ -29,6 +29,7 @@ class Application_Form_Evento extends Zend_Form {
           //$this->_curriculum(), // usar bio da pessoa
           $this->_resumo(),
           $this->_id_encontro(),
+          $this->_tecnologias_envolvidas(),
           $this->_preferencia_horario(),
       ));
       
@@ -168,6 +169,24 @@ class Application_Form_Evento extends Zend_Form {
       $e->setLabel('Preferência de horário:')
               ->setAttrib('rows', 5)
               ->setAttrib('placeholder', 'Data e horário mais conveniente...')
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim');
+
+      $e->setDecorators(array(
+          'ViewHelper',
+          'Description',
+          'Errors',
+          array('HtmlTag', ''),
+          array('Label', ''),
+      ));
+      return $e;
+   }
+
+   protected function _tecnologias_envolvidas() {
+      $e = new Zend_Form_Element_Textarea('tecnologias_envolvidas');
+      $e->setLabel('Tecnologias envolvidas:')
+              ->setAttrib('rows', 5)
+              ->setAttrib('placeholder', 'Necessidade de um programa ou ferramenta específica, distro, IDE, etc...')
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
