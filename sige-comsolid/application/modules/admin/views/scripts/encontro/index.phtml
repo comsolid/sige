@@ -1,0 +1,86 @@
+<?php echo $this->partial('menu.phtml'); ?>
+
+<table class="display" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th style="width: 10px;">ID</th>
+         <th style="width: 250px;">Nome</th>
+         <th style="width: 200px;">Codenome</th>
+         <th style="width: 150px;">Realizado em</th>
+         <th>Ação</th>
+      </tr>
+   </thead>
+   <tbody>
+   <? foreach($this->lista as $value): ?>
+      <tr>
+         <td><?=$value['id_encontro'] ?></td>
+         <td><?=$value['nome_encontro'] ?></td>
+         <td><?=$value['apelido_encontro'] ?></td>
+         <td><?=$value['data_inicio'] ?> - <?=$value['data_fim'] ?></td>
+         <td>
+            <a href="<?php echo $this->url(array(
+               'module' => 'admin',
+               'controller' => 'encontro',
+               'action' => 'detalhes',
+               'id' => $value['id_encontro']), 'default', true); ?>"
+               class="no-bottom">
+               <i class="icon-edit"></i> Editar
+            </a>
+         </td>
+      </tr>
+   <? endforeach; ?>
+   </tbody>
+</table>
+
+<div class="container">
+   <div class="span-10">
+      <a href="#">Visualizar #3</a>
+   </div>
+   <div class="span-10">
+      de 07/11/2013 até 09/11/2013
+   </div>
+</div>
+<div class="container">
+   <div class="span-10">
+      <p>6º Encontro da COMSOLID</p>
+   </div>
+   <div class="span-10">
+      Codenome: COMSOLiD*6
+   </div>
+</div>
+<div class="container">
+   <div class="span-20">
+      <a href="<?php echo $this->url(array(
+         'module' => 'admin',
+         'controller' => 'encontro',
+         'action' => 'detalhes',
+         'id' => $value['id_encontro']), 'default', true); ?>"
+         class="no-bottom">
+         <i class="icon-edit"></i> Editar
+      </a>&nbsp;&nbsp;&nbsp;
+      <a href="<?php echo $this->url(array(
+         'module' => 'admin',
+         'controller' => 'encontro',
+         'action' => 'editar-mensagem-email-confirmacao',
+         'id' => $value['id_encontro']), 'default', true); ?>"
+         class="no-bottom">
+         <i class="icon-envelope-alt"></i> Mensagem e-mail confirmação
+      </a>&nbsp;&nbsp;&nbsp;
+      <a href="<?php echo $this->url(array(
+         'module' => 'admin',
+         'controller' => 'encontro',
+         'action' => 'detalhes',
+         'id' => $value['id_encontro']), 'default', true); ?>"
+         class="no-bottom">
+         <i class="icon-envelope-alt"></i> Mensagem e-mail recuperar senha
+      </a>
+   </div>
+</div>
+
+<hr/>
+
+<a href="<?=$this->url(array(
+    'module' => 'admin',
+    'controller' => 'encontro',
+    'action' => 'criar'), 'default', true);
+?>" class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>

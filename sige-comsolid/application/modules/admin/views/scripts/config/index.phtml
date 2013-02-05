@@ -2,11 +2,30 @@
 
 <div class="container">
    <div class="span-8 prepend-1">
+      <h3>Encontro</h3><hr/>
+      <ul class="unstyled">
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'encontro',
+            'action' => 'index'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-bullhorn"></i> Gerenciar Encontros</a>
+         </li>
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'encontro',
+            'action' => 'criar'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>
+         </li>
+      </ul>
+   </div>
+   <div class="span-8 prepend-1">
       <h3>Usuários</h3><hr/>
-      <a href="<?php echo $this->url(array(
-         'module' => 'admin',
-         'controller' => 'config',
-         'action' => 'permissao-usuarios'), 'default', true); ?>"
-         class="no-bottom"><i class="icon-lock"></i> Permissão de usuários</a>
+      <ul class="unstyled">
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'config',
+            'action' => 'permissao-usuarios'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-lock"></i> Permissão de usuários</a></li>
+      </ul>
    </div>
 </div>
