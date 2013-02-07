@@ -29,7 +29,12 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
 		$emailText->mensagem = str_replace('{email}', $linha->email, $emailText->mensagem);
 		$emailText->mensagem = str_replace('{senha}', $pessoa->senha, $emailText->mensagem);
-		$emailText->mensagem = str_replace('{href_link}', $emailText->link, $emailText->mensagem);
+		if (empty($emailText->link)) {
+         $link = "#";
+      } else {
+         $link = $emailText->link;
+      }
+      $emailText->mensagem = str_replace('{href_link}', $link, $emailText->mensagem);
 		$mail->setBodyHtml($emailText->mensagem);
 		$mail->addTo($linha->email, $linha->nome);
 		$mail->setSubject($emailText->assunto);

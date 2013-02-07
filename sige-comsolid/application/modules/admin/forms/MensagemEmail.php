@@ -50,7 +50,6 @@ class Admin_Form_MensagemEmail extends Zend_Form {
       $e->setLabel('Mensagem:')
               ->setRequired(true)
               ->setAttrib('rows', 10)
-              ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
       $e->setDecorators(array(
@@ -88,7 +87,8 @@ class Admin_Form_MensagemEmail extends Zend_Form {
               ->addValidator('StringLength', false, array(1, 70))
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->setAttrib('class', 'large');
+              ->setAttrib('class', 'large')
+              ->setAttrib('placeholder', 'ex. http://www.esl.org/login');
 
       $e->setDecorators(array(
           'ViewHelper',
