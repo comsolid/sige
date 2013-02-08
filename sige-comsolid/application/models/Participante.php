@@ -107,10 +107,10 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
                nome_encontro
          FROM evento e
          INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
-         INNER JOIN encontro_participante ep ON ep.id_pessoa = p.id_pessoa
+         INNER JOIN encontro_participante ep ON e.id_encontro = ep.id_encontro
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
          INNER JOIN encontro en ON e.id_encontro = en.id_encontro
-         WHERE p.id_pessoa = ?
+         WHERE ep.id_pessoa = ?
          AND e.validada = TRUE
          AND ep.validado = TRUE
          AND ep.confirmado = TRUE

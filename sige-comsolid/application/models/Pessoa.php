@@ -61,7 +61,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 			LEFT OUTER JOIN instituicao i ON (ep.id_instituicao = i.id_instituicao)
 			INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio)
 			LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana)
-			WHERE id_encontro = ? AND id_tipo_usuario = 3 "; // 3: participante
+			WHERE id_encontro = ? ";
 		
 		if($data[2]=="nome"){
 			if($data[1] != NULL){

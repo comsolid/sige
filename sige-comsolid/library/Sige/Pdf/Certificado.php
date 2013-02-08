@@ -7,7 +7,7 @@
  */
 class Sige_Pdf_Certificado {
    
-   const NUM_MAX_CARACTERES = 128;
+   const NUM_MAX_CARACTERES = 70;
    const POS_X_INICIAL = 120;
    const POS_Y_INICIAL = 340;
    const DES_Y = 20;
@@ -32,8 +32,13 @@ class Sige_Pdf_Certificado {
       $linhas = array();
       $linhas[] = $this->str_center(sprintf($string[0], $array['nome']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
       $linhas[] = $this->str_center(sprintf($string[1], $array['encontro']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
-      $linhas[] = $this->str_center(sprintf($string[2], $array['tipo_evento'], $array['nome_evento']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
-      $linhas[] = ""; // saltar linha
+      
+      $str2 = sprintf($string[2], $array['tipo_evento'], $array['nome_evento']);
+      $l3 = $this->truncate_str($str2, Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
+      $l4 = substr($str2, strlen($l3), strlen($str2));
+      $linhas[] = $this->str_center($l3, Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
+      $linhas[] = $this->str_center($l4, Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
+      //$linhas[] = ""; // saltar linha
       $date = new Zend_Date();
       $linhas[] = $this->str_pad_left(sprintf($string[3], $date->toString("dd 'de' MMMM 'de' y")), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
        
@@ -71,7 +76,7 @@ class Sige_Pdf_Certificado {
 
       $pdf = new Zend_Pdf();
       $page1 = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-      $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD);
+      $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_COURIER_BOLD);
       $page1->setFont($font, Sige_Pdf_Certificado::TAM_FONTE);
 
       // configura o plano de fundo
@@ -158,7 +163,14 @@ class Sige_Pdf_Certificado {
          return "";
       }
       
-      $str = str_pad($str, $tam, $pad, STR_PAD_BOTH);
+      $len = strlen($str);
+      $pads = $tam - $len;
+      if ($pads <= 0) {
+         return $str;
+      }
+      $str = str_pad($str, $len + $pads / 2, $pad, STR_PAD_LEFT);
+      $str = str_pad($str, $tam, $pad);
+      //$str = str_pad($str, $tam, $pad, STR_PAD_BOTH);
       return $str;
    }
    
@@ -169,6 +181,17 @@ class Sige_Pdf_Certificado {
       
       $str = str_pad($str, $tam, $pad, STR_PAD_LEFT);
       return $str;
+   }
+   
+   public function truncate_str($str, $maxlen) {
+      if (strlen($str) <= $maxlen)
+         return $str;
+
+      $newstr = substr($str, 0, $maxlen);
+      if (substr($newstr, -1, 1) != ' ')
+         $newstr = substr($newstr, 0, strrpos($newstr, " "));
+
+      return $newstr;
    }
 }
 

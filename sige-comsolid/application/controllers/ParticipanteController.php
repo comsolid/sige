@@ -351,7 +351,7 @@ class ParticipanteController extends Zend_Controller_Action {
              'nome_evento' => $rs['nome_evento']
          ));
 
-         header("Content-Disposition: inline; filename=certificado-participante.pdf");
+         header("Content-Disposition: inline; filename=certificado-palestrante.pdf");
          header("Content-type: application/x-pdf");
          echo $pdfData;
       } catch (Exception $e) {
