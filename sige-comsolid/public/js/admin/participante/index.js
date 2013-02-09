@@ -4,7 +4,7 @@ $(document).ready(function() {
    $("#nome_pessoa").select();
 	$('#radioset_tipo_busca').buttonset();
    
-   getValores();
+   buscar();
 	
 	oTablePes = $('#pessoas').dataTable( {
 		"sPaginationType" : "full_numbers",
@@ -14,13 +14,13 @@ $(document).ready(function() {
 
 	$("#nome_pessoa").autocomplete({
 		source: function() {
-			getValores();
+			buscar();
 		}
 	});
 	
    $('input:radio').click(function() {
 		$("#nome_pessoa").select();
-      getValores();
+      buscar();
    });
 
 	$(document).delegate('a.situacao', 'click', function() {
@@ -29,19 +29,33 @@ $(document).ready(function() {
    });
 });
 
-function getValores() {
+function buscar() {
    $("#loading").show();
 	var idEncontro = $("#id_encontro").val();
 	var nomePessoa = $("#nome_pessoa").val();
 	var tipo_busca= $('input:radio[name=t_busca]:checked').val();
    
-   $.getJSON("/admin/participante/ajax-buscar/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa, function(json){
+   /*$.getJSON("/admin/participante/ajax-buscar/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa, function(json){
       oTablePes.fnClearTable();
       if(json.size>0) {
          oTablePes.fnAddData(json.aaData);
       }
    }).complete(function() {
       $("#loading").hide();
+   });*/
+   $.ajax({
+      url: "/admin/participante/ajax-buscar/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa,
+      contentType: "application/x-www-form-urlencoded; charset=utf-8;",
+      type: 'POST',
+      success: function( json ) {
+         oTablePes.fnClearTable();
+         if(json.size>0) {
+            oTablePes.fnAddData(json.aaData);
+         }
+      },
+      complete: function() {
+         $("#loading").hide();
+      }
    });
 }
 
@@ -53,7 +67,7 @@ function presenca(url) {
          mostrarMensagem("div.error", json.erro);
       }
    }).complete(function() {
-      getValores();
+      buscar();
    });
 }
 

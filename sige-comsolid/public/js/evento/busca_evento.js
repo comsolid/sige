@@ -9,8 +9,10 @@ $(function() {
    });
    
    getValores();
-   $("#termo").keyup(function() {
-      getValores();
+   $("#termo").autocomplete({
+      source: function() {
+         getValores();
+      }
    });
 
    // evento Usado quando seleciar uma data do evento	
@@ -37,8 +39,8 @@ function getValores() {
    var data_evento = getDataEvento();
    var tipo_evento = getTipoEvento();
    
-   oTable.fnClearTable();
    $.getJSON("/evento/ajax-buscar/termo/"+termo+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento, function(json){
+      oTable.fnClearTable();
       if (json.size > 0) {
          oTable.fnAddData(json.itens);
       }

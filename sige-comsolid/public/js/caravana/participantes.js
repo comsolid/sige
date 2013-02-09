@@ -24,7 +24,7 @@ $(function() {
          // {"result":[{"id":"7","text":"julioneves@gmail.com"}]}
          var url = "/caravana/ajax-buscar-participante/termo/" + options.term;
          $.getJSON(url, null, function(json) {
-            options.callback(json);
+               options.callback(json);
          });
       }
    });

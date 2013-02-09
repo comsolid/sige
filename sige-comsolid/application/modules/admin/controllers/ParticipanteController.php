@@ -40,7 +40,9 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
       $pessoas = new Application_Model_Pessoa ();
-      $dataTodosUsuarios = array($this->_request->getParam("idEncontro", 0), $this->_request->getParam("nomePessoa"), $this->_request->getParam("tbusca"));
+      //$termo = iconv("UTF-8", "ISO-8859-1", $this->_request->getParam("nomePessoa"));
+      $termo = urldecode($this->_request->getParam("nomePessoa"));
+      $dataTodosUsuarios = array($this->_request->getParam("idEncontro", 0), $termo, $this->_request->getParam("tbusca"));
       $data = $pessoas->buscaPessoas($dataTodosUsuarios);
 
       $json = new stdClass; // objeto anonymous http://va.mu/cEGn

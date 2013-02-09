@@ -46,16 +46,30 @@ class Application_Model_CaravanaEncontro extends Zend_Db_Table_Abstract {
 	  	  			AND id_pessoa IN
                   (SELECT p.id_pessoa FROM pessoa p 
                   INNER JOIN encontro_participante ep ON (p.id_pessoa = ep.id_pessoa)
-	  	  			WHERE id_encontro = ? AND id_caravana IS NULL AND p.id_pessoa IN (? ";
+	  	  			WHERE id_encontro = ? AND id_caravana IS NULL AND p.id_pessoa IN (";
 			  	
       $quant = count($where);
-      $numParam = 4;
+      $numParam = 3;
+      $pessoas_validas = 0;
       // concatena os id_pessoa que vem de $data
-		for ($i = $numParam; $i < $quant; $i = $i + 1) {
-         $select .= ", ?";
+		for ($i = $numParam; $i < $quant; $i++) {
+         if (intval($where[$i]) > 0) {
+            $select .= " ?";
+            if ($i < $quant - 1) {
+               $select .= ", ";
+            }
+            $pessoas_validas++;
+         } else {
+            unset($where[$i]);
+         }
       }
       $select .= ")) ";
-      return $this->getAdapter()->fetchAll($select,$where);
+      if ($pessoas_validas > 0) {
+         $this->getAdapter()->fetchAll($select,$where);
+         return 1; // true
+      } else {
+         return 0; // false
+      }
 	}
      
 	public function deletarParticipante($data) {

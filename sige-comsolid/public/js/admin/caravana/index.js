@@ -5,18 +5,19 @@
 
 $(document).ready(function() {
    oTable = $('table').dataTable({
-      "sPaginationType" : "full_numbers",
-      "aaSorting": [ ],
+      "sPaginationType": "full_numbers",
+      "aaSorting": [],
       "bFilter": false
    });
 
    $("#termo").focus();
-    
+
    getValores();
-	
-   $("#termo").keyup(function() {
-      getValores();
-		
+
+   $("#termo").autocomplete({
+      source: function() {
+         getValores();
+      }
    });
 
 });
@@ -28,7 +29,7 @@ function getValores() {
    $.getJSON(url, null, function(json) {
       oTable.fnClearTable();
       if (json.size > 0) {
-        oTable.fnAddData(json.itens);
+         oTable.fnAddData(json.itens);
       }
    }).complete(function() {
       $("#loading").hide();

@@ -62,9 +62,15 @@ class CaravanaController extends Zend_Controller_Action {
                );
                $where = array_merge($where, $array_id_pessoas);
                try {
-                  $caravanaEncontro->updateParticipantesCaravana($where);
-                  $this->_helper->flashMessenger->addMessage(
-                          array('success' => 'Participantes adicionados à caravana com sucesso.'));
+                  $result = $caravanaEncontro->updateParticipantesCaravana($where);
+                  if ($result) {
+                     $this->_helper->flashMessenger->addMessage(
+                             array('success' => 'Participantes adicionados à caravana com sucesso.'));
+                  } else {
+                     $this->_helper->flashMessenger->addMessage(
+                             array('notice' => 'Nenhum participante adicionado à caravana.'));
+                  }
+                  
                } catch (Exception $e) {
                   $this->_helper->flashMessenger->addMessage(
                           array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
@@ -101,6 +107,7 @@ class CaravanaController extends Zend_Controller_Action {
          AND ep.id_caravana IS NULL
          AND ep.validado = true ",
               array("{$termo}%", $idPessoa, $idEncontro));
+      $json->size = count($rs);
       foreach ($rs as $value) {
          $obj = new stdClass;
          $obj->id = "{$value['id_pessoa']}";
