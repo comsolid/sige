@@ -124,7 +124,8 @@ class IndexController extends Zend_Controller_Action {
             $idEncontro = $config->encontro->codigo;
 
             $mail = new Application_Model_EmailConfirmacao();
-            $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro);
+            $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro,
+                    Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA);
             $this->_helper->flashMessenger->addMessage(
                      array('success' => 'E-mail enviado com sucesso, verifique seu e-mail.'));
          } else {

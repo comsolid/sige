@@ -1,5 +1,7 @@
 start transaction;
 
+set client_enconding = 'LATIN1';
+
 --
 -- Tabela: dificuldade_evento
 --
