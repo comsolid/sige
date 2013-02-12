@@ -1,7 +1,7 @@
 var oTablePes;
 $(document).ready(function() {
 	
-   $("#nome_pessoa").select();
+   $("#termo").select();
 	$('#radioset_tipo_busca').buttonset();
    
    buscar();
@@ -12,39 +12,32 @@ $(document).ready(function() {
 		"bFilter": false
 	});
 
-	$("#nome_pessoa").autocomplete({
+	$("#termo").autocomplete({
 		source: function() {
 			buscar();
 		}
 	});
 	
    $('input:radio').click(function() {
-		$("#nome_pessoa").select();
+		$("#termo").select();
       buscar();
    });
 
 	$(document).delegate('a.situacao', 'click', function() {
       //console.log($(this).attr('data-url'));
       presenca($(this).attr('data-url'));
+      $("#termo").select();
    });
 });
 
 function buscar() {
    $("#loading").show();
 	var idEncontro = $("#id_encontro").val();
-	var nomePessoa = $("#nome_pessoa").val();
+	var termo = $("#termo").val();
 	var tipo_busca= $('input:radio[name=t_busca]:checked').val();
    
-   /*$.getJSON("/admin/participante/ajax-buscar/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa, function(json){
-      oTablePes.fnClearTable();
-      if(json.size>0) {
-         oTablePes.fnAddData(json.aaData);
-      }
-   }).complete(function() {
-      $("#loading").hide();
-   });*/
    $.ajax({
-      url: "/admin/participante/ajax-buscar/tbusca/"+tipo_busca+"/idEncontro/"+idEncontro+"/nomePessoa/"+nomePessoa,
+      url: "/admin/participante/ajax-buscar/tipo/"+tipo_busca+"/idEncontro/"+idEncontro+"/termo/"+termo,
       contentType: "application/x-www-form-urlencoded; charset=utf-8;",
       type: 'POST',
       success: function( json ) {
