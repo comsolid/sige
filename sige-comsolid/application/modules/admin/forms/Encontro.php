@@ -2,6 +2,12 @@
 
 class Admin_Form_Encontro extends Zend_Form {
 
+   protected $modo_edicao = false;
+   
+   public function modoEdicao() {
+      $this->modo_edicao = true;
+   }
+   
    public function init() {
       $this->setName('Encontro');
 
@@ -11,7 +17,6 @@ class Admin_Form_Encontro extends Zend_Form {
       $cancelar->setAttrib('class', 'submitCancelar');
 
       $this->addElements(array(
-          //$this->_id_encontro(),
           $this->_nome_encontro(),
           $this->_apelido_encontro(),
           $this->_data_inicio(),
@@ -79,7 +84,11 @@ class Admin_Form_Encontro extends Zend_Form {
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
               ->setAttrib('class', 'date');
-
+      
+      if ($this->modo_edicao) {
+         $e->setAttrib("disabled", "disabled");
+      }
+      
       $e->setDecorators(array(
           'ViewHelper',
           'Description',
@@ -97,7 +106,11 @@ class Admin_Form_Encontro extends Zend_Form {
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
               ->setAttrib('class', 'date');
-
+      
+      if ($this->modo_edicao) {
+         $e->setAttrib("disabled", "disabled");
+      }
+      
       $e->setDecorators(array(
           'ViewHelper',
           'Description',

@@ -57,6 +57,19 @@ class Admin_EncontroController extends Zend_Controller_Action {
             
             $model->getAdapter()->beginTransaction();
             try {
+               $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+               $dbdf = $config->db->date->format;
+               
+               if (! empty($values['data_inicio'])) {
+                  $date = new Zend_Date($values['data_inicio']);
+                  $values['data_inicio'] = $date->toString($dbdf);
+               }
+               
+               if (! empty($values['data_fim'])) {
+                  $date = new Zend_Date($values['data_fim']);
+                  $values['data_fim'] = $date->toString($dbdf);
+               }
+               
                $id = $model->insert($values);
                $modelMensagem->criarMensagensPadrao(
                        $id, $values['apelido_encontro']
@@ -76,6 +89,75 @@ class Admin_EncontroController extends Zend_Controller_Action {
             }
          } else {
             $form->populate($formData);
+         }
+      }
+   }
+   
+   public function editarAction() {
+      $form = new Admin_Form_Encontro();
+      $this->view->form = $form;
+      $model = new Admin_Model_Encontro();
+      
+      if ($this->getRequest()->isPost()) {
+         $formData = $this->getRequest()->getPost();
+
+         if (isset($formData['cancelar'])) {
+            return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'encontro'
+                            ), 'default', true);
+         }
+         
+         if ($form->isValid($formData)) {
+            $id = $this->getRequest()->getParam('id', 0);
+            $values = $form->getValues();
+            
+            try {
+               $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+               $dbdf = $config->db->date->format;
+
+               if (!empty($values['data_inicio'])) {
+                  $date = new Zend_Date($values['data_inicio']);
+                  $values['data_inicio'] = $date->toString($dbdf);
+               }
+
+               if (!empty($values['data_fim'])) {
+                  $date = new Zend_Date($values['data_fim']);
+                  $values['data_fim'] = $date->toString($dbdf);
+               }
+               $model->update($values, 'id_encontro = ' . $id);
+               $this->_helper->flashMessenger->addMessage(
+                     array('success' => 'Encontro atualizado com sucesso.'));
+               return $this->_helper->redirector->goToRoute(array(
+                  'module' => 'admin',
+                  'controller' => 'encontro',
+                  'action' => 'index'), 'default', true);
+            } catch (Exception $e) {
+               $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                         . $e->getMessage()));
+            }
+         } else {
+            $form->populate($formData);
+         }
+      } else {
+         $id = $this->_getParam('id', 0);
+         if ($id > 0) {
+            $array = $model->fetchRow('id_encontro = ' . $id)->toArray();
+            
+            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+            $appdf = $config->app->date->format;
+            if (!empty($array['data_inicio'])) {
+               $date = new Zend_Date($array['data_inicio']);
+               $array['data_inicio'] = $date->toString($appdf);
+            }
+
+            if (!empty($array['data_fim'])) {
+               $date = new Zend_Date($array['data_fim']);
+               $array['data_fim'] = $date->toString($appdf);
+            }
+            
+            $form->populate($array);
          }
       }
    }
