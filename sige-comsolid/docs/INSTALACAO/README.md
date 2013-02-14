@@ -81,6 +81,9 @@ para substiruir valores reais, tornando a mensagem dinâmica.
 
 Vale lembrar que a mensagem pode ser escrita em HTML. Coloque apenas tags referentes ao `body`.
 
+Outro ponto importante é configurar o *enconding* ao inserir um encontro e suas mensagens.
+Para isso adicione `SET client_encoding = 'LATIN1';` no início do *insert*.
+
 Da mesma forma crie a mensagem de recuperação de senha:
 
 ~~~
@@ -95,9 +98,8 @@ INSERT INTO mensagem_email(id_encontro, id_tipo_mensagem_email,
 Por ser um exemplo, as mensagens ficaram uma muito parecida com a outra. Você deve adaptar
 de acordo com seu encontro.
 
-<!--
-TODO: demonstrar configuração do projeto, fazendo checkout e instalando o zend
--->
+**obs.:** esse passo serve somente para o primeiro encontro. Os demais podem ser criados
+a partir do SiGE em `/adim/encontro/criar/`.
 
 SiGE
 ----
@@ -128,6 +130,15 @@ Para realizar checkout da última versão do SiGE:
 $ svn checkout http://sige-comsolid.googlecode.com/svn/trunk/ sige-comsolid
 ~~~
 
+ou ainda checkout a partir de uma tag:
+
+~~~
+$ svn checkout http://sige-comsolid.googlecode.com/svn/tag/sige-comsolid-1.1.2 \
+sige-comsolid
+~~~
+
+Modifique a versão para a última encontrada: ex. sige-comsolid-1.1.2.
+
 **obs.:** é necessário instalar o svn. No Ubuntu podemos instalar através do comando:
 
 ~~~
@@ -136,6 +147,12 @@ $ sudo apt-get install subversion
 
 **obs.:** instale a partir do repositório somente se você está interessado em contribuir,
 estudar o código ou apenas testando.
+
+### Baixando versão estável SiGE
+
+Procure pela versão mais atual do SiGE na seção de downloads
+
+<http://code.google.com/p/sige-comsolid/downloads/list>
 
 ### Configurando VirtualHost
 
