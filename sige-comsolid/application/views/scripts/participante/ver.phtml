@@ -1,6 +1,5 @@
 <?php
-   $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
-   $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
+   $this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
 ?>
 <? if (! empty($this->user)): ?>
 <p>
@@ -43,6 +42,60 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
 ?>
 <p><?=$twitter ?></p>
 
-<? else: ?>
+   <?
+   if (! empty($this->user->slideshare)):
+      try {
+         $channel = new Zend_Feed_Rss("http://www.slideshare.net/rss/user/{$this->user->slideshare}");
+   ?>
+<hr/> 
+<div class="container">
+   <div class="span-6">
+      <a href="<? echo $channel->link; ?>" target="_blank">
+         <img src="<? echo $channel->image->url; ?>"/>
+      </a>
+   </div>
+   <div class="span-12">
+      <h4 style="padding-top: 6px;">Slideshows de
+         <a href="<? echo "{$channel->link}{$this->user->slideshare}" ?>" target="_blank">
+            <? echo $this->user->slideshare ?>
+         </a>
+      </h4>
+   </div>
+   <hr/>
+</div>
+      <?
+      $maxEmbedSlides = 3;
+      $i = 0;
+      foreach ($channel as $item): ?>
+<div class="container">
+   <div class="span-20">
+      <? if ($i < $maxEmbedSlides): ?>
+         <? echo ($item->__get('slideshare:embed')); ?>
+      <? else: ?>
+      <i class='icon-external-link'></i> <a href="<? echo $item->link; ?>" target="_blank">
+         <? echo $item->title; ?></a>
+      <? endif; ?>
+   </div>
+</div><hr/>
+      <?
+         $i++;
+      endforeach; ?>
+   <? 
+      } catch (Exception $e) {
+         ?>
+<div class="notice">
+   <div class="msg-header">Atenção!</div>
+   <div>Usuário do Slideshare <? echo $this->user->slideshare; ?> não encontrado.</div>
+   <div>Detalhes: <? echo $e->getMessage(); ?></div>
+</div>
+         <?
+      }
+   else: ?>
+Crie uma conta no <a href="http://www.slideshare.net/"
+                     class="no-bottom" target="_blank">
+   <img src="<? echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare</a>
+para que suas apresentações apareçam aqui.
+   <? endif; ?>
+<? else: // end: not empty user ?>
 <p>Participante não encontrado.</p>
 <? endif; ?>

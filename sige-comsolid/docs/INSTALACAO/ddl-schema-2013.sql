@@ -619,7 +619,8 @@ CREATE TABLE pessoa (
     administrador boolean DEFAULT false NOT NULL,
     facebook character varying(50),
     email_enviado boolean DEFAULT false NOT NULL,
-    bio text
+    bio text,
+    slideshare character varying(32)
 );
 
 

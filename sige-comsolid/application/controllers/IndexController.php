@@ -48,7 +48,7 @@ class IndexController extends Zend_Controller_Action {
                $result = $pessoa->buscarUltimoEncontro($idPessoa);
 
 					// se ultimo encontro do participante for diferente do atual
-					if($result['id_encontro'] != $idEncontro) {
+					if($pessoa->verificaEncontro($idEncontro, $idPessoa) == false) {
 						
 						$result['id_encontro'] = intval($idEncontro);
 					   $pessoa->getAdapter()->insert("encontro_participante", $result);

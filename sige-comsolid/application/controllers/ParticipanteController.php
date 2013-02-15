@@ -114,13 +114,18 @@ class ParticipanteController extends Zend_Controller_Action {
 	public function editarAction() {
 		$this->autenticacao();
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/salvar.js'));
 
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
+		
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
 
-		$sessao = Zend_Auth :: getInstance()->getIdentity();
+		$sessao = Zend_Auth::getInstance()->getIdentity();
 		
 		$idPessoa = $sessao["idPessoa"];
 		$idEncontro = $sessao["idEncontro"];
@@ -141,7 +146,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		$data = $this->getRequest()->getPost();
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
-			$data = $form->getValues();
+         $data = $form->getValues();
 
 			$data2 = array (
 				'id_encontro' => $idEncontro,

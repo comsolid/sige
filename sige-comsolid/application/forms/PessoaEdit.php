@@ -27,7 +27,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
 
       $nome = $this->createElement('text', 'nome', array('label' => 'Nome: '));
       $nome->setRequired(true)
-              ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÁÉÍÓÚ]*$/'))
+              ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÇÁÉÍÓÚ]*$/'))
               ->addValidator('stringLength', false, array(6, 100))
               ->addErrorMessage("Nome deve ter no mínimo 6 caracteres ou contém caracteres inválidos");
 
@@ -51,7 +51,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
          $sexo->addMultiOption($row->id_sexo, $row->descricao_sexo);
       }
 
-      $twitter = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
+      /*$twitter = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
       $twitter->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
               ->addErrorMessage("Twitter inválido");
 
@@ -61,7 +61,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
 
       $site = $this->createElement('text', 'endereco_internet', array('label' => 'Site: '));
       $site->addValidator(new Url_Validator)
-              ->addErrorMessage("Site inválido");
+              ->addErrorMessage("Site inválido");*/
 
       $cidade = new Application_Model_Municipio();
       $listaCiddades = $cidade->fetchAll(null, 'nome_municipio');
@@ -94,9 +94,6 @@ class Application_Form_PessoaEdit extends Zend_Form {
               ->addElement($email)
               ->addElement($apelido)
               ->addElement($sexo)
-              ->addElement($twitter)
-              ->addElement($facebook)
-              ->addElement($site)
               ->addElement($municipio)
               ->addElement($instituicao)
               ->addElement($anoNascimento)
@@ -105,6 +102,48 @@ class Application_Form_PessoaEdit extends Zend_Form {
       $this->addElement($botao);
       $botao = $this->createElement('reset', 'cancelar')->removeDecorator('DtDdWrapper');
       $this->addElement($botao);
+      
+      // grupo para tab-1
+      $this->addDisplayGroup(array(
+          'nome',
+          'email',
+          'apelido',
+          'id_sexo',
+          'id_municipio',
+          'id_instituicao',
+          'nascimento',
+          'bio'
+         ), 'tab-1', array(
+            'decorators' => array(
+              'FormElements',
+              array('HtmlTag', array('tag' => 'div', 'id' => 'tab-1'))
+            )
+      ));
+            
+      // grupo para tab-2
+      $this->addElement($this->_twitter())
+              ->addElement($this->_facebook())
+              ->addElement($this->_slideshare())
+              ->addElement($this->_website());
+      $this->addDisplayGroup(array(
+          'twitter',
+          'facebook',
+          'slideshare',
+          'endereco_internet'
+         ), 'tab-2', array(
+            'decorators' => array(
+              'FormElements',
+              array('HtmlTag', array('tag' => 'div', 'id' => 'tab-2'))
+            )
+      ));
+      
+      // agrupar botoes
+      $this->addDisplayGroup(array('confimar', 'cancelar'), 'form_actions', array(
+          'decorators' => array(
+            'FormElements',
+            array('HtmlTag', array('tag' => 'div'))
+          )
+      ));
    }
 
    protected function _bio() {
@@ -116,5 +155,33 @@ class Application_Form_PessoaEdit extends Zend_Form {
               ->addFilter('StringTrim');
       return $e;
    }
+   
+   private function _twitter() {
+      $e = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
+      $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
+              ->addErrorMessage("Twitter inválido");
+      return $e;
+   }
 
+   private function _facebook() {
+      $e = $this->createElement('text', 'facebook', array('label' => 'Facebook (E-mail): '));
+      $e->addValidator('EmailAddress')
+              ->addErrorMessage("Facebook inválido");
+      return $e;
+   }
+
+   private function _website() {
+      $e = $this->createElement('text', 'endereco_internet', array('label' => 'Site: '));
+      $e->setAttrib("placeholder", "http://comsolid.org")
+              ->addValidator(new Url_Validator)
+              ->addErrorMessage("Site inválido (ex. http://comsolid.org)");
+      return $e;
+   }
+
+   private function _slideshare() {
+      $e = $this->createElement('text', 'slideshare', array('label' => 'Slideshare: '));
+      $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
+              ->addErrorMessage("Usuário slideshare inválido");
+      return $e;
+   }
 }

@@ -7,3 +7,6 @@ ALTER TABLE pessoa ADD COLUMN bio text;
 
 ALTER TABLE public.evento DROP COLUMN curriculum;
 ALTER TABLE public.evento ADD COLUMN tecnologias_envolvidas text;
+
+-- upgrade versao 1.1.2
+ALTER TABLE pessoa ADD COLUMN slideshare character varying(32);
