@@ -19,8 +19,11 @@ class EventoController extends Zend_Controller_Action {
 	public function indexAction() {
       $this->autenticacao();
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tipsy.css'));
+      
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.tipsy.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/evento/inicio.js'));
 		
 
@@ -407,6 +410,142 @@ class EventoController extends Zend_Controller_Action {
                        array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                            . $e->getMessage()));
       }
+   }
+   
+   public function outrosPalestrantesAction() {
+      $this->view->menu->setAtivo('submissao');
+      
+      $evento = new Application_Model_Evento();
+      $idEvento = $this->_request->getParam('id', 0);
+      
+      $cancelar = $this->getRequest()->getPost('cancelar');
+      if (isset($cancelar)) {
+         return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
+      }
+      
+      if ($this->getRequest()->isPost()) {
+         $submit = $this->getRequest()->getPost('submit');
+         if ($submit == "confimar") {
+            $array_id_pessoas = explode(",", $this->getRequest()->getPost('array_id_pessoas'));
+            
+            if (count($array_id_pessoas) == 1 && empty($array_id_pessoas[0])) {
+               $this->_helper->flashMessenger->addMessage(
+                        array('notice' => 'Nenhum palestrante foi selecionado.'));
+            } else {
+               try {
+                  $numParticipantes = 0;
+                  foreach ($array_id_pessoas as $value) {
+                     $value = intval($value);
+                     $numParticipantes += $evento->adicionarPalestranteEvento($idEvento, $value);
+                  }
+                  $this->_helper->flashMessenger->addMessage(
+                             array('success' => "{$numParticipantes} palestrante(s) adicionado(s) ao evento com sucesso."));
+               } catch (Zend_Db_Exception $ex) {
+                  if ($ex->getCode() == 23505) {
+                     $this->_helper->flashMessenger->addMessage(
+                             array('error' => 'Palestrante(s) já existe(m) no evento.'));
+                  } else {
+                     $this->_helper->flashMessenger->addMessage(
+                             array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                                 . $ex->getMessage()));
+                  }
+               }
+            }
+         }
+      }
+      
+      // listar palestrantes
+      try {
+         $data = $evento->buscaEventoPessoa($idEvento);
+         if (empty($data)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('notice' => 'Evento não encontrado.'));
+         } else {
+            $this->view->evento = $data[0];
+            
+            // checa as permissão do usuário, para editar somente seus eventos
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            if ($this->view->evento['id_pessoa'] != $sessao['idPessoa']) {
+               $this->_helper->flashMessenger->addMessage(
+                    array('notice' => 'Você não tem permissão de editar este evento.'));
+               return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
+            }
+         }
+
+         $palestrantes = $evento->getAdapter()->fetchAll("SELECT p.id_pessoa,
+                  p.nome, p.email
+           FROM evento_palestrante ep
+           INNER JOIN pessoa p ON ep.id_pessoa = p.id_pessoa
+           WHERE ep.id_evento = ?", array($idEvento));
+         $this->view->palestrantes = $palestrantes;
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(
+                 array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                     . $e->getMessage()));
+      }
+   }
+   
+   public function ajaxBuscarParticipanteAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+      $idPessoa = $sessao["idPessoa"];
+      $idEncontro = $sessao["idEncontro"];
+      
+      $model = new Application_Model_Pessoa();
+      $termo = $this->_request->getParam("termo", "");
+      
+      $json = new stdClass;
+      $json->results = array();
+      
+      $rs = $model->getAdapter()->fetchAll(
+         "SELECT p.id_pessoa,
+               p.email
+         FROM pessoa p
+         INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
+         WHERE p.email LIKE lower(?)
+         AND p.id_pessoa <> ?
+         AND ep.id_encontro = ?
+         AND ep.validado = true ",
+              array("{$termo}%", $idPessoa, $idEncontro));
+      $json->size = count($rs);
+      foreach ($rs as $value) {
+         $obj = new stdClass;
+         $obj->id = "{$value['id_pessoa']}";
+         $obj->text = "{$value['email']}";
+         array_push($json->results, $obj);
+      }
+      
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
+   
+   public function deletarPalestranteAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $pessoa = $this->_getParam('pessoa', 0);
+      $evento = $this->_getParam('evento', 0);
+      if ($pessoa > 0 and $evento > 0) {
+         $model = new Application_Model_Evento();
+         try {
+            $model->getAdapter()->delete("evento_palestrante",                  "id_pessoa = {$pessoa} AND id_evento = {$evento}");
+            $this->_helper->flashMessenger->addMessage(
+                    array('success' => 'Palestrante removido do evento com sucesso.'));
+         } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                         . $e->getMessage()));
+         }
+      } else {
+         $this->_helper->flashMessenger->addMessage(
+                        array('notice' => 'Nenhum palestrante foi selecionado.'));
+      }
+      $this->_helper->redirector->goToRoute(array('controller' => 'evento',
+          'action' => 'outros-palestrantes', 'id' => $evento), 'default', true);
    }
    
    private function redirecionar($admin = false, $id = 0) {

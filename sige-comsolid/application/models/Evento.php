@@ -151,4 +151,14 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
          ORDER BY data asc, hora_inicio asc";
       return $this->getAdapter()->fetchAll($sql, array($id_encontro));
    }
+   
+   public function adicionarPalestranteEvento($idEvento = 0, $idPessoa = 0) {
+      if ($idEvento > 0 and $idPessoa > 0) {
+         return $this->getAdapter()->insert("evento_palestrante", array(
+             'id_evento' => $idEvento,
+             'id_pessoa' => $idPessoa
+         ));
+      }
+      return 0; // nenhuma linha afetada.
+   }
 }

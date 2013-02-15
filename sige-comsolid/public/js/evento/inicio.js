@@ -6,12 +6,6 @@ $(function() {
 		//"sPaginationType" : "full_numbers",
 		"aaSorting": [  ]
 	});
-
-   $("#bSearch").button({
-      icons: {
-         primary: "ui-icon-search"
-      }
-   });
-
- 
+   
+   $('.tooltip').tipsy({gravity: 's'});
 });

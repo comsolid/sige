@@ -1,0 +1,52 @@
+<?php
+   $this->headScript()
+      ->prependFile($this->baseUrl('js/evento/outros-palestrantes.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery.tipsy.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery.dataTables.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/select2.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery-1.8.3.min.js'),'text/javascript');
+   
+   $this->headLink()
+           ->prependStylesheet($this->baseUrl('css/tipsy.css'))
+           ->prependStylesheet($this->baseUrl('css/tabela_sort.css'))
+           ->prependStylesheet($this->baseUrl('css/form.css'))
+           ->prependStylesheet($this->baseUrl('css/select2.css'));
+?>
+<fieldset>
+   <form action="<?=$this->url(array('action' => 'outros-palestrantes')) ?>" method="post">
+      <span>Adicionar outros palestrantes:
+         <strong><?=$this->evento['nome_evento'] ?></strong>.</span><br/><br/>
+      <input type="hidden" id="sel" name="array_id_pessoas" style="width: 500px;"/>
+      <dl class="zend_form">
+         <input type="submit" name="cancelar" id="cancelar" value="cancelar" class="submitCancelar">
+         <input type="submit" name="submit" id="submit" value="confimar"/>
+      </dl>
+   </form>
+</fieldset>
+
+<table class="display" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <th>Palestrantes</th>
+      <th style="width: 70px;">Ação</th>
+   </thead>
+   <tbody> 
+      <? foreach ($this->palestrantes as $palestrante): ?>
+         <tr>
+            <td><?= $palestrante['nome'] ?></td>
+            <td><a title="Remover participante dessa caravana" 
+                  href="<?php
+                     echo $this->url(array('controller' => 'evento',
+                         'action' => 'deletar-palestrante',
+                         'pessoa' => $palestrante['id_pessoa'],
+                         'evento' => $this->evento['id_evento']), 'default', true);
+                     ?>" class="no-bottom"
+                     onclick="return confirm('Tem certeza que deseja deletar o palestrante do evento?')">
+                  <i class="icon-remove"></i> Deletar
+               </a>&nbsp;&nbsp;&nbsp;
+               <a href="mailto:<?=$palestrante['email'] ?>" target="_blank"
+                  title="Enviar e-mail" class="no-bottom tooltip"><i class="icon-envelope"></i></a>
+            </td>
+         </tr>
+   <? endforeach; ?>
+   </tbody>
+</table>

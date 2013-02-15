@@ -143,6 +143,7 @@ body{
 
 a {cursor: pointer;}
 a.no-bottom {text-decoration: none}
+a.no-bottom:hover {border-bottom: 1px solid}
 
 fieldset {padding:0 1.4em 1.4em 1.4em;margin:0 0 1.5em 0;border:1px solid #ccc;}
 legend {font-size:1.2em;margin-top:-0.2em;margin-bottom:1em;}
