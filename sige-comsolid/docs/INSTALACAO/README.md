@@ -133,11 +133,11 @@ $ svn checkout http://sige-comsolid.googlecode.com/svn/trunk/ sige-comsolid
 ou ainda checkout a partir de uma tag:
 
 ~~~
-$ svn checkout http://sige-comsolid.googlecode.com/svn/tag/sige-comsolid-1.1.2 \
+$ svn checkout http://sige-comsolid.googlecode.com/svn/tag/sige-comsolid-1.2.0 \
 sige-comsolid
 ~~~
 
-Modifique a versão para a última encontrada: ex. sige-comsolid-1.1.2.
+Modifique a versão para a última encontrada: ex. sige-comsolid-1.2.0.
 
 **obs.:** é necessário instalar o svn. No Ubuntu podemos instalar através do comando:
 
