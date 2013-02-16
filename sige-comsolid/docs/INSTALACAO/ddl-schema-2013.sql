@@ -813,6 +813,26 @@ CREATE TABLE tipo_usuario (
 );
 
 
+CREATE TABLE tags
+(
+  id serial NOT NULL,
+  descricao character varying(30) NOT NULL,
+  CONSTRAINT tags_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE evento_tags
+(
+  id_evento integer NOT NULL,
+  id_tag integer NOT NULL,
+  CONSTRAINT evento_tags_pkey PRIMARY KEY (id_evento, id_tag),
+  CONSTRAINT evento_tags_id_evento_fkey FOREIGN KEY (id_evento)
+      REFERENCES evento (id_evento) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT evento_tags_id_tag_fkey FOREIGN KEY (id_tag)
+      REFERENCES tags (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
 --
 -- TOC entry 2089 (class 2604 OID 21547)
 -- Name: id_caravana; Type: DEFAULT; Schema: public; Owner: -

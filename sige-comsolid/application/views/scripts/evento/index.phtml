@@ -32,7 +32,12 @@
 				'action'=>'outros-palestrantes',
             'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
             title="Adicionar outros palestrantes">
-            <i class="icon-group"></i></a>
+            <i class="icon-group"></i></a>&nbsp;&nbsp;&nbsp;
+         <a href="<?php echo $this->url(array('controller'=>'evento',
+				'action' => 'tags',
+            'id' => $linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
+            title="Criar/Editar tags">
+            <i class="icon-tags"></i></a>
 		 </td>
 	  </tr>
 	  <?}?>

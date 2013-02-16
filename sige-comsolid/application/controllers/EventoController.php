@@ -548,6 +548,99 @@ class EventoController extends Zend_Controller_Action {
           'action' => 'outros-palestrantes', 'id' => $evento), 'default', true);
    }
    
+   public function tagsAction() {
+      $model = new Application_Model_EventoTags();
+      $idEvento = $this->_getParam('id', 0);
+      $this->view->tags = $model->listarPorEvento($idEvento);
+      $this->view->id_evento = $idEvento;
+   }
+   
+   public function ajaxBuscarTagsAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $model = new Application_Model_EventoTags();
+      $termo = $this->_getParam('termo', "");
+      $rs = $model->listarTags($termo);
+      
+      $json = new stdClass;
+      $json->itens = array();
+      foreach ($rs as $value) {
+         $obj = new stdClass;
+         $obj->id = "{$value['id']}";
+         $obj->text = "{$value['descricao']}";
+         array_push($json->itens, $obj);
+      }
+      
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
+   
+   public function ajaxSalvarTagAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $model = new Application_Model_EventoTags();
+      $json = new stdClass;
+      try {
+         $id_tag = $this->_getParam('id', 0);
+         $id_evento = $this->_getParam('id_evento', 0);
+         $id = $model->insert(array('id_tag' => $id_tag, 'id_evento' => $id_evento));
+         if ($id > 0) {
+            $json->ok = true;
+            $json->msg = "Tag adicionada com sucesso.";
+         } else {
+            $json->ok = false;
+            $json->erro = "Ocorreu um erro inesperado ao salvar <b>tag</b>.";
+         }
+      } catch (Exception $e) {
+         if ($e->getCode() == 23505) {
+            $json->erro = "Tag já existe.";
+         } else {
+            $json->erro = "Ocorreu um erro inesperado ao salvar <b>tag</b>.<br/>Detalhes"
+                    . $e->getMessage();
+         }
+         $json->ok = false;
+      }
+      
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
+   
+   public function ajaxCriarTagAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $model = new Application_Model_EventoTags();
+      $json = new stdClass;
+      try {
+         $descricao = $this->_getParam('descricao', "");
+         $id = $model->getAdapter()->insert("tags", array('descricao' => $descricao));
+         $json->ok = true;
+         $json->id = $id;
+      } catch (Exception $e) {
+         if ($e->getCode() == 23505) {
+            $json->erro = "Tag já existe.";
+         } else {
+            $json->erro = "Ocorreu um erro inesperado ao salvar <b>tag</b>.<br/>Detalhes"
+                    . $e->getMessage();
+         }
+         $json->ok = false;
+      }
+      
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
+
    private function redirecionar($admin = false, $id = 0) {
       if ($admin) {
          $this->_helper->redirector->goToRoute(array(

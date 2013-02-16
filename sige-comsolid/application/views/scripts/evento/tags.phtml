@@ -1,0 +1,49 @@
+<?php
+   $this->headScript()
+      ->prependFile($this->baseUrl('js/evento/tags.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/select2.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'),'text/javascript')
+      ->prependFile($this->baseUrl('js/jquery-1.6.2.min.js'),'text/javascript');
+   
+   $this->headLink()
+           ->prependStylesheet($this->baseUrl('css/screen.css'))
+           ->prependStylesheet($this->baseUrl('css/form.css'))
+           ->prependStylesheet($this->baseUrl('css/select2.css'))
+           ->prependStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'))
+           ->prependStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+?>
+
+<fieldset>
+   <div class="container">
+      <div class="span-8">
+         <input type="hidden" id="id_evento" value="<?=$this->id_evento ?>"/>
+         <i class="icon-search"></i> Buscar tag:<br/>
+         <input type="text" class="text" name="termo" id="termo"
+                value="" size="40" maxlength="50"
+                placeholder="ex. python, ruby, java..." style="float: left;" />
+         <br/><br/>
+         <a id="criar-tag" href="#" class="no-bottom" style="display: none;" onclick="return false;">
+            <i class="icon-tag"></i> Criar tag</a>
+      </div>
+      
+      <!-- lista de tags -->
+      <div class="span-8">
+         <i class="icon-tags"></i> Tags:<br/>
+         <div class="select2-container select2-container-multi" style="width: 400px;">
+            <ul class="select2-choices">
+               <? foreach ($this->tags as $tag): ?>
+                  <li class="select2-search-choice">
+                     <div><?= $tag['descricao'] ?></div>
+                     <a href="#" data-id="<?= $tag['id'] ?>"
+                        class="select2-search-choice-close" tabindex="-1"></a>
+                  </li>
+               <? endforeach; ?>
+            </ul>
+         </div>
+      </div>
+   </div>
+   
+</fieldset>
+
+<div class="success" style="display: none;margin-top: 10px;"></div>
+<div class="error" style="display: none;margin-top: 10px;"></div>

@@ -109,8 +109,8 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
          $json->ok = true;
       } catch (Exception $e) {
          $json->ok = false;
-         $json->erro = "Ocorreu um erro inesperado ao marcar interesse em evento.<br/>Detalhes"
-                 . $ex->getMessage();
+         $json->erro = "Ocorreu um erro inesperado ao marcar interesse em <b>evento</b>.<br/>Detalhes"
+                 . $e->getMessage();
       }
 
       header("Pragma: no-cache");
