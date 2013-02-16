@@ -12,11 +12,11 @@
            ->prependStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'))
            ->prependStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
 ?>
-
+<h3><?=$this->evento['nome_tipo_evento'] ?>: <?=$this->evento['nome_evento'] ?></h3><hr/>
 <fieldset>
    <div class="container">
       <div class="span-8">
-         <input type="hidden" id="id_evento" value="<?=$this->id_evento ?>"/>
+         <input type="hidden" id="id_evento" value="<?=$this->evento['id_evento'] ?>"/>
          <i class="icon-search"></i> Buscar tag:<br/>
          <input type="text" class="text" name="termo" id="termo"
                 value="" size="40" maxlength="50"
@@ -32,11 +32,11 @@
          <div class="select2-container select2-container-multi" style="width: 400px;">
             <ul class="select2-choices">
                <? foreach ($this->tags as $tag): ?>
-                  <li class="select2-search-choice">
-                     <div><?= $tag['descricao'] ?></div>
-                     <a href="#" data-id="<?= $tag['id'] ?>"
-                        class="select2-search-choice-close" tabindex="-1"></a>
-                  </li>
+               <li class="select2-search-choice" id="tag_<?= $tag['id'] ?>">
+                  <div><?= $tag['descricao'] ?></div>
+                  <a href="#" data-id="<?= $tag['id'] ?>" onclick="return false;"
+                     class="select2-search-choice-close" tabindex="-1"></a>
+               </li>
                <? endforeach; ?>
             </ul>
          </div>

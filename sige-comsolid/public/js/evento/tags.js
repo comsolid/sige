@@ -1,15 +1,31 @@
 
 $(function() {
+   $("#termo").select();
    
-   $("#termo").keyup(function() {
+   $("#termo").keyup(function(event) {
       if ($(this).val().length === 0) {
          $("#criar-tag").hide();
+         return false;
+      }
+      
+      switch (event.keyCode) {
+         case 27: // ESC
+            if ($(this).val().length !== 0) {
+               $("#criar-tag").show();
+            }
+            return false;
+         default:
+            return true;
       }
    });
    
    $(document).delegate('#criar-tag', 'click', function() {
       criar($("#termo").val());
       $("#criar-tag").hide();
+   });
+   
+   $(document).delegate('.select2-search-choice-close', 'click', function() {
+      deletar($(this).attr("data-id"));
    });
    
    $("#termo").autocomplete({
@@ -45,9 +61,10 @@ $(function() {
 function appendToUl(id, descricao) {
    $("<li>", {
       html: "<div>" + descricao + "</div>" +
-              "<a href=\"#\" data-id=\"" + id +
-              "\" class=\"select2-search-choice-close\" tabindex=\"-1\"></a>",
-      class: "select2-search-choice"
+              "<a href=\"#\" data-id=\"" + id + "\" onclick=\"return false;\"" +
+              " class=\"select2-search-choice-close\" tabindex=\"-1\"></a>",
+      class: "select2-search-choice",
+      id: "tag_" + id
    }).appendTo($("ul.select2-choices"));
 }
 
@@ -75,6 +92,23 @@ function criar(descricao) {
       $.getJSON(url, function(json) {
          if (json.ok) {
             salvar(json.id, descricao);
+         } else if (json.erro !== null) {
+            mostrarMensagem("div.error", json.erro);
+            $("#termo").select();
+         }
+      });
+   }
+}
+
+function deletar(id) {
+   if (id > 0) {
+      var id_evento = $("#id_evento").val();
+      var url = "/evento/ajax-deletar-tag/id/" + id + "/id_evento/" + id_evento;
+      $.getJSON(url, function(json) {
+         if (json.ok) {
+            mostrarMensagem("div.success", json.msg);
+            $("#tag_" + id).remove();
+            $("#termo").select();
          } else if (json.erro !== null) {
             mostrarMensagem("div.error", json.erro);
             $("#termo").select();

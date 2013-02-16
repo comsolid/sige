@@ -41,8 +41,15 @@ if (! empty($this->lista)):
                $id = $item['id_pessoa'];
             }
             ?>
-            <div>por <a href="<?=$this->url(array('id' => $id),
-                    'ver', true) ?>" target="blank"><?=$item['nome'] ?></a></div>
+            <div>
+               por <a href="<?=$this->url(array('id' => $id),
+                    'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
+               <? if ($item['outros'] == 1): ?>
+                  e outro.
+               <? elseif ($item['outros'] > 1): ?>
+                  e <?=$item['outros'] ?> outros.
+               <? endif; ?>
+            </div>
             <p><?=$item['resumo'] ?></p>
          </div>
       </div>

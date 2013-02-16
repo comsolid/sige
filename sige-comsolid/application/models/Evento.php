@@ -142,7 +142,9 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
    public function programacao($id_encontro) {
       $sql = "SELECT er.id_evento, nome_tipo_evento, nome_evento,
          nome, nome_sala, data, hora_inicio, hora_fim, resumo, descricao,
-         id_pessoa, twitter FROM evento e 
+         id_pessoa, twitter, ( SELECT COUNT(*) FROM evento_palestrante ep
+            WHERE ep.id_evento = er.id_evento ) as outros
+         FROM evento e 
          INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
          INNER JOIN evento_realizacao er on e.id_evento = er.id_evento
@@ -160,5 +162,13 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
          ));
       }
       return 0; // nenhuma linha afetada.
+   }
+   
+   public function buscarOutrosPalestrantes($idEvento) {
+      $sql = "SELECT p.id_pessoa, p.nome, p.twitter, p.apelido
+               FROM evento_palestrante ep
+               INNER JOIN pessoa p ON ep.id_pessoa = p.id_pessoa
+               WHERE ep.id_evento = ?";
+      return $this->getAdapter()->fetchAll($sql, array($idEvento));
    }
 }

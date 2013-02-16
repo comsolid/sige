@@ -509,7 +509,9 @@ disabled look for already selected choices in the results dropdown
 .select2-result-unselectable .select2-match { text-decoration: none; }
 
 .select2-offscreen { position: absolute; left: -10000px; }
-
+.select2-locked {
+  padding: 3px 5px 3px 5px !important;
+}
 /* Retina-ize icons */
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) {

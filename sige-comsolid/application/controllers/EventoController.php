@@ -388,6 +388,7 @@ class EventoController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
       
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
@@ -404,6 +405,10 @@ class EventoController extends Zend_Controller_Action {
                         array('notice' => 'Evento não encontrado.'));
          } else {
             $this->view->evento = $data[0];
+            $this->view->outros = $evento->buscarOutrosPalestrantes($idEvento);
+            
+            $modelTags = new Application_Model_EventoTags();
+            $this->view->tags = $modelTags->listarPorEvento($idEvento);
          }
       } catch (Exception $e) {
          $this->_helper->flashMessenger->addMessage(
@@ -532,7 +537,8 @@ class EventoController extends Zend_Controller_Action {
       if ($pessoa > 0 and $evento > 0) {
          $model = new Application_Model_Evento();
          try {
-            $model->getAdapter()->delete("evento_palestrante",                  "id_pessoa = {$pessoa} AND id_evento = {$evento}");
+            $model->getAdapter()->delete("evento_palestrante",
+                    "id_pessoa = {$pessoa} AND id_evento = {$evento}");
             $this->_helper->flashMessenger->addMessage(
                     array('success' => 'Palestrante removido do evento com sucesso.'));
          } catch (Exception $e) {
@@ -549,10 +555,21 @@ class EventoController extends Zend_Controller_Action {
    }
    
    public function tagsAction() {
+      $this->view->menu->setAtivo('submissao');
       $model = new Application_Model_EventoTags();
       $idEvento = $this->_getParam('id', 0);
       $this->view->tags = $model->listarPorEvento($idEvento);
-      $this->view->id_evento = $idEvento;
+      
+      $evento = new Application_Model_Evento();
+      $data = $evento->buscaEventoPessoa($idEvento);
+      if (empty($data)) {
+         $this->_helper->flashMessenger->addMessage(
+                     array('notice' => 'Evento não encontrado.'));
+         return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
+         
+      } else {
+         $this->view->evento = $data[0];
+      }
    }
    
    public function ajaxBuscarTagsAction() {
@@ -621,19 +638,49 @@ class EventoController extends Zend_Controller_Action {
       $json = new stdClass;
       try {
          $descricao = $this->_getParam('descricao', "");
-         $id = $model->getAdapter()->insert("tags", array('descricao' => $descricao));
+         $model->getAdapter()->insert("tags", array('descricao' => $descricao));
          $json->ok = true;
-         $json->id = $id;
+         $json->id = $model->getAdapter()->lastSequenceId("tags_id_seq");
       } catch (Exception $e) {
          if ($e->getCode() == 23505) {
             $json->erro = "Tag já existe.";
          } else {
-            $json->erro = "Ocorreu um erro inesperado ao salvar <b>tag</b>.<br/>Detalhes"
+            $json->erro = "Ocorreu um erro inesperado ao criar <b>tag</b>.<br/>Detalhes"
                     . $e->getMessage();
          }
          $json->ok = false;
       }
       
+      header("Pragma: no-cache");
+      header("Cache: no-cahce");
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Content-type: text/json");
+      echo json_encode($json);
+   }
+   
+   public function ajaxDeletarTagAction() {
+      $this->_helper->layout()->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(true);
+      
+      $model = new Application_Model_EventoTags();
+      $json = new stdClass;
+      try {
+         $id = $this->_getParam('id', 0);
+         $id_evento = $this->_getParam('id_evento', 0);
+         $affected = $model->delete("id_tag = {$id} AND id_evento = {$id_evento}");
+         if ($affected > 0) {
+            $json->ok = true;
+            $json->msg = "Tag removida com sucesso.";
+         } else {
+            $json->erro = "Tag não encontrada.";
+            $json->ok = false;
+         }
+      } catch (Exception $e) {
+         $json->erro = "Ocorreu um erro inesperado ao deletar <b>tag</b>.<br/>Detalhes"
+                 . $e->getMessage();
+         $json->ok = false;
+      }
+
       header("Pragma: no-cache");
       header("Cache: no-cahce");
       header("Cache-Control: no-cache, must-revalidate");

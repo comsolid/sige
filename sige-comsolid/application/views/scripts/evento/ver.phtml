@@ -84,17 +84,44 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
       <div class="span-20 prepend-2" id="tabs">
          <ul>
             <li><a href="#tab-1">Resumo</a></li>
-            <li><a href="#tab-2">Perfil</a></li>
-            <li><a href="#tab-3">Bio</a></li>
+            <li><a href="#tab-2">Outros Palestrantes</a></li>
+            <li><a href="#tab-3">Perfil</a></li>
+            <li><a href="#tab-4">Bio</a></li>
+            <li><a href="#tab-5">Tags</a></li>
          </ul>
          <div id="tab-1">
             <?= $this->evento['resumo'] ?>
          </div>
          <div id="tab-2">
-            <?= $this->evento['perfil_minimo'] ?>
+            <ul>
+            <? if (! empty($this->outros)):
+                  foreach ($this->outros as $outro): ?>
+               <?
+               $url = "/u/";
+               $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
+               ?>
+               <li><a href="<?=$url ?>" title="<?=$outro['apelido'] ?>"
+                      target="_blank"><?=$outro['nome'] ?></a></li>
+            <?    endforeach;
+               endif; ?>
+            </ul>
          </div>
          <div id="tab-3">
+            <?= $this->evento['perfil_minimo'] ?>
+         </div>
+         <div id="tab-4">
             <?= $this->evento['bio'] ?>
+         </div>
+         <div id="tab-5" class="select2-container select2-container-multi" style="width: 450px;">
+            <ul class="select2-choices">
+            <? if (! empty($this->tags)):
+                  foreach ($this->tags as $tag): ?>
+               <li class="select2-search-choice select2-locked">
+                  <a><?=$tag['descricao'] ?></a>
+               </li>
+            <?    endforeach;
+               endif; ?>
+            </ul>
          </div>
       </div>
    </div>
