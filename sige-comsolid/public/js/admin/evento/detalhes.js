@@ -1,6 +1,6 @@
 
 $(function() {
-	oTable = $('table#horarios').dataTable({
+	oTable = $('.display').dataTable({
       //"sPaginationType" : "full_numbers",
       "aaSorting": [ ],
       "bFilter": false

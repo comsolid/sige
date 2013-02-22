@@ -6,6 +6,7 @@ $(function() {
 		"bFilter": false
 	});
    
+   $("#termo").select();
    $("#radioset_tipo_busca").buttonset();
    buscar();
    

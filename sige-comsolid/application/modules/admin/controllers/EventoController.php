@@ -47,7 +47,7 @@ class Admin_EventoController extends Zend_Controller_Action {
 
       $idEvento = $this->_request->getParam('id', 0);
 
-      $evento = new Application_Model_Evento();
+      $evento = new Admin_Model_Evento();
       $data = $evento->buscaEventoPessoa($idEvento);
       $this->view->evento = $data[0];
       
@@ -69,10 +69,9 @@ class Admin_EventoController extends Zend_Controller_Action {
                   <i class='icon-eye-open'></i> Apresentado</a>";
       }
 
-      $select = "SELECT evento, descricao, TO_CHAR(data, 'DD/MM/YYYY') AS data, TO_CHAR(hora_inicio, 'HH24:MI') as inicio, TO_CHAR(hora_fim, 'HH24:MI') as fim, nome_sala FROM evento_realizacao er INNER JOIN sala s ON (er.id_sala = s.id_sala) WHERE id_evento = ?";
-      $data = $evento->getAdapter()->fetchAll($select, $idEvento);
-
-      $this->view->horarios = $data;
+      $this->view->horarios = $evento->listarHorarios($idEvento);
+      $this->view->outrosPalestrantes = $evento->listarOutrosPalestrantes($idEvento);
+      
    }
    
    /**
@@ -170,6 +169,34 @@ class Admin_EventoController extends Zend_Controller_Action {
       header("Cache-Control: no-cache, must-revalidate");
       header("Content-type: text/json");
       echo json_encode($json);
+   }
+   
+   public function outrosPalestrantesAction() {
+      $idPessoa = $this->_getParam('pessoa', 0);
+      $idEvento = $this->_getParam('evento', 0);
+      $confirmado = $this->_getParam('confirmar', 'f');
+      $model = new Admin_Model_Evento();
+      try {
+         $sql = "UPDATE evento_palestrante SET confirmado = ? WHERE id_evento = ?
+            AND id_pessoa = ?";
+         $model->getAdapter()->fetchAll($sql, array($confirmado, $idEvento, $idPessoa));
+         if ($confirmado == "f") {
+            $msg = "Desfazer confirmação palestrante executada com sucesso.";
+         } else {
+            $msg = "Confirmação palestrante executada com sucesso.";
+         }
+         $this->_helper->flashMessenger->addMessage(
+                     array('success' => $msg));
+      } catch (Exception $e) {
+         $this->_helper->flashMessenger->addMessage(array('error' =>
+             'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
+      }
+      
+      $this->_helper->redirector->goToRoute(array(
+          'module' => 'admin',
+          'controller' => 'evento',
+          'action' => 'detalhes',
+          'id' => $idEvento), 'default');
    }
 }
 

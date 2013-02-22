@@ -282,6 +282,8 @@ class ParticipanteController extends Zend_Controller_Action {
       $model = new Application_Model_Participante();
       $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
       $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
+      $this->view->certsPalestrante = array_merge($this->view->certsPalestrante,
+              $model->listarCertificadosPalestrantesOutros($idPessoa));
    }
    
    public function certificadoParticipanteAction() {
@@ -336,6 +338,10 @@ class ParticipanteController extends Zend_Controller_Action {
       
       $model = new Application_Model_Participante();
       $rs = $model->listarCertificadosPalestrante($idPessoa, $idEvento);
+      // palestrante em evento_palestrante
+      if (is_null($rs)) {
+         $rs = $model->listarCertificadosPalestrantesOutros($idPessoa, $idEvento);
+      }
       
       if (is_null($rs)) {
          $this->_helper->flashMessenger->addMessage(

@@ -98,10 +98,10 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
     * @return type 
     */
    public function listarCertificadosPalestrante($idPessoa, $idEvento = null) {
-      $sql = "SELECT ep.id_encontro,
+      $sql = "SELECT distinct id_evento,
+               ep.id_encontro,
                p.id_pessoa,
                nome_tipo_evento,
-               id_evento,
                nome_evento,
                nome,
                nome_encontro
@@ -110,7 +110,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
          INNER JOIN encontro_participante ep ON e.id_encontro = ep.id_encontro
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
          INNER JOIN encontro en ON e.id_encontro = en.id_encontro
-         WHERE ep.id_pessoa = ?
+         WHERE p.id_pessoa = ?
          AND e.validada = TRUE
          AND ep.validado = TRUE
          AND ep.confirmado = TRUE
@@ -127,4 +127,35 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
       return $this->getAdapter()->fetchAll($sql, array($idPessoa));
    }
 
+   public function listarCertificadosPalestrantesOutros($idPessoa, $idEvento = null) {
+      $sql = "SELECT distinct e.id_evento,
+               ep.id_encontro,
+               p.id_pessoa,
+               nome_tipo_evento,
+               nome_evento,
+               p.nome,
+               nome_encontro
+         FROM evento e
+         INNER JOIN encontro_participante ep ON e.id_encontro = ep.id_encontro
+         INNER JOIN evento_palestrante epa ON e.id_evento = epa.id_evento
+         INNER JOIN pessoa p ON epa.id_pessoa = p.id_pessoa
+         INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
+         INNER JOIN encontro en ON e.id_encontro = en.id_encontro
+         WHERE epa.id_pessoa = ?
+         AND e.validada = TRUE
+         AND ep.validado = TRUE
+         AND ep.confirmado = TRUE
+         AND e.apresentado = TRUE
+         AND epa.confirmado = TRUE ";
+      if (! is_null($idEvento)) {
+         $sql .= " AND epa.id_evento = ? ";
+         $rs = $this->getAdapter()->fetchAll($sql, array($idPessoa, $idEvento));
+         if (count($rs) > 0) {
+            return $rs[0];
+         } else {
+            return null;
+         }
+      }
+      return $this->getAdapter()->fetchAll($sql, array($idPessoa));
+   }
 }

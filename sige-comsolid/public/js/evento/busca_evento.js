@@ -8,6 +8,7 @@ $(function() {
       "aaSorting": [ [1, 'asc'] ]
    });
    
+   $("#termo").select();
    getValores();
    $("#termo").autocomplete({
       source: function() {

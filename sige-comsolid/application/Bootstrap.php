@@ -164,6 +164,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       );
       $router->addRoute('evento_desfazer_apresentado', $route);
       
+      $route = new Zend_Controller_Router_Route(
+            '/admin/evento/outros-palestrantes/confirmar/:pessoa/:evento',
+            array(
+               'module' => 'admin',
+               'controller' => 'evento',
+               'action' => 'outros-palestrantes',
+               'confirmar' => 't'
+            )
+      );
+      $router->addRoute('confirmar_outro_palestrante', $route);
+      
+      $route = new Zend_Controller_Router_Route(
+            '/admin/evento/outros-palestrantes/desfazer/:pessoa/:evento',
+            array(
+               'module' => 'admin',
+               'controller' => 'evento',
+               'action' => 'outros-palestrantes',
+               'confirmar' => 'f'
+            )
+      );
+      $router->addRoute('des_confirmar_outro_palestrante', $route);
+      
       $route = new Zend_Controller_Router_Route_Static(
          '/programacao',
          array(

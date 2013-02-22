@@ -440,7 +440,8 @@ ALTER SEQUENCE evento_id_evento_seq OWNED BY evento.id_evento;
 
 CREATE TABLE evento_palestrante (
     id_evento integer NOT NULL,
-    id_pessoa integer NOT NULL
+    id_pessoa integer NOT NULL,
+    confirmado boolean NOT NULL DEFAULT false
 );
 
 

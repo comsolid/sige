@@ -30,3 +30,8 @@ CREATE TABLE evento_tags
       REFERENCES tags (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
+-- upgrade 1.2.0
+ALTER TABLE evento_palestrante ADD COLUMN confirmado boolean;
+ALTER TABLE evento_palestrante ALTER COLUMN confirmado SET NOT NULL;
+ALTER TABLE evento_palestrante ALTER COLUMN confirmado SET DEFAULT false;
