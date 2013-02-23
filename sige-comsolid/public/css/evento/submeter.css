@@ -1,0 +1,18 @@
+/* 
+    Document   : submeter
+    Created on : 23/02/2013, 10:45:48
+    Author     : atila
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.parsley-error-list {
+   list-style-type: none;
+   padding-left: 10px;
+   font-size: 13px;
+}
+
+.parsley-error {
+   background-color: #F2DEDE !important;
+   border: 1px solid #EED3D7 !important;
+}
