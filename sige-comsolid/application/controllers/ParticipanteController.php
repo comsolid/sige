@@ -8,6 +8,9 @@ class ParticipanteController extends Zend_Controller_Action {
 
 	private function autenticacao() {
 		if (!Zend_Auth::getInstance()->hasIdentity()) {
+         $session = new Zend_Session_Namespace();
+         $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
+         $session->url = $_SERVER['REQUEST_URI'];
 			return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
 	}
@@ -36,9 +39,12 @@ class ParticipanteController extends Zend_Controller_Action {
 	public function criarAction() {
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/parsley.i18n/messages.pt_br.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/parsley.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/salvar.js'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
+		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/participante/criar.css'));
 		
 		$this->view->menu="";
 		$form = new Application_Form_Pessoa();

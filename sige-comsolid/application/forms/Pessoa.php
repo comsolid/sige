@@ -24,20 +24,27 @@ class Url_Validator extends Zend_Validate_Abstract
 class Application_Form_Pessoa extends Zend_Form {
 
 	public function init() {
-		
+		$this->setAttrib("data-validate", "parsley");
+      
 		$nome = $this->createElement('text', 'nome',array('label' => '* Nome: '));
 		$nome->setRequired(true)
+         ->setAttrib("data-required", "true")
+         ->setAttrib("data-rangelength", "[1,100]")
          ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÁÉÍÓÚ]*$/'))
-         ->addValidator('stringLength', false, array(6, 100))
+         ->addValidator('stringLength', false, array(1, 100))
          ->addErrorMessage("Nome deve ter no mínimo 6 caracteres, contém caracteres inválidos");
                          
 		$email = $this->createElement('text', 'email',array('label' => '* E-mail: '));
 		$email->setRequired(true)
+          ->setAttrib("data-required", "true")
+          ->setAttrib("data-type", "email")
           ->addValidator('EmailAddress')
           ->addErrorMessage("E-mail inválido");
    
 		$apelido = $this->createElement('text', 'apelido',array('label' => '* Apelido: '));
 		$apelido->setRequired(true)
+          ->setAttrib("data-required", "true")
+          ->setAttrib("data-rangelength", "[1,20]")
           ->addValidator('stringLength', false, array(1, 20))
           ->addErrorMessage("Apelido deve ter no nímimo 1 caracteres");
 
@@ -61,6 +68,7 @@ class Application_Form_Pessoa extends Zend_Form {
                
 		$site = $this->createElement('text', 'endereco_internet',array('label' => 'Site: '));
 		$site->addValidator(new Url_Validator)
+        ->setAttrib("data-type", "urlstrict")
         ->addErrorMessage("Site inválido");
            
 

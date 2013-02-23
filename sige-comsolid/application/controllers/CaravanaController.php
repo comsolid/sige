@@ -4,6 +4,9 @@ class CaravanaController extends Zend_Controller_Action {
 
    public function init() {
       if (!Zend_Auth :: getInstance()->hasIdentity()) {
+         $session = new Zend_Session_Namespace();
+         $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
+         $session->url = $_SERVER['REQUEST_URI'];
          return $this->_helper->redirector->goToRoute(array(), 'login', true);
       }
       

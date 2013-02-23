@@ -18,7 +18,7 @@ class Application_Form_Evento extends Zend_Form {
    }
 
    public function init() {
-      
+      $this->setAttrib("data-validate", "parsley");
       $this->setName('Evento');
 
       $this->addElements(array(
@@ -48,6 +48,8 @@ class Application_Form_Evento extends Zend_Form {
       $e->setLabel('Título:')
               ->setRequired(true)
               ->addValidator('StringLength', false, array(1, 100))
+              ->setAttrib("data-required", "true")
+              ->setAttrib("data-rangelength", "[1,100]")
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
               ->setAttrib('class', 'large');
@@ -107,6 +109,8 @@ class Application_Form_Evento extends Zend_Form {
       $e->setLabel('Perfil Mínimo:')
               ->setRequired(true)
               ->setAttrib('rows', 6)
+              ->setAttrib("data-required", "true")
+              ->setAttrib('placeholder', 'Descreve o que seu público deve saber basicamente...')
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
@@ -125,6 +129,7 @@ class Application_Form_Evento extends Zend_Form {
       $e->setLabel('Curriculum:')
               ->setRequired(true)
               ->setAttrib('rows', 10)
+              ->setAttrib("data-required", "true")
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
@@ -148,6 +153,7 @@ class Application_Form_Evento extends Zend_Form {
       $e->setLabel('Resumo:')
               ->setRequired(true)
               ->setAttrib('rows', 10)
+              ->setAttrib("data-required", "true")
               ->addFilter('StringTrim')
               ->setAttrib('class', 'ckeditor')
               ->addValidator('stringLength', false, array(10))

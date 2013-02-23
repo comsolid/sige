@@ -10,6 +10,10 @@ class IndexController extends Zend_Controller_Action {
 		
 	}
 
+   /**
+    * Mapeada como
+    *    /login
+    */
 	public function loginAction() {
 		
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
@@ -46,6 +50,7 @@ class IndexController extends Zend_Controller_Action {
 					// pelo que dá pra perceber quando o usuário não está no encontro atual
 					// ele é adicionado ao encontro.
                $result = $pessoa->buscarUltimoEncontro($idPessoa);
+               $irParaEditar = false;
 
 					// se ultimo encontro do participante for diferente do atual
 					if($pessoa->verificaEncontro($idEncontro, $idPessoa) == false) {
@@ -53,7 +58,8 @@ class IndexController extends Zend_Controller_Action {
 						$result['id_encontro'] = intval($idEncontro);
 					   $pessoa->getAdapter()->insert("encontro_participante", $result);
                   $this->_helper->flashMessenger->addMessage(
-                     array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!'));
+                     array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!<br/>Por favor, atualize seus dados cadastrais.'));
+                  $irParaEditar = true;
 					} else if (! $result['validado']) {
                   // se participante ainda não está validado no encontro
                   // devemos validar
@@ -76,11 +82,23 @@ class IndexController extends Zend_Controller_Action {
                   "twitter" => $twitter
 					));
 
-					return $this->_helper->redirector->goToRoute(array (
-						'controller' => 'participante',
-						'action' => 'index'
-					), 'default', true);
-
+               if ($irParaEditar) {
+                  return $this->_helper->redirector->goToRoute(array (
+                     'controller' => 'participante',
+                     'action' => 'editar'
+                  ), 'default', true);
+               } else {
+                  $session = new Zend_Session_Namespace();
+                  if (isset($session->url)) {
+                     $this->_redirect($session->url, array('prependBase' => false));
+                     unset($session->url);
+                  } else {
+                     return $this->_helper->redirector->goToRoute(array (
+                        'controller' => 'participante',
+                        'action' => 'index'
+                     ), 'default', true);
+                  }
+               }
 				} else {
                $this->_helper->flashMessenger->addMessage(
                   array('error' => 'Senha está incorreta.'));

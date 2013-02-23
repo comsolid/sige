@@ -8,6 +8,9 @@ class EventoController extends Zend_Controller_Action {
    
    private function autenticacao() {
 		if (!Zend_Auth::getInstance()->hasIdentity()) {
+         $session = new Zend_Session_Namespace();
+         $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
+         $session->url = $_SERVER['REQUEST_URI'];
 			return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
 	}
@@ -171,6 +174,7 @@ class EventoController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/evento/editar.js'));
 		
 		$data = $this->getRequest()->getPost();
 

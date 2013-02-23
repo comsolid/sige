@@ -1,0 +1,18 @@
+/* 
+    Document   : criar
+    Created on : 22/02/2013, 19:57:03
+    Author     : atila
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.parsley-error-list {
+   list-style-type: none;
+   padding-left: 70px;
+   font-size: 13px;
+}
+
+.parsley-error {
+   background-color: #F2DEDE !important;
+   border: 1px solid #EED3D7 !important;
+}
