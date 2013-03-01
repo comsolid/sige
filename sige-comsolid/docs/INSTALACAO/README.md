@@ -194,6 +194,17 @@ $ sudo su
 # ln -s /usr/local/lib/zend/library/Zend
 ~~~
 
+### Permitir escrita para HTMLPurifier e Captcha
+
+É necessário dar permissão total a dois diretórios, faça:
+
+~~~
+$ cd ${SiGE}/library/HTMLPurifier/DefinitionCache/
+$ chmod -R 777 Serializer/
+$ cd ${SiGE}/public/
+$ chmod -R 777 captcha/
+~~~
+
 ### Configurar conexão com base de dados
 
 Com o projeto configurado vamos editar os parâmetros de conexão com o PostgreSQL.

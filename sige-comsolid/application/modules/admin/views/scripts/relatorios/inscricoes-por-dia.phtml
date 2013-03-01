@@ -1,0 +1,15 @@
+<?php echo $this->partial('menu.phtml'); ?>
+
+<div class="error" style="display: none;margin-top: 10px;"></div>
+<div class="container">
+   <div class="span-14">
+      <h3>Inscrições por Dia</h3>
+   </div>
+   <div class="span-4">
+      <a id="reload" href="#" class="no-bottom" onclick="return false;">
+         <i class="icon-refresh"></i> Recarregar
+      </a>
+   </div>
+</div>
+<hr/>
+<div id="line-chart" style="width: 800px;"></div>

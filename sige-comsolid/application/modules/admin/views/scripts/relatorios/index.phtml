@@ -1,0 +1,33 @@
+<?php echo $this->partial('menu.phtml'); ?>
+
+<div class="container">
+   <div class="span-8 prepend-1">
+      <h3>Encontro Atual</h3><hr/>
+      <ul class="unstyled">
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'relatorios',
+            'action' => 'inscricoes-por-dia'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-calendar"></i> Inscrições por Dia</a>
+         </li>
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'relatorios',
+            'action' => 'inscricoes-horario'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-time"></i> Horário das Inscrições</a>
+         </li>
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'relatorios',
+            'action' => 'inscricoes-sexo'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-user"></i> Inscrições por Sexo</a>
+         </li>
+         <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'relatorios',
+            'action' => 'inscricoes-municipio'), 'default', true); ?>"
+            class="no-bottom"><i class="icon-flag"></i> Inscrições por Município (15+)</a>
+         </li>
+      </ul>
+   </div>
+</div>
