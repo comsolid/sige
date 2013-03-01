@@ -71,7 +71,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
    public function listarCertificadosParticipante($idPessoa, $idEncontro = null) {
       $sql = "SELECT ep.id_encontro,
             p.id_pessoa,
-            nome,
+            UPPER(nome) as nome,
             nome_encontro
          FROM encontro_participante ep
          INNER JOIN pessoa p ON ep.id_pessoa = p.id_pessoa
@@ -103,7 +103,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
                p.id_pessoa,
                nome_tipo_evento,
                nome_evento,
-               nome,
+               UPPER(nome) as nome,
                nome_encontro
          FROM evento e
          INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)

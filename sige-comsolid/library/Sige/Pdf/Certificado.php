@@ -7,11 +7,11 @@
  */
 class Sige_Pdf_Certificado {
    
-   const NUM_MAX_CARACTERES = 70;
+   const NUM_MAX_CARACTERES = 80;
    const POS_X_INICIAL = 120;
    const POS_Y_INICIAL = 340;
    const DES_Y = 20;
-   const TAM_FONTE = 14;
+   const TAM_FONTE = 15;
    const POS_X1_INI_ASSINATURA = 130;
    const POS_X2_INI_ASSINATURA = 260;
    const POS_Y1_ASSINATURA = 120;
@@ -30,7 +30,7 @@ class Sige_Pdf_Certificado {
       include_once 'strings.palestrante.php';
       
       $linhas = array();
-      $linhas[] = $this->str_center(sprintf($string[0], $array['nome']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
+      $linhas[] = $this->str_center(sprintf($string[0], $this->fullUpper($array['nome'])), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
       $linhas[] = $this->str_center(sprintf($string[1], $array['encontro']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
       
       $str2 = sprintf($string[2], $array['tipo_evento'], $array['nome_evento']);
@@ -52,10 +52,11 @@ class Sige_Pdf_Certificado {
                'encontro' => '',
            )
    ) {
+      $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'emailmsg');
       include_once 'strings.participante.php';
       
       $linhas = array();
-      $linhas[] = $this->str_center(sprintf($string[0], $array['nome']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
+      $linhas[] = $this->str_center(sprintf($string[0], $this->fullUpper($array['nome'])), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
       $linhas[] = $this->str_center(sprintf($string[1], $array['encontro']), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
       $linhas[] = ""; // saltar linha
       $linhas[] = ""; // saltar linha
@@ -76,7 +77,7 @@ class Sige_Pdf_Certificado {
 
       $pdf = new Zend_Pdf();
       $page1 = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-      $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_COURIER_BOLD);
+      $font = Zend_Pdf_Font::fontWithPath(APPLICATION_PATH . "/../public/font/UbuntuMono-R.ttf");
       $page1->setFont($font, Sige_Pdf_Certificado::TAM_FONTE);
 
       // configura o plano de fundo
@@ -192,6 +193,27 @@ class Sige_Pdf_Certificado {
          $newstr = substr($newstr, 0, strrpos($newstr, " "));
 
       return $newstr;
+   }
+   
+   public function fullUpper($string) {
+      return strtr(strtoupper($string), array(
+          "à" => "À",
+          "è" => "È",
+          "ì" => "Ì",
+          "ò" => "Ò",
+          "ù" => "Ù",
+          "á" => "Á",
+          "é" => "É",
+          "í" => "Í",
+          "ó" => "Ó",
+          "ú" => "Ú",
+          "â" => "Â",
+          "ê" => "Ê",
+          "î" => "Î",
+          "ô" => "Ô",
+          "û" => "Û",
+          "ç" => "Ç",
+      ));
    }
 }
 

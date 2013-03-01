@@ -5,7 +5,7 @@
  */
 $string = array(
     "Certificamos que %s participou do(a)", // participante
-    "%s,", // encontro
+    "%s.", // encontro
     "Maracanaú, %s"
 );
 ?>
