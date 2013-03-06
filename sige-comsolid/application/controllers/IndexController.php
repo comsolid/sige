@@ -23,9 +23,9 @@ class IndexController extends Zend_Controller_Action {
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
-			$pessoa = new Application_Model_Pessoa();
+			$model = new Application_Model_Pessoa();
 
-			$resultadoConsulta = $pessoa->avaliaLogin($data['email'], $data['senha']);
+			$resultadoConsulta = $model->avaliaLogin($data['email'], $data['senha']);
 
 			if (sizeof($resultadoConsulta) > 0) {
 				if ($resultadoConsulta['valido']) {
@@ -34,37 +34,38 @@ class IndexController extends Zend_Controller_Action {
 					$administrador = $resultadoConsulta['administrador'];
 					$apelido = $resultadoConsulta['apelido'];
                $twitter = $resultadoConsulta['twitter'];
-               
-               $validaCadastroPessoa = $pessoa->find($idPessoa);
+               $cadastro_validado = $resultadoConsulta['cadastro_validado'];
 
-               if ($validaCadastroPessoa[0]->cadastro_validado == false) {
-                  $where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+               if ($cadastro_validado == false) {
+                  $where = $model->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
 
-                  $pessoa->update(array('cadastro_validado' => true), $where);
+                  $model->update(array('cadastro_validado' => true), $where);
                }
 					
 					$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 					$idEncontro = $config->encontro->codigo;
 					
-					// DONE: seja lá o que seja isso
-					// pelo que dá pra perceber quando o usuário não está no encontro atual
-					// ele é adicionado ao encontro.
-               $result = $pessoa->buscarUltimoEncontro($idPessoa);
+               $result = $model->buscarUltimoEncontro($idPessoa);
                $irParaEditar = false;
 
 					// se ultimo encontro do participante for diferente do atual
-					if($pessoa->verificaEncontro($idEncontro, $idPessoa) == false) {
+					if($model->verificaEncontro($idEncontro, $idPessoa) == false) {
 						
 						$result['id_encontro'] = intval($idEncontro);
-					   $pessoa->getAdapter()->insert("encontro_participante", $result);
-                  $this->_helper->flashMessenger->addMessage(
-                     array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!<br/>Por favor, atualize seus dados cadastrais.'));
-                  $irParaEditar = true;
+                  try {
+                     $model->getAdapter()->insert("encontro_participante", $result);
+                     $this->_helper->flashMessenger->addMessage(
+                        array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!<br/>Por favor, atualize seus dados cadastrais.'));
+                     $irParaEditar = true;
+                  } catch (Exception $e) {
+                     $irParaEditar = false;
+                     $this->_helper->flashMessenger->addMessage(
+                        array('error' => $e->getMessage()));
+                  }
 					} else if (! $result['validado']) {
                   // se participante ainda não está validado no encontro
                   // devemos validar
-                  // TODO: refazer este trecho!!!!
-                  $adapter = $pessoa->getAdapter();
+                  $adapter = $model->getAdapter();
                   $adapter->fetchAll("UPDATE encontro_participante
                      SET validado = 't', data_validacao = now()
                      WHERE id_pessoa = {$result['id_pessoa']}

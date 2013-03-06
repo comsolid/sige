@@ -46,7 +46,8 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
                        "(senha=md5('$senha')) AS valido",
                        'twitter'))
 			  		   ->where("email = ?", $login);*/
-      $sql = "select id_pessoa, administrador, apelido, (senha = md5(?)) as valido, twitter
+      $sql = "select id_pessoa, administrador, apelido, (senha = md5(?)) as valido,
+         twitter, cadastro_validado
          from pessoa where email = ? ";
       $where = array($senha, $login);
 		$result = $this->getAdapter()->fetchAll($sql, $where);
