@@ -29,7 +29,11 @@ $(function() {
    });
    
    $("#termo").autocomplete({
+      search: function( event, ui ) {
+         $("#loading").show();
+      },
       source: function( request, response ) {
+         
          $.ajax({
             url: "/evento/ajax-buscar-tags/termo/" + request.term,
             contentType: "application/x-www-form-urlencoded; charset=utf-8;",
@@ -48,6 +52,8 @@ $(function() {
                   $("#termo").autocomplete('close');
                }
             } // end of success
+         }).complete(function () {
+            $("#loading").hide();
          }); // end of ajax
       }, // end of source
       minLength: 1,
@@ -59,6 +65,9 @@ $(function() {
 });
 
 function appendToUl(id, descricao) {
+   if (! $("ul.select2-choices").has("li")) {
+      $("ul.select2-choices").html("");
+   }
    $("<li>", {
       html: "<div>" + descricao + "</div>" +
               "<a href=\"#\" data-id=\"" + id + "\" onclick=\"return false;\"" +
@@ -70,6 +79,7 @@ function appendToUl(id, descricao) {
 
 function salvar(id, descricao) {
    if (id > 0) {
+      $("#loading").show();
       var id_evento = $("#id_evento").val();
       var url = "/evento/ajax-salvar-tag/id/" + id + "/id_evento/" + id_evento;
       $.getJSON(url, function(json) {
@@ -82,12 +92,15 @@ function salvar(id, descricao) {
             mostrarMensagem("div.error", json.erro);
             $("#termo").select();
          }
+      }).complete(function() {
+         $("#loading").hide();
       });
    }
 }
 
 function criar(descricao) {
    if (descricao !== "") {
+      $("#loading").show();
       var url = "/evento/ajax-criar-tag/descricao/" + descricao;
       $.getJSON(url, function(json) {
          if (json.ok) {
@@ -96,12 +109,15 @@ function criar(descricao) {
             mostrarMensagem("div.error", json.erro);
             $("#termo").select();
          }
+      }).complete(function() {
+         $("#loading").hide();
       });
    }
 }
 
 function deletar(id) {
    if (id > 0) {
+      $("#loading").show();
       var id_evento = $("#id_evento").val();
       var url = "/evento/ajax-deletar-tag/id/" + id + "/id_evento/" + id_evento;
       $.getJSON(url, function(json) {
@@ -113,6 +129,8 @@ function deletar(id) {
             mostrarMensagem("div.error", json.erro);
             $("#termo").select();
          }
+      }).complete(function() {
+         $("#loading").hide();
       });
    }
 }
