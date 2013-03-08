@@ -23,7 +23,48 @@
    </a>
    <? endif; ?>
 </p>
-<p>Meu nome é <?=$this->user->nome ?>.</p>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=336256479809348";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="container">
+   <div class="span-13">
+      <p>Meu nome é <?=$this->user->nome ?>.</p>
+   </div>
+   <div class="span-social">
+      <!-- twitter button -->
+      <? $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
+      <a href="https://twitter.com/share" class="twitter-share-button"
+         data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
+           'ver', true) ?>"
+           data-text="Página de <?=$this->user->nome ?>"
+           data-via="<?=$config->twitter->username ?>"
+           data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+   </div>
+   <div class="span-social">   
+      <!-- facebook button -->
+      <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
+           'ver', true) ?>" data-send="false" data-layout="button_count"
+           data-width="450" data-show-faces="false"></div>
+   </div>
+   <div class="span-social">
+      <!-- Place this tag in your head or just before your close body tag. -->
+      <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+        {lang: 'pt-BR'}
+      </script>
+
+      <!-- Place this tag where you want the +1 button to render. -->
+      <div class="g-plusone" data-size="medium" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
+           'ver', true) ?>"></div>
+   </div>
+</div>
 <p>
    Sobre mim: <?=$this->user->bio ?>
 </p>

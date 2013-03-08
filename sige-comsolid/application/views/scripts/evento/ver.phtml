@@ -24,11 +24,13 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
       </div>
       <div class="span-social">
          <!-- twitter button -->
+         <? $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
          <a href="https://twitter.com/share" class="twitter-share-button"
             data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
               'ver_evento', true) ?>"
               data-text="<?= $this->evento['nome_evento'] ?> por <?= $this->evento['nome'] ?>"
-              data-via="comsolid" data-lang="pt" data-hashtags="comsolid6">Tweetar</a>
+              data-via="<?=$config->twitter->username ?>"
+              data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       </div>
       <div class="span-social">   
