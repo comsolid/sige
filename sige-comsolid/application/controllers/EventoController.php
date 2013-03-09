@@ -396,6 +396,7 @@ class EventoController extends Zend_Controller_Action {
       
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.timeago.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/ver.js'));

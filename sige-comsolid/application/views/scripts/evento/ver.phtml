@@ -1,14 +1,17 @@
+
+<? if (!empty($this->evento)): ?>
+
 <?
+$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 /* meta tags para twitter */
 $this->headMeta()->setName('twitter:card', 'summary');
 $this->headMeta()->setName('twitter:description', "{$this->evento['resumo']}");
-$this->headMeta()->setName('twitter:site', '@comsolid');
+$this->headMeta()->setName('twitter:site', "@{$config->twitter->username}");
 $this->headMeta()->setName('twitter:title', "{$this->evento['nome_evento']}");
 $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array('id' => $this->evento['id_evento']),
               'ver_evento', true)}");
 ?>
 
-<? if (!empty($this->evento)): ?>
    <div id="fb-root"></div>
    <script>(function(d, s, id) {
      var js, fjs = d.getElementsByTagName(s)[0];
@@ -24,7 +27,6 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
       </div>
       <div class="span-social">
          <!-- twitter button -->
-         <? $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
          <a href="https://twitter.com/share" class="twitter-share-button"
             data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
               'ver_evento', true) ?>"
@@ -70,7 +72,10 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
          Submissão:
       </div>
       <div class="span-6">
-         <?= $this->evento['data_submissao'] ?>
+         <? $date = new Zend_Date($this->evento['data_submissao']); ?>
+         <abbr class="timeago" title="<?= $this->evento['data_submissao'] ?>">
+            <?=$date->toString("dd 'de' MMMM 'de' y") ?>
+         </abbr>
       </div>
       <div class="span-1">
          Nível:
