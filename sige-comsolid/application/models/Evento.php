@@ -10,8 +10,20 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
                'columns' => 'id_evento',  
                'onDelete'=> self::CASCADE,  
                'onUpdate'=> self::RESTRICT));
-  
+
+   /**
+    * @deprecated since version 1.2.2
+    * @param type $idEncontro
+    * @return type
+    */
 	public function getEventos($idEncontro){
+		$select = "SELECT DISTINCT(TO_CHAR(data, 'DD/MM/YYYY')) AS data FROM evento e
+			INNER JOIN evento_realizacao er ON (e.id_evento = er.id_evento)
+			WHERE id_encontro = ? ORDER BY TO_CHAR(data, 'DD/MM/YYYY')";
+		return $this->getAdapter()->fetchAll($select,$idEncontro);
+	}
+   
+   public function listarDiasDoEncontro($idEncontro){
 		$select = "SELECT DISTINCT(TO_CHAR(data, 'DD/MM/YYYY')) AS data FROM evento e
 			INNER JOIN evento_realizacao er ON (e.id_evento = er.id_evento)
 			WHERE id_encontro = ? ORDER BY TO_CHAR(data, 'DD/MM/YYYY')";
@@ -141,7 +153,8 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
    
    public function programacao($id_encontro) {
       $sql = "SELECT er.id_evento, nome_tipo_evento, nome_evento,
-         nome, nome_sala, data, hora_inicio, hora_fim, resumo, descricao,
+         nome, nome_sala, data, TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
+         TO_CHAR(hora_fim, 'HH24:MM') as hora_fim, resumo, descricao,
          id_pessoa, twitter, ( SELECT COUNT(*) FROM evento_palestrante ep
             WHERE ep.id_evento = er.id_evento ) as outros
          FROM evento e 

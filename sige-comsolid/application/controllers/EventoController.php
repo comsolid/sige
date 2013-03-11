@@ -289,7 +289,7 @@ class EventoController extends Zend_Controller_Action {
 
       $eventos = new Application_Model_Evento();
       // usada para mostrar dias que possuem eventos
-      $this->view->listaEvento = $eventos->getEventos($idEncontro);
+      $this->view->diasEncontro = $eventos->listarDiasDoEncontro($idEncontro);
       $this->view->idEncontro = $idEncontro;
       $this->view->idPessoa = $idPessoa;
 

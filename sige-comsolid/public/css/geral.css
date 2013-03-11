@@ -1,0 +1,17 @@
+/* 
+    Document   : geral
+    Created on : 08/03/2013, 02:57:38
+    Author     : atila
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+/* Swipe works with mouse as well but often causes text selection. */
+.sige-page * {
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   user-select: none;
+}

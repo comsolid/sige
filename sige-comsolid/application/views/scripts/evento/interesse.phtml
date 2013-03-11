@@ -4,10 +4,10 @@
       <input type="radio" name="data_evento" class="data_evento"
              id="radio_data_todos" value="todas" checked="checked" />
       <label for="radio_data_todos">Todos</label>
-      <? foreach ($this->listaEvento as $evento): ?>
-      <input type="radio" name="data_evento" class="data_evento" id="radio_<?= $evento['data'] ?>"
-                value="<?= str_replace('/', '-', $evento['data']) ?>" />
-      <label for="radio_<?= $evento['data'] ?>"><?= $evento['data'] ?></label>
+      <? foreach ($this->diasEncontro as $value): ?>
+      <input type="radio" name="data_evento" class="data_evento" id="radio_<?= $value['data'] ?>"
+                value="<?= str_replace('/', '-', $value['data']) ?>" />
+      <label for="radio_<?= $value['data'] ?>"><?= $value['data'] ?></label>
       <? endforeach; ?>
    </div>
 </div><br/>
