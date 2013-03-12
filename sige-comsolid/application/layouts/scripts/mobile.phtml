@@ -9,7 +9,7 @@
          $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.mobile-1.3.0.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome.min.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'))
-                          ->appendStylesheet($this->baseUrl('css/geral.css'));
+                          ->appendStylesheet($this->baseUrl('css/mobile/mobile.css'));
       ?>
       
       <?= $this->headLink() ?>
@@ -19,7 +19,7 @@
          <div data-role="panel" data-display="overlay" id="panel-menu" data-theme="a">
             <div data-role="controlgroup">
                <a href="<?=$this->url(array('module' => 'mobile',
-                   'controller' => 'index',
+                   'controller' => 'participante',
                    'action' => 'index'), 'default', true) ?>" data-role="button" data-ajax="false">
                   <i class="icon-home icon-2x"></i><br/>
                   Início

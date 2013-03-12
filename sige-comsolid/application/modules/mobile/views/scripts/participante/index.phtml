@@ -1,4 +1,20 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Participante</b> and script/action name <b>index</b></p>
+
+<div style="margin-top: 10px;">
+   <ul data-role="listview" data-filter="true" data-filter-placeholder="Buscar eventos..." data-inset="true">
+      <? foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
+      <li>
+         <h2>
+            <?echo $item["nome_tipo_evento"];?>: <? echo $item["nome_evento"];?>
+         </h2>
+         <? $date = new Zend_Date($item["data"]); ?>
+         <p class="ui-li-aside" style="font-size: 12pt;">
+         <?=$date->toString('dd MMM') ?> -
+         <? echo $item["hora_inicio"];?> as <? echo $item["hora_fim"];?>
+         </p>
+         <? if (!$item['validada']): ?>
+         <p><i class="icon-warning-sign"></i> Este evento foi invalidado e pode não ser ministrado.</p>
+         <? endif; ?>
+      </li>
+      <? endforeach; ?>
+   </ul>
 </div>
