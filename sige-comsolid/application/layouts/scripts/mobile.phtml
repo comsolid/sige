@@ -9,7 +9,8 @@
          $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.mobile-1.3.0.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome.min.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'))
-                          ->appendStylesheet($this->baseUrl('css/mobile/mobile.css'));
+                          ->appendStylesheet($this->baseUrl('css/mobile/mobile.css'))
+                          ->appendStylesheet($this->baseUrl('css/flash-messages.css'));
       ?>
       
       <?= $this->headLink() ?>
@@ -18,7 +19,7 @@
       <div data-role="page" class="sige-page">
          <div data-role="panel" data-display="overlay" id="panel-menu" data-theme="a">
             <div data-role="controlgroup">
-               <a href="<?=$this->url(array('module' => 'mobile',
+               <!--<a href="<?=$this->url(array('module' => 'mobile',
                    'controller' => 'participante',
                    'action' => 'index'), 'default', true) ?>" data-role="button" data-ajax="false">
                   <i class="icon-home icon-2x"></i><br/>
@@ -35,6 +36,13 @@
                   <i class="icon-user icon-2x"></i><br/>
                   atilacamurca
                </a>
+               <a href="<?php echo $this->url(array(), 'logout', true); ?>" data-role="button" data-ajax="false">
+                  <i class="icon-signout icon-2x"></i><br/>
+                  Sair
+               </a>-->
+               <? if (isset($this->menu)) {
+                  echo $this->menu->getView();
+               } ?>
             </div>
             <a href="#panel-menu" class="" data-rel="close" data-role="button">
                <i class="icon-remove"></i> Fechar
@@ -45,10 +53,10 @@
          <div data-role="header" data-theme="c">
             <a href="#panel-menu" data-icon="bars">Menu</a>
             <h1>SiGE - COMSOLiD</h1>
-            <a href="#" data-icon="bars">Menu</a>
          </div>
          <!-- content -->
          <div data-role="content">
+            <div><?= $this->flashMessages(); ?></div>
             <?php echo $this->layout()->content ?>
          </div>
          

@@ -71,7 +71,7 @@
 <?
 // HACK: usuários não devem ter @ no username do twitter, é um caractere implicito
 // ao invés disso ele deve ser usado concatenando o @
-// TODO: remover todos os @ de usuários da base de dados antes de remover este HACK!
+// DONE: remover todos os @ de usuários da base de dados antes de remover este HACK!
 $tw_user = str_replace("@", "", $this->user->twitter);
 if (! empty($tw_user)) {
    $twitter = "Me siga no  <a href='https://twitter.com/#!/{$tw_user}'

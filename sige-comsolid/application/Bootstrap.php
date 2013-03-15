@@ -99,6 +99,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       $router->addRoute('ver', $route);
       
       $route = new Zend_Controller_Router_Route(
+         '/mobile/u/:id',
+         array(
+             'module' => 'mobile',
+             'controller' => 'participante',
+             'action' => 'ver'
+         )
+      );
+      $router->addRoute('mobile_ver', $route);
+      
+      $route = new Zend_Controller_Router_Route(
          '/u/confirmar/:id',
          array(
              'module' => 'admin',
@@ -225,6 +235,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('ver_evento', $route);
+      
+      $route = new Zend_Controller_Router_Route_Static(
+         '/mobile',
+         array(
+             'module' => 'mobile',
+             'controller' => 'participante',
+             'action' => 'index'
+         )
+      );
+      $router->addRoute('mobile', $route);
    }
    
    public function _initTranslate() {

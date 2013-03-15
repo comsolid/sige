@@ -94,7 +94,7 @@ class Application_Form_Menu extends Zend_Form
  		//$menu.=" <a  class=\"";
  		//$menu.=" \" href=\"#\" class=\"fl_right\"><img src=\"".$this->control->baseUrl('imagens/layout/bt_sejavoluntario.png')."\"></img></a>";
       if ($this->isAdmin) {
-          $menu.="<a class=\"" . $this->menuAtivo['admin'];
+         $menu.="<a class=\"" . $this->menuAtivo['admin'];
          $menu.="\" href=\"" . $this->admin . "\"><i class=\"icon-legal icon-large\"></i> &nbsp;Admin</a>";
       }
       $menu.= "</div>";

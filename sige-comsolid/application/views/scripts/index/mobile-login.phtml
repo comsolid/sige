@@ -1,0 +1,27 @@
+
+<?php
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction() ?>" data-ajax="false">
+   <ul data-role="listview" data-inset="true">
+      <li data-role="fieldcontain">
+         <?php echo $form->email->renderLabel()
+              . $form->email->renderViewHelper(); ?>
+      </li>
+      <?php if ($form->email->hasErrors()) echo "<li data-role=\"fieldcontain\"><div>
+            {$form->email->renderErrors()}</div></li>"; ?>
+      <li data-role="fieldcontain">
+         <?php echo $form->senha->renderLabel()
+              . $form->senha->renderViewHelper(); ?>
+      </li>
+      <?php if ($form->senha->hasErrors()) echo "<li data-role=\"fieldcontain\"><div>
+            {$form->senha->renderErrors()}</div></li>"; ?>
+      <li class="ui-body ui-body-b">
+         <fieldset class="ui-grid-a">
+            <div class="ui-block-a"><button type="reset" data-theme="d">Limpar</button></div>
+            <div class="ui-block-b"><button type="submit" data-theme="b">Confirmar</button></div>
+         </fieldset>
+      </li>
+   </ul>
+</form>

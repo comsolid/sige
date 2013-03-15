@@ -21,7 +21,39 @@ class Mobile_ParticipanteController extends Zend_Controller_Action {
       $eventoDemanda = new Application_Model_EventoDemanda();
       $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));
       $this->view->listaParticipanteEventoTabela =$eventoParticipante;
+      
+      $menu = new Sige_Mobile_Menu($this->view, "inicio");
+      $this->view->menu = $menu;
    }
 
+   public function verAction() {
+      $menu = new Sige_Mobile_Menu($this->view, "participante");
+      $this->view->menu = $menu;
+      
+      $model = new Application_Model_Pessoa();
+      $id = $this->_getParam('id', "");
+      if (!empty($id)) {
+         if (is_numeric($id)) {
+            $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $id);
+         } else {
+            $sql = $model->getAdapter()->quoteInto('twitter = ?', $id);
+         }
+      } else if (Zend_Auth::getInstance()->hasIdentity()) {
+         $sessao = Zend_Auth::getInstance()->getIdentity();
+         if (!empty($sessao["twitter"])) {
+            $sql = $model->getAdapter()->quoteInto('twitter = ?', $sessao["twitter"]);
+            $id = $sessao["twitter"];
+         } else {
+            $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $sessao["idPessoa"]);
+            $id = $sessao["idPessoa"];
+         }
+      } else {
+         $this->_helper->flashMessenger->addMessage(
+                 array('error' => 'Participante não encontrado.'));
+         return;
+      }
+      $this->view->id = $id;
+      $this->view->user = $model->fetchRow($sql);
+   }
 }
 

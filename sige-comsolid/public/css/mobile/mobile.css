@@ -10,3 +10,12 @@
    background-color: #3a87ad !important;
    cursor: default;
 }
+
+.error, .alert, .notice, .success, .info {margin-top: 0 !important;font-size: 13pt !important;}
+.error div.msg-header, .alert div.msg-header, .notice div.msg-header,
+   .success div.msg-header, .info div.msg-header {font-size: 13pt !important;}
+
+ul.errors {
+   list-style: none;
+}
+

@@ -1,0 +1,60 @@
+
+<? if (!empty($this->user)): ?>
+   <h4>Meu nome é <?= $this->user->nome ?>.</h4>
+   <div data-role="collapsible" data-theme="b" data-content-theme="d">
+      <h4>Sobre mim:</h4>
+      <p><?= $this->user->bio ?></p>
+      <?
+      $tw_user = str_replace("@", "", $this->user->twitter);
+      if (!empty($tw_user)) {
+         $twitter = "<a href='https://twitter.com/#!/{$tw_user}'
+            data-role='button' rel='external' target='_blank'>Me siga no
+               <i class='icon-twitter'></i> Twitter</a>";
+      } else {
+         $twitter = "Ainda não possuo <a href='https://twitter.com' data-role='button'
+            rel='external' target='_blank'><i class='icon-twitter'></i> Twitter</a>";
+      }
+      ?>
+      <?= $twitter ?>
+   </div>
+   <?
+   if (! empty($this->user->slideshare)):
+      try {
+         $channel = new Zend_Feed_Rss("http://www.slideshare.net/rss/user/{$this->user->slideshare}");
+   ?>
+   <br/>
+   <ul data-role="listview" data-filter="true" data-inset="true"
+       data-theme="c" data-divider-theme="e" data-filter-placeholder="Buscar slideshow...">
+      <li data-role="list-divider">
+         Slideshows de <? echo $this->user->slideshare ?>
+      </li>
+      <? foreach ($channel as $item): ?>
+      <li><a href="<? echo $item->link; ?>"
+             rel="external" target="_blank">
+                <? echo $item->title; ?></a>
+      </li>
+      <? endforeach; ?>
+      
+   </ul>
+   <a href="<? echo "{$channel->link}{$this->user->slideshare}" ?>"
+      rel="external" target="_blank" data-role="button">
+      <? echo $this->user->slideshare ?> no slideshare
+   </a>
+   <?
+      } catch (Exception $e) { ?>
+            <div class="notice">
+               <div class="msg-header">Atenção!</div>
+               <div>Usuário do Slideshare <? echo $this->user->slideshare; ?> não encontrado.</div>
+               <div>Detalhes: <? echo $e->getMessage(); ?></div>
+            </div>
+   <? }
+      else: ?>
+         Crie uma conta no <a href="http://www.slideshare.net/"
+                              class="no-bottom" target="_blank">
+            <img src="<? echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare</a>
+         para que suas apresentações apareçam aqui.
+   <? endif; ?>
+   
+<? else: // end: not empty user ?>
+   <p>Participante não encontrado.</p>
+<? endif; ?>
