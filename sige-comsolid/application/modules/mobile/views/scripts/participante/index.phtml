@@ -7,7 +7,7 @@
             <?echo $item["nome_tipo_evento"];?>: <? echo $item["nome_evento"];?>
          </h2>
          <? $date = new Zend_Date($item["data"]); ?>
-         <p class="ui-li-aside" style="font-size: 12pt;">
+         <p style="font-size: 12pt;">
          <?=$date->toString('dd MMM') ?> -
          <? echo $item["hora_inicio"];?> as <? echo $item["hora_fim"];?>
          </p>

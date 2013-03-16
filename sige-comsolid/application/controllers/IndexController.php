@@ -134,12 +134,7 @@ class IndexController extends Zend_Controller_Action {
 		$auth = Zend_Auth::getInstance();
 		$auth->clearIdentity();
       
-      $mobile = new Sige_Mobile_Browser();
-      if ($mobile->isMobile()) {
-         return $this->_helper->redirector->goToRoute(array(), 'mobile_login', true);
-      } else {
-         return $this->_helper->redirector->goToRoute(array(), 'index', true);
-      }
+      return $this->_helper->redirector->goToRoute(array(), 'index', true);
 	}
    
    public function recuperarSenhaAction() {

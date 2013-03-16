@@ -13,9 +13,9 @@ class Application_Form_Login extends Zend_Form {
     
          $this->addElement($this->_email())
 			   ->addElement($senha);
-	    $botao = $this->createElement('submit',' confirmar')->removeDecorator('DtDdWrapper');
+	    $botao = $this->createElement('submit',' Entrar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
-		$botao = $this->createElement('reset', 'limpar')->removeDecorator('DtDdWrapper');
+		$botao = $this->createElement('reset', 'Limpar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
                 
 	}

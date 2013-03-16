@@ -19,27 +19,6 @@
       <div data-role="page" class="sige-page">
          <div data-role="panel" data-display="overlay" id="panel-menu" data-theme="a">
             <div data-role="controlgroup">
-               <!--<a href="<?=$this->url(array('module' => 'mobile',
-                   'controller' => 'participante',
-                   'action' => 'index'), 'default', true) ?>" data-role="button" data-ajax="false">
-                  <i class="icon-home icon-2x"></i><br/>
-                  Início
-               </a>
-               <a href="<?=$this->url(array('module' => 'mobile',
-                   'controller' => 'evento',
-                   'action' => 'programacao'), 'default', true) ?>"
-                   data-role="button" data-ajax="false">
-                  <i class="icon-calendar icon-2x"></i><br/>
-                  Programação
-               </a>
-               <a href="participante_ver.html" data-role="button" data-ajax="false">
-                  <i class="icon-user icon-2x"></i><br/>
-                  atilacamurca
-               </a>
-               <a href="<?php echo $this->url(array(), 'logout', true); ?>" data-role="button" data-ajax="false">
-                  <i class="icon-signout icon-2x"></i><br/>
-                  Sair
-               </a>-->
                <? if (isset($this->menu)) {
                   echo $this->menu->getView();
                } ?>
