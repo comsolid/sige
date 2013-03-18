@@ -17,10 +17,11 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
    public function listar($data) {
       $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
          TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH24:MM') AS hora_inicio,
-         TO_CHAR(hora_fim, 'HH24:MM') AS hora_fim, validada
+         TO_CHAR(hora_fim, 'HH24:MM') AS hora_fim, validada, nome_sala
          FROM evento_demanda ed INNER JOIN evento_realizacao er ON (ed.evento = er.evento)
          INNER JOIN evento e ON (er.id_evento = e.id_evento)
          INNER JOIN tipo_evento te ON (e.id_tipo_evento = te.id_tipo_evento)
+         INNER JOIN sala s ON (er.id_sala = s.id_sala)
          WHERE e.id_encontro = ? AND ed.id_pessoa = ? ORDER BY data ASC, hora_inicio ASC ";
 
       return $this->getAdapter()->fetchAll($select, $data);

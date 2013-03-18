@@ -59,7 +59,7 @@ if (! empty($this->lista)):
                   }
                   ?>
                   por <a href="<?=$this->url(array('id' => $id),
-                        'mobile_ver', true) ?>" target="blank"
+                        'mobile_ver', true) ?>" target="blank" data-ajax="false"
                         data-role="button" data-inline="true"><?=$item['nome'] ?></a>
                    <? if ($item['outros'] == 1): ?>
                       e outro.
@@ -71,7 +71,9 @@ if (! empty($this->lista)):
          </div><!-- /grid-a -->
          <p><?=$item['resumo'] ?></p>
          <a href="<?=$this->url(array('id' => $item['id_evento']),
-              'ver_evento', true) ?>" data-role="button"><i class="icon-plus"></i> Detalhes</a>
+              'mobile_ver_evento', true) ?>#disqus_thread" data-role="button" data-ajax="false">
+            <i class="icon-comments-alt"></i> Comentários
+         </a>
       </div>
 <?
    endforeach;

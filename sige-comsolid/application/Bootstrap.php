@@ -236,6 +236,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       );
       $router->addRoute('ver_evento', $route);
       
+      $route = new Zend_Controller_Router_Route(
+         '/mobile/e/:id',
+         array(
+             'module' => 'mobile',
+             'controller' => 'evento',
+             'action' => 'ver'
+         )
+      );
+      $router->addRoute('mobile_ver_evento', $route);
+      
       $route = new Zend_Controller_Router_Route_Static(
          '/mobile',
          array(

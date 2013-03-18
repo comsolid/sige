@@ -11,27 +11,26 @@
 	<table class="display" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
-				<th>Tipo evento</th>
 				<th>Descrição</th>
 				<th>Dia</th>
-				<th>Hora Início</th>
-				<th>Hora Fim</th>
+				<th>Horário</th>
+				<th>Sala</th>
 				<th>Ações</th>
 			</tr>
 		</thead>
 		<tbody>
 		<? foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
 			<tr>
-				<td><?echo $item["nome_tipo_evento"];?></td>
 				<td>
                <? if (!$item['validada']): ?>
                   <i class="icon-warning-sign" title="Este evento foi invalidado e pode não ser ministrado."></i>
                <? endif; ?>
+               <?echo $item["nome_tipo_evento"];?> -
                <? echo $item["nome_evento"];?>
             </td>
 				<td><? echo $item["data"];?></td>
-				<td><? echo $item["hora_inicio"];?></td>
-				<td><? echo $item["hora_fim"];?></td>
+				<td><? echo $item["hora_inicio"];?> - <? echo $item["hora_fim"];?></td>
+				<td><? echo $item["nome_sala"];?></td>
 				<td>
 					<a href="<?=$this->url(array(
                    'controller' => 'evento',

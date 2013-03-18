@@ -1,0 +1,127 @@
+<?
+$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+
+$this->headLink()
+        ->appendStylesheet($this->baseUrl("css/prettify.css"));
+
+$this->headScript()
+        ->appendFile($this->baseUrl("js/init.prettify.js"))
+        ->appendFile($this->baseUrl("js/prettify.js"))
+        ->appendFile($this->baseUrl("js/mobile/evento/ver.js"));
+?>
+
+<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+   <div data-role="collapsible">
+      <h3><?= $this->evento['nome_tipo_evento'] ?>: <?= $this->evento['nome_evento'] ?></h3>
+      <p>
+         por <?= $this->evento['nome'] ?>
+      </p>
+      <p>
+         Nível: <?= $this->evento['descricao_dificuldade_evento'] ?>
+      </p>
+   </div>
+</div>
+
+<div data-role="navbar" data-grid="c">
+   <ul>
+      <li><a href="#" data-id="resumo"><i class="icon-file-alt"></i></a></li>
+      <li><a href="#" data-id="outros-palestrantes"><i class="icon-group"></i></a></li>
+      <li><a href="#" data-id="perfil"><i class="icon-info-sign"></i></a></li>
+      <li><a href="#" data-id="bio"><i class="icon-user"></i></a></li>
+      <li><a href="#" data-id="tags"><i class="icon-tags"></i></a></li>
+   </ul>
+</div><!-- /navbar -->
+
+<div id="resumo" class="tab" style="display: none">
+   <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
+      <li data-role="list-divider">Resumo</li>
+      <li><?= $this->evento['resumo'] ?></li>
+   </ul>
+</div>
+
+<div id="outros-palestrantes" class="tab" style="display: none">
+   <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
+      <li data-role="list-divider">Outros Palestrantes</li>
+      <? if (!empty($this->outros)):
+         foreach ($this->outros as $outro):
+            ?>
+            <?
+            $url = "/mobile/u/";
+            $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
+            ?>
+            <li><a href="<?= $url ?>" title="<?= $outro['apelido'] ?>"
+                   data-ajax="false"><?= $outro['nome'] ?></a></li>
+         <? endforeach;
+      else: ?>
+      <li>Palestrante único.</li>
+      <? endif; ?>
+   </ul>
+</div>
+
+<div id="perfil" class="tab" style="display: none">
+   <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
+      <li data-role="list-divider">Perfil</li>
+      <li><?= $this->evento['perfil_minimo'] ?></li>
+   </ul>
+</div>
+
+<div id="bio" class="tab" style="display: none">
+   <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
+      <li data-role="list-divider">Bio</li>
+      <li><?= $this->evento['bio'] ?></li>
+   </ul>
+</div>
+
+<div id="tags" class="tab" style="display: none">
+   <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
+      <li data-role="list-divider">Tags</li>
+      <? if (! empty($this->tags)):
+         foreach ($this->tags as $tag): ?>
+            <li><?=$tag['descricao'] ?></li>
+      <? endforeach;
+      else: ?>
+            <li>Nenhuma tag adicionada.</li> 
+      <? endif; ?>
+   </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'comsolid';
+    var disqus_title = '<?= $this->evento['nome_evento'] ?>';
+    var disqus_url = '<?= $this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']), 'ver_evento', true) ?>';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Por favor, habilite o JavaScript para ver os <a href="http://disqus.com/?ref_noscript">comentários do Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<!-- panel compartilhar -->
+<div data-role="panel" data-display="overlay" id="panel-share" data-theme="a" data-position="right">
+   <h2>Compartilhar</h2>
+   <?
+   $shareUrl = $this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']), 'ver_evento', true);
+   $texto = "{$this->evento['nome_evento']} por {$this->evento['nome']} via @{$config->twitter->username}";
+   ?>
+   <div data-role="controlgroup">
+      <a href="http://twitter.com/share?text=<?=$texto ?>&url=<?=$shareUrl ?>" data-role="button" rel="external" target="_blank">
+         <i class="icon-twitter-sign icon-large"></i><br/>Twitter
+      </a>
+      <a href="http://www.facebook.com/sharer.php?u=<?=$shareUrl ?>" data-role="button" rel="external" target="_blank">
+         <i class="icon-facebook-sign icon-large"></i><br/>Facebook
+      </a>
+      <a href="https://plus.google.com/share?url=<?=$shareUrl ?>" data-role="button" rel="external" target="_blank">
+         <i class="icon-google-plus-sign icon-large"></i><br/>Google+
+      </a>
+   </div>
+   
+   <a href="#panel-share" data-rel="close" data-role="button">
+      <i class="icon-remove"></i> Fechar
+   </a>
+</div>

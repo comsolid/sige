@@ -11,6 +11,7 @@
          <?=$date->toString('dd MMM') ?> -
          <? echo $item["hora_inicio"];?> as <? echo $item["hora_fim"];?>
          </p>
+         <p style="font-size: 11pt;">Sala: <?=$item['nome_sala'] ?></p>
          <? if (!$item['validada']): ?>
          <p><i class="icon-warning-sign"></i> Este evento foi invalidado e pode não ser ministrado.</p>
          <? endif; ?>

@@ -19,7 +19,7 @@ ul.errors {
    list-style: none;
 }
 
-#panel-menu {
+#panel-menu, #panel-share {
    width: 180px;
    background: rgba(0,0,0,.5);
 }
