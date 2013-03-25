@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Modelo para tabela "mensagem_email"
+ * Trata do envio de e-mail usando Zend_Mail.
+ */
 class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 	
    const MSG_CONFIRMACAO = 0;
@@ -13,14 +18,31 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
       $this->config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'emailmsg');
    }
 	
+   /**
+    * Obtem dados da mensagem de confirmação para e-mail.
+    * @param int $idEncrontro
+    * @return Zend_Db_Table_Row_Abstract
+    */
 	public function getMsgConfirmacao($idEncrontro) {
 		return $this->find($idEncrontro,$this->config->email->confirmacao)->current();
 	}
 	
+   /**
+    * Obtem dados da mensagem de recuperação de senha para e-mail.
+    * @param int $idEncrontro
+    * @return Zend_Db_Table_Row_Abstract
+    */
 	public function getMsgCorrecao($idEncrontro) {
 		return $this->find($idEncrontro,$this->config->email->correcao)->current();
 	}
 
+   /**
+    * Envia e-mail para usuário com dados iniciais, como username (e-mail) e senha.
+    * @param int $idpessoa
+    * @param int $idEncrontro
+    * @param int $tipoMensagem use as constantes definidas acima [ MSG_CONFIRMACAO, MSG_RECUPERAR_SENHA ].
+    * @throws Exception
+    */
 	public function send(
            $idpessoa, $idEncrontro,
            $tipoMensagem = Application_Model_EmailConfirmacao::MSG_CONFIRMACAO
@@ -29,7 +51,6 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 		$mail = new Zend_Mail();
 		$pessoa = new Application_Model_Pessoa();
 		$linha = $pessoa->find($idpessoa)->current();
-		//$linha = $linha[0];
 		$pessoa->email = $linha->email;
 		$pessoa->gerarSenha();
       

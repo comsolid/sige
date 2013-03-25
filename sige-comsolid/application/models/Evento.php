@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Modelo para tabela "evento"
+ */
 class Application_Model_Evento extends Zend_Db_Table_Abstract {
 	protected $_name = 'evento';
 	protected $_primary = 'id_evento';
@@ -23,6 +26,11 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 		return $this->getAdapter()->fetchAll($select,$idEncontro);
 	}
    
+   /**
+    * Lista de datas onde há eventos no encontro.
+    * @param int $idEncontro id do encontro atual
+    * @return array
+    */
    public function listarDiasDoEncontro($idEncontro){
 		$select = "SELECT DISTINCT(TO_CHAR(data, 'DD/MM/YYYY')) AS data FROM evento e
 			INNER JOIN evento_realizacao er ON (e.id_evento = er.id_evento)
@@ -30,6 +38,14 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 		return $this->getAdapter()->fetchAll($select,$idEncontro);
 	}
 	
+   /**
+    * Lista eventos do encontro, retirando os eventos do usuário logado.
+    * Pode filtrar por data, tipo do evento ou parte do nome do evento.
+    * TODO: melhorar passagem de parametro e forma com que parametros são tratados.
+    * @param array $data [ 0: id_encontro, 1: !responsavel, 2: id_pessoa ]
+    *    Opcionais [ 3: data, 4: id_tipo_evento, 5: nome_evento ]
+    * @return array
+    */
 	public function buscaEventos($data) {
       $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
          TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH24:MM') AS h_inicio,
@@ -70,7 +86,13 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
       $select .= " LIMIT 100";
       return $this->getAdapter()->fetchAll($select, $where);
    }
-      
+   
+   /**
+    * Lista eventos mostrados no module admin.
+    * @param array $data [ 0: id_encontro ]
+    *    Opcionais [ 1: nome_evento, 2: id_tipo_evento, 3: validada ]
+    * @return array
+    */
    public function buscaEventosAdmin($data) {
       $select = "SELECT id_evento, nome_tipo_evento, nome_evento, validada, data_submissao, nome
 			FROM evento e INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
@@ -112,7 +134,13 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 
       return $this->getAdapter()->fetchAll($select, $where);
    }
-      
+   
+   /**
+    * Lista todos os detalhes do evento.
+    * TODO: retornar apenas elemento 0 do array! Tem impacto grande, verifique todos os usos.
+    * @param int $idEvento
+    * @return array
+    */
    public function buscaEventoPessoa($idEvento) {
       $select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, 
             validada, data_submissao, nome, resumo,
@@ -151,6 +179,11 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
       return $this->getAdapter()->fetchAll($select, $data);
    }
    
+   /**
+    * Lista a programação básica dos eventos.
+    * @param int $id_encontro
+    * @return array
+    */
    public function programacao($id_encontro) {
       $sql = "SELECT er.id_evento, nome_tipo_evento, nome_evento,
          nome, nome_sala, data, TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
@@ -167,6 +200,13 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
       return $this->getAdapter()->fetchAll($sql, array($id_encontro));
    }
    
+   /**
+    * Adiciona palestrantes a um evento, retornando o número de linhas afetadas
+    * para contar quantos realmente foram adicionados.
+    * @param int $idEvento
+    * @param int $idPessoa
+    * @return int número de linhas afetadas.
+    */
    public function adicionarPalestranteEvento($idEvento = 0, $idPessoa = 0) {
       if ($idEvento > 0 and $idPessoa > 0) {
          return $this->getAdapter()->insert("evento_palestrante", array(
@@ -177,6 +217,11 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
       return 0; // nenhuma linha afetada.
    }
    
+   /**
+    * Lista outros palestrantes de um evento, se houver.
+    * @param int $idEvento
+    * @return array
+    */
    public function buscarOutrosPalestrantes($idEvento) {
       $sql = "SELECT p.id_pessoa, p.nome, p.twitter, p.apelido
                FROM evento_palestrante ep

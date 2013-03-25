@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Modelo para tabela "evento_demanda"
+ */
 class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
 
    protected $_name = 'evento_demanda';
@@ -7,12 +10,17 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
    protected $_primary = array('evento', 'id_pessoa');
    protected $_dependentTables = array('pessoa', 'evento_realizacao');
 
+   /**
+    * @deprecated since version 1.3.0
+    * @param type $data
+    */
    public function remover($data) {
       $this->delete($data);
    }
 
 	/**
-	 * @param array $data id_encontro, id_pessoa
+    * Lista eventos de interesse do usuário.
+	 * @param array $data [ 0: id_encontro, 1: id_pessoa ]
 	 */
    public function listar($data) {
       $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
@@ -28,8 +36,8 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
    }
 
    /**
-    *
-    * @param array $data id_encontro, id_pessoa, id_evento
+    * Ler evento para confirmação de desfazer interesse.
+    * @param array $data [ 0: id_encontro, 1: id_pessoa, 2: id_evento ]
     */
    public function lerEvento($data) {
       $select = "SELECT ed.evento, nome_tipo_evento, nome_evento,

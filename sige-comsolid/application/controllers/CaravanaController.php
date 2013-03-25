@@ -43,6 +43,7 @@ class CaravanaController extends Zend_Controller_Action {
       $idEncontro = $sessao["idEncontro"];
       
       $participante = new Application_Model_Participante();
+      // TODO: usar CaravanaEncontro#lerResponsavelCaravana
       $rs = $participante->getMinhasCaravanaResponsavel(array($idEncontro, $idPessoa));
       $this->view->caravana = $rs[0];
       

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Modelo para tabela "evento_realizacao"
+ */
 class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
 
    protected $_name = 'evento_realizacao';
@@ -12,8 +15,10 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
            'onUpdate' => self::RESTRICT));
 
    /**
-    *	retorna true caso haja eventos no mesmo horário ou entre horários reservados, false caso contrário.
-    * @param array $data com as colunas id_encontro, id_sala, data, hora_inicio e hora_fim
+    *	Retorna nome do evento caso haja eventos no mesmo horário ou entre horários
+    * reservados, false caso contrário.
+    * @param array $data [ 0: id_encontro, 1: id_sala, 2: data, 3: hora_inicio, 4: hora_fim ]
+    * @return mixed Nome do evento caso exista, ou false caso contrário.
     */
    public function existeHorario($data) {
       $sql = "SELECT er.evento
