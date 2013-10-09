@@ -95,7 +95,7 @@ class EventoController extends Zend_Controller_Action {
       }
       
       header("Pragma: no-cache");
-      header("Cache: no-cahce");
+      header("Cache: no-cache");
       header("Cache-Control: no-cache, must-revalidate");
       header("Content-type: text/json");
       echo json_encode($json);

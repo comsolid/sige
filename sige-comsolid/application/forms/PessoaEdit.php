@@ -31,11 +31,11 @@ class Application_Form_PessoaEdit extends Zend_Form {
               ->addValidator('stringLength', false, array(6, 100))
               ->addErrorMessage("Nome deve ter no mínimo 6 caracteres ou contém caracteres inválidos");
 
-      $email = $this->createElement('text', 'email', array('label' => 'E-mail: '));
+      /*$email = $this->createElement('text', 'email', array('label' => 'E-mail: '));
       $email->setRequired(true)
               ->addValidator('EmailAddress')
               ->setAttrib('readonly', true)
-              ->addErrorMessage("E-mail inválido");
+              ->addErrorMessage("E-mail inválido");*/
 
       $apelido = $this->createElement('text', 'apelido', array('label' => 'Apelido: '));
       $apelido->setRequired(true)
@@ -81,7 +81,6 @@ class Application_Form_PessoaEdit extends Zend_Form {
          $instituicao->addMultiOptions(array($item->id_instituicao => $item->nome_instituicao));
       }
 
-      // TODO: usar máscara para ano nascimento
       $anoNascimento = $this->createElement('select', 'nascimento', array('label' => 'Ano Nascimento: '));
       $anoNascimento->setAttrib("class", "select2");
       $date = new Zend_Date();
@@ -91,7 +90,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
       }
 
       $this->addElement($nome)
-              ->addElement($email)
+              //->addElement($email)
               ->addElement($apelido)
               ->addElement($sexo)
               ->addElement($municipio)
