@@ -26,12 +26,12 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
          INNER JOIN evento e ON er.id_evento = e.id_evento
          WHERE id_encontro = ?
          AND id_sala = ?
-         AND data = ?
+         AND data = TO_DATE(?, 'DD/MM/YYYY')
          AND hora_inicio = ?
          AND hora_fim = ?
          OR (? BETWEEN hora_inicio AND hora_fim - '00:01'
             AND id_sala = ?
-            AND data = ? ) ";
+            AND data = TO_DATE(?, 'DD/MM/YYYY') ) ";
       $where = array(
           $data[0],
           $data[1],

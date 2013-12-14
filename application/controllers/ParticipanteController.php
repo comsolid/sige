@@ -17,7 +17,6 @@ class ParticipanteController extends Zend_Controller_Action {
 
 	public function indexAction() {
 	   $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 	   $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
 	   
@@ -36,11 +35,10 @@ class ParticipanteController extends Zend_Controller_Action {
 	 * 	/participar
 	 */
 	public function criarAction() {
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/parsley.i18n/messages.pt_br.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/parsley.min.js'));
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/salvar.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/criar.js'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/participante/criar.css'));
@@ -118,10 +116,9 @@ class ParticipanteController extends Zend_Controller_Action {
 
 	public function editarAction() {
 		$this->autenticacao();
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/salvar.js'));
+		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/editar.js'));
 
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * TODO: mover para forms do admin
+ */
 class Application_Form_Horarios extends Zend_Form {
    
 	private  $descricao;
@@ -64,7 +67,7 @@ class Application_Form_Horarios extends Zend_Form {
 		$data_ini = new Zend_Date($row->data_inicio);
 		$data_fim = new Zend_Date($row->data_fim);
 		while ($data_ini <= $data_fim) {
-			$element->addMultiOption($data_ini->toString('YYYY-MM-dd'), $data_ini->toString('dd/MM/YYYY'));
+			$element->addMultiOption($data_ini->toString('dd/MM/YYYY'), $data_ini->toString('dd/MM/YYYY'));
 			$data_ini->add(1, Zend_Date::DAY);
 		}
 		$element->setRequired(true)->addErrorMessage("Escolha uma data para realização do evento");
@@ -85,7 +88,7 @@ class Application_Form_Horarios extends Zend_Form {
 				$hora_aux->add(1, Zend_Date::HOUR);
 				continue;
 			}
-			$element->addMultiOption($hora_aux->toString('HH:mm:ss'), $hora_aux->toString('HH:mm'));
+			$element->addMultiOption($hora_aux->toString('HH:mm'), $hora_aux->toString('HH:mm'));
 			$hora_aux->add(1, Zend_Date::HOUR);
 		}
 		return $element;

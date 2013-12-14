@@ -8,7 +8,7 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
    protected $_name = 'evento_demanda';
    protected $_sequence = false;
    protected $_primary = array('evento', 'id_pessoa');
-   protected $_dependentTables = array('pessoa', 'evento_realizacao');
+   //protected $_dependentTables = array('pessoa', 'evento_realizacao');
 
    /**
     * @deprecated since version 1.3.0
@@ -36,6 +36,9 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
    }
 
    /**
+    * Utilização
+    *    /evento/desfazer-interesse
+    * 
     * Ler evento para confirmação de desfazer interesse.
     * @param array $data [ 0: id_encontro, 1: id_pessoa, 2: id_evento ]
     */
@@ -48,11 +51,10 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
          INNER JOIN tipo_evento te ON (e.id_tipo_evento = te.id_tipo_evento)
          WHERE e.id_encontro = ? AND ed.id_pessoa = ? AND ed.evento = ? ";
 
-      $row = $this->getAdapter()->fetchAll($select, $data);
-      if (!$row[0]) {
+      $row = $this->getAdapter()->fetchRow($select, $data);
+      if (is_null($row)) {
          throw new Exception("Evento não encontrado.");
-         return;
       }
-      return $row[0];
+      return $row;
    }
 }

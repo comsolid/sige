@@ -24,7 +24,6 @@ class EventoController extends Zend_Controller_Action {
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tipsy.css'));
       
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.tipsy.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/evento/inicio.js'));

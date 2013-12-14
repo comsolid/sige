@@ -103,19 +103,19 @@ table a.deletar{
 }
 
 .paginate_disabled_previous {
-	background-image: url('../img/table/back_disabled.jpg');
+	background-image: url('../img/table/back_disabled.png');
 }
 
 .paginate_enabled_previous {
-	background-image: url('../img/table/back_enabled.jpg');
+	background-image: url('../img/table/back_enabled.png');
 }
 
 .paginate_disabled_next {
-	background-image: url('../img/table/forward_disabled.jpg');
+	background-image: url('../img/table/forward_disabled.png');
 }
 
 .paginate_enabled_next {
-	background-image: url('../img/table/forward_enabled.jpg');
+	background-image: url('../img/table/forward_enabled.png');
 }
 
 

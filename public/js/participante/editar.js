@@ -1,8 +1,4 @@
 
-/**
- * @deprecated
- * @returns {undefined}
- */
 $(function() {
 	$("input#nome").focus();
 	

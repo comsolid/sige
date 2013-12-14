@@ -114,7 +114,11 @@ class Admin_HorarioController extends Zend_Controller_Action {
       } else {
          $id = $this->_getParam('id', 0);
          if ($id > 0) {
-            $form->populate($model->fetchRow("evento = " . $id)->toArray());
+            $form->populate($model->getAdapter()->fetchRow("SELECT evento, id_evento,
+                  id_sala, TO_CHAR(data, 'DD/MM/YYYY') as data,
+                  TO_CHAR(hora_inicio, 'HH24:MI') as hora_inicio,
+                  TO_CHAR(hora_fim, 'HH24:MI') as hora_fim, descricao
+               FROM evento_realizacao WHERE evento = " . $id));
          }
       }
       

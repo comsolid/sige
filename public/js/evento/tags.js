@@ -65,9 +65,10 @@ $(function() {
 });
 
 function appendToUl(id, descricao) {
-   if (! $("ul.select2-choices").has("li")) {
+   if ($("ul.select2-choices li").length === 0) {
       $("ul.select2-choices").html("");
    }
+   
    $("<li>", {
       html: "<div>" + descricao + "</div>" +
               "<a href=\"#\" data-id=\"" + id + "\" onclick=\"return false;\"" +

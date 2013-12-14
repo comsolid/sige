@@ -676,7 +676,7 @@
 				"sInfoEmpty": "Mostrando 0 com 0 de 0 registros encontrados",
 				"sInfoFiltered": "(filtrado _MAX_ do total de registros)",
 				"sInfoPostFix": "",
-				"sSearch": "Localizar nestas páginas:",
+				"sSearch": "Filtrar:",
 				"sUrl": "",
 				"oPaginate": {
 					"sFirst":    "&nbsp;&nbsp;&nbsp;",

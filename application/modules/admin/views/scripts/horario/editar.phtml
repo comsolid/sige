@@ -1,10 +1,10 @@
-<?
-   echo $this->headScript()
-        ->prependFile($this->baseUrl('js/admin/horario/salvar.js'), 'text/javascript')
-        ->prependFile($this->baseUrl('js/jquery.dataTables.js'))
-        ->prependFile($this->baseUrl('js/jquery-1.6.2.min.js'));
+<?php
+   $this->headScript()
+        ->prependFile($this->baseUrl('js/admin/horario/salvar.js'))
+        ->prependFile($this->baseUrl('js/jquery.dataTables.js'));
    
-   echo $this->headLink()
+   $this->headLink()
+           ->appendStylesheet($this->baseUrl('css/screen.css'))
            ->appendStylesheet($this->baseUrl('css/form.css'))
            ->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
 ?>
@@ -17,12 +17,14 @@
 
 <h2>Editar horário</h2>
 
-<?
+<?php
 echo $this->form;
 ?>
 
+<hr/>
 
-<table class="display" cellpadding="0" cellspacing="0" border="0;" >
+<h4>Outros Horários</h4>
+<table class="display" cellpadding="0" cellspacing="0" border="0;">
    <thead>
       <tr>
          <th>Data</th>
@@ -32,16 +34,13 @@ echo $this->form;
       </tr>
    </thead>
    <tbody>
-      <? foreach ($this->horariosEventos as $horario) { ?>
-
+      <?php foreach ($this->horariosEventos as $horario): ?>
          <tr>
-
-            <td><? echo $horario["data"] ?></td>
-            <td><? echo $horario["hora_inicio"] ?></td>
-            <td><? echo $horario["hora_fim"] ?></td>
+            <td><?php echo $horario["data"] ?></td>
+            <td><?php echo $horario["hora_inicio"] ?></td>
+            <td><?php echo $horario["hora_fim"] ?></td>
          </tr>
-
-      <? }
-      ?>
+      <?php endforeach; ?>
    </tbody>
 </table>
+

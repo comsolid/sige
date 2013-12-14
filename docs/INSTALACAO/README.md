@@ -200,9 +200,11 @@ $ sudo su
 
 ~~~
 $ cd ${SiGE}/library/HTMLPurifier/DefinitionCache/
-$ chmod -R 777 Serializer/
+$ mkdir Serializer
+$ chmod 777 Serializer/
 $ cd ${SiGE}/public/
-$ chmod -R 777 captcha/
+$ mkdir captcha
+$ chmod 777 captcha/
 ~~~
 
 ### Configurar conexão com base de dados

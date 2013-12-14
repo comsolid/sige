@@ -4,12 +4,15 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <?=$this->headMeta(); ?>
       <title>COMSOLiD - SiGE</title>
-      <?
-      $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css'));
-      $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
-      $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
-      $this->headLink()->prependStylesheet($this->baseUrl('css/flash-messages.css'));
+      <?php
+         $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css'));
+         $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
+         $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
+         $this->headLink()->prependStylesheet($this->baseUrl('css/flash-messages.css'));
       ?>
+      
+      <?php $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js')) ?>
+      
       <?= $this->headLink() ?>
       <?= $this->headStyle() ?>
       <?= $this->headScript() ?>
@@ -35,12 +38,12 @@
          <div id="corpo">
 
             <div id="conteudo">
-               <?= (is_object($this->menu)) ? $this->menu->getView() : "" ?>
-               <? //php echo  $this->render('menu.phtml')?>
+               <?php echo (is_object($this->menu)) ? $this->menu->getView() : ""; ?>
+               <? //php echo  $this->render('menu.phtml'); ?>
                <? if (!empty($this->deprecated)): ?>
                   <p style="color: red;"><?= $this->deprecated ?></p>
                <? endif; ?>
-               <?= $this->flashMessages(); ?>
+               <?php echo $this->flashMessages(); ?>
                <?php echo $this->layout()->content ?>
             </div>
          </div>
