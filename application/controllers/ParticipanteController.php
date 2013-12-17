@@ -220,12 +220,12 @@ class ParticipanteController extends Zend_Controller_Action {
 
 			$resultadoConsulta = $pessoa->avaliaLogin($data['email'], $data['senhaAntiga']);
 
-			if (sizeof($resultadoConsulta) > 0) {
+			if ($resultadoConsulta != null) {
 
-				if ($resultadoConsulta[0]->valido == true) {
+				if ($resultadoConsulta['valido']) {
 
 					if ($data['senhaNova'] == $data['senhaNovaRepeticao']) {
-						$where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $resultadoConsulta[0]->id_pessoa);
+						$where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $resultadoConsulta['id_pessoa']);
 
 						$novaSennha = array (
 							'senha' => md5($data['senhaNova'])

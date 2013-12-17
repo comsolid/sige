@@ -41,7 +41,7 @@ class IndexController extends Zend_Controller_Action {
 
          $resultadoConsulta = $model->avaliaLogin($data['email'], $data['senha']);
 
-         if (sizeof($resultadoConsulta) > 0) {
+         if ($resultadoConsulta != null) {
             if ($resultadoConsulta['valido']) {
 
                $idPessoa = $resultadoConsulta['id_pessoa'];

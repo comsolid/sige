@@ -37,6 +37,11 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 		}
 	}
 	
+	/**
+	 * Utilização
+	 * 	/login
+	 * 	/participante/alterar-senha
+	 */
 	public function avaliaLogin($login, $senha) {
 		// trecho antigo sujeito a SQL Injection: ') or ('1'='1
 		/*$select = $this->select()
@@ -50,9 +55,9 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
          twitter, cadastro_validado
          from pessoa where email = ? ";
       $where = array($senha, $login);
-		$result = $this->getAdapter()->fetchAll($sql, $where);
+		$result = $this->getAdapter()->fetchRow($sql, $where);
 
-		return $result[0];
+		return $result;
 	}
 	
 	public function buscaPessoas($data){

@@ -38,15 +38,28 @@ class Admin_Model_EncontroParticipante extends Zend_Db_Table_Abstract {
       return $this->getAdapter()->fetchAll($sql, array($idEncontro));
    }
    
-   public function relatorioInscricoesMunicipio($idEncontro) {
-      $sql = "SELECT nome_municipio AS municipio, COUNT(*) AS num
+   public function relatorioInscricoesMunicipio($idEncontro, $limit = null) {
+      /*$sql = "SELECT nome_municipio AS municipio, COUNT(*) AS num
          FROM encontro_participante ep
          INNER JOIN municipio m ON (m.id_municipio = ep.id_municipio)
          WHERE id_encontro = ?
          GROUP BY nome_municipio
          ORDER BY COUNT(*) DESC
-         LIMIT 15;";
-      return $this->getAdapter()->fetchAll($sql, array($idEncontro));
+         LIMIT 15;";*/
+      $sql = "SELECT nome_municipio AS municipio, COUNT(*) AS num,
+			(SELECT COUNT(ep1.id_pessoa) FROM encontro_participante ep1
+				 WHERE ep1.id_encontro = ?
+				 AND confirmado = true
+				 AND ep1.id_municipio =  ep.id_municipio) as confirmados
+			FROM encontro_participante ep
+			INNER JOIN municipio m ON (m.id_municipio = ep.id_municipio)
+			WHERE id_encontro = ?
+			GROUP BY nome_municipio, ep.id_municipio
+			ORDER BY COUNT(*) DESC";
+		if ($limit != null && is_numeric($limit)) {
+			$sql .= " LIMIT {$limit} ";
+		}
+      return $this->getAdapter()->fetchAll($sql, array($idEncontro, $idEncontro));
    }
 }
 

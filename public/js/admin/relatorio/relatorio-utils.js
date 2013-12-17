@@ -1,7 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 function dateFormat(date) {
    return sprintf("%02d/%02d/%04d",

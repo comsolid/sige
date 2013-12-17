@@ -26,7 +26,6 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/morris.css'));
       
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/raphael-min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/morris.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/sprintf-0.6.js'));
@@ -71,7 +70,6 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/morris.css'));
       
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/raphael-min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/morris.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/sprintf-0.6.js'));
@@ -116,7 +114,6 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/morris.css'));
       
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/raphael-min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/morris.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/sprintf-0.6.js'));
@@ -158,18 +155,25 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
    }
    
    public function inscricoesMunicipioAction() {
+		$model = new Admin_Model_EncontroParticipante();
+		$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+      $id_encontro = $config->encontro->codigo;
+		$rs = $model->relatorioInscricoesMunicipio($id_encontro);
+		$this->view->list = $rs;
+	}
+   
+   public function inscricoesMunicipio15MaisAction() {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/morris.css'));
       
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/raphael-min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/morris.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/sprintf-0.6.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/relatorio/relatorio-utils.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/relatorio/inscricoes-municipio.js'));
+      $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/relatorio/inscricoes-municipio-15-mais.js'));
    }
    
-   public function ajaxInscricoesMunicipioAction() {
+   public function ajaxInscricoesMunicipio15MaisAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
 
@@ -178,7 +182,8 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
 
       $model = new Admin_Model_EncontroParticipante();
       try {
-         $rs = $model->relatorioInscricoesMunicipio($idEncontro);
+			$limit = 15;
+         $rs = $model->relatorioInscricoesMunicipio($idEncontro, $limit);
          $json = new stdClass;
          $json->size = count($rs);
          $json->array = array();
@@ -187,6 +192,7 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
             $obj = new stdClass;
             $obj->municipio = "{$value['municipio']}";
             $obj->num = "{$value['num']}";
+            $obj->confirmados = "{$value['confirmados']}";
             array_push($json->array, $obj);
          }
       } catch (Exception $e) {

@@ -41,6 +41,11 @@ table a.editar{
 table a.deletar{
 	background: url("../img/menu_vertical/delete.png") no-repeat;
 }
+
+table tbody td.col-right, table tfoot th.col-right {
+	text-align: right;
+}
+
 #demo{
 	float: left;
 	clear: right;
