@@ -1,7 +1,21 @@
 
-<? if (!empty($this->evento)): ?>
+<?php
+   $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+   $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
+   $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+   $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+   $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
 
-<?
+   $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+   $this->headScript()->appendFile($this->baseUrl('js/jquery.timeago.min.js'));
+   $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
+   $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
+   $this->headScript()->appendFile($this->baseUrl('js/evento/ver.js'));
+?>
+
+<?php if (!empty($this->evento)): ?>
+
+<?php
 $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 /* meta tags para twitter */
 $this->headMeta()->setName('twitter:card', 'summary');
@@ -70,7 +84,7 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
          Submissão:
       </div>
       <div class="span-6">
-         <? $date = new Zend_Date($this->evento['data_submissao']); ?>
+         <?php $date = new Zend_Date($this->evento['data_submissao']); ?>
          <abbr class="timeago" title="<?= $this->evento['data_submissao'] ?>">
             <?=$date->toString("dd 'de' MMMM 'de' y") ?>
          </abbr>
@@ -99,15 +113,15 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
          </div>
          <div id="tab-2">
             <ul>
-            <? if (! empty($this->outros)):
+            <?php if (! empty($this->outros)):
                   foreach ($this->outros as $outro): ?>
-               <?
+               <?php
                $url = "/u/";
                $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
                ?>
                <li><a href="<?=$url ?>" title="<?=$outro['apelido'] ?>"
                       target="_blank"><?=$outro['nome'] ?></a></li>
-            <?    endforeach;
+            <?php    endforeach;
                endif; ?>
             </ul>
          </div>
@@ -119,12 +133,12 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
          </div>
          <div id="tab-5" class="select2-container select2-container-multi" style="width: 450px;">
             <ul class="select2-choices">
-            <? if (! empty($this->tags)):
+            <?php if (! empty($this->tags)):
                   foreach ($this->tags as $tag): ?>
                <li class="select2-search-choice select2-locked">
                   <a><?=$tag['descricao'] ?></a>
                </li>
-            <?    endforeach;
+            <?php    endforeach;
                endif; ?>
             </ul>
          </div>
@@ -149,5 +163,5 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
    <noscript>Por favor, habilite o JavaScript para ver os <a href="http://disqus.com/?ref_noscript">comentários do Disqus.</a></noscript>
    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-<? endif; ?>
+<?php endif; ?>
 

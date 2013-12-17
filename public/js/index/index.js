@@ -1,11 +1,14 @@
 $(function(){
 
    var note = $('#note'),
-      ts = new Date(2013, 10, 5),
-      newYear = true;
+      // data do evento
+      ts = new Date(2013, 11, 18),
+      itsTime = true,
+      // mude para o nome do seu evento
+      MSG_EVENTO = "para o ESL I!";
 
    if((new Date()) > ts){
-      newYear = false;
+      itsTime = false;
    }
 
    $('#countdown').countdown({
@@ -18,8 +21,8 @@ $(function(){
          message += minutes + " minuto" + ( minutes==1 ? '':'s' ) + " e ";
          message += seconds + " segundo" + ( seconds==1 ? '':'s' ) + " <br />";
 
-         if(newYear){
-            message += "para o COMSOLiD 6!";
+         if(itsTime){
+            message += MSG_EVENTO;
          } else {
             message = "Começou!";
          }

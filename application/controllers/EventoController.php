@@ -387,18 +387,6 @@ class EventoController extends Zend_Controller_Action {
     */
    public function verAction() {
       $this->view->menu->setAtivo('programacao');
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
-      
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.timeago.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/ver.js'));
       
       try {
          $idEvento = $this->_request->getParam('id', 0);

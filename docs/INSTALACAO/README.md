@@ -1,8 +1,7 @@
 % SiGE - Sistema de Gerência de Eventos
 % Equipe COMSOLiD
 
-Instalação
-==========
+# Instalação e Configuração
 
 Programas necessários:
 
@@ -12,8 +11,7 @@ Programas necessários:
 * Zend Framework;
 * subversion (opcional);
 
-Base de dados
--------------
+## Base de dados
 
 ### Schema da Base de dados
 
@@ -101,8 +99,7 @@ de acordo com seu encontro.
 **obs.:** esse passo serve somente para o primeiro encontro. Os demais podem ser criados
 a partir do SiGE em `/adim/encontro/criar/`.
 
-SiGE
-----
+## SiGE
 
 ### Zend
 
@@ -267,8 +264,7 @@ senha padrão foi enviado para você. Tente fazer um login.
 
 No banco de dados, na tebela `pessoa`, modifique a coluna `administrador` para `true`.
 
-Certificados
-------------
+### Certificados
 
 Os arquivos relativos aos certificados, participante e palestrante, ficam localizados
 em `${SiGE}/public/img/certificados/`. Lá teremos um diretório `default/` que contém
@@ -325,10 +321,41 @@ ${SiGE}/public/img/certificados/
           assinatura-1.png
 ~~~
 
+### Dados do evento
 
+#### Contagem Regressiva
 
+Para modficar a data e os dados referentes a contagem regressiva que aparece na página
+inicial do SiGE vá até o arquivo `${SiGE}/public/js/index/index.js`
+e modifique as linhas:
 
+~~~
+// data do evento
+ts = new Date(2013, 10, 5),
+~~~
 
+**obs.:** lembrando que em Javascript os meses vão de 0 a 11.
 
+~~~
+month
+    Integer value representing the month, beginning with 0 for January to 11 for December.
+~~~
 
+Fonte: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date>
 
+e
+
+~~~
+// mude para o nome do seu evento
+MSG_EVENTO = "para o ESL I!";
+~~~
+
+#### Twitter
+
+No arquivo `${SiGE}/application/configs/application.ini`
+altere as linhas:
+
+~~~
+twitter.username = "els"; sem "@"
+twitter.hashtags = "els1"; sem "#" e separadas por ","
+~~~
