@@ -2,10 +2,11 @@
 var oTable;
 
 $(function() {
-	oTable = $('table').dataTable( {
-		"sPaginationType" : "full_numbers",
-        "aaSorting": [ ],
-		"bFilter": false
+	oTable = $('table').dataTable({
+      "aaSorting": [ ],
+		"bFilter": false,
+      bInfo: false,
+      "bLengthChange": false
 	});
  
 });

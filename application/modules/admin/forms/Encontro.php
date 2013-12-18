@@ -21,6 +21,8 @@ class Admin_Form_Encontro extends Zend_Form {
           $this->_apelido_encontro(),
           $this->_data_inicio(),
           $this->_data_fim(),
+          $this->_periodo_submissao_inicio(),
+          $this->_periodo_submissao_fim(),
           $submit,
           $cancelar
       ));
@@ -112,6 +114,42 @@ class Admin_Form_Encontro extends Zend_Form {
       if ($this->modo_edicao) {
          $e->setAttrib("disabled", "disabled");
       }
+      
+      $e->setDecorators(array(
+          'ViewHelper',
+          'Description',
+          'Errors',
+          array('HtmlTag', ''),
+          array('Label', ''),
+      ));
+      return $e;
+   }
+   
+   protected function _periodo_submissao_inicio() {
+      $e = new Zend_Form_Element_Text('periodo_submissao_inicio');
+      $e->setLabel('Início Submissão:')
+              ->setRequired(true)
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->setAttrib('class', 'date');
+      
+      $e->setDecorators(array(
+          'ViewHelper',
+          'Description',
+          'Errors',
+          array('HtmlTag', ''),
+          array('Label', ''),
+      ));
+      return $e;
+   }
+   
+   protected function _periodo_submissao_fim() {
+      $e = new Zend_Form_Element_Text('periodo_submissao_fim');
+      $e->setLabel('Fim Submissão:')
+              ->setRequired(true)
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->setAttrib('class', 'date');
       
       $e->setDecorators(array(
           'ViewHelper',

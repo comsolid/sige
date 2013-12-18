@@ -186,7 +186,8 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
     */
    public function programacao($id_encontro) {
       $sql = "SELECT er.id_evento, nome_tipo_evento, nome_evento,
-         nome, nome_sala, data, TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
+         nome, nome_sala, TO_CHAR(data, 'DD/MM/YYYY') as data,
+         TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
          TO_CHAR(hora_fim, 'HH24:MM') as hora_fim, resumo, descricao,
          id_pessoa, twitter, ( SELECT COUNT(*) FROM evento_palestrante ep
             WHERE ep.id_evento = er.id_evento ) as outros

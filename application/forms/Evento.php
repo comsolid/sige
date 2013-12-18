@@ -26,7 +26,6 @@ class Application_Form_Evento extends Zend_Form {
           $this->_id_tipo_evento(),
           $this->_id_dificuldade_evento(),
           $this->_perfil_minimo(),
-          //$this->_curriculum(), // usar bio da pessoa
           $this->_resumo(),
           $this->_id_encontro(),
           $this->_tecnologias_envolvidas(),
@@ -124,25 +123,6 @@ class Application_Form_Evento extends Zend_Form {
       return $e;
    }
    
-   protected function _curriculum() {
-      $e = new Zend_Form_Element_Textarea('curriculum');
-      $e->setLabel('Curriculum:')
-              ->setRequired(true)
-              ->setAttrib('rows', 10)
-              ->setAttrib("data-required", "true")
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim');
-
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
-   
    protected function _id_encontro() {
       $e = new Zend_Form_Element_Hidden('id_encontro');
       return $e;
@@ -153,12 +133,12 @@ class Application_Form_Evento extends Zend_Form {
       $e->setLabel('Resumo:')
               ->setRequired(true)
               ->setAttrib('rows', 10)
-              ->setAttrib("data-required", "true")
+              //->setAttrib("data-required", "true")
               ->addFilter('StringTrim')
               ->setAttrib('class', 'ckeditor')
-              ->addValidator('stringLength', false, array(10))
+              ->addValidator('stringLength', false, array(20))
               ->addFilter(new Sige_Filter_HTMLPurifier)
-          	  ->addErrorMessage("Resumo com numero insuficiente de caracteres (min. 10).");
+          	  ->addErrorMessage("Resumo com número insuficiente de caracteres (mín. 20).");
 
       $e->setDecorators(array(
           'ViewHelper',
