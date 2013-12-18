@@ -52,5 +52,3 @@ class Admin_Model_MensagemEmail extends Application_Model_EmailConfirmacao {
       $this->insert($params);
    }
 }
-
-?>

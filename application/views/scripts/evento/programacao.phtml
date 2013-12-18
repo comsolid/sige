@@ -1,12 +1,12 @@
 <h3>Programação</h3>
 <hr/>
-<?
+<?php
 $data_atual = null;
 if (! empty($this->lista)):
    foreach ($this->lista as $item): ?>
 <div class="container">
    <div class="span-2">
-      <?
+      <?php
       if ($item['data'] != $data_atual) {
 			// TODO: formatar data de maneira genérica.
          $date = new Zend_Date($item['data']);
@@ -15,7 +15,7 @@ if (! empty($this->lista)):
       <div class="prog-date">
          <p><?=$date->toString('dd') ?> <span><?=$date->toString('MMM') ?></span></p>
       </div>
-      <?
+      <?php
          $data_atual = $item['data'];
       } else {
          echo "&nbsp;";
@@ -26,15 +26,15 @@ if (! empty($this->lista)):
       <div class="acc-evento">
          <div class="header3">
             <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
-            <? if (! empty($item['descricao'])) : ?>
+            <?php if (! empty($item['descricao'])) : ?>
             (<?=$item['descricao'] ?>)
-            <? endif; ?>
+            <?php endif; ?>
          </div>
          <div>
             <div>Sala <?=$item['nome_sala'] ?> de
             <?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
             <hr/>
-            <?
+            <?php
             if (! empty($item['twitter'])) {
                $id = $item['twitter'];
             } else {
@@ -44,11 +44,11 @@ if (! empty($this->lista)):
             <div>
                por <a href="<?=$this->url(array('id' => $id),
                     'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
-               <? if ($item['outros'] == 1): ?>
+               <?php if ($item['outros'] == 1): ?>
                   e outro.
-               <? elseif ($item['outros'] > 1): ?>
+               <?php elseif ($item['outros'] > 1): ?>
                   e <?=$item['outros'] ?> outros.
-               <? endif; ?>
+               <?php endif; ?>
             </div>
             <p><?=$item['resumo'] ?></p>
          </div>
@@ -61,7 +61,7 @@ if (! empty($this->lista)):
       </a>
    </div>
 </div>
-<?
+<?php
    endforeach;
 else:
 ?>
@@ -72,5 +72,4 @@ else:
     'action'=>'submeter'), 'default');?>"
     class="no-bottom"><i class="icon-file"></i> Submeta um trabalho</a></div>
 </div>
-<? endif; ?>
-
+<?php endif; ?>

@@ -25,7 +25,6 @@ class Admin_EncontroController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
@@ -60,20 +59,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
             
             $model->getAdapter()->beginTransaction();
             try {
-               $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
-               $dbdf = $config->db->date->format;
                
-               if (! empty($values['data_inicio'])) {
-                  $date = new Zend_Date($values['data_inicio']);
-                  $values['data_inicio'] = $date->toString($dbdf);
-               }
-               
-               if (! empty($values['data_fim'])) {
-                  $date = new Zend_Date($values['data_fim']);
-                  $values['data_fim'] = $date->toString($dbdf);
-               }
-               
-               $id = $model->insert($values);
+               $id = $model->criar($values);
                $modelMensagem->criarMensagensPadrao(
                        $id, $values['apelido_encontro']
                );
@@ -112,23 +99,11 @@ class Admin_EncontroController extends Zend_Controller_Action {
          }
          
          if ($form->isValid($formData)) {
-            $id = $this->getRequest()->getParam('id', 0);
+            $id_encontro = $this->getRequest()->getParam('id', 0);
             $values = $form->getValues();
             
             try {
-               $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
-               $dbdf = $config->db->date->format;
-
-               if (!empty($values['data_inicio'])) {
-                  $date = new Zend_Date($values['data_inicio']);
-                  $values['data_inicio'] = $date->toString($dbdf);
-               }
-
-               if (!empty($values['data_fim'])) {
-                  $date = new Zend_Date($values['data_fim']);
-                  $values['data_fim'] = $date->toString($dbdf);
-               }
-               $model->update($values, 'id_encontro = ' . $id);
+               $model->atualizar($values, $id_encontro);
                $this->_helper->flashMessenger->addMessage(
                      array('success' => 'Encontro atualizado com sucesso.'));
                return $this->_helper->redirector->goToRoute(array(
@@ -144,22 +119,9 @@ class Admin_EncontroController extends Zend_Controller_Action {
             $form->populate($formData);
          }
       } else {
-         $id = $this->_getParam('id', 0);
-         if ($id > 0) {
-            $array = $model->fetchRow('id_encontro = ' . $id)->toArray();
-            
-            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
-            $appdf = $config->app->date->format;
-            if (!empty($array['data_inicio'])) {
-               $date = new Zend_Date($array['data_inicio']);
-               $array['data_inicio'] = $date->toString($appdf);
-            }
-
-            if (!empty($array['data_fim'])) {
-               $date = new Zend_Date($array['data_fim']);
-               $array['data_fim'] = $date->toString($appdf);
-            }
-            
+         $id_encontro = $this->_getParam('id', 0);
+         if ($id_encontro > 0) {
+            $array = $model->ler($id_encontro);
             $form->populate($array);
          }
       }

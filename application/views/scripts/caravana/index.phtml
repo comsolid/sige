@@ -1,4 +1,4 @@
-<? if (! is_null($this->participante)): ?>
+<?php if (! is_null($this->participante)): ?>
 <fieldset>
    <legend><i class="icon-plane"></i> Está cadastrado nesta caravana</legend>
 	<div class="acoes">
@@ -6,7 +6,8 @@
 			href="<?php echo $this->url(array('controller' => 'caravana',
 	  'action' => 'sair'), 'default', true);
 	  ?>" onclick="return confirm('Tem certeza que deseja sair da caravana?')">
-			<img src="<? echo $this->baseUrl('imagens/layout/bt_sairexcluir.png'); ?>" alt="Sair" border="0"/>
+			<img src="<?php echo $this->baseUrl('imagens/layout/bt_sairexcluir.png'); ?>"
+              alt="Sair" border="0"/>
 		</a>
 	</div>
 
@@ -24,15 +25,16 @@
       <dd><label><?= $this->participante['nome'] ?></label></dd>
    </dl>
 </fieldset>
-<? endif; ?>
+<?php endif; ?>
 
 <fieldset>
    <legend>É Responsável pela Caravana</legend>
-   <? if (is_null($this->caravanaResponsavel) and is_null($this->participante)): ?>
-      <a title="Criar Caravana" href="<? echo $this->baseUrl('caravana/criar'); ?>" class="no-bottom" style="float: right">
+   <?php if (is_null($this->caravanaResponsavel) and is_null($this->participante)): ?>
+      <a title="Criar Caravana" href="<?php echo $this->baseUrl('caravana/criar'); ?>"
+         class="no-bottom" style="float: right">
 			<i class="icon-plus"></i> Criar caravana
 		</a>
-   <? elseif (! is_null($this->caravanaResponsavel)): ?>
+   <?php elseif (! is_null($this->caravanaResponsavel)): ?>
       <dl class="detalhes">
          <dt id="nome_caravana-label"><label class="required" for="nome_caravana">Caravana:</label></dt>
          <dd id="nome_caravana-element">
@@ -48,15 +50,14 @@
       </dl>
     
       <a title="Adicionar participantes" 
-         href="<?=
-        $this->url(array(
-            'controller' => 'caravana',
-            'action' => 'participantes'), 'default', true)
-        ?>" class="no-bottom">
+         href="<?=$this->url(array(
+                  'controller' => 'caravana',
+                  'action' => 'participantes'), 'default', true)
+              ?>" class="no-bottom">
            <i class="icon-plus"></i> Adicionar Participantes</a>&nbsp;&nbsp;&nbsp;
       <a href="<?=$this->url(array('controller' => 'caravana',
                'action' => 'editar'), 'default', true) ?>"
                class="no-bottom"><i class="icon-edit"></i> Editar</a>
-	<? endif; ?>
+	<?php endif; ?>
 </fieldset>
 

@@ -4,11 +4,11 @@
       <input type="radio" name="data_evento" class="data_evento"
              id="radio_data_todos" value="todas" checked="checked" />
       <label for="radio_data_todos">Todos</label>
-      <? foreach ($this->diasEncontro as $value): ?>
+      <?php foreach ($this->diasEncontro as $value): ?>
       <input type="radio" name="data_evento" class="data_evento" id="radio_<?= $value['data'] ?>"
                 value="<?= str_replace('/', '-', $value['data']) ?>" />
       <label for="radio_<?= $value['data'] ?>"><?= $value['data'] ?></label>
-      <? endforeach; ?>
+      <?php endforeach; ?>
    </div>
 </div><br/>
 <div class="container">
@@ -16,12 +16,12 @@
       <i class="icon-star"></i>
       <input type="radio" name="tipo_evento" class="tipo_evento" id="radio_tipo_todos"
              value="0" checked="checked" /><label for="radio_tipo_todos">Todos</label>
-      <? foreach ($this->tipoEvento as $tipoEvento): ?>
+      <?php foreach ($this->tipoEvento as $tipoEvento): ?>
       <input type="radio" name="tipo_evento" class="tipo_evento"
                 id="radio_<?= $tipoEvento->id_tipo_evento ?>"
                 value="<?= $tipoEvento->id_tipo_evento ?>" />
       <label for="radio_<?= $tipoEvento->id_tipo_evento ?>"><?= $tipoEvento->nome_tipo_evento ?></label>
-      <? endforeach; ?>
+      <?php endforeach; ?>
    </div>
 </div>
 <br>
@@ -52,5 +52,6 @@
 
 <div class="notice">
    <p><strong>Atenção!</strong> Marcar interesse numa palestra não garante sua vaga.
-      Então chegue cedo.<br/>Marcar eventos é apenas uma forma de organizar melhor os locais dependendo da demanda.</p>
+      Então chegue cedo.<br/>Marcar eventos é apenas uma forma de organizar melhor
+      os locais dependendo da demanda.</p>
 </div>

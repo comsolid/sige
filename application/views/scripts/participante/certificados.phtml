@@ -1,23 +1,23 @@
 <fieldset>
    <legend>Certificados de participação</legend>
    <ul>
-      <? foreach($this->certsParticipante as $cert): ?>
+      <?php foreach($this->certsParticipante as $cert): ?>
       <li><a href="<?=$this->url(array('controller' => 'participante',
          'action' => 'certificado-participante',
           'id_encontro' => $cert['id_encontro']), 'default', true) ?>"
          ><?=$cert['nome_encontro'] ?></a></li>
-      <? endforeach; ?>
+      <?php endforeach; ?>
    </ul>
 </fieldset>
 
 <fieldset>
    <legend>Certificados de palestrante</legend>
    <ul>
-      <? foreach($this->certsPalestrante as $cert): ?>
+      <?php foreach($this->certsPalestrante as $cert): ?>
       <li><a href="<?=$this->url(array('controller' => 'participante',
          'action' => 'certificado-palestrante',
           'id' => $cert['id_evento']), 'default', true) ?>"
          ><?=$cert['nome_tipo_evento'] ?>: <?=$cert['nome_evento'] ?> - <?=$cert['nome_encontro'] ?></a></li>
-      <? endforeach; ?>
+      <?php endforeach; ?>
    </ul>
 </fieldset>

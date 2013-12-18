@@ -23,7 +23,6 @@ class Admin_CaravanaController extends Zend_Controller_Action {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('/js/admin/caravana/index.js'));

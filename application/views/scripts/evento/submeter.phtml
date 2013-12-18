@@ -1,11 +1,10 @@
-<?
+<?php
 $this->headScript()
         ->prependFile($this->baseUrl('js/evento/submeter.js'), 'text/javascript')
         ->prependFile($this->baseUrl('js/jquery.qtip.min.js'), 'text/javascript')
         ->prependFile($this->baseUrl('js/ckeditor.js'), 'text/javascript')
         ->prependFile($this->baseUrl('js/parsley.min.js'), 'text/javascript')
-        ->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript')
-        ->prependFile($this->baseUrl('js/jquery-1.8.3.min.js'), 'text/javascript');
+        ->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
 
 $this->headLink()
            ->appendStylesheet($this->baseUrl('css/jquery.qtip.css'))

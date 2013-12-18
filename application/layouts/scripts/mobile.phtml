@@ -5,7 +5,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <?=$this->headMeta(); ?>
-      <?
+      <?php
          $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.mobile-1.3.0.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome.min.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'))
@@ -19,7 +19,7 @@
       <div data-role="page" class="sige-page">
          <div data-role="panel" data-display="overlay" id="panel-menu" data-theme="a">
             <div data-role="controlgroup">
-               <? if (isset($this->menu)) {
+               <?php if (isset($this->menu)) {
                   echo $this->menu->getView();
                } ?>
             </div>
@@ -45,10 +45,10 @@
          </div>
 
       </div><!-- page -->
-      <?
+      <?php
          $this->headScript()->prependFile($this->baseUrl('js/mobile/geral.js'))
                  ->prependFile($this->baseUrl('js/jquery.mobile-1.3.0.min.js'))
-                 ->prependFile($this->baseUrl('js/jquery-1.8.3.min.js'));
+                 ->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
       ?>
       <?= $this->headScript() ?>
    </body>

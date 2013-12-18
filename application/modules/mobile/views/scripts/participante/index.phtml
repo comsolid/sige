@@ -1,21 +1,21 @@
 
 <div style="margin-top: 10px;">
    <ul data-role="listview" data-filter="true" data-filter-placeholder="Buscar eventos..." data-inset="true">
-      <? foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
+      <?php foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
       <li>
          <h2>
-            <?echo $item["nome_tipo_evento"];?>: <? echo $item["nome_evento"];?>
+            <?php echo $item["nome_tipo_evento"];?>: <?php echo $item["nome_evento"];?>
          </h2>
-         <? $date = new Zend_Date($item["data"]); ?>
+         <?php $date = new Zend_Date($item["data"]); ?>
          <p style="font-size: 12pt;">
          <?=$date->toString('dd MMM') ?> -
-         <? echo $item["hora_inicio"];?> as <? echo $item["hora_fim"];?>
+         <?php echo $item["hora_inicio"];?> as <?php echo $item["hora_fim"];?>
          </p>
          <p style="font-size: 11pt;">Sala: <?=$item['nome_sala'] ?></p>
-         <? if (!$item['validada']): ?>
+         <?php if (!$item['validada']): ?>
          <p><i class="icon-warning-sign"></i> Este evento foi invalidado e pode não ser ministrado.</p>
-         <? endif; ?>
+         <?php endif; ?>
       </li>
-      <? endforeach; ?>
+      <?php endforeach; ?>
    </ul>
 </div>

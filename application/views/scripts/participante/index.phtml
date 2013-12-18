@@ -1,7 +1,4 @@
 
-<? /*<a href="<?=$this->url(array('action' => 'certificado-palestrante'),
-        'default') ?>">Certificado Palestrante</a><br/><br/> //teste */?>
-
 <fieldset>
    <a title="Adicionar interesse em Evento" style="float:right; clear:right;"
 			href="<?=$this->url(array('controller' => 'evento',
@@ -19,28 +16,28 @@
 			</tr>
 		</thead>
 		<tbody>
-		<? foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
+		<?php foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
 			<tr>
 				<td>
-               <? if (!$item['validada']): ?>
-                  <i class="icon-warning-sign" title="Este evento foi invalidado e pode não ser ministrado."></i>
-               <? endif; ?>
-               <?echo $item["nome_tipo_evento"];?> -
-               <? echo $item["nome_evento"];?>
+               <?php if (!$item['validada']): ?>
+                  <i class="icon-warning-sign"
+                     title="Este evento foi invalidado e pode não ser ministrado."></i>
+               <?php endif; ?>
+               <?php echo $item["nome_tipo_evento"];?> -
+               <?php echo $item["nome_evento"];?>
             </td>
-				<td><? echo $item["data"];?></td>
-				<td><? echo $item["hora_inicio"];?> - <? echo $item["hora_fim"];?></td>
-				<td><? echo $item["nome_sala"];?></td>
+				<td><?php echo $item["data"];?></td>
+				<td><?php echo $item["hora_inicio"];?> - <?php echo $item["hora_fim"];?></td>
+				<td><?php echo $item["nome_sala"];?></td>
 				<td>
 					<a href="<?=$this->url(array(
                    'controller' => 'evento',
                    'action' => 'desfazer-interesse',
                    'id' => $item["evento"])) ?>" class="no-bottom">
                   <i class="icon-reply"></i> Desfazer</a>
-					<!--<a href="<?// echo $this->baseUrl('/participante/excluievento/evento/'.$item["evento"]);?>">Excluir</a>-->
 				</td>
 		  </tr>
-		<? endforeach; ?>
+		<?php endforeach; ?>
 		</tbody>
 	</table>
 </fieldset>

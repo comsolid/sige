@@ -46,7 +46,8 @@ class Admin_Form_Encontro extends Zend_Form {
               ->addValidator('StringLength', false, array(1, 100))
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->setAttrib('class', 'large');
+              ->setAttrib('class', 'large')
+              ->setAttrib("placeholder", "I Encontro de Software Livre");
 
       $e->setDecorators(array(
           'ViewHelper',
@@ -60,12 +61,13 @@ class Admin_Form_Encontro extends Zend_Form {
 
    protected function _apelido_encontro() {
       $e = new Zend_Form_Element_Text('apelido_encontro');
-      $e->setLabel('Apelido encontro:')
+      $e->setLabel('Codenome:')
               ->setRequired(true)
               ->addValidator('StringLength', false, array(1, 10))
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->setAttrib('class', 'normal');
+              ->setAttrib('class', 'normal')
+              ->setAttrib("placeholder", "I ESL");
 
       $e->setDecorators(array(
           'ViewHelper',

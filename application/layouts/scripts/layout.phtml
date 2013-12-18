@@ -23,7 +23,7 @@
          <div id="info_usu">
             <?php
                $this->usuaLogado = Zend_Auth::getInstance()->getIdentity();
-               if (!empty($this->usuaLogado)) {
+               if (!empty($this->usuaLogado)):
             ?>
                <span>Bem-Vindo(a) :</span>
                <a href="<?php echo $this->url(array('controller' => 'participante',
@@ -32,17 +32,17 @@
                </a>&nbsp;
                <a href="<?php echo $this->url(array(), 'logout', true); ?>" class="no-bottom">
 						<i class="icon-signout"></i> Sair</a>
-            <? } ?>
+            <?php endif; ?>
          </div>
 
          <div id="corpo">
 
             <div id="conteudo">
                <?php echo (is_object($this->menu)) ? $this->menu->getView() : ""; ?>
-               <? //php echo  $this->render('menu.phtml'); ?>
-               <? if (!empty($this->deprecated)): ?>
+               
+               <?php if (!empty($this->deprecated)): ?>
                   <p style="color: red;"><?= $this->deprecated ?></p>
-               <? endif; ?>
+               <?php endif; ?>
                <?php echo $this->flashMessages(); ?>
                <?php echo $this->layout()->content ?>
             </div>

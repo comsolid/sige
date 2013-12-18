@@ -1,4 +1,4 @@
-<?
+<?php
    $this->headLink()
            ->appendStylesheet($this->baseUrl("css/prettify.css"));
 
@@ -10,15 +10,15 @@
 
 <div data-role="navbar">
    <ul>
-      <? foreach($this->diasEncontro as $value):
+      <?php foreach($this->diasEncontro as $value):
             $date = new Zend_Date($value['data']);
       ?>
       <li><a href="#" data-id="<?=$date->toString('dd-MMM') ?>"><?=$date->toString('dd MMM') ?></a></li>
-      <? endforeach; ?>
+      <?php endforeach; ?>
    </ul>
 </div>
 
-<?
+<?php
 $data_atual = null;
 $count = 0;
 if (! empty($this->lista)):
@@ -29,20 +29,20 @@ if (! empty($this->lista)):
          if ($count > 0) {
    ?>
    </div><!-- fecha div data-role=collapsible-set -->
-   <?
+   <?php
          }
    ?>
    <div id="<?=$date->toString('dd-MMM') ?>" data-role="collapsible-set" class="dia" style="display: none;">
-   <?
+   <?php
          $count++;
       } // end if test data !=
 ?>
       <div data-role="collapsible" data-theme="c" data-content-theme="d">
          <h4>
             <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
-            <? if (! empty($item['descricao'])) : ?>
+            <?php if (! empty($item['descricao'])) : ?>
             (<?=$item['descricao'] ?>)
-            <? endif; ?>
+            <?php endif; ?>
             <span style="color: gray; float: right"><?=$item['hora_inicio'] ?></span>
          </h4>
          <div class="ui-grid-a ui-responsive">
@@ -51,7 +51,7 @@ if (! empty($this->lista)):
             </div>
             <div class="ui-block-b">
                <div class="ui-body">
-                  <?
+                  <?php
                   if (!empty($item['twitter'])) {
                      $id = $item['twitter'];
                   } else {
@@ -61,11 +61,11 @@ if (! empty($this->lista)):
                   por <a href="<?=$this->url(array('id' => $id),
                         'mobile_ver', true) ?>" target="blank" data-ajax="false"
                         data-role="button" data-inline="true"><?=$item['nome'] ?></a>
-                   <? if ($item['outros'] == 1): ?>
+                   <?php if ($item['outros'] == 1): ?>
                       e outro.
-                   <? elseif ($item['outros'] > 1): ?>
+                   <?php elseif ($item['outros'] > 1): ?>
                       e <?=$item['outros'] ?> outros.
-                   <? endif; ?>
+                   <?php endif; ?>
                </div>
             </div>
          </div><!-- /grid-a -->
@@ -75,9 +75,9 @@ if (! empty($this->lista)):
             <i class="icon-comments-alt"></i> Comentários
          </a>
       </div>
-<?
+<?php
    endforeach;
 else:
 ?>
 Não há eventos.
-<? endif; ?>
+<?php endif; ?>

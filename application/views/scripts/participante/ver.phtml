@@ -1,11 +1,11 @@
 <?php
    $this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
 ?>
-<? if (! empty($this->user)): ?>
+<?php if (! empty($this->user)): ?>
 <p>
    <a href="<?=$this->url(array('id' => $this->id),
         'ver') ?>" class="no-bottom"><i class='icon-user'></i> Página de <?=$this->user->nome ?></a>
-   <? if ($this->mostrarEditar) : ?>
+   <?php if ($this->mostrarEditar): ?>
    &nbsp;&nbsp;&nbsp;
    <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'editar'), 'default', true);?>" class="no-bottom">
@@ -21,7 +21,7 @@
          'action'=>'certificados'), 'default', true);?>" class="no-bottom">
       <i class='icon-credit-card'></i> Certificados
    </a>
-   <? endif; ?>
+   <?php endif; ?>
 </p>
 
 <div id="fb-root"></div>
@@ -39,7 +39,7 @@
    </div>
    <div class="span-social">
       <!-- twitter button -->
-      <? $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
+      <?php $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
       <a href="https://twitter.com/share" class="twitter-share-button"
          data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
            'ver', true) ?>"
@@ -68,7 +68,7 @@
 <p>
    Sobre mim: <?=$this->user->bio ?>
 </p>
-<?
+<?php
 // HACK: usuários não devem ter @ no username do twitter, é um caractere implicito
 // ao invés disso ele deve ser usado concatenando o @
 // DONE: remover todos os @ de usuários da base de dados antes de remover este HACK!
@@ -83,7 +83,7 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
 ?>
 <p><?=$twitter ?></p>
 
-   <?
+   <?php
    if (! empty($this->user->slideshare)):
       try {
          $channel = new Zend_Feed_Rss("http://www.slideshare.net/rss/user/{$this->user->slideshare}");
@@ -97,46 +97,46 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
    </div>
    <div class="span-12">
       <h4 style="padding-top: 6px;">Slideshows de
-         <a href="<? echo "{$channel->link}{$this->user->slideshare}" ?>" target="_blank">
-            <? echo $this->user->slideshare ?>
+         <a href="<?php echo "{$channel->link}{$this->user->slideshare}" ?>" target="_blank">
+            <?php echo $this->user->slideshare ?>
          </a>
       </h4>
    </div>
    <hr/>
 </div>
-      <?
+      <?php
       $maxEmbedSlides = 3;
       $i = 0;
       foreach ($channel as $item): ?>
 <div class="container">
    <div class="span-20">
-      <? if ($i < $maxEmbedSlides): ?>
-         <? echo ($item->__get('slideshare:embed')); ?>
-      <? else: ?>
+      <?php if ($i < $maxEmbedSlides): ?>
+         <?php echo ($item->__get('slideshare:embed')); ?>
+      <?php else: ?>
       <i class='icon-external-link'></i> <a href="<? echo $item->link; ?>" target="_blank">
-         <? echo $item->title; ?></a>
-      <? endif; ?>
+         <?php echo $item->title; ?></a>
+      <?php endif; ?>
    </div>
 </div><hr/>
-      <?
+      <?php
          $i++;
       endforeach; ?>
-   <? 
-      } catch (Exception $e) {
-         ?>
+      <?php
+         } catch (Exception $e) {
+      ?>
 <div class="notice">
    <div class="msg-header">Atenção!</div>
-   <div>Usuário do Slideshare <? echo $this->user->slideshare; ?> não encontrado.</div>
-   <div>Detalhes: <? echo $e->getMessage(); ?></div>
+   <div>Usuário do Slideshare <?php echo $this->user->slideshare; ?> não encontrado.</div>
+   <div>Detalhes: <?php echo $e->getMessage(); ?></div>
 </div>
-         <?
-      }
-   else: ?>
+         <?php
+         }
+      else: ?>
 Crie uma conta no <a href="http://www.slideshare.net/"
                      class="no-bottom" target="_blank">
    <img src="<? echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare</a>
 para que suas apresentações apareçam aqui.
-   <? endif; ?>
-<? else: // end: not empty user ?>
+   <?php endif; ?>
+<?php else: // end: not empty user ?>
 <p>Participante não encontrado.</p>
-<? endif; ?>
+<?php endif; ?>

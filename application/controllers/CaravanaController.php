@@ -19,7 +19,6 @@ class CaravanaController extends Zend_Controller_Action {
       $sessao = Zend_Auth::getInstance()->getIdentity();
 
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.6.2.min.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
       $this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/index.js'));
 
@@ -175,7 +174,6 @@ class CaravanaController extends Zend_Controller_Action {
    }
 
    public function criarAction() {
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
@@ -243,7 +241,6 @@ class CaravanaController extends Zend_Controller_Action {
    }
 
    public function editarAction() {
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-1.8.3.min.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
@@ -314,5 +311,3 @@ class CaravanaController extends Zend_Controller_Action {
       }
    }
 }
-
-?>

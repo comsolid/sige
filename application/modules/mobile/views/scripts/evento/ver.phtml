@@ -1,4 +1,4 @@
-<?
+<?php
 $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
 
 $this->headLink()
@@ -42,19 +42,17 @@ $this->headScript()
 <div id="outros-palestrantes" class="tab" style="display: none">
    <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
       <li data-role="list-divider">Outros Palestrantes</li>
-      <? if (!empty($this->outros)):
+      <?php if (!empty($this->outros)):
          foreach ($this->outros as $outro):
-            ?>
-            <?
             $url = "/mobile/u/";
             $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
             ?>
             <li><a href="<?= $url ?>" title="<?= $outro['apelido'] ?>"
                    data-ajax="false"><?= $outro['nome'] ?></a></li>
-         <? endforeach;
-      else: ?>
+      <?php endforeach;
+         else: ?>
       <li>Palestrante único.</li>
-      <? endif; ?>
+      <?php endif; ?>
    </ul>
 </div>
 
@@ -75,13 +73,13 @@ $this->headScript()
 <div id="tags" class="tab" style="display: none">
    <ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="a" data-count-theme="b">
       <li data-role="list-divider">Tags</li>
-      <? if (! empty($this->tags)):
+      <?php if (! empty($this->tags)):
          foreach ($this->tags as $tag): ?>
             <li><?=$tag['descricao'] ?></li>
-      <? endforeach;
+      <?php endforeach;
       else: ?>
             <li>Nenhuma tag adicionada.</li> 
-      <? endif; ?>
+      <?php endif; ?>
    </ul>
 </div>
 
@@ -105,7 +103,7 @@ $this->headScript()
 <!-- panel compartilhar -->
 <div data-role="panel" data-display="overlay" id="panel-share" data-theme="a" data-position="right">
    <h2>Compartilhar</h2>
-   <?
+   <?php
    $shareUrl = $this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']), 'ver_evento', true);
    $texto = "{$this->evento['nome_evento']} por {$this->evento['nome']} via @{$config->twitter->username}";
    ?>

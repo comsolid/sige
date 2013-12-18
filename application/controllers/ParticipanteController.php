@@ -327,9 +327,6 @@ class ParticipanteController extends Zend_Controller_Action {
       }
    }
    
-   /**
-    * certificado Teste 
-    */
    public function certificadoPalestranteAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
