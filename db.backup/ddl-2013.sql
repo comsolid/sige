@@ -35,3 +35,9 @@ CREATE TABLE evento_tags
 ALTER TABLE evento_palestrante ADD COLUMN confirmado boolean;
 ALTER TABLE evento_palestrante ALTER COLUMN confirmado SET NOT NULL;
 ALTER TABLE evento_palestrante ALTER COLUMN confirmado SET DEFAULT false;
+
+-- upgrade 1.2.1
+ALTER TABLE encontro ADD COLUMN periodo_submissao_inicio date;
+ALTER TABLE encontro ALTER COLUMN periodo_submissao_inicio SET NOT NULL;
+ALTER TABLE encontro ADD COLUMN periodo_submissao_fim date;
+ALTER TABLE encontro ALTER COLUMN periodo_submissao_fim SET NOT NULL;

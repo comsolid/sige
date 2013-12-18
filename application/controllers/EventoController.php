@@ -131,16 +131,28 @@ class EventoController extends Zend_Controller_Action {
 
 	public function submeterAction() {
       $this->autenticacao();
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+		$id_pessoa = $sessao["idPessoa"];
+		$id_encontro = $sessao["idEncontro"];
+      $admin = $sessao["administrador"]; // boolean
+      
+      $encontro = new Application_Model_Encontro();
+      $rs = $encontro->isPeriodoSubmissao($id_encontro);
+      if ($rs['liberar_submissao'] == null and ! $admin) {
+         $this->_helper->flashMessenger->addMessage(
+                 array('notice' => "O Período de inscrição "
+                     . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
+         return $this->_helper->redirector->goToRoute(array(
+                     'controller' => 'evento'), 'default', true);
+      }
+      
 		$this->view->menu->setAtivo('submissao');
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
 		$data = $this->getRequest()->getPost();
 		if (isset ($data['cancelar'])) {
 			return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
 		}
-
-		$sessao = Zend_Auth::getInstance()->getIdentity();
-		$idPessoa = $sessao["idPessoa"];
-		$idEncontro = $sessao["idEncontro"];
 
 		$form = new Application_Form_Evento();
 		$this->view->form = $form;
@@ -149,8 +161,8 @@ class EventoController extends Zend_Controller_Action {
 			$evento = new Application_Model_Evento();
 			$data = $form->getValues();
 			try {
-				$data['id_encontro'] = $idEncontro;
-				$data['responsavel'] = $idPessoa;
+				$data['id_encontro'] = $id_encontro;
+				$data['responsavel'] = $id_pessoa;
 				$evento->insert($data);
             
             $this->_helper->flashMessenger->addMessage(
@@ -168,6 +180,22 @@ class EventoController extends Zend_Controller_Action {
 
 	public function editarAction() {
       $this->autenticacao();
+      
+      $sessao = Zend_Auth::getInstance()->getIdentity();
+		$id_encontro = $sessao["idEncontro"];
+      $admin = $sessao["administrador"]; // boolean
+      $idPessoa = $sessao["idPessoa"];
+      
+      $encontro = new Application_Model_Encontro();
+      $rs = $encontro->isPeriodoSubmissao($id_encontro);
+      if ($rs['liberar_submissao'] == null and ! $admin) {
+         $this->_helper->flashMessenger->addMessage(
+                 array('notice' => "O Período de inscrição "
+                     . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
+         return $this->_helper->redirector->goToRoute(array(
+                     'controller' => 'evento'), 'default', true);
+      }
+      
 		$this->view->menu->setAtivo('submissao');
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
@@ -196,10 +224,6 @@ class EventoController extends Zend_Controller_Action {
 			$concatena = array_merge($linha->toArray(), $sala->toArray());
 			$this->view->realizacao[] = $concatena;
 		}
-      
-      $sessao = Zend_Auth::getInstance()->getIdentity();
-      $idPessoa = $sessao["idPessoa"];
-      $admin = $sessao["administrador"]; // boolean
       
   		if (isset($data['cancelar'])) {
          return $this->redirecionar($admin, $idEvento);
