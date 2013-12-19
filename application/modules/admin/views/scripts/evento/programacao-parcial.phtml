@@ -1,39 +1,21 @@
+<?php
+   $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
 
-<div class="container">
-   <div class="span-15">
-      <h3>Programação</h3>
-   </div>
-   <div class="span-6">
-      <div style="float: right">
-         Modo:
-         <a href="#" id="modo-normal" onclick="return false;" class="no-bottom">Normal</a> |
-         <a href="#" id="modo-impressao" onclick="return false;" class="no-bottom">Impressão</a>
-      </div>
-   </div>
-</div>
+   echo $this->partial('menu.phtml');
+?>
 
-<hr/>
+<h3>Programação parcial</h3><hr/>
+
 <?php
 $data_atual = null;
 if (! empty($this->lista)):
    foreach ($this->lista as $item): ?>
 <div class="container">
    <div class="span-2">
-      <?php
-      if ($item['data'] != $data_atual) {
-			// TODO: formatar data de maneira genérica.
-         $date = new Zend_Date($item['data']);
-         //echo $date->toString('dd/MM/YYYY');
-      ?>
-      <div class="prog-date">
-         <p><?=$date->toString('dd') ?> <span><?=$date->toString('MMM') ?></span></p>
+      <?php $date = new Zend_Date($item['data']); ?>
+      <div>
+         <p><?=$date->toString('dd') ?>/<?=$date->toString('MMM') ?></p>
       </div>
-      <?php
-         $data_atual = $item['data'];
-      } else {
-         echo "&nbsp;";
-      }
-      ?>
    </div>
    <div class="span-18">
       <div class="acc-evento">
@@ -67,13 +49,8 @@ if (! empty($this->lista)):
          </div>
       </div>
    </div>
-   <div class="span-1">
-      <a href="<?=$this->url(array('id' => $item['id_evento']),
-              'ver_evento', true) ?>#disqus_thread" class="no-bottom" title="Ver e publicar comentários">
-              <i class="icon-comments-alt"></i>
-      </a>
-   </div>
 </div>
+<hr/>
 <?php
    endforeach;
 else:
