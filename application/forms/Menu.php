@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * TODO: pensar numa maneira mais elegante de escrever o menu!
+ */
 class Application_Form_Menu extends Zend_Form
 {
 	private $control;
@@ -28,31 +31,31 @@ class Application_Form_Menu extends Zend_Form
 
 	public function setAtivo($ativo){
   		if('inicio' == $ativo) {
-			$this->menuAtivo['inicio']="verde fl_left";
+			$this->menuAtivo['inicio']="active fl_left";
     	} else {
 			$this->menuAtivo['inicio']='';
 		}
 
     	if('programacao' == $ativo) {
-			$this->menuAtivo['programacao']="verde fl_left";
+			$this->menuAtivo['programacao']="active fl_left";
     	}else{
     		$this->menuAtivo['programacao']="";
     	}
     	
     	if('submissao' == $ativo) {
-			$this->menuAtivo['submissao']="verde fl_left";
+			$this->menuAtivo['submissao']="active fl_left";
     	} else {
 			$this->menuAtivo['submissao']="";
 		}
 		
     	if('caravana' == $ativo) {
-			$this->menuAtivo['caravana']="verde fl_left";
+			$this->menuAtivo['caravana']="active fl_left";
 		} else {
 			$this->menuAtivo['caravana']="";
 		}
       
       if('admin' == $ativo) {
-			$this->menuAtivo['admin']="verde fl_left";
+			$this->menuAtivo['admin']="active fl_left";
 		} else {
 			$this->menuAtivo['admin']="";
 		}

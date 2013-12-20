@@ -33,8 +33,8 @@ class Admin_Model_Evento extends Application_Model_Evento {
          FROM evento e 
          INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
-         INNER JOIN evento_realizacao er on e.id_evento = er.id_evento
-         INNER JOIN sala s on er.id_sala = s.id_sala
+         LEFT JOIN evento_realizacao er on e.id_evento = er.id_evento
+         LEFT JOIN sala s on er.id_sala = s.id_sala
          WHERE id_encontro = ?
          ORDER BY data asc, hora_inicio asc";
       return $this->getAdapter()->fetchAll($sql, array($id_encontro));

@@ -36,21 +36,7 @@ class EventoController extends Zend_Controller_Action {
 		$idEncontro = $sessao["idEncontro"];
 
 		$evento = new Application_Model_Evento();
-		$select = $evento->select();
-		$rows = $evento->fetchAll($select->where('responsavel = ?', $idPessoa)->where('id_encontro = ?', $idEncontro));
-		$this->view->meusEventos = array ();
-
-		foreach ($rows as $linha) {
-			$tipo_evento = $linha->findDependentRowset('Application_Model_TipoEvento')->current();
-			
-         ($linha->validada) ?
-            $linha->validada = '<i class="icon-thumbs-up"></i> Sim' :
-            $linha->validada = '<i class="icon-thumbs-down"></i> Não';
-         
-			$linha->data_submissao = date('d/m/Y', strtotime($linha->data_submissao));
-
-			$this->view->meusEventos[] = array_merge($tipo_evento->toArray(), $linha->toArray());
-		}
+		$this->view->meusEventos = $evento->listarEventosParticipante($idEncontro, $idPessoa);
 	}
    
    public function ajaxBuscarAction() {

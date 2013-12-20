@@ -56,8 +56,10 @@ O primeiro passo para criar um encontro, e adicionar um registro na tabela `enco
 da seguinte forma:
 
 ~~~
-INSERT INTO encontro(nome_encontro, apelido_encontro, data_inicio, data_fim, ativo)
-    VALUES ('I Encontro de Software Livre', 'I ESL', '2013-11-07', '2013-11-09', true);
+INSERT INTO encontro(nome_encontro, apelido_encontro, data_inicio, data_fim,
+    periodo_submissao_inicio, periodo_submissao_fim)
+    VALUES ('I Encontro de Software Livre', 'I ESL', '2013-11-07', '2013-11-09',
+    '2013-05-01', '2013-11-06');
 ~~~
 
 **obs.:** a coluna `ativo` será removida em breve.
@@ -103,9 +105,9 @@ a partir do SiGE em `/adim/encontro/criar/`.
 
 ### Zend
 
-A versão utilizada pelo SiGE é [Zend 1.12.1][Zend_1.12.1].
+A versão utilizada pelo SiGE é [Zend 1.12.3][Zend_1.12.3].
 
-[Zend_1.12.1]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.1"
+[Zend_1.12.3]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.3"
 
 A instalação é bem simples. Basta copiarmos o Zend para um diretório de bibliotecas do sistema.
 Baixe o pacote Full, descompacte e siga as instruções em um terminal:
@@ -114,32 +116,23 @@ Baixe o pacote Full, descompacte e siga as instruções em um terminal:
 $ sudo su
 # mv ZendFramework-1.12.1 /usr/local/lib
 # cd /usr/local/lib
-# ln -s ZendFramework-1.11.11 zend
+# ln -s ZendFramework-1.12.3 zend
 # cd /usr/local/bin
 # ln -s /usr/local/lib/zend/bin/zf.sh zf
 ~~~
 
-### Baixando SiGE do repositório SVN
+### Baixando SiGE do Github
 
-Para realizar checkout da última versão do SiGE:
-
-~~~
-$ svn checkout http://sige-comsolid.googlecode.com/svn/trunk/ sige-comsolid
-~~~
-
-ou ainda checkout a partir de uma tag:
+Para realizar clone da última versão do SiGE:
 
 ~~~
-$ svn checkout http://sige-comsolid.googlecode.com/svn/tag/sige-comsolid-1.2.0 \
-sige-comsolid
+$ git clone https://github.com/comsolid/sige.git
 ~~~
 
-Modifique a versão para a última encontrada: ex. sige-comsolid-1.2.0.
-
-**obs.:** é necessário instalar o svn. No Ubuntu podemos instalar através do comando:
+**obs.:** é necessário instalar o git. No Ubuntu podemos instalar através do comando:
 
 ~~~
-$ sudo apt-get install subversion
+$ sudo apt-get install git
 ~~~
 
 **obs.:** instale a partir do repositório somente se você está interessado em contribuir,
@@ -185,7 +178,7 @@ projeto (daqui para frente chamadado de `${SiGE}`) em `${SIGE}/library`:
 
 ~~~
 $ sudo su
-# cd /var/www/sige-comsolid
+# cd /var/www/sige
 # mkdir library
 # cd library
 # ln -s /usr/local/lib/zend/library/Zend
@@ -211,9 +204,9 @@ Dentro do diretório do projeto abra o arquivo `${SiGE}/application/configs/appl
 e edite os parâmetros abaixo:
 
 ~~~
-resources.db.params.host     = "localhost" 
-resources.db.params.dbname   = "database"  
-resources.db.params.username = "postgres" 
+resources.db.params.host     = "localhost"
+resources.db.params.dbname   = "database"
+resources.db.params.username = "postgres"
 resources.db.params.password = "**secret**"
 ~~~
 
@@ -230,7 +223,7 @@ resources.mail.transport.ssl  = "tls"
 resources.mail.transport.auth = "login"; não precisa editar
 resources.mail.transport.username   = "esl@esl.org";
 resources.mail.transport.password   = "**secret**"
-resources.mail.transport.register   = true; True by default 
+resources.mail.transport.register   = true; True by default
 resources.mail.defaultFrom.email    = "esl@esl.org"
 resources.mail.defaultFrom.name     = "I ESL"
 resources.mail.defaultReplyTo.email = "esl@esl.org"
@@ -358,4 +351,30 @@ altere as linhas:
 ~~~
 twitter.username = "els"; sem "@"
 twitter.hashtags = "els1"; sem "#" e separadas por ","
+~~~
+
+### Cores do sistema
+
+Para alterar a cor dos _links_ abra o `arquivo ${SiGE}/public/css/sigecss.css` altere o trecho:
+
+~~~
+#corpo a {
+   /* ... */
+}
+~~~
+
+Para alterar a cor dos menus abra o arquivo `arquivo ${SiGE}/public/css/sigecss.css` altere o trecho:
+
+~~~
+#menu {
+   /* ... */
+}
+
+#menu a {
+   /* ... */
+}
+
+#menu a.active, #menu a:hover {
+   /* ... */
+}
 ~~~

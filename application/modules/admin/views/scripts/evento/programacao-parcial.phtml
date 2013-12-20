@@ -24,10 +24,27 @@ if (! empty($this->lista)):
             <?php if (! empty($item['descricao'])) : ?>
             (<?=$item['descricao'] ?>)
             <?php endif; ?>
+            <?php if ($item['validada']): ?>
+            <i class="icon-thumbs-up-alt right" title="Validada"></i>
+            <?php else: ?>
+            <i class="icon-thumbs-down-alt right" title="Não Validada"></i>
+            <?php endif; ?>
          </div>
          <div>
-            <div>Sala <?=$item['nome_sala'] ?> de
-            <?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
+            <div>
+               Sala
+               <?php if($item['nome_sala'] == null): ?>
+                  <span class="quiet">[Não informada]</span>
+               <?php else: ?>
+                  <?=$item['nome_sala']?>
+               <?php endif; ?>
+               
+               <?php if($item['hora_inicio'] == null): ?>
+                  <span class="quiet">[Horário não definido]</span>
+               <?php else: ?>
+                  de <?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?>
+               <?php endif; ?>
+            </div>
             <hr/>
             <?php
             if (! empty($item['twitter'])) {
@@ -50,7 +67,7 @@ if (! empty($this->lista)):
       </div>
    </div>
 </div>
-<hr/>
+<hr style="border: 1px dotted #666;"/>
 <?php
    endforeach;
 else:

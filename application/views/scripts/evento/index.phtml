@@ -6,45 +6,51 @@
 
 <?php if(count($this->meusEventos)>0): ?>
 
-<table class="display" cellpadding="0" cellspacing="0" border="0" >
-	<thead>
-		<tr>
-			<th>Tipo Evento</th>
-			<th>Evento</th>
-			<th>Validada</th>
-			<th>Data Submissão</th>
-         <th style="width: 100px;">Ação</th>
-		</tr>
-	</thead> 
-	<tbody> 
-	  <?php foreach($this->meusEventos as $linha): ?>
-	  <tr>
-	    <td><?=$linha["nome_tipo_evento"] ?></td>
-	    <td><?=$linha["nome_evento"] ?></td>
-	    <td><?=$linha["validada"] ?></td>
-	    <td><?=$linha["data_submissao"] ?></td>
-	    <td>
-			<a href="<?php echo $this->url(array('controller'=>'evento',
-				'action'=>'editar',
-             'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom">
-            <i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;&nbsp;
-			<a href="<?php echo $this->url(array('controller'=>'evento',
-				'action'=>'outros-palestrantes',
-            'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
-            title="Adicionar outros palestrantes">
-            <i class="icon-group"></i></a>&nbsp;&nbsp;&nbsp;
-         <a href="<?php echo $this->url(array('controller'=>'evento',
-				'action' => 'tags',
-            'id' => $linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
-            title="Criar/Editar tags">
-            <i class="icon-tags"></i></a>
-		 </td>
-	  </tr>
-	  <?php endforeach; ?>
-	</tbody>
-</table>
+   <table class="display" cellpadding="0" cellspacing="0" border="0" >
+      <thead>
+         <tr>
+            <th>Tipo Evento</th>
+            <th>Evento</th>
+            <th>Validada</th>
+            <th>Data Submissão</th>
+            <th style="width: 100px;">Ação</th>
+         </tr>
+      </thead> 
+      <tbody> 
+         <?php foreach ($this->meusEventos as $linha): ?>
+            <tr>
+               <td><?= $linha["nome_tipo_evento"] ?></td>
+               <td><?= $linha["nome_evento"] ?></td>
+               <td>
+                  <?php if ($linha["validada"]): ?>
+                     <i class="icon-thumbs-up-alt"></i> Sim
+                  <?php else: ?>
+                     <i class="icon-thumbs-down-alt"></i> Não
+                  <?php endif; ?>
+               </td>
+               <td><?= $linha["data_submissao"] ?></td>
+               <td>
+                  <a href="<?php echo $this->url(array('controller'=>'evento',
+                     'action'=>'editar',
+                      'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom">
+                     <i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;&nbsp;
+                  <a href="<?php echo $this->url(array('controller'=>'evento',
+                     'action'=>'outros-palestrantes',
+                     'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
+                     title="Adicionar outros palestrantes">
+                     <i class="icon-group"></i></a>&nbsp;&nbsp;&nbsp;
+                  <a href="<?php echo $this->url(array('controller'=>'evento',
+                     'action' => 'tags',
+                     'id' => $linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
+                     title="Criar/Editar tags">
+                     <i class="icon-tags"></i></a>
+               </td>
+            </tr>
+         <?php endforeach; ?>
+      </tbody>
+   </table>
 <br>
 
 <?php else: ?>
-<br>Que tal submeter um trabalho e participar?
+   <br>Que tal submeter um trabalho e participar?
 <?php endif; ?>

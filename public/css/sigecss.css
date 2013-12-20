@@ -1,26 +1,25 @@
 @charset "utf-8";
-/* CSS Document */
-/*html{	
-	background-image:url(../imagens/layout/topo_sige.png);
-	background-repeat:no-repeat;
-	margin-top: 20px;
-}*/
+
 .fl_left{
-	float: left;
-	}
-.fl_right{
-	float: right;
-	}
-.cl_left{
-	clear: left;
-	}
-.cl_right{
-	clear: right;
-	}
-body{
-	font-family:  Arial,Helvetica,sans-serif;
-	
+   float: left;
 }
+
+.fl_right{
+   float: right;
+}
+
+.cl_left{
+   clear: left;
+}
+
+.cl_right{
+   clear: right;
+}
+
+body{
+   font-family:  Arial,Helvetica,sans-serif;
+}
+
 #principal{
    margin: 0 auto;
    width: 927px;
@@ -29,27 +28,28 @@ body{
    background-image: url(../imagens/layout/topo_sige.png);
    padding-top: 140px;
    background-repeat: no-repeat;
-		
+
 }
+
 #corpo{
-	background-image:url(../imagens/layout/bg_corpo_sige.png);
-	background-repeat:no-repeat;
-	margin-top: 13px;
+   background-image:url(../imagens/layout/bg_corpo_sige.png);
+   background-repeat:no-repeat;
+   margin-top: 13px;
 }
-	#corpo a{
-		font-size: 11pt;
-		color: #f48533;
-			
-	}
-	
+
+#corpo a{
+   font-size: 11pt;
+   color: #F48533;
+}
+
 #conteudo{
-	padding: 27px;
+   padding: 27px;
 }
 
 #info_usu{
-	float:right;
-	font-size: 14px;
-	margin-right: 17px;
+   float:right;
+   font-size: 14px;
+   margin-right: 17px;
 }
 
 #info_usu span{
@@ -63,54 +63,61 @@ body{
    text-decoration: none;
 }
 
-#socialist a {
-   color: white;
+#info_usu .apelido:hover {
+   text-decoration-color: #359324 !important;
 }
 
 /*MENU*/
-#menu{
-	background-color: #450e3d;
-	width: 100%;
-	height: 43px;
-	margin-bottom: 20px;
-	/*border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;*/
-}
-.inativo{
-	background-color: #f0f0f0 !important;
+#menu {
+   background-color: #FFFFFF;
+   width: 100%;
+   height: 43px;
+   margin-bottom: 20px;
+   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 -2px 0 rgba(0,0,0,.08);
+   box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 -2px 0 rgba(0,0,0,.08);
+   -moz-box-shadow: 0 2px 2px rgba(0,0,0,.05), inset 0 -2px 0 rgba(0,0,0,.08);
+   border: 1px solid #c4c4c4;
+
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
 }
 
-#menu a{
+.inativo {
+   background-color: #f0f0f0 !important;
+}
+
+#menu a {
    height: 100%;
    float: left;
-   line-height:3em;
+   line-height: 45px;
    text-align: center;
-   color: white;
+   color: #555555;
    padding: 0 18px;
 }
-#menu a,#menu img{
+
+#menu a, #menu img {
    text-decoration: none;
    border: none;
 }
-/*#menu img{
-   padding: 0 18px;
-}*/
-#menu a.verde{
-   background-color: #359324;
+
+#menu a.active, #menu a:hover {
+   color: #555555;
+   text-decoration: none;
+   background-color: #e5e5e5;
+   -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+   -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+   box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
 }
 
-#menu a:hover{
-   background-color: #359324;
-}
 /*FIM MENU*/
 
 /*RODAPE*/
 #rodape {
-	background-image:url("../imagens/layout/bg_rodape_sige.png");
-	height:69px;
-	width:927px;
-	margin-top: 44px;
+   background-image:url("../imagens/layout/bg_rodape_sige.png");
+   height:69px;
+   width:927px;
+   margin-top: 44px;
 }
 
 #rodape div {
@@ -148,8 +155,8 @@ div.header3 {
 }
 
 ul.unstyled {
-  list-style: none;
-  margin-left: 0;
+   list-style: none;
+   margin-left: 0;
 }
 
 ul.unstyled li {

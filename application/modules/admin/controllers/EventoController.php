@@ -203,9 +203,9 @@ class Admin_EventoController extends Zend_Controller_Action {
    
    public function programacaoParcialAction() {
       $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
-      $idEncontro = $config->encontro->codigo;
+      $id_encontro = $config->encontro->codigo;
       $model = new Admin_Model_Evento();
-      $this->view->lista = $model->programacaoParcial($idEncontro);
+      $this->view->lista = $model->programacaoParcial($id_encontro);
    }
 }
 
