@@ -117,8 +117,6 @@ $ sudo su
 # mv ZendFramework-1.12.1 /usr/local/lib
 # cd /usr/local/lib
 # ln -s ZendFramework-1.12.3 zend
-# cd /usr/local/bin
-# ln -s /usr/local/lib/zend/bin/zf.sh zf
 ~~~
 
 ### Baixando SiGE do Github
@@ -140,9 +138,11 @@ estudar o código ou apenas testando.
 
 ### Baixando versão estável SiGE
 
-Procure pela versão mais atual do SiGE na seção de downloads
+Procure pela versão mais atual do SiGE em:
 
-<http://code.google.com/p/sige-comsolid/downloads/list>
+<https://github.com/comsolid/sige/releases>
+
+Renomeie a pasta para `sige` caso necessário.
 
 ### Configurando VirtualHost
 
@@ -154,8 +154,8 @@ chamado `sige`. Nele copie o seguinte conteúdo, modificando conforme necessidad
 <VirtualHost *:80>
    ServerName sige.local
 
-   DocumentRoot /var/www/sige-comsolid/public
-   <Directory "/var/www/sige-comsolid/public">
+   DocumentRoot /var/www/sige/public
+   <Directory "/var/www/sige/public">
       AllowOverride All
    </Directory>
 </VirtualHost>
@@ -169,6 +169,8 @@ Adicionaremos o `ServerName` ao `/etc/hosts`:
 127.0.0.1       sige.local
 ~~~
 
+Habilite o `mod rewrite` do apache: `$ sudo a2enmod rewrite`.
+
 Reinicie o Apache: `$ sudo service apache2 restart`.
 
 ### Instalar o Zend no SiGE
@@ -178,9 +180,7 @@ projeto (daqui para frente chamadado de `${SiGE}`) em `${SIGE}/library`:
 
 ~~~
 $ sudo su
-# cd /var/www/sige
-# mkdir library
-# cd library
+# cd /var/www/sige/library
 # ln -s /usr/local/lib/zend/library/Zend
 ~~~
 
@@ -378,3 +378,8 @@ Para alterar a cor dos menus abra o arquivo `arquivo ${SiGE}/public/css/sigecss.
    /* ... */
 }
 ~~~
+
+### Banner do Sistema
+
+Para alterar o banner geral basta substituir o arquivo `${SiGE}/public/imagens/layout/topo_sige.png`.
+As dimensões são: **962x135**.

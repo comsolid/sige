@@ -70,13 +70,5 @@ if (! empty($this->lista)):
 <hr style="border: 1px dotted #666;"/>
 <?php
    endforeach;
-else:
+endif;
 ?>
-<div class="notice" style="margin-top: 10px;">
-   <div class="msg-header">Atenção!</div>
-   <div>Ainda não há eventos na programação. Seja o primeiro e
-      <a href="<?php echo $this->url(array('controller'=>'evento',
-    'action'=>'submeter'), 'default');?>"
-    class="no-bottom"><i class="icon-file"></i> Submeta um trabalho</a></div>
-</div>
-<?php endif; ?>
