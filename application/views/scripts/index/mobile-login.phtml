@@ -5,30 +5,28 @@ $form = $this->form;
 
 <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction() ?>"
       data-ajax="false">
-   <ul data-role="listview" data-inset="true">
-      <li data-role="fieldcontain">
+   
+      <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
          <?php echo $form->email->renderLabel()
               . $form->email->renderViewHelper(); ?>
-      </li>
+      </div>
       <?php if ($form->email->hasErrors()): ?>
-         <li data-role="fieldcontain">
-            <div><?php echo $form->email->renderErrors() ?></div>
-         </li>
+         <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+            <?php echo $form->email->renderErrors() ?>
+         </div>
       <?php endif; ?>
-      <li data-role="fieldcontain">
+      <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
          <?php echo $form->senha->renderLabel()
               . $form->senha->renderViewHelper(); ?>
-      </li>
+      </div>
       <?php if ($form->senha->hasErrors()): ?>
-         <li data-role="fieldcontain">
-            <div><?php echo $form->senha->renderErrors() ?></div>
-         </li>
+         <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+            <?php echo $form->senha->renderErrors() ?>
+         </div>
       <?php endif; ?>
-      <li class="ui-body ui-body-b">
-         <fieldset class="ui-grid-a">
-            <div class="ui-block-a"><button type="reset" data-theme="d">Limpar</button></div>
-            <div class="ui-block-b"><button type="submit" data-theme="b">Entrar</button></div>
-         </fieldset>
-      </li>
-   </ul>
+   
+   <fieldset class="ui-grid-a">
+      <div class="ui-block-a"><input type="reset" value="Limpar" data-theme="b"></div>
+      <div class="ui-block-b"><input type="submit" value="Entrar" data-theme="a"></div>
+   </fieldset>
 </form>

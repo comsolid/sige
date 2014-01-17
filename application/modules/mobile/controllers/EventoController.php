@@ -15,6 +15,7 @@ class Mobile_EventoController extends Zend_Controller_Action {
       // usada para mostrar dias que possuem eventos
       $this->view->diasEncontro = $model->listarDiasDoEncontro($idEncontro);
       $this->view->lista = $model->programacao($idEncontro);
+      //$this->view->lista_size = len($this->view->lista);
       
       $menu = new Sige_Mobile_Menu($this->view, "programacao");
       $this->view->menu = $menu;

@@ -20,7 +20,7 @@ class Mobile_ParticipanteController extends Zend_Controller_Action {
 
       $eventoDemanda = new Application_Model_EventoDemanda();
       $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));
-      $this->view->listaParticipanteEventoTabela =$eventoParticipante;
+      $this->view->listaParticipanteEventoTabela = $eventoParticipante;
       
       $menu = new Sige_Mobile_Menu($this->view, "inicio");
       $this->view->menu = $menu;

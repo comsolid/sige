@@ -383,3 +383,9 @@ Para alterar a cor dos menus abra o arquivo `arquivo ${SiGE}/public/css/sigecss.
 
 Para alterar o banner geral basta substituir o arquivo `${SiGE}/public/imagens/layout/topo_sige.png`.
 As dimensões são: **962x135**.
+
+### Versão Móvel
+
+Edite o arquivo `application/layouts/scripts/mobile.phtml`:
+
+Linha 44: `<h1>COMSOLiD <?=date('Y') ?></h1>`

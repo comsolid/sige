@@ -1,7 +1,7 @@
 
 <?php if (!empty($this->user)): ?>
-   <h4>Meu nome é <?= $this->user->nome ?>.</h4>
-   <div data-role="collapsible" data-theme="b" data-content-theme="d">
+   <p>Meu nome é <?= $this->user->nome ?>.</p>
+   <div data-role="collapsible">
       <h4>Sobre mim:</h4>
       <p><?= $this->user->bio ?></p>
       <?php
@@ -24,7 +24,7 @@
    ?>
    <br/>
    <ul data-role="listview" data-filter="true" data-inset="true"
-       data-theme="c" data-divider-theme="e" data-filter-placeholder="Buscar slideshow...">
+       data-filter-placeholder="Buscar slideshow...">
       <li data-role="list-divider">
          Slideshows de <?php echo $this->user->slideshare ?>
       </li>

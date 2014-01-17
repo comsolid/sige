@@ -23,7 +23,7 @@ class Application_Model_EventoDemanda extends Zend_Db_Table_Abstract {
 	 * @param array $data [ 0: id_encontro, 1: id_pessoa ]
 	 */
    public function listar($data) {
-      $select = "SELECT er.evento, nome_tipo_evento, nome_evento,
+      $select = "SELECT e.id_evento, er.evento, nome_tipo_evento, nome_evento,
          TO_CHAR(data, 'DD/MM/YYYY') as data, TO_CHAR(hora_inicio, 'HH24:MM') AS hora_inicio,
          TO_CHAR(hora_fim, 'HH24:MM') AS hora_fim, validada, nome_sala
          FROM evento_demanda ed INNER JOIN evento_realizacao er ON (ed.evento = er.evento)
