@@ -1,0 +1,94 @@
+\section{Manual do Usuário}
+
+Este manual serve para o administrador do SiGE entender como funciona as
+telas do usuário. Pretendemos mostrar cada tela e identificar sua
+função.
+
+\subsection{Telas de acesso de usuários deslogados}
+
+São telas de acesso público, onde qualquer usuário pode acessar.
+
+\subsubsection{Página inicial \label{home}}
+
+Mapeada como: \texttt{/ {[}application/IndexController.index{]}}
+
+Primeira página do sistema, contendo o banner, links para a inscrição
+\ref{inscricao} e login \ref{login}, além de contador regressivo para o
+evento.
+
+\subsubsection{Login \label{login}}
+
+Mapeada como: \texttt{/login {[}application/IndexController.login{]}}
+
+Página comum de login, onde o e-mail e a senha são requeridos. Contém
+links para Esqueci minha senha \ref{esqueci-senha} e inscrição
+\ref{inscricao}.
+
+\subsubsection{Inscrição \label{inscricao}}
+
+Mapeada como :
+\texttt{/participar {[}application/ParticipanteController.criar{]}}
+
+Página para preenchimento dos dados necessário para se cadastrar. Logo
+após o cadastro um e-mail é enviado para o usuário contendo alguns dados
+dele, além de uma senha gerada automaticamente pelo sistema.
+
+\paragraph{OBSERVAÇÃO:}
+
+esse sistema de enviar a senha deve mudar em breve, pois isso pode
+causar um problema de segurança.
+
+\subsubsection{Esqueci minha senha \label{esqueci-senha}}
+
+Mapeada como:
+\texttt{/recuperar-senha {[}application/IndexController.recuperar-senha{]}}
+
+Nessa tela apenas o e-mail é requerido. Logo em seguida uma nova senha
+gerada pelo sistema é enviada para o e-mail do usuário.
+
+\paragraph{OBSERVAÇÃO:}
+
+essa tela deve mudar muito. Pedir apenas o e-mail pode gerar ataque de
+DoS, troca de senhas não desejadas, etc.
+
+Para começar teremos um Captcha, além do pedido de outros dados.
+
+\subsubsection{Sobre \label{sobre}}
+
+Mapeada como: \texttt{/sobre {[}application/IndexController.sobre{]}}
+
+Página com os envolvidos no projeto, tecnologias utilizadas.
+
+\subsubsection{Programação \label{programacao}}
+
+Mapeada como:
+\texttt{/programacao {[}application/EventoController.programacao{]}}
+
+Página com toda a programação do evento, com detalhes sobre o
+palestrante, horário, conteúdo abordado, etc.
+
+\subsubsection{Detalhes do evento \label{evento}}
+
+Página com todos os detalhes do evento, se é palestra, mini-curso ou
+oficina, o horário, nível, links para compartilhar em redes sociais e
+comentários usando a plataforma \href{http://disqus.com/}{disqus}.
+
+\paragraph{NOTA:}
+
+usamos a palavra \textbf{Encontro} para definir um conjunto de eventos.
+\textbf{Evento} é definido como uma palestra, mini-curos ou oficina.
+
+\subsubsection{Página do usuário \label{usuario}}
+
+Cada usuário tem uma página pública onde é mostrado alguns detalhes
+sobre ele como bio, twitter, apresentações do slideshare.
+
+\paragraph{OBSERVAÇÃO:}
+
+devido a uma mudança no RSS do slideshare, alguns usuários apresentam
+problemas com a visualização das suas apresentações mesmo colocando o
+usuário do slideshare corretamente. Para isso precisamos usar a nova
+\href{http://apiexplorer.slideshare.net/}{api}.
+
+\subsection{Telas de acesso de usuários logados}
+
