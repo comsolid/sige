@@ -31,7 +31,7 @@
                   <span class="apelido"><i class="icon-user"></i> <?= $this->usuaLogado['apelido'] ?></span>
                </a>&nbsp;
                <a href="<?php echo $this->url(array(), 'logout', true); ?>" class="no-bottom">
-						<i class="icon-signout"></i> Sair</a>
+						<i class="icon-signout"></i> <?php echo $this->translate("Logout"); ?></a>
             <?php endif; ?>
          </div>
 

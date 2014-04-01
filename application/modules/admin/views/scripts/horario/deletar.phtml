@@ -17,9 +17,9 @@
    <div class="container">
       <div class="span-14">
          Você irá deletar horário de: <strong><?= $this->horario['nome_evento'] ?>
-         <? if (! empty($this->horario['descricao'])) : ?>
+         <?php if (! empty($this->horario['descricao'])) : ?>
          (<?=$this->horario['descricao'] ?>)
-         <? endif; ?></strong>
+         <?php endif; ?></strong>
          do palestrante <strong><?=$this->horario['nome'] ?></strong>. Tem certeza?
       </div>
    </div>

@@ -6,10 +6,12 @@
 Programas necessários:
 
 * PostgreSQL;
-* Apache HTTP Server;
-* php5;
+* Apache HTTP Server: `sudo apt-get install apache2`;
+* php5: `sudo apt-get install php5 php5-pgsql libapache2-mod-php5`;
+	* extensão intl: `sudo apt-get install php5-intl`;
+	* extensão GD: `sudo apt-get install php5-gd`;
 * Zend Framework;
-* subversion (opcional);
+* git (opcional);
 
 ## Base de dados
 

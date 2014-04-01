@@ -1,6 +1,6 @@
 <a href="<?=$this->url(array(), 'login', true) ?>"
-      class="no-bottom"><i class="icon-signin"></i> Login</a>
+      class="no-bottom"><i class="icon-signin"></i> <?php echo $this->translate("Login"); ?></a>
 <?php
     echo $this->form;
 ?>
-<br/><br/><font color="#828282">* Campos obrigatórios</font>
+<br/><br/><font color="#828282">* <?php echo $this->translate("Required fields"); ?></font>

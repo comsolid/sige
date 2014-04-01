@@ -8,13 +8,14 @@
 ?>
 
 <div>
-	Se você ja participou clique em
+	<?php echo $this->translate("If you already participated once click on"); ?>
 	<a href="<?=$this->url(array(), 'login', true) ?>"
-      class="no-bottom"><i class="icon-signin"></i> Entrar</a>. Se não clique em
+      class="no-bottom"><i class="icon-signin"></i> <?php echo $this->translate("Login"); ?></a>.
+    <?php echo $this->translate("If not click on"); ?>
 	<a href="<?=$this->url(array(), 'participar', true) ?>"
-      class="no-bottom"><i class="icon-hand-right"></i> Quero participar!</a>.
+      class="no-bottom"><i class="icon-hand-right"></i> <?php echo $this->translate("I want to participate!"); ?></a>.
 </div>
 
-<h3>Falta pouco ...</h3>
+<h3><?php echo $this->translate("It's getting closer ..."); ?></h3>
 <div id="countdown"></div>
 <p id="note" style="text-align: center;"></p>

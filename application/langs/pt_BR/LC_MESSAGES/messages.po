@@ -1,0 +1,154 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: sige 1.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-01 20:32-0300\n"
+"PO-Revision-Date: 2014-04-01 20:32-0300\n"
+"Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;translate\n"
+"X-Poedit-Basepath: /home/atila/NetBeansProjects/sige/application/\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: forms/Pessoa.php:29
+msgid "Name:"
+msgstr ""
+
+#: forms/Pessoa.php:35
+msgid "Name must have at least 1 character. Or contains invalid characters"
+msgstr "Nome deve ter no mínimo 1 caracteres. Ou contém caracteres inválidos"
+
+#: forms/Pessoa.php:37
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: forms/Pessoa.php:42
+msgid "Invalid E-mail."
+msgstr "E-mail inválido."
+
+#: forms/Pessoa.php:44
+msgid "Nickname:"
+msgstr ""
+
+#: forms/Pessoa.php:49
+msgid "Nickname must have at least 1, max. 20 characters"
+msgstr "Apelido deve ter no mín. 1, max. 20 caracteres"
+
+#: forms/Pessoa.php:53
+msgid "Gender:"
+msgstr ""
+
+#: forms/Pessoa.php:63
+msgid "Invalid Twitter username"
+msgstr "Nome de usuário do Twitter inválido"
+
+#: forms/Pessoa.php:67
+msgid "Invalid Facebook username"
+msgstr "Nome de usuário do Facebook inválido"
+
+#: forms/Pessoa.php:69
+msgid "Website:"
+msgstr ""
+
+#: forms/Pessoa.php:72
+msgid "Invalid website"
+msgstr "Site inválido"
+
+#: forms/Pessoa.php:77
+msgid "District:"
+msgstr ""
+
+#: forms/Pessoa.php:86
+msgid "Institution:"
+msgstr ""
+
+#: forms/Pessoa.php:92
+msgid "Birth Year:"
+msgstr ""
+
+#: forms/Pessoa.php:112
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: forms/Pessoa.php:114
+msgid "Reset"
+msgstr "Limpar"
+
+#: forms/Pessoa.php:121
+msgid "Prove that you are human, enter the characters below"
+msgstr "Prove que você é humano, digite os caracteres abaixo"
+
+#: forms/Pessoa.php:135
+msgid "Entered value is not valid."
+msgstr "Valor digitado não é válido."
+
+#: forms/Login.php:11
+msgid "Login"
+msgstr "Entrar"
+
+#: forms/Login.php:26
+msgid "Password:"
+msgstr "Senha:"
+
+#: forms/Login.php:29
+msgid "You enter a very small or very large password. Min.: 6, Max.: 255"
+msgstr "Você digitou uma senha muito pequena ou muito grande. Mín.: 6, Máx.: 255"
+
+#: views/scripts/participante/sucesso.phtml:3
+msgid "Signup successfully performed, verify you e-mail!"
+msgstr "Cadastro realizado com sucesso, verifique seu e-mail!"
+
+#: views/scripts/participante/sucesso.phtml:4
+msgid "There you will find your default password. Your login will be your e-mail address."
+msgstr "Lá você encontrará sua senha padrão. Seu login será seu endereço de e-mail."
+
+#: views/scripts/participante/sucesso.phtml:8
+msgid "Then you just need to"
+msgstr "Depois você só precisa"
+
+#: views/scripts/participante/criar.phtml:2
+msgid "Entrar"
+msgstr "Entrar"
+
+#: views/scripts/participante/criar.phtml:6
+msgid "Required fields"
+msgstr "Campos obrigatórios"
+
+#: views/scripts/index/index.phtml:11
+msgid "If you already participated once click on"
+msgstr "Se você já participou clique em"
+
+#: views/scripts/index/index.phtml:14
+msgid "If not click on"
+msgstr "Se não clique em"
+
+#: views/scripts/index/index.phtml:16
+msgid "I want to participate!"
+msgstr "Quero participar!"
+
+#: views/scripts/index/index.phtml:19
+msgid "It's getting closer ..."
+msgstr "Falta pouco ..."
+
+#: views/scripts/index/login.phtml:6
+msgid "Forgot My Password"
+msgstr "Esqueci Minha Senha"
+
+#: views/scripts/index/login.phtml:9
+msgid "Participate Now"
+msgstr "Participe Agora"
+
+#: layouts/scripts/layout.phtml:34
+msgid "Logout"
+msgstr "Sair"
+
+#~ msgid "Sair"
+#~ msgstr "Sair"

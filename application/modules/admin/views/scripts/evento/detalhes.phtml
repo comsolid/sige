@@ -107,12 +107,12 @@
          </tr>
       </thead>
       <tbody>
-      <? foreach ($this->horarios as $item): ?>
+      <?php foreach ($this->horarios as $item): ?>
 			<tr>
-				<td><? echo $item["descricao"]; ?></td>
-				<td><? echo $item["data"]; ?></td>
-				<td><? echo $item["inicio"]; ?> - <? echo $item["fim"]; ?></td>
-				<td><? echo $item["nome_sala"]; ?></td>
+				<td><?php echo $item["descricao"]; ?></td>
+				<td><?php echo $item["data"]; ?></td>
+				<td><?php echo $item["inicio"]; ?> - <?php echo $item["fim"]; ?></td>
+				<td><?php echo $item["nome_sala"]; ?></td>
 				<td>
 					<a href="<?=$this->url(array('module' => 'admin',
 						'controller' => 'horario',
@@ -128,7 +128,7 @@
 						class="btn no-bottom" title="Deletar"><i class="icon-remove"></i></a>
 				</td>
 			</tr>
-      <? endforeach; ?>
+      <?php endforeach; ?>
       </tbody> 
    </table>
    
@@ -146,11 +146,11 @@
          </tr>
       </thead>
       <tbody>
-      <? foreach ($this->outrosPalestrantes as $p): ?>
+      <?php foreach ($this->outrosPalestrantes as $p): ?>
          <tr>
             <td><?=$p['nome'] ?></td>
             <td><?=($p['confirmado'] ? "Sim" : "Não") ?></td>
-            <?
+            <?php
                if ($p['confirmado']) {
                   $url = "<a href='/admin/evento/outros-palestrantes/desfazer/{$p['id_pessoa']}/{$this->evento['id_evento']}'
                      class='no-bottom'><i class='icon-reply'></i> Desfazer</a>";
@@ -163,7 +163,7 @@
                <?=$url ?>
             </td>
          </tr>
-      <? endforeach; ?>
+      <?php endforeach; ?>
       </tbody> 
    </table>
 </fieldset>

@@ -257,9 +257,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       $router->addRoute('mobile', $route);
    }
    
-   public function _initTranslate() {
-      $translator = new Zend_Translate(array('adapter' => 'array', 'content' => '../resources/languages', 'locale' => 'pt_BR', 'scan' => Zend_Translate::LOCALE_DIRECTORY));
-      Zend_Validate_Abstract::setDefaultTranslator($translator);
-   }
+   /**
+    * Referência:
+    * http://www.codeforest.net/multilanguage-support-in-zend-framework
+    */
+    protected function _initTranslate() {
+        $translate = new Zend_Translate('gettext',
+                APPLICATION_PATH . "/langs/",
+                'en_US',
+                array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+        $registry = Zend_Registry::getInstance();
+        $registry->set('Zend_Translate', $translate);
+        Zend_Form::setDefaultTranslator($translate);
+    }
 }
 

@@ -9,13 +9,13 @@
       $this->url(array(
           'module' => 'admin',
           'controller' => 'encontro',
-          'action' => 'criar'), 'default', true);
-?>" class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>
+          'action' => 'criar'), 'default', true); ?>"
+        class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>
    </div>
 </div>
 
 <hr/>
-<? foreach($this->lista as $value): ?>
+<?php foreach($this->lista as $value): ?>
 <fieldset>
    <div class="container">
       <div class="span-2">
@@ -68,12 +68,14 @@
       </div>
    </div>
 </fieldset>
-<? endforeach; ?>
+<?php endforeach; ?>
 
 <hr/>
 
 <a href="<?=$this->url(array(
     'module' => 'admin',
     'controller' => 'encontro',
-    'action' => 'criar'), 'default', true);
-?>" class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>
+    'action' => 'criar'), 'default', true); ?>"
+    class="no-bottom">
+        <i class="icon-plus"></i> Criar Encontro
+</a>
