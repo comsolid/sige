@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sige 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-01 20:32-0300\n"
-"PO-Revision-Date: 2014-04-01 20:32-0300\n"
+"POT-Creation-Date: 2014-04-01 21:00-0300\n"
+"PO-Revision-Date: 2014-04-01 21:00-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -102,6 +102,22 @@ msgstr "Senha:"
 msgid "You enter a very small or very large password. Min.: 6, Max.: 255"
 msgstr "Você digitou uma senha muito pequena ou muito grande. Mín.: 6, Máx.: 255"
 
+#: forms/Menu.php:93
+msgid "Home"
+msgstr ""
+
+#: forms/Menu.php:95
+msgid "Schedule"
+msgstr ""
+
+#: forms/Menu.php:97
+msgid "Caravan"
+msgstr ""
+
+#: forms/Menu.php:99
+msgid "Paper Submission"
+msgstr ""
+
 #: views/scripts/participante/sucesso.phtml:3
 msgid "Signup successfully performed, verify you e-mail!"
 msgstr "Cadastro realizado com sucesso, verifique seu e-mail!"
@@ -113,10 +129,6 @@ msgstr "Lá você encontrará sua senha padrão. Seu login será seu endereço d
 #: views/scripts/participante/sucesso.phtml:8
 msgid "Then you just need to"
 msgstr "Depois você só precisa"
-
-#: views/scripts/participante/criar.phtml:2
-msgid "Entrar"
-msgstr "Entrar"
 
 #: views/scripts/participante/criar.phtml:6
 msgid "Required fields"
@@ -149,6 +161,9 @@ msgstr "Participe Agora"
 #: layouts/scripts/layout.phtml:34
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "Entrar"
+#~ msgstr "Entrar"
 
 #~ msgid "Sair"
 #~ msgstr "Sair"

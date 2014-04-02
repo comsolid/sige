@@ -6,8 +6,7 @@
 class Application_Form_Menu extends Zend_Form
 {
 	private $control;
-	private $menuAtivo=array('inicio'=>'inicio','programacao'=>'','submissao'=>'','caravana'=>'');
-	private $urlBase;
+	private $menuAtivo = array('inicio'=>'inicio','programacao'=>'','submissao'=>'','caravana'=>'');
 	private $acaoAtual;
 	private $participanteIndexInicio;
 	private $caravana, $submissao, $programacao, $admin;
@@ -85,22 +84,27 @@ class Application_Form_Menu extends Zend_Form
 		return $this->acaoAtual;
 	}
 	
+    /**
+     * TODO: refazer lógica do menu!
+     * @return string
+     */
 	public function getView() {
-		$menu="<div id=\"menu\" class=\"fl_left\"><a class=\"".$this->menuAtivo['inicio'];
-		$menu.="\" href=\"".$this->getInicio()."\"><i class=\"icon-home icon-large\"></i> &nbsp;Início</a>";
-		$menu.="<a class=\"".$this->menuAtivo['programacao'];
-		$menu.="\" href=\"".$this->getProgramacao()."\"><i class=\"icon-calendar icon-large\"></i> &nbsp;Programação</img></a>";
-	   $menu.="<a class=\"".$this->menuAtivo['caravana'];
-	   $menu.="\" href=\"".$this->getCaravana()."\"><i class=\"icon-plane icon-large\"></i> &nbsp;Caravana</a>";
-	   $menu.="<a class=\"".$this->menuAtivo['submissao'];
-	   $menu.="\" href=\"".$this->getSubmissao()."\"><i class=\"icon-star icon-large\"></i> &nbsp;Submissão</a>";
- 		//$menu.=" <a  class=\"";
- 		//$menu.=" \" href=\"#\" class=\"fl_right\"><img src=\"".$this->control->baseUrl('imagens/layout/bt_sejavoluntario.png')."\"></img></a>";
-      if ($this->isAdmin) {
-         $menu.="<a class=\"" . $this->menuAtivo['admin'];
-         $menu.="\" href=\"" . $this->admin . "\"><i class=\"icon-legal icon-large\"></i> &nbsp;Admin</a>";
-      }
-      $menu.= "</div>";
-		return $menu;
-	}
+        $menu = "<div id=\"menu\" class=\"fl_left\"><a class=\"" . $this->menuAtivo['inicio'];
+        $menu.= "\" href=\"" . $this->getInicio() . "\"><i class=\"icon-home icon-large\"></i> &nbsp;" . _("Home") . "</a>";
+        $menu.= "<a class=\"" . $this->menuAtivo['programacao'];
+        $menu.= "\" href=\"" . $this->getProgramacao() . "\"><i class=\"icon-calendar icon-large\"></i> &nbsp;" . _("Schedule") . "</img></a>";
+        $menu.= "<a class=\"" . $this->menuAtivo['caravana'];
+        $menu.= "\" href=\"" . $this->getCaravana() . "\"><i class=\"icon-plane icon-large\"></i> &nbsp;" . _("Caravan") . "</a>";
+        $menu.= "<a class=\"" . $this->menuAtivo['submissao'];
+        $menu.= "\" href=\"" . $this->getSubmissao() . "\"><i class=\"icon-file-text icon-large\"></i> &nbsp;" . _("Paper Submission") . "</a>";
+        //$menu.=" <a  class=\"";
+        //$menu.=" \" href=\"#\" class=\"fl_right\"><img src=\"".$this->control->baseUrl('imagens/layout/bt_sejavoluntario.png')."\"></img></a>";
+        if ($this->isAdmin) {
+            $menu.="<a class=\"" . $this->menuAtivo['admin'];
+            $menu.="\" href=\"" . $this->admin . "\"><i class=\"icon-legal icon-large\"></i> &nbsp;Admin</a>";
+        }
+        $menu.= "</div>";
+        return $menu;
+    }
+
 }
