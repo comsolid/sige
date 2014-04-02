@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sige 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-01 21:00-0300\n"
-"PO-Revision-Date: 2014-04-01 21:00-0300\n"
+"POT-Creation-Date: 2014-04-02 20:08-0300\n"
+"PO-Revision-Date: 2014-04-02 20:08-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -118,6 +118,30 @@ msgstr ""
 msgid "Paper Submission"
 msgstr ""
 
+#: views/scripts/participante/index.phtml:3
+msgid "Interest List"
+msgstr ""
+
+#: views/scripts/participante/index.phtml:7
+msgid "View and add events of your interest"
+msgstr "Ver e adicionar eventos do seu interesse"
+
+#: views/scripts/participante/index.phtml:12
+msgid "Description"
+msgstr ""
+
+#: views/scripts/participante/index.phtml:13
+msgid "Date"
+msgstr ""
+
+#: views/scripts/participante/index.phtml:14
+msgid "Time"
+msgstr ""
+
+#: views/scripts/participante/index.phtml:15
+msgid "Place"
+msgstr ""
+
 #: views/scripts/participante/sucesso.phtml:3
 msgid "Signup successfully performed, verify you e-mail!"
 msgstr "Cadastro realizado com sucesso, verifique seu e-mail!"
@@ -157,6 +181,48 @@ msgstr "Esqueci Minha Senha"
 #: views/scripts/index/login.phtml:9
 msgid "Participate Now"
 msgstr "Participe Agora"
+
+#: views/scripts/evento/interesse.phtml:6
+#: views/scripts/evento/interesse.phtml:18
+msgid "All"
+msgstr ""
+
+#: views/scripts/evento/interesse.phtml:40
+msgid "Event"
+msgstr ""
+
+#: views/scripts/evento/interesse.phtml:53
+#: views/scripts/evento/programacao.phtml:86
+msgid "Attention!"
+msgstr ""
+
+#: views/scripts/evento/interesse.phtml:54
+msgid "Bookmark an event do not guarantee your spot. So arrive early."
+msgstr "Marcar interesse numa palestra não garante sua vaga. Então chegue cedo."
+
+#: views/scripts/evento/interesse.phtml:55
+msgid "Bookmark events it's only a way to organize the places depending on demand."
+msgstr "Marcar eventos é apenas uma forma de organizar melhor os locais dependendo da demanda."
+
+#: views/scripts/evento/programacao.phtml:8
+msgid "Mode:"
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:10
+msgid "Normal"
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:13
+msgid "Print"
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:87
+msgid "There are no events on our schedule yet. Be the first to"
+msgstr "Ainda não há eventos na programação. Seja o primeiro a"
+
+#: views/scripts/evento/programacao.phtml:90
+msgid "Submit a paper"
+msgstr "Submeter um trabalho"
 
 #: layouts/scripts/layout.phtml:34
 msgid "Logout"

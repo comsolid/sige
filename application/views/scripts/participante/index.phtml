@@ -1,19 +1,19 @@
 
 <fieldset>
-   <legend>Lista de Interesses</legend>
-   <a title="Adicionar interesse em Evento" style="float:right; clear:right;"
+    <legend><?php echo $this->translate("Interest List"); ?></legend>
+    <a style="float:right; clear:right;"
 			href="<?=$this->url(array('controller' => 'evento',
              'action' => 'interesse')) ?>" class="no-bottom">
-		<i class="icon-plus"></i> Ver e adicionar eventos do seu interesse
+		<i class="icon-plus"></i> <?php echo $this->translate("View and add events of your interest"); ?>
 	</a>
 	<table class="display" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
-				<th>Descrição</th>
-				<th>Dia</th>
-				<th>Horário</th>
-				<th>Sala</th>
-				<td style="width: 90px;">Ações</td>
+				<th><?php echo $this->translate("Description"); ?></th>
+				<th><?php echo $this->translate("Date"); ?></th>
+				<th><?php echo $this->translate("Time"); ?></th>
+				<th><?php echo $this->translate("Place"); ?></th>
+				<td style="width: 90px;">&nbsp;</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -22,7 +22,7 @@
 				<td>
                <?php if (!$item['validada']): ?>
                   <i class="icon-warning-sign"
-                     title="Este evento foi invalidado e pode não ser ministrado."></i>
+                     title="<?php echo $this->translate("This event was invalidated and could not be given."); ?>"></i>
                <?php endif; ?>
                <?php echo $item["nome_tipo_evento"];?> -
                <?php echo $item["nome_evento"];?>

@@ -1,13 +1,17 @@
 
 <div class="container">
    <div class="span-15">
-      <h3>Programação</h3>
+      <h3><?php echo $this->translate("Schedule"); ?></h3>
    </div>
    <div class="span-6">
       <div style="float: right">
-         Modo:
-         <a href="#" id="modo-normal" onclick="return false;" class="no-bottom">Normal</a> |
-         <a href="#" id="modo-impressao" onclick="return false;" class="no-bottom">Impressão</a>
+         <?php echo $this->translate("Mode:"); ?>
+         <a href="#" id="modo-normal" onclick="return false;" class="no-bottom">
+             <?php echo $this->translate("Normal"); ?>
+         </a> |
+         <a href="#" id="modo-impressao" onclick="return false;" class="no-bottom">
+             <?php echo $this->translate("Print"); ?>
+         </a>
       </div>
    </div>
 </div>
@@ -21,9 +25,7 @@ if (! empty($this->lista)):
    <div class="span-2">
       <?php
       if ($item['data'] != $data_atual) {
-			// TODO: formatar data de maneira genérica.
-         $date = new Zend_Date($item['data']);
-         //echo $date->toString('dd/MM/YYYY');
+         $date = new Zend_Date($item['data'], 'dd/MM/y');
       ?>
       <div class="prog-date">
          <p><?=$date->toString('dd') ?> <span><?=$date->toString('MMM') ?></span></p>
@@ -44,23 +46,29 @@ if (! empty($this->lista)):
             <?php endif; ?>
          </div>
          <div>
-            <div>Sala <?=$item['nome_sala'] ?> de
-            <?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?></div>
-            <hr/>
-            <?php
-            if (! empty($item['twitter'])) {
-               $id = $item['twitter'];
-            } else {
-               $id = $item['id_pessoa'];
-            }
-            ?>
             <div>
-               por <a href="<?=$this->url(array('id' => $id),
+                <?php echo $this->translate("Place"); ?>
+                <?=$item['nome_sala'] ?>
+                <?php echo $this->translate("from"); ?>
+                <?=$item['hora_inicio'] ?>
+                <?php echo $this->translate("to"); ?>
+                <?=$item['hora_fim'] ?></div>
+                <hr/>
+                <?php
+                if (! empty($item['twitter'])) {
+                   $id = $item['twitter'];
+                } else {
+                   $id = $item['id_pessoa'];
+                }
+                ?>
+            <div>
+               <?php echo $this->translate("by"); ?>
+               <a href="<?=$this->url(array('id' => $id),
                     'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
                <?php if ($item['outros'] == 1): ?>
-                  e outro.
+                  <?php echo $this->translate("and other."); ?>
                <?php elseif ($item['outros'] > 1): ?>
-                  e <?=$item['outros'] ?> outros.
+                  <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
                <?php endif; ?>
             </div>
             <p><?=$item['resumo'] ?></p>
@@ -69,7 +77,8 @@ if (! empty($this->lista)):
    </div>
    <div class="span-1">
       <a href="<?=$this->url(array('id' => $item['id_evento']),
-              'ver_evento', true) ?>#disqus_thread" class="no-bottom" title="Ver e publicar comentários">
+              'ver_evento', true) ?>#disqus_thread" class="no-bottom"
+              title="<?php echo $this->translate("View and post comments"); ?>">
               <i class="icon-comments-alt"></i>
       </a>
    </div>
@@ -79,10 +88,10 @@ if (! empty($this->lista)):
 else:
 ?>
 <div class="notice" style="margin-top: 10px;">
-   <div class="msg-header">Atenção!</div>
-   <div>Ainda não há eventos na programação. Seja o primeiro e
+   <div class="msg-header"><?php echo $this->translate("Attention!"); ?></div>
+   <div><?php echo $this->translate("There are no events on our schedule yet. Be the first to"); ?>
       <a href="<?php echo $this->url(array('controller'=>'evento',
     'action'=>'submeter'), 'default');?>"
-    class="no-bottom"><i class="icon-file"></i> Submeta um trabalho</a></div>
+    class="no-bottom"><i class="icon-file"></i> <?php echo $this->translate("Submit a paper"); ?></a></div>
 </div>
 <?php endif; ?>

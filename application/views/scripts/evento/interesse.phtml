@@ -3,7 +3,7 @@
       <i class="icon-calendar"></i>
       <input type="radio" name="data_evento" class="data_evento"
              id="radio_data_todos" value="todas" checked="checked" />
-      <label for="radio_data_todos">Todos</label>
+      <label for="radio_data_todos"><?php echo $this->translate("All"); ?></label>
       <?php foreach ($this->diasEncontro as $value): ?>
       <input type="radio" name="data_evento" class="data_evento" id="radio_<?= $value['data'] ?>"
                 value="<?= str_replace('/', '-', $value['data']) ?>" />
@@ -15,7 +15,7 @@
    <div class="span-14" id="radioset_tipo">
       <i class="icon-star"></i>
       <input type="radio" name="tipo_evento" class="tipo_evento" id="radio_tipo_todos"
-             value="0" checked="checked" /><label for="radio_tipo_todos">Todos</label>
+             value="0" checked="checked" /><label for="radio_tipo_todos"><?php echo $this->translate("All"); ?></label>
       <?php foreach ($this->tipoEvento as $tipoEvento): ?>
       <input type="radio" name="tipo_evento" class="tipo_evento"
                 id="radio_<?= $tipoEvento->id_tipo_evento ?>"
@@ -26,7 +26,7 @@
 </div>
 <br>
 <input type="text" class="text" name="termo" id="termo"
-       value="" size="50" maxlength="50" placeholder="Buscar evento..." style="float: left;" />
+       value="" size="50" maxlength="50" placeholder="<?php echo $this->translate("Search event..."); ?>" style="float: left;" />
 <img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
      style="display: none; float: left;" />
 <br><br>
@@ -34,15 +34,14 @@
 <div class="error" style="display: none;"></div>
 
 <fieldset>
-   <legend>Interesse em Eventos</legend>
    <table class="display" cellpadding="0" cellspacing="0" border="0"  >
       <thead>
          <tr>
-            <th>Evento</th>
-            <th>Descrição</th>
-            <th>Dia</th>
-            <th>Horário</th>
-            <th>Ação</th>
+            <th><?php echo $this->translate("Event"); ?></th>
+            <th><?php echo $this->translate("Description"); ?></th>
+            <th><?php echo $this->translate("Date"); ?></th>
+            <th><?php echo $this->translate("Time"); ?></th>
+            <th>&nbsp;</th>
          </tr>
       </thead>
       <tbody id="resultado">
@@ -51,7 +50,8 @@
 </fieldset>
 
 <div class="notice">
-   <p><strong>Atenção!</strong> Marcar interesse numa palestra não garante sua vaga.
-      Então chegue cedo.<br/>Marcar eventos é apenas uma forma de organizar melhor
-      os locais dependendo da demanda.</p>
+   <p><strong><?php echo $this->translate("Attention!"); ?></strong>
+      <?php echo $this->translate("Bookmark an event do not guarantee your spot. So arrive early."); ?><br/>
+      <?php echo $this->translate("Bookmark events it's only a way to organize the places depending on demand."); ?>
+   </p>
 </div>
