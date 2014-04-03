@@ -248,35 +248,40 @@ class ParticipanteController extends Zend_Controller_Action {
 	}
    
    public function verAction() {
-      $model = new Application_Model_Pessoa();
-      $id = $this->_getParam('id', "");
-      if (! empty($id)) {
-         if (is_numeric($id)) {
-            $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $id);
-         } else {
-            $sql = $model->getAdapter()->quoteInto('twitter = ?', $id);
-         }
-         $this->view->mostrarEditar = false;
-      } else if (Zend_Auth::getInstance()->hasIdentity()) {
-         $sessao = Zend_Auth::getInstance()->getIdentity();
-         if (! empty($sessao["twitter"])) {
-            $sql = $model->getAdapter()->quoteInto('twitter = ?', $sessao["twitter"]);
-            $id = $sessao["twitter"];
-         } else {
-            $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $sessao["idPessoa"]);
-            $id = $sessao["idPessoa"];
-         }
-         $this->view->mostrarEditar = true;
-      } else {
-         $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Participante não encontrado.'));
-         return;
-      }
-      $this->view->id = $id;
-      $this->view->user = $model->fetchRow($sql);
-   }
-   
-   public function certificadosAction() {
+        $model = new Application_Model_Pessoa();
+        $id = $this->_getParam('id', "");
+        if (!empty($id)) {
+            if (is_numeric($id)) {
+                $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $id);
+            } else {
+                $sql = $model->getAdapter()->quoteInto('twitter = ?', $id);
+            }
+            $this->view->mostrarEditar = false;
+        } else if (Zend_Auth::getInstance()->hasIdentity()) {
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            if (!empty($sessao["twitter"])) {
+                $sql = $model->getAdapter()->quoteInto('twitter = ?', $sessao["twitter"]);
+                $id = $sessao["twitter"];
+            } else {
+                $sql = $model->getAdapter()->quoteInto('id_pessoa = ?', $sessao["idPessoa"]);
+                $id = $sessao["idPessoa"];
+            }
+            $this->view->mostrarEditar = true;
+        } else {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Participante não encontrado.'));
+            return;
+        }
+        $this->view->id = $id;
+        $this->view->user = $model->fetchRow($sql);
+        try {
+            $this->view->slides = $model->listarSlideShare($this->view->user->slideshare);
+        } catch (Exception $e) {
+            $this->view->slideshareError = $e->getMessage();
+        }
+    }
+
+    public function certificadosAction() {
       $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
       $sessao = Zend_Auth :: getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
