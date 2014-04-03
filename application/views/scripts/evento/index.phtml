@@ -1,7 +1,7 @@
 
 <a href="<?php echo $this->url(array('controller'=>'evento',
     'action'=>'submeter'), 'default');?>" class="no-bottom">
-   <i class="icon-file"></i> Submeter trabalho</a>
+   <i class="icon-file"></i> <?php echo $this->translate("Submit Paper"); ?></a>
 <br/><br/>
 
 <?php if(count($this->meusEventos)>0): ?>
@@ -9,11 +9,11 @@
    <table class="display" cellpadding="0" cellspacing="0" border="0" >
       <thead>
          <tr>
-            <th>Tipo Evento</th>
-            <th>Evento</th>
-            <th>Validada</th>
-            <th>Data Submissão</th>
-            <th style="width: 100px;">Ação</th>
+            <th><?php echo $this->translate("Event Type"); ?></th>
+            <th><?php echo $this->translate("Event"); ?></th>
+            <th><?php echo $this->translate("Validated"); ?></th>
+            <th><?php echo $this->translate("Submission Date"); ?></th>
+            <th style="width: 100px;">&nbsp;</th>
          </tr>
       </thead> 
       <tbody> 
@@ -23,9 +23,9 @@
                <td><?= $linha["nome_evento"] ?></td>
                <td>
                   <?php if ($linha["validada"]): ?>
-                     <i class="icon-thumbs-up-alt"></i> Sim
+                     <i class="icon-thumbs-up-alt"></i> <?php echo $this->translate("Yes"); ?>
                   <?php else: ?>
-                     <i class="icon-thumbs-down-alt"></i> Não
+                     <i class="icon-thumbs-down-alt"></i> <?php echo $this->translate("No"); ?>
                   <?php endif; ?>
                </td>
                <td><?= $linha["data_submissao"] ?></td>
@@ -33,16 +33,16 @@
                   <a href="<?php echo $this->url(array('controller'=>'evento',
                      'action'=>'editar',
                       'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom">
-                     <i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;&nbsp;
+                     <i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?></a>&nbsp;&nbsp;&nbsp;
                   <a href="<?php echo $this->url(array('controller'=>'evento',
                      'action'=>'outros-palestrantes',
                      'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
-                     title="Adicionar outros palestrantes">
+                     title="<?php echo $this->translate("Add other speakers"); ?>">
                      <i class="icon-group"></i></a>&nbsp;&nbsp;&nbsp;
                   <a href="<?php echo $this->url(array('controller'=>'evento',
                      'action' => 'tags',
                      'id' => $linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
-                     title="Criar/Editar tags">
+                     title="<?php echo $this->translate("Create/Edit tags"); ?>">
                      <i class="icon-tags"></i></a>
                </td>
             </tr>
@@ -52,5 +52,5 @@
 <br>
 
 <?php else: ?>
-   <br>Que tal submeter um trabalho e participar?
+   <br><?php echo $this->translate("What about submit a paper and participate?"); ?>
 <?php endif; ?>

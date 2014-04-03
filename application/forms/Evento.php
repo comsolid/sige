@@ -35,16 +35,16 @@ class Application_Form_Evento extends Zend_Form {
       $responsavel = $this->createElement('hidden', 'responsavel');
       $this->addElement($responsavel);
       
-      $botao = $this->createElement('submit', 'confimar')->removeDecorator('DtDdWrapper');
-      $this->addElement($botao);
-      $botao = $this->createElement('submit', 'cancelar')->removeDecorator('DtDdWrapper');
-      $botao->setAttrib('class', 'submitCancelar');
-      $this->addElement($botao);
+      $submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
+      $this->addElement($submit);
+      $cancel = $this->createElement('submit', _('Cancel'))->removeDecorator('DtDdWrapper');
+      $cancel->setAttrib('class', 'submitCancelar');
+      $this->addElement($cancel);
 	}
    
    protected function _nome_evento() {
       $e = new Zend_Form_Element_Text('nome_evento');
-      $e->setLabel('Título:')
+      $e->setLabel(_('Title:'))
               ->setRequired(true)
               ->addValidator('StringLength', false, array(1, 100))
               ->setAttrib("data-required", "true")
@@ -66,7 +66,7 @@ class Application_Form_Evento extends Zend_Form {
    protected function _id_tipo_evento() {
       $e = new Zend_Form_Element_Select('id_tipo_evento');
       $e->setRequired(true)
-              ->setLabel('Tipo Atividade:');
+              ->setLabel(_('Event type:'));
       $model = new Application_Model_TipoEvento();
       $rs = $model->fetchAll();
       foreach ($rs as $item) {
@@ -86,7 +86,7 @@ class Application_Form_Evento extends Zend_Form {
    protected function _id_dificuldade_evento() {
       $e = new Zend_Form_Element_Select('id_dificuldade_evento');
       $e->setRequired(true)
-              ->setLabel('Nível:');
+              ->setLabel(_('Level:'));
       $model = new Application_Model_DificuldadeEvento();
       $rs = $model->fetchAll();
       foreach ($rs as $item) {
@@ -105,11 +105,11 @@ class Application_Form_Evento extends Zend_Form {
    
    protected function _perfil_minimo() {
       $e = new Zend_Form_Element_Textarea('perfil_minimo');
-      $e->setLabel('Perfil Mínimo:')
+      $e->setLabel(_('Minimum profile:'))
               ->setRequired(true)
               ->setAttrib('rows', 6)
               ->setAttrib("data-required", "true")
-              ->setAttrib('placeholder', 'Descreve o que seu público deve saber basicamente...')
+              ->setAttrib('placeholder', _('Describe what your audience should basically know...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
@@ -130,7 +130,7 @@ class Application_Form_Evento extends Zend_Form {
    
    protected function _resumo() {
       $e = new Zend_Form_Element_Textarea('resumo');
-      $e->setLabel('Resumo:')
+      $e->setLabel(_('Abstract:'))
               ->setRequired(true)
               ->setAttrib('rows', 10)
               //->setAttrib("data-required", "true")
@@ -138,7 +138,7 @@ class Application_Form_Evento extends Zend_Form {
               ->setAttrib('class', 'ckeditor')
               ->addValidator('stringLength', false, array(20))
               ->addFilter(new Sige_Filter_HTMLPurifier)
-          	  ->addErrorMessage("Resumo com número insuficiente de caracteres (mín. 20).");
+          	  ->addErrorMessage(_("Abstract with insufficient number of characters (min. 20)."));
 
       $e->setDecorators(array(
           'ViewHelper',
@@ -152,9 +152,9 @@ class Application_Form_Evento extends Zend_Form {
    
    protected function _preferencia_horario() {
       $e = new Zend_Form_Element_Textarea('preferencia_horario');
-      $e->setLabel('Preferência de horário:')
+      $e->setLabel(_('Time preferences:'))
               ->setAttrib('rows', 5)
-              ->setAttrib('placeholder', 'Data e horário mais conveniente...')
+              ->setAttrib('placeholder', _('Date and time more convenient...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
@@ -170,9 +170,9 @@ class Application_Form_Evento extends Zend_Form {
 
    protected function _tecnologias_envolvidas() {
       $e = new Zend_Form_Element_Textarea('tecnologias_envolvidas');
-      $e->setLabel('Tecnologias envolvidas:')
+      $e->setLabel(_('Technologies involved:'))
               ->setAttrib('rows', 5)
-              ->setAttrib('placeholder', 'Necessidade de um programa ou ferramenta específica, distro, IDE, etc...')
+              ->setAttrib('placeholder', _('Need of an especific program ou tool, distro, IDE, etc...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
 
