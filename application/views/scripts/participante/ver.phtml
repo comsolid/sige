@@ -84,20 +84,18 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
 <p><?=$twitter ?></p>
 
    <?php
-   if (! empty($this->user->slideshare)):
-      try {
-         $channel = new Zend_Feed_Rss("http://www.slideshare.net/rss/user/{$this->user->slideshare}");
+   if (!is_null($this->slides)):
    ?>
 <hr/> 
 <div class="container">
    <div class="span-6">
-      <a href="<? echo $channel->link; ?>" target="_blank">
-         <img src="<? echo $channel->image->url; ?>"/>
+      <a href="http://slideshare.net" target="_blank">
+         <img src="<?php echo $this->baseUrl('img/slideshare_200x50.png'); ?>"/>
       </a>
    </div>
    <div class="span-12">
       <h4 style="padding-top: 6px;">Slideshows de
-         <a href="<?php echo "{$channel->link}{$this->user->slideshare}" ?>" target="_blank">
+         <a href="http://slideshare.net/<?php echo $this->user->slideshare ?>" target="_blank">
             <?php echo $this->user->slideshare ?>
          </a>
       </h4>
@@ -107,36 +105,41 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
       <?php
       $maxEmbedSlides = 3;
       $i = 0;
-      foreach ($channel as $item): ?>
+      foreach ($this->slides as $item): ?>
 <div class="container">
    <div class="span-20">
-      <?php if ($i < $maxEmbedSlides): ?>
-         <?php echo ($item->__get('slideshare:embed')); ?>
-      <?php else: ?>
-      <i class='icon-external-link'></i> <a href="<? echo $item->link; ?>" target="_blank">
-         <?php echo $item->title; ?></a>
-      <?php endif; ?>
+        <?php if ($i < $maxEmbedSlides): ?>
+            <?php echo ($item->getEmbedCode()); ?>
+        <?php else: ?>
+            <i class='icon-external-link'></i>
+            <a href="<?php echo $item->getPermaLink(); ?>" target="_blank">
+         <?php echo $item->getTitle(); ?></a>
+        <?php endif; ?>
    </div>
 </div><hr/>
       <?php
          $i++;
-      endforeach; ?>
-      <?php
-         } catch (Exception $e) {
-      ?>
-<div class="notice">
-   <div class="msg-header">Atenção!</div>
-   <div>Usuário do Slideshare <?php echo $this->user->slideshare; ?> não encontrado.</div>
-   <div>Detalhes: <?php echo $e->getMessage(); ?></div>
-</div>
-         <?php
-         }
+      endforeach;
+         
       else: ?>
-Crie uma conta no <a href="http://www.slideshare.net/"
-                     class="no-bottom" target="_blank">
-   <img src="<? echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare</a>
-para que suas apresentações apareçam aqui.
+    Crie uma conta no
+    <a href="http://www.slideshare.net/" class="no-bottom" target="_blank">
+        <img src="<?php echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare
+    </a>
+    para que suas apresentações apareçam aqui.
    <?php endif; ?>
 <?php else: // end: not empty user ?>
 <p>Participante não encontrado.</p>
 <?php endif; ?>
+
+<?php
+    if (isset($this->slideshareError)):
+?>
+<div class="notice">
+    <div class="msg-header">Atenção!</div>
+    <div>Usuário do Slideshare <?php echo $this->user->slideshare; ?> não encontrado.</div>
+    <div>Detalhes: <?php echo $this->slideshareError; ?></div>
+</div>
+<?php
+    endif;
+?>

@@ -41,6 +41,23 @@ Note que o script possui `START TRANSACTION;` e `ROLLBACK;`. Faça um teste inic
 e execute o script para se certificar que tudo irá correr bem. Por fim remova-os
 e execute realmente o script.
 
+#### Observação:
+
+Para PostgreSQL 9.2 para trás comentar a linha 12:
+
+~~~
+SET lock_timeout = 0;
+~~~
+
+Para isso basta colocar `--` no início, dessa forma:
+
+~~~
+--SET lock_timeout = 0;
+~~~
+
+Esse comando faz parte das versões 9.3 para frente, mas não prejudica o uso de versões
+mais antigas.
+
 ### Dados iniciais do sistema
 
 A inserção dos dados iniciais pode ser encontrada em `ddl-dados-iniciais.sql`.

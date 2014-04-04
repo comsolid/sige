@@ -1,6 +1,7 @@
 <?php
 
 class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
+    
 	protected $_name = 'pessoa';
 	protected $_primary = 'id_pessoa';
   
@@ -43,14 +44,6 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 	 * 	/participante/alterar-senha
 	 */
 	public function avaliaLogin($login, $senha) {
-		// trecho antigo sujeito a SQL Injection: ') or ('1'='1
-		/*$select = $this->select()
-			  		    ->from('pessoa', array("id_pessoa",
-                       "administrador",
-                       "apelido",
-                       "(senha=md5('$senha')) AS valido",
-                       'twitter'))
-			  		   ->where("email = ?", $login);*/
       $sql = "select id_pessoa, administrador, apelido, (senha = md5(?)) as valido,
          twitter, cadastro_validado
          from pessoa where email = ? ";
@@ -187,5 +180,33 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
       $sql .= " ORDER BY p.nome LIMIT 50 ";
       return $this->getAdapter()->fetchAll($sql, $where);
    }
+
+   public function listarSlideShare($slideshareUsername) {
+        if (empty($slideshareUsername)) {
+            return null;
+        }
+        
+        try {
+            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+            $api_key = $config->slideshare->api_key;
+            $shared_secret = $config->slideshare->shared_secret;
+            
+            // Caso o slideshare não esteja configurado retorna null.
+            // TODO: jogar exceção para melhor mostrar ao usuário o que realmente
+            // aconteceu. Do modo que está agora mostra como se o usuário
+            // não tivesse configurado sua conta no slideshare!
+            if (empty($api_key) || empty($shared_secret)) {
+                return null;
+            }
+
+            $service = new Zend_Service_SlideShare($api_key, $shared_secret);
+            $offset = 0;
+            $limit = 10;
+            $slides = $service->getSlideShowsByUsername($slideshareUsername, $offset, $limit);
+            return $slides;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 
 }
