@@ -262,13 +262,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     * http://www.codeforest.net/multilanguage-support-in-zend-framework
     */
     protected function _initTranslate() {
+        $locale = "pt_BR";
+        
+        $translatorArray = new Zend_Translate(array(
+            'adapter' => 'array',
+            'content' => '../resources/languages',
+            'locale' => $locale,
+            'scan' => Zend_Translate::LOCALE_DIRECTORY
+        ));
+        
         $translate = new Zend_Translate('gettext',
                 APPLICATION_PATH . "/langs/",
-                'en_US',
+                $locale,
                 array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+        
+        $translate->addTranslation($translatorArray);
+        
+        Zend_Validate_Abstract::setDefaultTranslator($translate);
         $registry = Zend_Registry::getInstance();
         $registry->set('Zend_Translate', $translate);
-        Zend_Form::setDefaultTranslator($translate);
     }
 }
-

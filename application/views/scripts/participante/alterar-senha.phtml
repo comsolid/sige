@@ -1,2 +1,9 @@
 <?php
+   $this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
+   $this->headLink()->prependStylesheet($this->baseUrl('css/form.css'));
+?>
+
+<h4><?php echo $this->translate("Alter Password") ?></h4><hr>
+
+<?php
 	echo $this->form;

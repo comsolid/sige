@@ -4,26 +4,30 @@
 <?php if (! empty($this->user)): ?>
 <p>
    <a href="<?=$this->url(array('id' => $this->id),
-        'ver') ?>" class="no-bottom"><i class='icon-user'></i> Página de <?=$this->user->nome ?></a>
+        'ver') ?>" class="no-bottom">
+       <i class='icon-user'></i>
+           <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
+   </a>
    <?php if ($this->mostrarEditar): ?>
    &nbsp;&nbsp;&nbsp;
    <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'editar'), 'default', true);?>" class="no-bottom">
-      <i class='icon-edit'></i> Editar
+      <i class='icon-edit'></i> <?php echo $this->translate("Edit"); ?>
    </a>
    &nbsp;&nbsp;&nbsp;
    <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
-      <i class='icon-lock'></i> Alterar Senha
+      <i class='icon-lock'></i> <?php echo $this->translate("Alter Password"); ?>
    </a>
    &nbsp;&nbsp;&nbsp;
    <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'certificados'), 'default', true);?>" class="no-bottom">
-      <i class='icon-credit-card'></i> Certificados
+      <i class='icon-credit-card'></i> <?php echo $this->translate("Certificates"); ?>
    </a>
    <?php endif; ?>
 </p>
 
+<!-- BEGIN : botão curtir do facebook -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -32,10 +36,11 @@
   js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=336256479809348";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+<!-- END : botão curtir do facebook -->
 
 <div class="container">
    <div class="span-13">
-      <p>Meu nome é <?=$this->user->nome ?>.</p>
+      <p><?php echo $this->translate("My name is"); ?> <?=$this->user->nome ?>.</p>
    </div>
    <div class="span-social">
       <!-- twitter button -->
@@ -66,7 +71,7 @@
    </div>
 </div>
 <p>
-   Sobre mim: <?=$this->user->bio ?>
+   <?php echo $this->translate("About me:"); ?> <?=$this->user->bio ?>
 </p>
 <?php
 // HACK: usuários não devem ter @ no username do twitter, é um caractere implicito
@@ -74,11 +79,11 @@
 // DONE: remover todos os @ de usuários da base de dados antes de remover este HACK!
 $tw_user = str_replace("@", "", $this->user->twitter);
 if (! empty($tw_user)) {
-   $twitter = "Me siga no  <a href='https://twitter.com/#!/{$tw_user}'
-class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
+   $twitter = sprintf($this->translate("Follow me on %s."),
+        '<a href="https://twitter.com/#!/' . $tw_user . '" class="no-bottom" target="_blank"><i class="icon-twitter"></i> Twitter</a>');
 } else {
-   $twitter = "Ainda não possuo <a href='https://twitter.com' class='no-bottom' 
-      target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
+   $twitter = sprintf($this->translate("I still don't have %s."),
+        "<a href='https://twitter.com' class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>");
 }
 ?>
 <p><?=$twitter ?></p>
@@ -94,7 +99,7 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
       </a>
    </div>
    <div class="span-12">
-      <h4 style="padding-top: 6px;">Slideshows de
+      <h4 style="padding-top: 6px;"><?php echo $this->translate("Slideshows of"); ?>
          <a href="http://slideshare.net/<?php echo $this->user->slideshare ?>" target="_blank">
             <?php echo $this->user->slideshare ?>
          </a>
@@ -122,23 +127,26 @@ class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>.";
       endforeach;
          
       else: ?>
-    Crie uma conta no
+    <?php echo $this->translate("Create an account on"); ?>
     <a href="http://www.slideshare.net/" class="no-bottom" target="_blank">
         <img src="<?php echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare
     </a>
-    para que suas apresentações apareçam aqui.
+    <?php echo $this->translate("so your presentations can appear here."); ?>
    <?php endif; ?>
 <?php else: // end: not empty user ?>
-<p>Participante não encontrado.</p>
+<p><?php echo $this->translate("Participant not found."); ?></p>
 <?php endif; ?>
 
 <?php
     if (isset($this->slideshareError)):
 ?>
 <div class="notice">
-    <div class="msg-header">Atenção!</div>
-    <div>Usuário do Slideshare <?php echo $this->user->slideshare; ?> não encontrado.</div>
-    <div>Detalhes: <?php echo $this->slideshareError; ?></div>
+    <div class="msg-header"><?php echo $this->translate("Attention!"); ?></div>
+    <div><?php echo $this->translate("Slideshare user"); ?>
+        <?php echo $this->user->slideshare; ?>
+        <?php echo $this->translate("not found."); ?>
+    </div>
+    <div><?php echo $this->translate("Details:"); ?> <?php echo $this->slideshareError; ?></div>
 </div>
 <?php
     endif;

@@ -1,12 +1,12 @@
-<h3>Editar participante</h3>
+<h3><?php echo $this->translate("Edit your personal informations"); ?></h3>
 <div class="container">
-   <div class="span-20" id="tabs">
-      <ul>
-         <li><a href="#tab-1">Perfil</a></li>
-         <li><a href="#tab-2">Redes Sociais</a></li>
-      </ul>
-<?php
-	echo $this->form;
-?>
-   </div>
+    <div class="span-20" id="tabs">
+        <ul>
+            <li><a href="#tab-1"><?php echo $this->translate("Profile"); ?></a></li>
+            <li><a href="#tab-2"><?php echo $this->translate("Social Networks"); ?></a></li>
+        </ul>
+        <?php
+            echo $this->form;
+        ?>
+    </div>
 </div>

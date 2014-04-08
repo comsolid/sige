@@ -8,9 +8,11 @@ class Application_Model_Encontro extends Zend_Db_Table_Abstract {
 	 * @deprecated utilize o arquivo application/configs/application.ini para configurar encontro atual
 	 */
 	public function getEncontroAtual() {
-		$select = $this->select()->where('ativo = ?', 'true');
-		$rows = $this->fetchAll($select);
-		return $rows[0]->id_encontro;
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+        $id = $config->encontro->codigo;
+		$select = $this->select()->where('id_encontro = ?', $id);
+		$rows = $this->fetchRow($select);
+		return $rows->id_encontro;
 	}
    
    /**

@@ -94,7 +94,8 @@ class IndexController extends Zend_Controller_Action {
                    "administrador" => $administrador,
                    "apelido" => $apelido,
                    "idEncontro" => $idEncontro,
-                   "twitter" => $twitter
+                   "twitter" => $twitter,
+                   "email" => $data['email']
                ));
 
                if ($isMobile) {

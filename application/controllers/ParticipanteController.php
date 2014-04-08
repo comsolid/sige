@@ -2,32 +2,32 @@
 class ParticipanteController extends Zend_Controller_Action {
 
 	public function init() {
-      $sessao = Zend_Auth::getInstance()->getIdentity();
+        $sessao = Zend_Auth::getInstance()->getIdentity();
 		$this->view->menu=new Application_Form_Menu($this->view,'inicio', $sessao['administrador']);
 	}
 
 	private function autenticacao() {
 		if (!Zend_Auth::getInstance()->hasIdentity()) {
-         $session = new Zend_Session_Namespace();
-         $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-         $session->url = $_SERVER['REQUEST_URI'];
-			return $this->_helper->redirector->goToRoute(array(), 'login', true);
+            $session = new Zend_Session_Namespace();
+            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
+            $session->url = $_SERVER['REQUEST_URI'];
+            return $this->_helper->redirector->goToRoute(array(), 'login', true);
 		}
 	}
 
 	public function indexAction() {
-	   $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-	   $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-	   $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
 	   
 		$this->autenticacao();
 		$sessao = Zend_Auth::getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
 		$idEncontro = $sessao["idEncontro"];
 
-      $eventoDemanda = new Application_Model_EventoDemanda();
-      $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));
-      $this->view->listaParticipanteEventoTabela =$eventoParticipante;
+        $eventoDemanda = new Application_Model_EventoDemanda();
+        $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));
+        $this->view->listaParticipanteEventoTabela = $eventoParticipante;
 	}
 
 	/**
@@ -63,9 +63,9 @@ class ParticipanteController extends Zend_Controller_Action {
 			);
 			unset ($data['municipio']);
 			unset ($data['instituicao']);
-         unset ($data['captcha']);
+            unset ($data['captcha']);
 			// inseri no banco ... e mantem uma trasacao 
-         $adapter = $pessoa->getAdapter();
+            $adapter = $pessoa->getAdapter();
 			try {
 				$adapter->beginTransaction();
 				$idPessoa = $pessoa->insert($data);
@@ -75,15 +75,15 @@ class ParticipanteController extends Zend_Controller_Action {
 			} catch (Zend_Db_Exception $ex) {
 				$adapter->rollBack();
 				$sentinela = 1;
-
-            if ($ex->getCode() == 23505) {
-               $this->_helper->flashMessenger->addMessage(
-                       array('error' => 'E-mail já cadastrado.'));
-            } else {
-               $this->_helper->flashMessenger->addMessage(
-                        array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
-                           . $ex->getMessage()));
-            }
+                // 23505 = foreign key exception
+                if ($ex->getCode() == 23505) {
+                   $this->_helper->flashMessenger->addMessage(
+                           array('error' => _('E-mail already registered.')));
+                } else {
+                   $this->_helper->flashMessenger->addMessage(
+                            array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                               . $ex->getMessage()));
+                }
 			}
 			// codigo responsavel por enviar email para confirmacao 
 			try {
@@ -97,15 +97,15 @@ class ParticipanteController extends Zend_Controller_Action {
 					$pessoa->update($data, $where);
 				}
 			} catch (Exception $ex) {
-            $adapter->rollBack();
+                $adapter->rollBack();
 				$sentinela = 1;
-            $this->_helper->flashMessenger->addMessage(
+                $this->_helper->flashMessenger->addMessage(
                      array('error' => 'Ocorreu um erro inesperado ao enviar e-mail.<br/>Detalhes: '
                          . $ex->getMessage()));
 			}
 
 			if ($sentinela == 0) {
-            $adapter->commit();
+                $adapter->commit();
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
 					'action' => 'sucesso'
@@ -116,16 +116,16 @@ class ParticipanteController extends Zend_Controller_Action {
 
 	public function editarAction() {
 		$this->autenticacao();
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
 		$this->view->headScript()->appendFile($this->view->baseUrl('js/participante/editar.js'));
 
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 		
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
 
 		$sessao = Zend_Auth::getInstance()->getIdentity();
 		
@@ -148,7 +148,7 @@ class ParticipanteController extends Zend_Controller_Action {
 		$data = $this->getRequest()->getPost();
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
-         $data = $form->getValues();
+            $data = $form->getValues();
 
 			$data2 = array (
 				'id_encontro' => $idEncontro,
@@ -159,8 +159,8 @@ class ParticipanteController extends Zend_Controller_Action {
 			unset ($data['id_municipio']);
 			unset ($data['id_instituicao']);
 			//alterar no banco ... e mantem uma trasacao 
-         $sentinela = 0;
-         $adapter = $pessoa->getAdapter();
+            $sentinela = 0;
+            $adapter = $pessoa->getAdapter();
 			try {
 				$adapter->beginTransaction();
             
@@ -187,7 +187,7 @@ class ParticipanteController extends Zend_Controller_Action {
 			if ($sentinela == 0) {
 				return $this->_helper->redirector->goToRoute(array (
 					'controller' => 'participante',
-					'action' => 'index'
+					'action' => 'ver'
 				), 'default', true);
 			}
 		}
@@ -203,22 +203,23 @@ class ParticipanteController extends Zend_Controller_Action {
 		
 		$form = new Application_Form_AlterarSenha();
 		$this->view->form = $form;
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
 		$data = $this->getRequest()->getPost();
 		if (isset ($data['cancelar'])) {
 			return $this->_helper->redirector->goToRoute(array (
-				'controller' => 'participante'
+				'controller' => 'participante',
+                'action' => 'ver'
 			), 'default', true);
-			return;
 		}
 
 		if ($this->getRequest()->isPost() && $form->isValid($data)) {
 			$data = $form->getValues();
 
 			$pessoa = new Application_Model_Pessoa();
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $email = $sessao["email"];
 
-			$resultadoConsulta = $pessoa->avaliaLogin($data['email'], $data['senhaAntiga']);
+			$resultadoConsulta = $pessoa->avaliaLogin($email, $data['senhaAntiga']);
 
 			if ($resultadoConsulta != null) {
 
@@ -236,12 +237,12 @@ class ParticipanteController extends Zend_Controller_Action {
 							'controller' => 'participante'
 						), 'default', true);
 					} else {
-                  $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Nova senha não confere!'));
+                        $this->_helper->flashMessenger->addMessage(
+                           array('error' => 'Nova senha não confere!'));
 					}
 				} else {
-               $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Senha antiga incorreta!'));
+                    $this->_helper->flashMessenger->addMessage(
+                          array('error' => 'Senha antiga incorreta!'));
 				}
 			}
 		}
@@ -275,23 +276,25 @@ class ParticipanteController extends Zend_Controller_Action {
         $this->view->id = $id;
         $this->view->user = $model->fetchRow($sql);
         try {
-            $this->view->slides = $model->listarSlideShare($this->view->user->slideshare);
+            if (isset($this->view->user->slideshare)) {
+                $this->view->slides = $model->listarSlideShare($this->view->user->slideshare);
+            }
         } catch (Exception $e) {
             $this->view->slideshareError = $e->getMessage();
         }
     }
 
     public function certificadosAction() {
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-      $sessao = Zend_Auth :: getInstance()->getIdentity();
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
+        $sessao = Zend_Auth :: getInstance()->getIdentity();
 		$idPessoa = $sessao["idPessoa"];
       
-      $model = new Application_Model_Participante();
-      $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
-      $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
-      $this->view->certsPalestrante = array_merge($this->view->certsPalestrante,
-              $model->listarCertificadosPalestrantesOutros($idPessoa));
-   }
+        $model = new Application_Model_Participante();
+        $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
+        $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
+        $this->view->certsPalestrante = array_merge($this->view->certsPalestrante,
+        $model->listarCertificadosPalestrantesOutros($idPessoa));
+    }
    
    public function certificadoParticipanteAction() {
       $this->_helper->layout()->disableLayout();

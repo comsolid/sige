@@ -1,47 +1,48 @@
 <?php
-   $this->headScript()
-      ->prependFile($this->baseUrl('js/caravana/participantes.js'),'text/javascript')
-      ->prependFile($this->baseUrl('js/jquery.dataTables.js'),'text/javascript')
-      ->prependFile($this->baseUrl('js/select2.js'),'text/javascript');
-   
-   $this->headLink()
-           ->prependStylesheet($this->baseUrl('css/tabela_sort.css'))
-           ->prependStylesheet($this->baseUrl('css/form.css'))
-           ->prependStylesheet($this->baseUrl('css/select2.css'));
+$this->headScript()
+        ->prependFile($this->baseUrl('js/caravana/participantes.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/jquery.dataTables.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/select2.js'), 'text/javascript');
+
+$this->headLink()
+        ->prependStylesheet($this->baseUrl('css/tabela_sort.css'))
+        ->prependStylesheet($this->baseUrl('css/form.css'))
+        ->prependStylesheet($this->baseUrl('css/select2.css'));
 ?>
 <fieldset>
-   <form action="<?=$this->url(array('action' => 'participantes')) ?>" method="post">
-      <span>Adicionar participantes a caravana:
-         <strong><?=$this->caravana['apelido_caravana'] ?></strong>.</span><br/><br/>
-      <input type="hidden" id="sel" name="array_id_pessoas" style="width: 500px;"/>
-      <dl class="zend_form">
-         <input type="submit" name="cancelar" id="cancelar" value="cancelar" class="submitCancelar">
-         <input type="submit" name="submit" id="submit" value="confimar"/>
-      </dl>
-   </form>
+    <form action="<?= $this->url(array('action' => 'participantes')) ?>" method="post">
+        <span>
+            <?php echo $this->translate("Add participants to caravan:"); ?>
+            <strong><?= $this->caravana['apelido_caravana'] ?></strong>.</span><br/><br/>
+        <input type="hidden" id="sel" name="array_id_pessoas" style="width: 500px;"/>
+        <dl class="zend_form">
+            <input type="submit" name="cancelar" id="cancelar"
+                   value="<?php echo $this->translate("Cancel"); ?>" class="submitCancelar">
+            <input type="submit" name="submit" id="submit" value="<?php echo $this->translate("Confirm"); ?>"/>
+        </dl>
+    </form>
 </fieldset>
 
 <table class="display" cellpadding="0" cellspacing="0" border="0">
-   <thead>
-      <th>Participantes</th>
-      <th style="width: 70px;">Ação</th>
-   </thead>
-   <tbody> 
-      <?php foreach ($this->participantes as $participante): ?>
-         <tr>
+    <thead>
+    <th><?php echo $this->translate("Participants"); ?></th>
+    <th style="width: 70px;">&nbsp;</th>
+</thead>
+<tbody> 
+    <?php foreach ($this->participantes as $participante): ?>
+        <tr>
             <td><?= $participante['nome'] ?></td>
-            <td><a title="Remover participante dessa caravana" 
-                  href="<?php
-                     echo $this->url(array('controller' => 'caravana',
-                         'action' => 'deletar-participante',
-                         'pessoa' => $participante['id_pessoa'],
-                         'caravana' => $this->caravana['id_caravana']));
-                     ?>" class="no-bottom"
-                     onclick="return confirm('Tem certeza que deseja deletar o participante da caravana?')">
-                        <i class="icon-remove"></i> Deletar
-               </a>
+            <td><a href="<?php
+                echo $this->url(array('controller' => 'caravana',
+                    'action' => 'deletar-participante',
+                    'pessoa' => $participante['id_pessoa'],
+                    'caravana' => $this->caravana['id_caravana']));
+                ?>" class="no-bottom"
+                   onclick="return confirm('Tem certeza que deseja deletar o participante da caravana?')">
+                    <i class="icon-remove"></i> <?php echo $this->translate("Delete"); ?>
+                </a>
             </td>
-         </tr>
-   <?php endforeach; ?>
-   </tbody>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
 </table>

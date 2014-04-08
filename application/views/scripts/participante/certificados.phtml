@@ -1,5 +1,5 @@
 <fieldset>
-   <legend>Certificados de participação</legend>
+   <legend><?php echo $this->translate("Participant Certificates"); ?></legend>
    <ul>
       <?php foreach($this->certsParticipante as $cert): ?>
       <li><a href="<?=$this->url(array('controller' => 'participante',
@@ -11,7 +11,7 @@
 </fieldset>
 
 <fieldset>
-   <legend>Certificados de palestrante</legend>
+   <legend><?php echo $this->translate("Speaker Certificates"); ?></legend>
    <ul>
       <?php foreach($this->certsPalestrante as $cert): ?>
       <li><a href="<?=$this->url(array('controller' => 'participante',

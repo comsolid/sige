@@ -3,44 +3,27 @@
 class Application_Form_AlterarSenha extends Zend_Form {
 	
 	public function init() {
-		$sessao = Zend_Auth::getInstance()->getIdentity();
-		
-		$idPessoa =  $sessao["idPessoa"];
-		//$idEncontro =  $sessao["idEncontro"];
-		//$administrador = $sessao["administrador"];
-       
-		$pessoa = new Application_Model_Pessoa();
-		$pessoa = $pessoa->find($idPessoa);
-        
-		$login = $this->createElement('text', 'email',array('label' => 'Login/E-mail: '));
-		$login->setRequired(true)
-          ->addValidator('EmailAddress')
-          ->setAttrib('readonly', 'readonly')
-          ->setValue($pessoa[0]->email);
           
-		$senhaAntiga = $this->createElement('password', 'senhaAntiga',array('label' => 'Senha Antiga: '));
+		$senhaAntiga = $this->createElement('password', 'senhaAntiga',array('label' => _('Current Password:')));
 		$senhaAntiga->addValidator('stringLength', false, array(6, 15))
-          ->setRequired(true)
-          ->addErrorMessage("Você digitou uma senha muito pequeno ou muito grande");
+          ->setRequired(true);
           
-		$senhaNova = $this->createElement('password', 'senhaNova',array('label' => 'Senha Nova: '));
+		$senhaNova = $this->createElement('password', 'senhaNova',array('label' => _('New Password:')));
 		$senhaNova ->addValidator('stringLength', false, array(6, 15))
-          ->setRequired(true)
-          ->addErrorMessage("Você digitou uma senha muito pequeno ou muito grande");
+          ->setRequired(true);
           
-		$senhaNovaRepeticao = $this->createElement('password', 'senhaNovaRepeticao',array('label' => 'Repita a Nova Senha: '));
+		$senhaNovaRepeticao = $this->createElement('password', 'senhaNovaRepeticao',array('label' => _('Repeat New Password:')));
 		$senhaNovaRepeticao ->addValidator('stringLength', false, array(6, 15))
-          ->setRequired(true)
-          ->addErrorMessage("Você digitou uma senha muito pequeno ou muito grande");       
+          ->setRequired(true);
     
-		$this->addElement($login)
-			->addElement($senhaAntiga)
+		$this->addElement($senhaAntiga)
 			->addElement($senhaNova)
 			->addElement($senhaNovaRepeticao);
-		$botao = $this->createElement('submit', 'confimar')->removeDecorator('DtDdWrapper');
-		$this->addElement($botao);
-		$botao = $this->createElement('submit', 'cancelar')->removeDecorator('DtDdWrapper');
-		$botao->setAttrib('class','submitCancelar');
-		$this->addElement($botao);
+		$submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
+		$this->addElement($submit);
+		$cancel = $this->createElement('submit', _('Cancel'))->removeDecorator('DtDdWrapper');
+		$cancel->setAttrib('class','submitCancelar');
+		$cancel->setAttrib('name','cancelar');
+		$this->addElement($cancel);
 	}
 }

@@ -25,7 +25,7 @@
                $this->usuaLogado = Zend_Auth::getInstance()->getIdentity();
                if (!empty($this->usuaLogado)):
             ?>
-               <span>Bem-Vindo(a) :</span>
+               <span><?php echo $this->translate("Welcome:"); ?></span>
                <a href="<?php echo $this->url(array('controller' => 'participante',
                    'action' => 'ver'), 'default', true); ?>" class="no-bottom">
                   <span class="apelido"><i class="icon-user"></i> <?= $this->usuaLogado['apelido'] ?></span>
