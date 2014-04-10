@@ -73,7 +73,7 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
 
    <div class="container">
       <div class="span-12">
-         Palestrante:
+         <?php echo $this->translate("Speaker:"); ?>
          <?= $this->evento['nome'] ?>
       </div>
    </div>
@@ -81,8 +81,8 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
    <br/>
 
    <div class="container">
-      <div class="span-2">
-         Submissão:
+      <div class="span-3">
+         <?php echo $this->translate("Submited at:"); ?>
       </div>
       <div class="span-6">
          <?php $date = new Zend_Date($this->evento['data_submissao']); ?>
@@ -91,7 +91,7 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
          </abbr>
       </div>
       <div class="span-1">
-         Nível:
+         <?php echo $this->translate("Level:"); ?>
       </div>
       <div class="span-4">
          <?= $this->evento['descricao_dificuldade_evento'] ?>
@@ -103,11 +103,11 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
    <div class="container">
       <div class="span-20 prepend-2" id="tabs">
          <ul>
-            <li><a href="#tab-1">Resumo</a></li>
-            <li><a href="#tab-2">Outros Palestrantes</a></li>
-            <li><a href="#tab-3">Perfil</a></li>
-            <li><a href="#tab-4">Bio</a></li>
-            <li><a href="#tab-5">Tags</a></li>
+            <li><a href="#tab-1"><?php echo $this->translate("Abstract"); ?></a></li>
+            <li><a href="#tab-2"><?php echo $this->translate("Other Speakers"); ?></a></li>
+            <li><a href="#tab-3"><?php echo $this->translate("Profile"); ?></a></li>
+            <li><a href="#tab-4"><?php echo $this->translate("Bio"); ?></a></li>
+            <li><a href="#tab-5"><?php echo $this->translate("Tags"); ?></a></li>
          </ul>
          <div id="tab-1">
             <?= $this->evento['resumo'] ?>

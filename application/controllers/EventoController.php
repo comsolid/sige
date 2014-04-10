@@ -430,6 +430,9 @@ class EventoController extends Zend_Controller_Action {
       
       if ($this->getRequest()->isPost()) {
          $submit = $this->getRequest()->getPost('submit');
+         // TODO: mudar todas essas comparações de valores para outra forma
+         // esse jeito de fazer faz com que atrapalhe a tradução!
+         // STOP HARD CODED EQUALS!
          if ($submit == "confimar") {
             $array_id_pessoas = explode(",", $this->getRequest()->getPost('array_id_pessoas'));
             
