@@ -16,3 +16,5 @@
    background-color: #F2DEDE !important;
    border: 1px solid #EED3D7 !important;
 }
+
+hr {background:#ddd;color:#ddd;clear:both;float:none;width:100%;height:1px;margin:0 0 17px;border:none;}

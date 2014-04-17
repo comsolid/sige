@@ -7,11 +7,14 @@ $this->headScript()
         ->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
 
 $this->headLink()
-           ->appendStylesheet($this->baseUrl('css/jquery.qtip.css'))
+           ->appendStylesheet($this->baseUrl('css/jquery.qtip.min.css'))
+           //->appendStylesheet($this->baseUrl('css/screen.css'))
            ->appendStylesheet($this->baseUrl('css/evento/submeter.css'));
 ?>
 <br>
 <br>
+
+<h4><?php echo $this->translate("Submit a paper"); ?></h4><hr/>
 
 <?php
 echo $this->form;

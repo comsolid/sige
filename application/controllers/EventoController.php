@@ -116,55 +116,52 @@ class EventoController extends Zend_Controller_Action {
    }
 
 	public function submeterAction() {
-      $this->autenticacao();
-      
-      $sessao = Zend_Auth::getInstance()->getIdentity();
-		$id_pessoa = $sessao["idPessoa"];
-		$id_encontro = $sessao["idEncontro"];
-      $admin = $sessao["administrador"]; // boolean
-      
-      $encontro = new Application_Model_Encontro();
-      $rs = $encontro->isPeriodoSubmissao($id_encontro);
-      if ($rs['liberar_submissao'] == null and ! $admin) {
-         $this->_helper->flashMessenger->addMessage(
-                 array('notice' => "O Período de inscrição "
-                     . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
-         return $this->_helper->redirector->goToRoute(array(
-                     'controller' => 'evento'), 'default', true);
-      }
-      
-		$this->view->menu->setAtivo('submissao');
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
-		$data = $this->getRequest()->getPost();
-		if (isset ($data['cancelar'])) {
-			return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
-		}
+        $this->autenticacao();
 
-		$form = new Application_Form_Evento();
-		$this->view->form = $form;
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $id_pessoa = $sessao["idPessoa"];
+        $id_encontro = $sessao["idEncontro"];
+        $admin = $sessao["administrador"]; // boolean
 
-		if ($this->getRequest()->isPost() && $form->isValid($data)) {
-			$evento = new Application_Model_Evento();
-			$data = $form->getValues();
-			try {
-				$data['id_encontro'] = $id_encontro;
-				$data['responsavel'] = $id_pessoa;
-				$evento->insert($data);
-            
+        $encontro = new Application_Model_Encontro();
+        $rs = $encontro->isPeriodoSubmissao($id_encontro);
+        if ($rs['liberar_submissao'] == null and ! $admin) {
             $this->_helper->flashMessenger->addMessage(
-                    array('success' => 'Trabalho submetido. Aguarde contato por e-mail.'));
-				return $this->_helper->redirector->goToRoute(array (
-					'controller' => 'evento'
-				), null, true);
-			} catch (Zend_Db_Exception $ex) {
-            $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
-                         . $ex->getMessage()));
-			}
-		}
-	}
+                    array('notice' => "O Período de inscrição "
+                        . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
+            return $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'evento'), 'default', true);
+        }
 
-	public function editarAction() {
+        $this->view->menu->setAtivo('submissao');
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
+        $data = $this->getRequest()->getPost();
+
+        $form = new Application_Form_Evento();
+        $this->view->form = $form;
+
+        if ($this->getRequest()->isPost() && $form->isValid($data)) {
+            $evento = new Application_Model_Evento();
+            $data = $form->getValues();
+            try {
+                $data['id_encontro'] = $id_encontro;
+                $data['responsavel'] = $id_pessoa;
+                $evento->insert($data);
+
+                $this->_helper->flashMessenger->addMessage(
+                        array('success' => 'Trabalho submetido. Aguarde contato por e-mail.'));
+                return $this->_helper->redirector->goToRoute(array(
+                            'controller' => 'evento'
+                                ), null, true);
+            } catch (Zend_Db_Exception $ex) {
+                $this->_helper->flashMessenger->addMessage(
+                        array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                            . $ex->getMessage()));
+            }
+        }
+    }
+
+    public function editarAction() {
       $this->autenticacao();
       
       $sessao = Zend_Auth::getInstance()->getIdentity();

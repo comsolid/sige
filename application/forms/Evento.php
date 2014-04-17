@@ -35,10 +35,12 @@ class Application_Form_Evento extends Zend_Form {
       $responsavel = $this->createElement('hidden', 'responsavel');
       $this->addElement($responsavel);
       
-      $submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
+      $submit = Sige_Form_Element_ButtonFactory::createSubmit();
+      $submit->setLabel(_("Confirm"));
       $this->addElement($submit);
-      $cancel = $this->createElement('submit', _('Cancel'))->removeDecorator('DtDdWrapper');
-      $cancel->setAttrib('class', 'submitCancelar');
+      $cancel = Sige_Form_Element_ButtonFactory::createCancel();
+      $cancel->setUrl(_("Cancel"),
+              array(), 'submissao', true);
       $this->addElement($cancel);
 	}
    
