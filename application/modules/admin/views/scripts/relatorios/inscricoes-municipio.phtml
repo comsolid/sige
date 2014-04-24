@@ -8,16 +8,16 @@
 
 <?php echo $this->partial('menu.phtml'); ?>
 
-<h3>Inscrições Por Município</h3>
+<h3><?php echo $this->translate("Registrations per district (All)"); ?></h3>
 
 <hr/>
 
 <table class="display" cellpadding="0" cellspacing="0" border="0;" >
    <thead>
       <tr>
-         <th>Município</th>
-         <th>Inscritos</th>
-         <th>Confirmados</th>
+         <th><?php echo $this->translate("District"); ?></th>
+         <th><?php echo $this->translate("Num. registries"); ?></th>
+         <th><?php echo $this->translate("Num. Confirmed"); ?></th>
       </tr>
    </thead>
    <tbody>

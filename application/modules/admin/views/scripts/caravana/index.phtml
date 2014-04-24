@@ -1,22 +1,22 @@
 <?php echo $this->partial('menu.phtml'); ?>
 
 <input type="text" class="text" name="termo" id="termo"
-       placeholder="Buscar caravana..." size="50" style="float: left;" />
+       placeholder="<?php echo $this->translate("Search caravan..."); ?>" size="50" style="float: left;" />
 <img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
      style="display: none; float: left;" />
 <br/><br/>
 <table class="display" cellpadding="0" cellspacing="0" border="0">
    <thead>
       <tr>
-         <th>Nome</th>
-         <th>Apelido</th>
-         <th>Responsável</th>
-         <th>Municipio</th>
-         <th>Instituição</th>
-         <th>Válida</th>
-         <th>Homens</th>
-         <th>Mulheres</th>
-         <th style="width: 60px;">Ação</th>
+         <th><?php echo $this->translate("Name"); ?></th>
+         <th><?php echo $this->translate("Codename"); ?></th>
+         <th><?php echo $this->translate("Responsable"); ?></th>
+         <th><?php echo $this->translate("District"); ?></th>
+         <th><?php echo $this->translate("Institution"); ?></th>
+         <th><?php echo $this->translate("Valid"); ?></th>
+         <th><?php echo $this->translate("Men"); ?></th>
+         <th><?php echo $this->translate("Women"); ?></th>
+         <th style="width: 60px;">&nbsp;</th>
       </tr>
    </thead>
    <tbody>

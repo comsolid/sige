@@ -55,20 +55,20 @@ class Admin_EventoController extends Zend_Controller_Action {
       
       if ($data[0]['validada']) {
          $this->view->url_situacao = "<a href=\"/admin/evento/invalidar/{$idEvento}\" 
-                 class=\"no-bottom\"><i class=\"icon-remove\"></i> Invalidar</a>";
+                 class=\"no-bottom\"><i class=\"icon-remove\"></i> " . _("Invalidate") . "</a>";
       } else {
          $this->view->url_situacao = "<a href=\"/admin/evento/validar/{$idEvento}\" 
-                 class=\"no-bottom\"><i class=\"icon-ok\"></i> Validar</a>";
+                 class=\"no-bottom\"><i class=\"icon-ok\"></i> " . _("Validate") . "</a>";
       }
       
       if ($data[0]['apresentado']) {
          $this->view->url_apresentado = "<a href='{$this->view->url(array('id' => $idEvento),
                  'evento_desfazer_apresentado', true)}' class='no-bottom'>
-                  <i class='icon-eye-close'></i> Desfazer Apresentado</a>";
+                  <i class='icon-eye-close'></i> " . _("Undo presented") . "</a>";
       } else {
          $this->view->url_apresentado = "<a href='{$this->view->url(array('id' => $idEvento),
                  'evento_apresentado', true)}' class='no-bottom'>
-                  <i class='icon-eye-open'></i> Apresentado</a>";
+                  <i class='icon-eye-open'></i> " . _("Presented") . "</a>";
       }
 
       $this->view->horarios = $evento->listarHorarios($idEvento);
@@ -146,16 +146,16 @@ class Admin_EventoController extends Zend_Controller_Action {
       
       foreach($rs as $value) {
          if ($value['validada']) {
-            $validada = "Sim";
+            $validada = _("Yes");
          } else {
-            $validada = "Não";
+            $validada = _("No");
          }
          
          $date = new Zend_Date($value['data_submissao']);
          
          $url = '<a href='
             . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
-            . ' class="no-bottom"><i class="icon-plus"></i> Detalhes</a>';
+            . ' class="no-bottom"><i class="icon-plus"></i> ' . _("Details") . '</a>';
          $json->itens[] = array(
              substr($value['nome_tipo_evento'], 0, 1),
              "{$value['nome_evento']}",

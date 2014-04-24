@@ -1,22 +1,23 @@
 
-<a href="<? echo $this->url(array('module' => 'admin',
+<a href="<?php echo $this->url(array('module' => 'admin',
    'controller' => 'evento',
    'action' => 'index'), 'default', true) ?>"
-   class="no-bottom"><i class="icon-reply"></i> Voltar</a>&nbsp;&nbsp;&nbsp;
+   class="no-bottom"><i class="icon-reply"></i> <?php echo $this->translate("Back"); ?></a>&nbsp;&nbsp;&nbsp;
 
 <?=$this->url_situacao ?>&nbsp;&nbsp;&nbsp;
 
 <a href="<?=$this->url(array('controller' => 'evento',
    'action' => 'editar',
    'id' => $this->evento['id_evento']), 'default', true) ?>"
-   class="no-bottom"><i class="icon-edit"></i> Editar</a>&nbsp;&nbsp;&nbsp;
+   class="no-bottom"><i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?></a>&nbsp;&nbsp;&nbsp;
+
 <?=$this->url_apresentado ?>
 
 <br><br>
 
 <div class="container">
    <div class="span-2">
-      Título:
+      <?php echo $this->translate("Title"); ?>:
    </div>
    <div class="span-10">
       <?=$this->evento['nome_evento'] ?>
@@ -27,15 +28,15 @@
 
 <div class="container">
    <div class="span-6">
-      Autor:
+      <?php echo $this->translate("Speaker"); ?>:
       <?=$this->evento['nome'] ?>
    </div>
    <div class="span-4">
-      Tipo:
+      <?php echo $this->translate("Type"); ?>:
       <?=$this->evento['nome_tipo_evento'] ?>
    </div>
    <div class="span-8">
-      Enviar e-mail:&nbsp;
+      <?php echo $this->translate("Send e-mail"); ?>:&nbsp;
       <a href="mailto:<?=$this->evento['email'] ?>"
          target="_blank" class="no-bottom">
          <i class="icon-envelope"></i> <?=$this->evento['email'] ?>
@@ -47,22 +48,22 @@
 
 <div class="container">
    <div class="span-2">
-      Submissão:
+      <?php echo $this->translate("Submission"); ?>:
    </div>
    <div class="span-6">
       <?=$this->evento['data_submissao'] ?>
    </div>
    <div class="span-1">
-      Nível:
+      <?php echo $this->translate("Level"); ?>:
    </div>
    <div class="span-4">
       <?=$this->evento['descricao_dificuldade_evento'] ?>
    </div>
    <div class="span-2">
-      Validada?:
+      <?php echo $this->translate("Validated"); ?>?:
    </div>
    <div class="span-2">
-      <?=($this->evento['validada'] ? "Sim" : "Não") ?>
+      <?=($this->evento['validada'] ? $this->translate("Yes") : $this->translate("No")) ?>
    </div>
 </div>
 
@@ -71,9 +72,9 @@
 <div class="container">
    <div class="span-20 prepend-2" id="tabs">
       <ul>
-			<li><a href="#tab-1">Resumo</a></li>
-			<li><a href="#tab-2">Preferência de horário</a></li>
-			<li><a href="#tab-3">Tecnologias Envolvidas</a></li>
+			<li><a href="#tab-1"><?php echo $this->translate("Abstract"); ?></a></li>
+			<li><a href="#tab-2"><?php echo $this->translate("Time preferences"); ?></a></li>
+			<li><a href="#tab-3"><?php echo $this->translate("Technologies involved"); ?></a></li>
 		</ul>
 		<div id="tab-1">
 			<?= $this->evento['resumo'] ?>
@@ -90,20 +91,20 @@
 <br><br>
 
 <fieldset>
-   <i class="icon-time"></i> Horários:
+   <i class="icon-time"></i> <?php echo $this->translate("Schedule"); ?>:
    <a href="<?php echo $this->url(array(
       'controller' => 'horario',
       'action' => 'criar',
       'id' => $this->evento['id_evento']));
-   ?>" class="no-bottom" style="float: right"><i class="icon-plus"></i>  Novo Horário</a><br>
+   ?>" class="no-bottom" style="float: right"><i class="icon-plus"></i> <?php echo $this->translate("New Schedule"); ?></a><br>
    <table id="horarios" class="display" cellpadding="0" cellspacing="0" border="0">
       <thead>
          <tr>
-            <th>Descrição</th>
-            <th style="width: 50px;">Data</th>
-            <th style="width: 60px;">Horário</th>
-            <th>Sala</th>
-            <th style="width: 100px;">Ações</th>
+            <th><?php echo $this->translate("Description"); ?></th>
+            <th style="width: 50px;"><?php echo $this->translate("Date"); ?></th>
+            <th style="width: 60px;"><?php echo $this->translate("Time"); ?></th>
+            <th><?php echo $this->translate("Place"); ?></th>
+            <th style="width: 100px;">&nbsp;</th>
          </tr>
       </thead>
       <tbody>
@@ -119,13 +120,13 @@
 						'action' => 'editar',
 						'id' => $item['evento'],
 						'evento' => $this->evento['id_evento']), 'default', true) ?>"
-						class="btn no-bottom" title="Editar"><i class="icon-edit"></i></a>
+						class="btn no-bottom" title="<?php echo $this->translate("Edit"); ?>"><i class="icon-edit"></i></a>
 					<a href="<?=$this->url(array('module' => 'admin',
 						'controller' => 'horario',
 						'action' => 'deletar',
 						'id' => $item['evento'],
 						'evento' => $this->evento['id_evento']), 'default', true) ?>"
-						class="btn no-bottom" title="Deletar"><i class="icon-remove"></i></a>
+						class="btn no-bottom" title="<?php echo $this->translate("Delete"); ?>"><i class="icon-remove"></i></a>
 				</td>
 			</tr>
       <?php endforeach; ?>
@@ -136,27 +137,27 @@
 <br/>
 
 <fieldset>
-   <i class="icon-group"></i> Outros Palestrantes:<br>
+   <i class="icon-group"></i> <?php echo $this->translate("Other Speakers"); ?>:<br>
    <table class="display" cellpadding="0" cellspacing="0" border="0" >
       <thead>
          <tr>
-            <th>Nome</th>
-            <th>Confirmado</th>
-            <th>Ação</th>
+            <th><?php echo $this->translate("Name"); ?></th>
+            <th><?php echo $this->translate("Confirmed"); ?></th>
+            <th>&nbsp;</th>
          </tr>
       </thead>
       <tbody>
       <?php foreach ($this->outrosPalestrantes as $p): ?>
          <tr>
             <td><?=$p['nome'] ?></td>
-            <td><?=($p['confirmado'] ? "Sim" : "Não") ?></td>
+            <td><?=($p['confirmado'] ? $this->translate("Yes") : $this->translate("No")) ?></td>
             <?php
                if ($p['confirmado']) {
                   $url = "<a href='/admin/evento/outros-palestrantes/desfazer/{$p['id_pessoa']}/{$this->evento['id_evento']}'
-                     class='no-bottom'><i class='icon-reply'></i> Desfazer</a>";
+                     class='no-bottom'><i class='icon-reply'></i> {$this->translate("Undo")}</a>";
                } else {
                   $url = "<a href='/admin/evento/outros-palestrantes/confirmar/{$p['id_pessoa']}/{$this->evento['id_evento']}'
-                     class='no-bottom'><i class='icon-ok'></i> Confirmar</a>";
+                     class='no-bottom'><i class='icon-ok'></i> {$this->translate("Confirm")}</a>";
                }
             ?>
             <td>

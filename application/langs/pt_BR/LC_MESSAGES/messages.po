@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sige 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-02 20:08-0300\n"
-"PO-Revision-Date: 2014-04-02 20:08-0300\n"
+"POT-Creation-Date: 2014-04-24 19:07-0300\n"
+"PO-Revision-Date: 2014-04-24 19:34-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -17,6 +17,71 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: modules/admin/controllers/EventoController.php:58
+#, fuzzy
+msgid "Invalidate"
+msgstr "Site inválido"
+
+#: modules/admin/controllers/EventoController.php:61
+msgid "Validate"
+msgstr ""
+
+#: modules/admin/controllers/EventoController.php:67
+msgid "Undo presented"
+msgstr ""
+
+#: modules/admin/controllers/EventoController.php:71
+msgid "Presented"
+msgstr ""
+
+#: modules/admin/controllers/EventoController.php:149
+msgid "Yes"
+msgstr ""
+
+#: modules/admin/controllers/EventoController.php:151
+msgid "No"
+msgstr ""
+
+#: modules/admin/controllers/EventoController.php:158
+msgid "Details"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:14
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: modules/admin/forms/Encontro.php:16
+msgid "Cancel"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:46
+msgid "Conference Name"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:66
+msgid "Codename"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:86
+msgid "Starts in"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:108
+msgid "Ends in"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:130
+msgid "Submission starts in"
+msgstr ""
+
+#: modules/admin/forms/Encontro.php:148
+msgid "Submission ends in"
+msgstr ""
+
+#: controllers/ParticipanteController.php:81
+msgid "E-mail already registered."
+msgstr ""
 
 #: forms/Pessoa.php:29
 msgid "Name:"
@@ -74,10 +139,6 @@ msgstr ""
 msgid "Birth Year:"
 msgstr ""
 
-#: forms/Pessoa.php:112
-msgid "Confirm"
-msgstr "Confirmar"
-
 #: forms/Pessoa.php:114
 msgid "Reset"
 msgstr "Limpar"
@@ -102,6 +163,37 @@ msgstr "Senha:"
 msgid "You enter a very small or very large password. Min.: 6, Max.: 255"
 msgstr "Você digitou uma senha muito pequena ou muito grande. Mín.: 6, Máx.: 255"
 
+#: forms/Caravana.php:7
+msgid "Caravan name:"
+msgstr ""
+
+#: forms/Caravana.php:12
+msgid "You enter a name too small (min. 1) or the name has invalid characters."
+msgstr ""
+
+#: forms/Caravana.php:14
+msgid "Codename:"
+msgstr ""
+
+#: forms/Caravana.php:18
+msgid "Codename is too small (min. 1)."
+msgstr ""
+
+#: forms/AlterarSenha.php:7
+#, fuzzy
+msgid "Current Password:"
+msgstr "Senha:"
+
+#: forms/AlterarSenha.php:11
+#, fuzzy
+msgid "New Password:"
+msgstr "Senha:"
+
+#: forms/AlterarSenha.php:15
+#, fuzzy
+msgid "Repeat New Password:"
+msgstr "Senha:"
+
 #: forms/Menu.php:93
 msgid "Home"
 msgstr ""
@@ -116,6 +208,54 @@ msgstr ""
 
 #: forms/Menu.php:99
 msgid "Paper Submission"
+msgstr ""
+
+#: forms/PessoaEdit.php:127
+msgid "Write a little about yourself..."
+msgstr ""
+
+#: forms/Evento.php:49
+msgid "Title:"
+msgstr ""
+
+#: forms/Evento.php:71
+msgid "Event type:"
+msgstr ""
+
+#: forms/Evento.php:91
+msgid "Level:"
+msgstr ""
+
+#: forms/Evento.php:110
+msgid "Minimum profile:"
+msgstr ""
+
+#: forms/Evento.php:114
+msgid "Describe what your audience should basically know..."
+msgstr ""
+
+#: forms/Evento.php:135
+msgid "Abstract:"
+msgstr ""
+
+#: forms/Evento.php:143
+msgid "Abstract with insufficient number of characters (min. 20)."
+msgstr ""
+
+#: forms/Evento.php:157
+msgid "Time preferences:"
+msgstr ""
+
+#: forms/Evento.php:159
+msgid "Date and time more convenient..."
+msgstr ""
+
+#: forms/Evento.php:175
+msgid "Technologies involved:"
+msgstr ""
+
+#: forms/Evento.php:177
+msgid "Need of an especific program ou tool, distro, IDE, etc..."
 msgstr ""
 
 #: views/scripts/participante/index.phtml:3
@@ -142,6 +282,84 @@ msgstr ""
 msgid "Place"
 msgstr ""
 
+#: views/scripts/participante/alterar-senha.phtml:6
+#, fuzzy
+msgid "Alter Password"
+msgstr "Senha:"
+
+#: views/scripts/participante/ver.phtml:9
+#, c-format
+msgid "%s's page"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:15
+#: views/scripts/caravana/index.phtml:94
+msgid "Edit"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:25
+msgid "Certificates"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:43
+msgid "My name is"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:74
+msgid "About me:"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:82
+#, c-format
+msgid "Follow me on %s."
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:85
+#, c-format
+msgid "I still don't have %s."
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:102
+msgid "Slideshows of"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:130
+msgid "Create an account on"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:134
+msgid "so your presentations can appear here."
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:137
+#, fuzzy
+msgid "Participant not found."
+msgstr "Participe Agora"
+
+#: views/scripts/participante/ver.phtml:144
+msgid "Attention!"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:145
+msgid "Slideshare user"
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:147
+msgid "not found."
+msgstr ""
+
+#: views/scripts/participante/ver.phtml:149
+msgid "Details:"
+msgstr ""
+
+#: views/scripts/participante/certificados.phtml:2
+msgid "Participant Certificates"
+msgstr ""
+
+#: views/scripts/participante/certificados.phtml:14
+msgid "Speaker Certificates"
+msgstr ""
+
 #: views/scripts/participante/sucesso.phtml:3
 msgid "Signup successfully performed, verify you e-mail!"
 msgstr "Cadastro realizado com sucesso, verifique seu e-mail!"
@@ -154,9 +372,58 @@ msgstr "Lá você encontrará sua senha padrão. Seu login será seu endereço d
 msgid "Then you just need to"
 msgstr "Depois você só precisa"
 
+#: views/scripts/participante/editar.phtml:1
+msgid "Edit your personal informations"
+msgstr ""
+
+#: views/scripts/participante/editar.phtml:5
+msgid "Profile"
+msgstr ""
+
+#: views/scripts/participante/editar.phtml:6
+msgid "Social Networks"
+msgstr ""
+
 #: views/scripts/participante/criar.phtml:6
 msgid "Required fields"
 msgstr "Campos obrigatórios"
+
+#: views/scripts/caravana/index.phtml:4
+msgid "You are registered on this caravan"
+msgstr ""
+
+#: views/scripts/caravana/index.phtml:32
+msgid "You are responsable for a Caravan"
+msgstr ""
+
+#: views/scripts/caravana/index.phtml:36
+msgid "Create caravan"
+msgstr ""
+
+#: views/scripts/caravana/index.phtml:42
+msgid "Caravan:"
+msgstr ""
+
+#: views/scripts/caravana/index.phtml:75
+msgid "Responsable:"
+msgstr ""
+
+#: views/scripts/caravana/index.phtml:89
+msgid "Add participants"
+msgstr ""
+
+#: views/scripts/caravana/participantes.phtml:15
+msgid "Add participants to caravan:"
+msgstr ""
+
+#: views/scripts/caravana/participantes.phtml:28
+#, fuzzy
+msgid "Participants"
+msgstr "Participe Agora"
+
+#: views/scripts/caravana/participantes.phtml:42
+msgid "Delete"
+msgstr ""
 
 #: views/scripts/index/index.phtml:11
 msgid "If you already participated once click on"
@@ -182,18 +449,81 @@ msgstr "Esqueci Minha Senha"
 msgid "Participate Now"
 msgstr "Participe Agora"
 
-#: views/scripts/evento/interesse.phtml:6
-#: views/scripts/evento/interesse.phtml:18
-msgid "All"
+#: views/scripts/evento/index.phtml:4
+#, fuzzy
+msgid "Submit Paper"
+msgstr "Submeter um trabalho"
+
+#: views/scripts/evento/index.phtml:12
+msgid "Event Type"
 msgstr ""
 
+#: views/scripts/evento/index.phtml:13
 #: views/scripts/evento/interesse.phtml:40
 msgid "Event"
 msgstr ""
 
-#: views/scripts/evento/interesse.phtml:53
-#: views/scripts/evento/programacao.phtml:86
-msgid "Attention!"
+#: views/scripts/evento/index.phtml:14
+msgid "Validated"
+msgstr ""
+
+#: views/scripts/evento/index.phtml:15
+msgid "Submission Date"
+msgstr ""
+
+#: views/scripts/evento/index.phtml:55
+msgid "What about submit a paper and participate?"
+msgstr ""
+
+#: views/scripts/evento/submeter.phtml:17
+#: views/scripts/evento/programacao.phtml:96
+msgid "Submit a paper"
+msgstr "Submeter um trabalho"
+
+#: views/scripts/evento/tags.phtml:17
+msgid "Go Back"
+msgstr ""
+
+#: views/scripts/evento/tags.phtml:30
+msgid "Search tag"
+msgstr ""
+
+#: views/scripts/evento/tags.phtml:38
+msgid "Create Tag"
+msgstr ""
+
+#: views/scripts/evento/tags.phtml:55
+msgid "No tags found."
+msgstr ""
+
+#: views/scripts/evento/ver.phtml:76
+msgid "Speaker:"
+msgstr ""
+
+#: views/scripts/evento/ver.phtml:85
+#, fuzzy
+msgid "Submited at:"
+msgstr "Submeter um trabalho"
+
+#: views/scripts/evento/ver.phtml:106
+msgid "Abstract"
+msgstr ""
+
+#: views/scripts/evento/ver.phtml:107
+msgid "Other Speakers"
+msgstr ""
+
+#: views/scripts/evento/ver.phtml:109
+msgid "Bio"
+msgstr ""
+
+#: views/scripts/evento/ver.phtml:110
+msgid "Tags"
+msgstr ""
+
+#: views/scripts/evento/interesse.phtml:6
+#: views/scripts/evento/interesse.phtml:18
+msgid "All"
 msgstr ""
 
 #: views/scripts/evento/interesse.phtml:54
@@ -203,6 +533,14 @@ msgstr "Marcar interesse numa palestra não garante sua vaga. Então chegue cedo
 #: views/scripts/evento/interesse.phtml:55
 msgid "Bookmark events it's only a way to organize the places depending on demand."
 msgstr "Marcar eventos é apenas uma forma de organizar melhor os locais dependendo da demanda."
+
+#: views/scripts/evento/outros-palestrantes.phtml:16
+msgid "Add other speakers:"
+msgstr ""
+
+#: views/scripts/evento/outros-palestrantes.phtml:28
+msgid "Speakers"
+msgstr ""
 
 #: views/scripts/evento/programacao.phtml:8
 msgid "Mode:"
@@ -216,13 +554,282 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: views/scripts/evento/programacao.phtml:87
+#: views/scripts/evento/programacao.phtml:53
+msgid "from"
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:55
+msgid "to"
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:66
+msgid "by"
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:70
+msgid "and other."
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:72
+#, c-format
+msgid "and %d others."
+msgstr ""
+
+#: views/scripts/evento/programacao.phtml:93
 msgid "There are no events on our schedule yet. Be the first to"
 msgstr "Ainda não há eventos na programação. Seja o primeiro a"
 
-#: views/scripts/evento/programacao.phtml:90
-msgid "Submit a paper"
-msgstr "Submeter um trabalho"
+#: modules/admin/views/scripts/menu.phtml:3
+msgid "Registration"
+msgstr ""
+
+#: modules/admin/views/scripts/menu.phtml:14
+msgid "Events"
+msgstr ""
+
+#: modules/admin/views/scripts/menu.phtml:20
+msgid "Reports"
+msgstr ""
+
+#: modules/admin/views/scripts/menu.phtml:25
+msgid "Configurations"
+msgstr ""
+
+#: modules/admin/views/scripts/participante/index.phtml:6
+msgid "Search by"
+msgstr ""
+
+#: modules/admin/views/scripts/participante/index.phtml:8
+#: modules/admin/views/scripts/participante/index.phtml:31
+msgid "Name"
+msgstr ""
+
+#: modules/admin/views/scripts/participante/index.phtml:10
+#: modules/admin/views/scripts/participante/index.phtml:33
+#, fuzzy
+msgid "E-mail"
+msgstr "E-mail:"
+
+#: modules/admin/views/scripts/participante/index.phtml:12
+#: modules/admin/views/scripts/participante/index.phtml:34
+#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:18
+msgid "District"
+msgstr ""
+
+#: modules/admin/views/scripts/participante/index.phtml:16
+#: modules/admin/views/scripts/participante/index.phtml:35
+msgid "Institution"
+msgstr ""
+
+#: modules/admin/views/scripts/participante/index.phtml:32
+msgid "Nickname"
+msgstr ""
+
+#: modules/admin/views/scripts/participante/index.phtml:37
+msgid "Status"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/index.phtml:5
+msgid "Current Conference"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/index.phtml:14
+msgid "Registrations per day"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/index.phtml:24
+#: modules/admin/views/scripts/relatorios/inscricoes-horario.phtml:6
+msgid "Registrations per hour of day"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/index.phtml:34
+#: modules/admin/views/scripts/relatorios/inscricoes-sexo.phtml:6
+msgid "Registrations per gender"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/index.phtml:44
+#: modules/admin/views/scripts/relatorios/inscricoes-municipio-15-mais.phtml:6
+msgid "Registrations per district (15+)"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/index.phtml:53
+#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:11
+msgid "Registrations per district (All)"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/inscricoes-municipio-15-mais.phtml:10
+#: modules/admin/views/scripts/relatorios/inscricoes-horario.phtml:10
+#: modules/admin/views/scripts/relatorios/inscricoes-sexo.phtml:10
+msgid "Reload"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:19
+msgid "Num. registries"
+msgstr ""
+
+#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:20
+#, fuzzy
+msgid "Num. Confirmed"
+msgstr "Confirmar"
+
+#: modules/admin/views/scripts/caravana/index.phtml:13
+#: modules/admin/views/scripts/evento/index.phtml:59
+msgid "Responsable"
+msgstr ""
+
+#: modules/admin/views/scripts/caravana/index.phtml:16
+#: modules/admin/views/scripts/evento/index.phtml:26
+#: modules/admin/views/scripts/evento/index.phtml:57
+msgid "Valid"
+msgstr ""
+
+#: modules/admin/views/scripts/caravana/index.phtml:17
+msgid "Men"
+msgstr ""
+
+#: modules/admin/views/scripts/caravana/index.phtml:18
+msgid "Women"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/index.phtml:5
+msgid "Conferences"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/index.phtml:13
+#: modules/admin/views/scripts/encontro/index.phtml:89
+#: modules/admin/views/scripts/encontro/criar.phtml:4
+#: modules/admin/views/scripts/config/index.phtml:20
+msgid "Create Conference"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/index.phtml:41
+msgid "Submission Period"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/index.phtml:65
+msgid "E-mail confirmation message"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/index.phtml:75
+msgid "E-mail recover password message"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:5
+msgid "Some features of the message"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:7
+msgid "The message can be written in HTML."
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:8
+msgid "The message must contain some attributes "
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:18
+msgid "Is not necessary write headers, write only the content of the"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:21
+msgid "Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"
+msgstr ""
+
+#: modules/admin/views/scripts/encontro/editar.phtml:2
+msgid "Edit Conference"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/index.phtml:29
+msgid "Not valid"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/index.phtml:46
+#: modules/admin/views/scripts/evento/programacao-parcial.phtml:7
+msgid "Parcial Schedule"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/index.phtml:55
+#: modules/admin/views/scripts/evento/detalhes.phtml:35
+msgid "Type"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/index.phtml:58
+#: modules/admin/views/scripts/evento/detalhes.phtml:51
+msgid "Submission"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:5
+msgid "Back"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:20
+msgid "Title"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:31
+msgid "Speaker"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:39
+#, fuzzy
+msgid "Send e-mail"
+msgstr "E-mail inválido."
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:57
+msgid "Level"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:76
+msgid "Time preferences"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:77
+msgid "Technologies involved"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:145
+#, fuzzy
+msgid "Confirmed"
+msgstr "Confirmar"
+
+#: modules/admin/views/scripts/evento/detalhes.phtml:157
+msgid "Undo"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/programacao-parcial.phtml:37
+msgid "Not informed"
+msgstr ""
+
+#: modules/admin/views/scripts/evento/programacao-parcial.phtml:43
+msgid "Schedule not defined"
+msgstr ""
+
+#: modules/admin/views/scripts/config/index.phtml:5
+msgid "Conference"
+msgstr ""
+
+#: modules/admin/views/scripts/config/index.phtml:12
+msgid "Manage Conferences"
+msgstr ""
+
+#: modules/admin/views/scripts/config/index.phtml:26
+msgid "Users"
+msgstr ""
+
+#: modules/admin/views/scripts/config/index.phtml:33
+msgid "User permissions"
+msgstr ""
+
+#: layouts/scripts/rodape.phtml:5
+msgid "SIGE by"
+msgstr ""
+
+#: layouts/scripts/rodape.phtml:8
+msgid "About"
+msgstr ""
+
+#: layouts/scripts/layout.phtml:28
+msgid "Welcome:"
+msgstr ""
 
 #: layouts/scripts/layout.phtml:34
 msgid "Logout"

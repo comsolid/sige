@@ -1,26 +1,26 @@
 
 <a href="<?php echo $this->url(array(), 'inscricoes', true); ?>"
-   class="no-bottom"><i class="icon-pencil"></i> Incrições</a>&nbsp;&nbsp;&nbsp;
+   class="no-bottom"><i class="icon-pencil"></i> <?php echo $this->translate("Registration"); ?></a>&nbsp;&nbsp;&nbsp;
 
 <a href="<?php echo $this->url(array('module' => 'admin',
     'controller' => 'caravana',
     'action' => 'index'), 'default', true); ?>"
-    class="no-bottom"><i class="icon-plane"></i> Caravana</a>&nbsp;&nbsp;&nbsp;
+    class="no-bottom"><i class="icon-plane"></i> <?php echo $this->translate("Caravan"); ?></a>&nbsp;&nbsp;&nbsp;
 
 <a href="<?php echo $this->url(array(
     'module' => 'admin',
     'controller' => 'evento',
     'action' => 'index'), 'default', true); ?>"
-    class="no-bottom"><i class="icon-star"></i> Evento</a>&nbsp;&nbsp;&nbsp;
+    class="no-bottom"><i class="icon-star"></i> <?php echo $this->translate("Events"); ?></a>&nbsp;&nbsp;&nbsp;
 
 <a href="<?php echo $this->url(array(
     'module' => 'admin',
     'controller' => 'relatorios',
     'action' => 'index'), 'default', true); ?>"
-    class="no-bottom"><i class="icon-bar-chart"></i> Relatórios</a>&nbsp;&nbsp;&nbsp;
+    class="no-bottom"><i class="icon-bar-chart"></i> <?php echo $this->translate("Reports"); ?></a>&nbsp;&nbsp;&nbsp;
 <a href="<?php echo $this->url(array(
     'module' => 'admin',
     'controller' => 'config',
     'action' => 'index'), 'default', true); ?>"
-    class="no-bottom"><i class="icon-cogs"></i> Configurações</a>
+    class="no-bottom"><i class="icon-cogs"></i> <?php echo $this->translate("Configurations"); ?></a>
 <br><br>

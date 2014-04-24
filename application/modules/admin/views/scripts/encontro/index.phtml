@@ -1,81 +1,90 @@
 <?php echo $this->partial('menu.phtml'); ?>
 
 <div class="container">
-   <div class="span-18">
-      <h3>Lista de encontros</h3>
-   </div>
-   <div class="span-3">
-      <a href="<?=
-      $this->url(array(
-          'module' => 'admin',
-          'controller' => 'encontro',
-          'action' => 'criar'), 'default', true); ?>"
-        class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>
-   </div>
+    <div class="span-16">
+        <h3><?php echo $this->translate("Conferences"); ?></h3>
+    </div>
+    <div class="span-5">
+        <a href="<?=$this->url(array(
+            'module' => 'admin',
+            'controller' => 'encontro',
+            'action' => 'criar'), 'default', true); ?>"
+           class="no-bottom">
+            <i class="icon-plus"></i> <?php echo $this->translate("Create Conference"); ?>
+        </a>
+    </div>
 </div>
 
 <hr/>
-<?php foreach($this->lista as $value): ?>
-<fieldset>
-   <div class="container">
-      <div class="span-2">
-         <a href="#">#<?=$value['id_encontro'] ?></a>
-      </div>
-      <div class="span-14">
-         <strong><?=$value['nome_encontro'] ?></strong>
-      </div>
-   </div><br/>
-   <div class="container">
-      <div class="span-7">
-         de <?=$value['data_inicio'] ?> até <?=$value['data_fim'] ?>
-      </div>
-      <div class="span-6">
-         Codenome: <?=$value['apelido_encontro'] ?>
-      </div>
-      <div class="span-7">
-         Submissão:
-         <?=$value['periodo_submissao_inicio'] ?> a <?=$value['periodo_submissao_fim'] ?>
-      </div>
-   </div><br/>
-   <div class="container">
-      <div class="span-20">
-         <a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'encontro',
-            'action' => 'editar',
-            'id' => $value['id_encontro']), 'default', true); ?>"
-            class="no-bottom">
-            <i class="icon-edit"></i> Editar
-         </a>&nbsp;&nbsp;&nbsp;
-         <a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'encontro',
-            'action' => 'editar-mensagem-email-confirmacao',
-            'id' => $value['id_encontro'],
-            'id_tipo_mensagem' => $this->confirmacao), 'default', true); ?>"
-            class="no-bottom">
-            <i class="icon-envelope-alt"></i> Mensagem e-mail confirmação
-         </a>&nbsp;&nbsp;&nbsp;
-         <a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'encontro',
-            'action' => 'editar-mensagem-email-confirmacao',
-            'id' => $value['id_encontro'],
-            'id_tipo_mensagem' => $this->correcao), 'default', true); ?>"
-            class="no-bottom">
-            <i class="icon-envelope-alt"></i> Mensagem e-mail recuperar senha
-         </a>
-      </div>
-   </div>
-</fieldset>
-<?php endforeach; ?>
+<?php foreach ($this->lista as $value): ?>
+    <fieldset>
+        <div class="container">
+            <div class="span-2">
+                #<?= $value['id_encontro'] ?>
+            </div>
+            <div class="span-14">
+                <strong><?= $value['nome_encontro'] ?></strong>
+            </div>
+        </div><br/>
+        <div class="container">
+            <div class="span-7">
+                <?php echo $this->translate("from"); ?>
+                <?= $value['data_inicio'] ?>
+                <?php echo $this->translate("to"); ?>
+                <?= $value['data_fim'] ?>
+            </div>
+            <div class="span-6">
+                <?php echo $this->translate("Codename"); ?>:
+                <?= $value['apelido_encontro'] ?>
+            </div>
+            <div class="span-7">
+                <?php echo $this->translate("Submission Period"); ?>:<br/>
+                <?= $value['periodo_submissao_inicio'] ?>
+                <?php echo $this->translate("to"); ?>
+                <?= $value['periodo_submissao_fim'] ?>
+            </div>
+        </div><br/>
+        <div class="container">
+            <div class="span-20">
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro',
+                    'action' => 'editar',
+                    'id' => $value['id_encontro']), 'default', true); ?>"
+                   class="no-bottom">
+                    <i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?>
+                </a>&nbsp;&nbsp;&nbsp;
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro',
+                    'action' => 'editar-mensagem-email-confirmacao',
+                    'id' => $value['id_encontro'],
+                    'id_tipo_mensagem' => $this->confirmacao), 'default', true); ?>"
+                   class="no-bottom">
+                    <i class="icon-envelope-alt"></i>
+                    <?php echo $this->translate("E-mail confirmation message"); ?>
+                </a>&nbsp;&nbsp;&nbsp;
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro',
+                    'action' => 'editar-mensagem-email-confirmacao',
+                    'id' => $value['id_encontro'],
+                    'id_tipo_mensagem' => $this->correcao), 'default', true); ?>"
+                   class="no-bottom">
+                    <i class="icon-envelope-alt"></i>
+                    <?php echo $this->translate("E-mail recover password message"); ?>
+                </a>
+            </div>
+        </div>
+    </fieldset>
+   <?php endforeach; ?>
 
 <hr/>
 
 <a href="<?=$this->url(array(
-    'module' => 'admin',
-    'controller' => 'encontro',
-    'action' => 'criar'), 'default', true); ?>"
-    class="no-bottom">
-        <i class="icon-plus"></i> Criar Encontro
+       'module' => 'admin',
+       'controller' => 'encontro',
+       'action' => 'criar'), 'default', true); ?>"
+   class="no-bottom">
+    <i class="icon-plus"></i> <?php echo $this->translate("Create Conference"); ?>
 </a>

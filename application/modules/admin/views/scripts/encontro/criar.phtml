@@ -1,7 +1,7 @@
 
 <?php echo $this->partial('menu.phtml'); ?>
 
-<h3>Criar Encontro</h3><hr/>
+<h3><?php echo $this->translate("Create Conference"); ?></h3><hr/>
 <?php
    $this->headScript()
         ->prependFile($this->baseUrl('js/admin/encontro/salvar.js'), 'text/javascript')

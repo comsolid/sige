@@ -1,23 +1,27 @@
-<h3>Editar mensagem confirmação e-mail</h3><hr/>
+
+<h3><?php echo $this->title; ?></h3><hr/>
 <div class="notice" style="margin-top: 10px;">
-   <strong>Atenção!</strong> Algumas características da mensagem:
-   <ul>
-      <li>A mensagem abaixo pode ser escrita em HTML.</li>
-      <li>A mensagem deve conter alguns atributos que serão substituídos no
-         envio do email. São eles:
-         <ul>
-            <li><code>{nome}</code></li>
-            <li><code>{email}</code></li>
-            <li><code>{senha}</code></li>
-            <li><code>{href_link}</code></li>
-         </ul>
-      </li>
-      <li>Não é necessário escrever cabeçalhos, escreva apenas o conteúdo do <code>&lt;body&gt;</code>.</li>
-      <li>Não é possível importar folhas de estilo (css) ou arquivos javascript (js),
-         pois os próprios servidores de e-mail irão bloqueá-los. Para utilizar css
-         você deve usar o atributo <code>style</code>.
-      </li>
-   </ul>
+    <strong><?php echo $this->translate("Attention!"); ?></strong>
+    <?php echo $this->translate("Some features of the message"); ?>:
+    <ul>
+        <li><?php echo $this->translate("The message can be written in HTML."); ?></li>
+        <li><?php echo $this->translate("The message must contain some attributes "
+                . "that will be replaced in the e-mail. They are:"); ?>
+            <ul>
+                <li><code>{nome}</code></li>
+                <li><code>{email}</code></li>
+                <li><code>{senha}</code></li>
+                <li><code>{href_link}</code></li>
+            </ul>
+        </li>
+        <li>
+            <?php echo $this->translate("Is not necessary write headers, write only the content of the"); ?>
+            <code>&lt;body&gt;</code>.</li>
+        <li>
+            <?php echo $this->translate("Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"); ?>
+            <code>style</code>.
+        </li>
+    </ul>
 </div>
 <?php
    $this->headScript()
@@ -30,6 +34,7 @@
            ->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'))
            ->appendStylesheet($this->baseUrl('css/screen.css'))
            ->appendStylesheet($this->baseUrl('css/form-evento.css'));
+   
    echo $this->form;
 
 ?>

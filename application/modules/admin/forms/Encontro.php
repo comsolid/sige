@@ -2,163 +2,163 @@
 
 class Admin_Form_Encontro extends Zend_Form {
 
-   protected $modo_edicao = false;
-   
-   public function modoEdicao() {
-      $this->modo_edicao = true;
-   }
-   
-   public function init() {
-      $this->setName('Encontro');
+    protected $modo_edicao = false;
 
-      $submit = $this->createElement('submit', 'confimar', array('label' => 'Confimar'))->removeDecorator('DtDdWrapper');
+    public function modoEdicao() {
+        $this->modo_edicao = true;
+    }
 
-      $cancelar = $this->createElement('submit', 'cancelar', array('label' => 'Cancelar'))->removeDecorator('DtDdWrapper');
-      $cancelar->setAttrib('class', 'submitCancelar');
+    public function init() {
+        $this->setName('Encontro');
 
-      $this->addElements(array(
-          $this->_nome_encontro(),
-          $this->_apelido_encontro(),
-          $this->_data_inicio(),
-          $this->_data_fim(),
-          $this->_periodo_submissao_inicio(),
-          $this->_periodo_submissao_fim(),
-          $submit,
-          $cancelar
-      ));
-   }
+        $submit = $this->createElement('submit', 'confimar', array('label' => _('Confirm')))->removeDecorator('DtDdWrapper');
 
-   protected function _id_encontro() {
-      $e = new Zend_Form_Element_Hidden('id_encontro');
-      $e->addFilter('Int');
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
+        $cancelar = $this->createElement('submit', 'cancelar', array('label' => _('Cancel')))->removeDecorator('DtDdWrapper');
+        $cancelar->setAttrib('class', 'submitCancelar');
 
-   protected function _nome_encontro() {
-      $e = new Zend_Form_Element_Text('nome_encontro');
-      $e->setLabel('Nome encontro:')
-              ->setRequired(true)
-              ->addValidator('StringLength', false, array(1, 100))
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim')
-              ->setAttrib('class', 'large')
-              ->setAttrib("placeholder", "I Encontro de Software Livre");
+        $this->addElements(array(
+            $this->_nome_encontro(),
+            $this->_apelido_encontro(),
+            $this->_data_inicio(),
+            $this->_data_fim(),
+            $this->_periodo_submissao_inicio(),
+            $this->_periodo_submissao_fim(),
+            $submit,
+            $cancelar
+        ));
+    }
 
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
+    protected function _id_encontro() {
+        $e = new Zend_Form_Element_Hidden('id_encontro');
+        $e->addFilter('Int');
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
 
-   protected function _apelido_encontro() {
-      $e = new Zend_Form_Element_Text('apelido_encontro');
-      $e->setLabel('Codenome:')
-              ->setRequired(true)
-              ->addValidator('StringLength', false, array(1, 10))
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim')
-              ->setAttrib('class', 'normal')
-              ->setAttrib("placeholder", "I ESL");
+    protected function _nome_encontro() {
+        $e = new Zend_Form_Element_Text('nome_encontro');
+        $e->setLabel(_('Conference Name') . ":")
+                ->setRequired(true)
+                ->addValidator('StringLength', false, array(1, 100))
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'large')
+                ->setAttrib("placeholder", "I Encontro de Software Livre");
 
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
-   
-   protected function _data_inicio() {
-      $e = new Zend_Form_Element_Text('data_inicio');
-      $e->setLabel('Data início:')
-              ->setRequired(true)
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim')
-              ->setAttrib('class', 'date');
-      
-      if ($this->modo_edicao) {
-         $e->setAttrib("disabled", "disabled");
-      }
-      
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
-   
-   protected function _data_fim() {
-      $e = new Zend_Form_Element_Text('data_fim');
-      $e->setLabel('Data fim:')
-              ->setRequired(true)
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim')
-              ->setAttrib('class', 'date');
-      
-      if ($this->modo_edicao) {
-         $e->setAttrib("disabled", "disabled");
-      }
-      
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
-   
-   protected function _periodo_submissao_inicio() {
-      $e = new Zend_Form_Element_Text('periodo_submissao_inicio');
-      $e->setLabel('Início Submissão:')
-              ->setRequired(true)
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim')
-              ->setAttrib('class', 'date');
-      
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
-   
-   protected function _periodo_submissao_fim() {
-      $e = new Zend_Form_Element_Text('periodo_submissao_fim');
-      $e->setLabel('Fim Submissão:')
-              ->setRequired(true)
-              ->addFilter('StripTags')
-              ->addFilter('StringTrim')
-              ->setAttrib('class', 'date');
-      
-      $e->setDecorators(array(
-          'ViewHelper',
-          'Description',
-          'Errors',
-          array('HtmlTag', ''),
-          array('Label', ''),
-      ));
-      return $e;
-   }
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _apelido_encontro() {
+        $e = new Zend_Form_Element_Text('apelido_encontro');
+        $e->setLabel(_('Codename') . ":")
+                ->setRequired(true)
+                ->addValidator('StringLength', false, array(1, 10))
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'normal')
+                ->setAttrib("placeholder", "I ESL");
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _data_inicio() {
+        $e = new Zend_Form_Element_Text('data_inicio');
+        $e->setLabel(_('Starts in') . ":")
+                ->setRequired(true)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'date');
+
+        if ($this->modo_edicao) {
+            $e->setAttrib("disabled", "disabled");
+        }
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _data_fim() {
+        $e = new Zend_Form_Element_Text('data_fim');
+        $e->setLabel(_('Ends in') . ":")
+                ->setRequired(true)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'date');
+
+        if ($this->modo_edicao) {
+            $e->setAttrib("disabled", "disabled");
+        }
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _periodo_submissao_inicio() {
+        $e = new Zend_Form_Element_Text('periodo_submissao_inicio');
+        $e->setLabel(_('Submission starts in') . ":")
+                ->setRequired(true)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'date');
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _periodo_submissao_fim() {
+        $e = new Zend_Form_Element_Text('periodo_submissao_fim');
+        $e->setLabel(_('Submission ends in') . ":")
+                ->setRequired(true)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'date');
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
 }
-

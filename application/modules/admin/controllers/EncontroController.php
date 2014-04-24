@@ -128,54 +128,58 @@ class Admin_EncontroController extends Zend_Controller_Action {
    }
    
    public function editarMensagemEmailConfirmacaoAction() {
-      $form = new Admin_Form_MensagemEmail();
-      $this->view->form = $form;
-      $model = new Admin_Model_MensagemEmail();
-      
-      if ($this->getRequest()->isPost()) {
-         $formData = $this->getRequest()->getPost();
-         
-         if (isset ($formData['cancelar'])) {
-            return $this->_helper->redirector->goToRoute(array(
-                'module' => 'admin',
-                'controller' => 'encontro'
-            ), 'default', true);
-         }
-         
-         if ($form->isValid($formData)) {
-            $data = array(
-               'mensagem' => $form->getValue('mensagem'),
-               'assunto' => $form->getValue('assunto'),
-               'link' => $form->getValue('link')
-            );
-            $idEncontro = (int) $form->getValue('id_encontro');
-            $idTipoMensagem = (int) $form->getValue('id_tipo_mensagem_email');
-            try {
-               $model->update($data,
-                     "id_encontro = {$idEncontro}
-                     AND id_tipo_mensagem_email = {$idTipoMensagem}");
-               $this->_helper->flashMessenger->addMessage(
-                  array('success' => 'Mensagem atualizada com sucesso.'));
-               return $this->_helper->redirector->goToRoute(array(
-                  'module' => 'admin',
-                  'controller' => 'encontro',
-                  'action' => 'index'), 'default', true);
-            } catch(Exception $e) {
-               $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
-                         . $e->getMessage()));
+        $form = new Admin_Form_MensagemEmail();
+        $this->view->form = $form;
+        $model = new Admin_Model_MensagemEmail();
+
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+
+            if (isset($formData['cancelar'])) {
+                return $this->_helper->redirector->goToRoute(array(
+                            'module' => 'admin',
+                            'controller' => 'encontro'), 'default', true);
             }
-         } else {
-            $form->populate($formData);
-         }
-      } else {
-         $id = $this->_getParam('id', 0);
-         $id_tipo_mensagem = $this->_getParam('id_tipo_mensagem', 0);
-         if ($id > 0 and $id_tipo_mensagem > 0) {
-            $row = $model->fetchRow("id_encontro = {$id} AND id_tipo_mensagem_email = {$id_tipo_mensagem}");
-            $form->populate($row->toArray());
-         }
-      }
-   }
+
+            if ($form->isValid($formData)) {
+                $data = array(
+                    'mensagem' => $form->getValue('mensagem'),
+                    'assunto' => $form->getValue('assunto'),
+                    'link' => $form->getValue('link')
+                );
+                $idEncontro = (int) $form->getValue('id_encontro');
+                $idTipoMensagem = (int) $form->getValue('id_tipo_mensagem_email');
+                try {
+                    $model->update($data, "id_encontro = {$idEncontro}
+                     AND id_tipo_mensagem_email = {$idTipoMensagem}");
+                    $this->_helper->flashMessenger->addMessage(
+                            array('success' => 'Mensagem atualizada com sucesso.'));
+                    return $this->_helper->redirector->goToRoute(array(
+                                'module' => 'admin',
+                                'controller' => 'encontro',
+                                'action' => 'index'), 'default', true);
+                } catch (Exception $e) {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                                . $e->getMessage()));
+                }
+            } else {
+                $form->populate($formData);
+            }
+        } else {
+            $id = (int) $this->_getParam('id', 0);
+            $id_tipo_mensagem = (int) $this->_getParam('id_tipo_mensagem', 0);
+            if ($id > 0 and $id_tipo_mensagem > 0) {
+                $row = $model->fetchRow("id_encontro = {$id} AND id_tipo_mensagem_email = {$id_tipo_mensagem}");
+                $form->populate($row->toArray());
+            }
+            
+            if ($id_tipo_mensagem == Application_Model_EmailConfirmacao::MSG_CONFIRMACAO) {
+                $this->view->title = "Edit e-mail confirmation message";
+            } else {
+                $this->view->title = "Edit e-mail recover password message";
+            }
+        }
+    }
 }
 

@@ -4,7 +4,7 @@
    echo $this->partial('menu.phtml');
 ?>
 
-<h3>Programação parcial</h3><hr/>
+<h3><?php echo $this->translate("Parcial Schedule"); ?></h3><hr/>
 
 <?php
 $data_atual = null;
@@ -12,7 +12,7 @@ if (! empty($this->lista)):
    foreach ($this->lista as $item): ?>
 <div class="container">
    <div class="span-2">
-      <?php $date = new Zend_Date($item['data']); ?>
+      <?php $date = new Zend_Date($item['data'], 'dd/MM/y'); ?>
       <div>
          <p><?=$date->toString('dd') ?>/<?=$date->toString('MMM') ?></p>
       </div>
@@ -25,24 +25,27 @@ if (! empty($this->lista)):
             (<?=$item['descricao'] ?>)
             <?php endif; ?>
             <?php if ($item['validada']): ?>
-            <i class="icon-thumbs-up-alt right" title="Validada"></i>
+            <i class="icon-thumbs-up-alt right" title="<?php echo $this->translate("Valid"); ?>"></i>
             <?php else: ?>
-            <i class="icon-thumbs-down-alt right" title="Não Validada"></i>
+            <i class="icon-thumbs-down-alt right" title="<?php echo $this->translate("Not Valid"); ?>"></i>
             <?php endif; ?>
          </div>
          <div>
             <div>
-               Sala
+               <?php echo $this->translate("Place"); ?>:
                <?php if($item['nome_sala'] == null): ?>
-                  <span class="quiet">[Não informada]</span>
+                  <span class="quiet">[<?php echo $this->translate("Not informed"); ?>]</span>
                <?php else: ?>
                   <?=$item['nome_sala']?>
                <?php endif; ?>
-               
+               -
                <?php if($item['hora_inicio'] == null): ?>
-                  <span class="quiet">[Horário não definido]</span>
+                  <span class="quiet">[<?php echo $this->translate("Schedule not defined"); ?>]</span>
                <?php else: ?>
-                  de <?=$item['hora_inicio'] ?> - <?=$item['hora_fim'] ?>
+                  <?php echo $this->translate("from"); ?>
+                  <?=$item['hora_inicio'] ?>
+                  <?php echo $this->translate("to"); ?>
+                  <?=$item['hora_fim'] ?>
                <?php endif; ?>
             </div>
             <hr/>
@@ -54,12 +57,13 @@ if (! empty($this->lista)):
             }
             ?>
             <div>
-               por <a href="<?=$this->url(array('id' => $id),
+               <?php echo $this->translate("by"); ?>
+               <a href="<?=$this->url(array('id' => $id),
                     'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
                <?php if ($item['outros'] == 1): ?>
-                  e outro.
+                  <?php echo $this->translate("and other."); ?>
                <?php elseif ($item['outros'] > 1): ?>
-                  e <?=$item['outros'] ?> outros.
+                  <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
                <?php endif; ?>
             </div>
             <p><?=$item['resumo'] ?></p>

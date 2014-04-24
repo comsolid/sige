@@ -6,8 +6,8 @@
  */
 class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 	
-   const MSG_CONFIRMACAO = 0;
-   const MSG_RECUPERAR_SENHA = 1;
+   const MSG_CONFIRMACAO = 1;
+   const MSG_RECUPERAR_SENHA = 2;
    
 	protected $_name = 'mensagem_email';
 	protected $_primary = array('id_encontro','id_tipo_mensagem_email');

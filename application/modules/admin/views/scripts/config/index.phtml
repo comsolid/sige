@@ -1,31 +1,43 @@
+
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+?>
+
 <?php echo $this->partial('menu.phtml'); ?>
 
 <div class="container">
-   <div class="span-8 prepend-1">
-      <h3>Encontro</h3><hr/>
-      <ul class="unstyled">
-         <li><a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'encontro',
-            'action' => 'index'), 'default', true); ?>"
-            class="no-bottom"><i class="icon-bullhorn"></i> Gerenciar Encontros</a>
-         </li>
-         <li><a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'encontro',
-            'action' => 'criar'), 'default', true); ?>"
-            class="no-bottom"><i class="icon-plus"></i> Criar Encontro</a>
-         </li>
-      </ul>
-   </div>
-   <div class="span-8 prepend-1">
-      <h3>Usuários</h3><hr/>
-      <ul class="unstyled">
-         <li><a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'config',
-            'action' => 'permissao-usuarios'), 'default', true); ?>"
-            class="no-bottom"><i class="icon-lock"></i> Permissão de usuários</a></li>
-      </ul>
-   </div>
+    <div class="span-8 prepend-1">
+        <h3><?php echo $this->translate("Conference"); ?></h3><hr/>
+        <ul class="unstyled">
+            <li><a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro',
+                    'action' => 'index'), 'default', true); ?>"
+                   class="no-bottom">
+                    <i class="icon-bullhorn"></i> <?php echo $this->translate("Manage Conferences"); ?>
+                </a>
+            </li>
+            <li><a href="<?php echo $this->url(array(
+                       'module' => 'admin',
+                       'controller' => 'encontro',
+                       'action' => 'criar'), 'default', true); ?>"
+                   class="no-bottom">
+                    <i class="icon-plus"></i> <?php echo $this->translate("Create Conference"); ?>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="span-8 prepend-1">
+        <h3><?php echo $this->translate("Users"); ?></h3><hr/>
+        <ul class="unstyled">
+            <li><a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'config',
+                    'action' => 'permissao-usuarios'), 'default', true); ?>"
+                   class="no-bottom">
+                    <i class="icon-lock"></i> <?php echo $this->translate("User permissions"); ?>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
