@@ -6,7 +6,7 @@ $(function() {
 	});
    
    $("#sel").select2({
-      placeholder: "Digite o e-mail do palestrante...",
+      placeholder: _("Enter speaker e-mail..."),
       minimumInputLength: 3,
       tags: function(options) {
          // https://groups.google.com/forum/#!msg/select2/bOF3CPXsqjI/YmR3yHN2yc4J

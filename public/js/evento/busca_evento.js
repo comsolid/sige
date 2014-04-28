@@ -55,7 +55,7 @@ function addEvento(id) {
    if (id > 0) {
       $.getJSON("/evento/ajax-interesse/id/"+id, function(json) {
          if (json.ok) {
-            mostrarMensagem("div.success", "Evento marcado com interessante.");
+            mostrarMensagem("div.success", _("Interesting event bookmarked."));
          } else if (json.erro != null) {
             mostrarMensagem("div.error", json.erro);
          }
@@ -63,15 +63,4 @@ function addEvento(id) {
          getValores();
       });
    }
-}
-
-function mostrarMensagem( id, msg ) {
-   var aux = (msg != null) ? msg : "Erro desconhecido.";
-   $(id).html( aux ).show( "blind", 500, esconderMensagem(id) );
-}
-
-function esconderMensagem(id) {
-   setTimeout(function() {
-      $( id + ":visible" ).fadeOut();
-   }, 3000 );
 }

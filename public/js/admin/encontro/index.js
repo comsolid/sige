@@ -1,7 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 $(document).ready(function() {
    oTable = $('table').dataTable({
@@ -11,9 +7,6 @@ $(document).ready(function() {
    });
 
    $("#termo").focus();
-    
-   //getValores();
-	
    $("#termo").keyup(function() {
       getValores();
 		

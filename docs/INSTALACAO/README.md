@@ -26,6 +26,12 @@ Encoding do servidor
 SET client_encoding = 'LATIN1';
 ~~~
 
+ou
+
+~~~
+SET client_encoding = 'UTF8';
+~~~
+
 Permissão ao usuário do banco de dados
 
 ~~~
@@ -38,8 +44,8 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 Modifique `postgres` para seu usuário.
 
 Note que o script possui `START TRANSACTION;` e `ROLLBACK;`. Faça um teste inicial
-e execute o script para se certificar que tudo irá correr bem. Por fim remova-os
-e execute realmente o script.
+e execute o script para se certificar que tudo irá correr bem. Por fim substitua
+o comando `ROLLBACK;` por `COMMIT;` e execute novamente o script.
 
 #### Observação:
 
@@ -124,18 +130,18 @@ a partir do SiGE em `/adim/encontro/criar/`.
 
 ### Zend
 
-A versão utilizada pelo SiGE é [Zend 1.12.3][Zend_1.12.3].
+A versão utilizada pelo SiGE é [Zend 1.12.6][Zend_1.12.6].
 
-[Zend_1.12.3]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.3"
+[Zend_1.12.6]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.6"
 
 A instalação é bem simples. Basta copiarmos o Zend para um diretório de bibliotecas do sistema.
 Baixe o pacote Full, descompacte e siga as instruções em um terminal:
 
 ~~~
 $ sudo su
-# mv ZendFramework-1.12.1 /usr/local/lib
+# mv ZendFramework-1.12.6 /usr/local/lib
 # cd /usr/local/lib
-# ln -s ZendFramework-1.12.3 zend
+# ln -s ZendFramework-1.12.6 zend
 ~~~
 
 ### Baixando SiGE do Github
@@ -203,6 +209,17 @@ $ sudo su
 # ln -s /usr/local/lib/zend/library/Zend
 ~~~
 
+#### Observação:
+
+Caso você não tenha permissão para instalar bibliotecas no sistema, por exemplo se você contratou um
+serviço externo, você pode copiar o Zend diretamente na pasta `library` do SiGE. Faça:
+
+~~~
+$ cp -R /caminho/para/ZendFramework1.12.6/library/Zend ${SiGE}/library
+~~~
+
+Caso use FTP suba o diretório para o mesmo local.
+
 ### Permitir escrita para HTMLPurifier e Captcha
 
 É necessário dar permissão total a dois diretórios, faça:
@@ -216,10 +233,20 @@ $ mkdir captcha
 $ chmod 777 captcha/
 ~~~
 
+### Configurar SiGE para ambiente de produção
+
+~~~
+$ cd ${SiGE}/public
+$ nano .htaccess
+~~~
+
+Mude `SetEnv APPLICATION_ENV development` para `SetEnv APPLICATION_ENV production`.
+
 ### Configurar conexão com base de dados
 
 Com o projeto configurado vamos editar os parâmetros de conexão com o PostgreSQL.
-Dentro do diretório do projeto abra o arquivo `${SiGE}/application/configs/application.ini`
+Dentro do diretório do projeto abra o arquivo `${SiGE}/application/configs/application.ini`,
+copie os dados para a seção `[production]` (cole abaixo de `autoloaderNamespaces[] = "Sige"`)
 e edite os parâmetros abaixo:
 
 ~~~
@@ -232,7 +259,8 @@ resources.db.params.password = "**secret**"
 ### Configurar SMTP para envio de e-mail
 
 Temos também que configurar o envio de e-mail para validar participantes, recuperação de
-senhas, etc. Ainda no arquivo `${SiGE}/application/configs/application.ini` edite o trecho:
+senhas, etc. Ainda no arquivo `${SiGE}/application/configs/application.ini`,
+copie o trecho a seguir e cole logo abaixo dos dados da conexão com o banco. Edite o trecho:
 
 ~~~
 resources.mail.transport.type = "smtp"; não precisa editar
@@ -251,10 +279,10 @@ resources.mail.defaultReplyTo.name  = "I ESL"
 
 **obs.:** para a linha `resources.mail.transport.port`:
 
-* 587 is the Outgoing server (SMTP) port for IMAP. It uses a TLS 
-encryption connection. 
-* 465 is the Outgoing server (SMTP) port for pop. It uses an SSL 
-encryption connection.
+* 587 is the Outgoing server (SMTP) port for IMAP. It uses a TLS encryption connection.
+* 587 é a porta de Saída de serviço (SMTP) para IMAP. Ela usa conexão TLS criptografada.
+* 465 is the Outgoing server (SMTP) port for POP. It uses an SSL encryption connection.
+* 465 é a porta de Saída de serviço (SMTP) para POP. Ela usa conexão SSL criptografada.
 
 Mais detalhes em [Zend_Mail][Zend_Mail].
 
@@ -269,12 +297,39 @@ Após criar um encontro no banco de dados, temos um `id_encontro`. No arquivo
 encontro.codigo = 1
 ~~~
 
+#### Observação:
+
+Mude o valor a cada novo encontro.
+
 ### Crie o primeiro usuário administrador
 
 Abra o SiGE no navegador e crie um usuário. Se tudo der certo um e-mail com uma
 senha padrão foi enviado para você. Tente fazer um login.
 
 No banco de dados, na tebela `pessoa`, modifique a coluna `administrador` para `true`.
+
+### Tradução (i18n)
+
+Para traduzir as mensagens do SiGE você deve editar o arquivo `${SiGE}/application/Bootstrap.php`.
+Na função `_initTranslate` edite a linha:
+
+~~~
+$locale = "pt_BR";
+~~~
+
+Verifique as traduções disponíveis em `${SiGE}/application/langs`. Coloque em `$locale` o mesmo
+nome do diretório da sua língua padrão.
+
+Para traduzir as mensagens que estão nos arquivos Javascript abra o arquivo
+`${SiGE}/application/layouts/scripts/layout.phtml`.
+
+Procure a linha:
+
+~~~
+$this->headScript()->prependFile($this->baseUrl('js/jed/locale/pt_BR.js'));
+~~~
+
+e mude para a língua desejada. As opções estão em `${SiGE}/public/js/jed/locale`.
 
 ### Certificados
 
@@ -313,6 +368,8 @@ criar apenas as assinaturas `assinatura-1.png` e `assinatura-3.png`.
 
 **obs.:** Note que o arquivo de assinaturas possui a extensão **PNG**. Por ser uma
 imagem pequena e que necessita de *alpha*, optamos por usá-la.
+
+\newpage
 
 Abaixo uma simulação da árvore de diretórios `${SiGE}/public/img/certificados/`:
 

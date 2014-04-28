@@ -24,7 +24,6 @@ $(document).ready(function() {
    });
 
 	$(document).delegate('a.situacao', 'click', function() {
-      //console.log($(this).attr('data-url'));
       presenca($(this).attr('data-url'));
       $("#termo").select();
    });
@@ -62,15 +61,4 @@ function presenca(url) {
    }).complete(function() {
       buscar();
    });
-}
-
-function mostrarMensagem( id, msg ) {
-   var aux = (msg != null) ? msg : "Erro desconhecido.";
-   $(id).html( aux ).show( "blind", 500, esconderMensagem(id) );
-}
-
-function esconderMensagem(id) {
-   setTimeout(function() {
-      $( id + ":visible" ).fadeOut();
-   }, 3000 );
 }

@@ -11,11 +11,16 @@
          $this->headLink()->prependStylesheet($this->baseUrl('css/flash-messages.css'));
       ?>
       
-      <?php $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js')) ?>
+      <?php
+        $this->headScript()->prependFile($this->baseUrl('js/utils.js'));
+        $this->headScript()->prependFile($this->baseUrl('js/jed/jed-init.js'));
+        $this->headScript()->prependFile($this->baseUrl('js/jed/locale/pt_BR.js'));
+        $this->headScript()->prependFile($this->baseUrl('js/jed/jed.js'));
+        $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
+      ?>
       
       <?= $this->headLink() ?>
       <?= $this->headStyle() ?>
-      <?= $this->headScript() ?>
       <link rel="shortcut icon" href="<?php echo $this->baseUrl('imagens/layout/favicon_sige.png'); ?>" type="image/x-icon" />
   	</head>
    <body>
@@ -53,5 +58,6 @@
          </div>
 
       </div>
+      <?= $this->headScript() ?>
    </body>
 </html>
