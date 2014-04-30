@@ -134,7 +134,6 @@ class EventoController extends Zend_Controller_Action {
         }
 
         $this->view->menu->setAtivo('submissao');
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
         $data = $this->getRequest()->getPost();
 
         $form = new Application_Form_Evento();
@@ -180,11 +179,6 @@ class EventoController extends Zend_Controller_Action {
       }
       
 		$this->view->menu->setAtivo('submissao');
-		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form-evento.css'));
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-		$this->view->headScript()->appendFile($this->view->baseUrl('js/evento/editar.js'));
-		
 		$data = $this->getRequest()->getPost();
 
 		$idEvento = $this->_request->getParam('id', 0);

@@ -1,20 +1,34 @@
 <?php
+
 $this->headScript()
-        ->prependFile($this->baseUrl('js/ckeditor.js'), 'text/javascript');
+        ->prependFile($this->baseUrl('js/jquery.qtip.min.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/ckeditor/ckeditor.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/jquery.dataTables.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/evento/editar.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/parsley.min.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
+
+$this->headLink()
+           ->appendStylesheet($this->baseUrl('css/jquery.qtip.min.css'))
+           ->appendStylesheet($this->baseUrl('css/tabela_sort.css'))
+           ->appendStylesheet($this->baseUrl('css/form-evento.css'))
+           ->appendStylesheet($this->baseUrl('css/evento/submeter.css'));
 ?>
 
 <br>
 <br>
+
+<h4><?php echo $this->translate("Submit a paper"); ?></h4><hr/>
 
 <?php echo $this->form; ?>
 
 <?php if (count($this->realizacao) > 0): ?>
    <table id="compra" class="display" cellpadding="0" cellspacing="0" border="0">
       <thead>
-         <th>Data</th>
-         <th>Hora Início</th>
-         <th>Hora Fim</th>
-         <th>Sala</th>
+         <th><?php echo $this->translate("Date"); ?></th>
+         <th><?php echo $this->translate("Starts at"); ?></th>
+         <th><?php echo $this->translate("Ends at"); ?></th>
+         <th><?php echo $this->translate("Place"); ?></th>
    </thead>
    <tbody> 
       <?php foreach ($this->realizacao as $linha): ?>

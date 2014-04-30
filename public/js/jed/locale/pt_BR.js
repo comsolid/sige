@@ -20,6 +20,8 @@ var locale_data = {
         "No": [null, "Não"],
         'Total registrations: <strong>%d</strong>': [null, 'Total de inscritos: <strong>%d</strong>'],
         "one second": [null, "um segundo"],
-        "%d seconds": [null, "%d segundos"]
+        "%d seconds": [null, "%d segundos"],
+        "Are you sure you want to leave this caravan?": [null, 'Tem certeza que deseja sair da caravana?'],
+        'Are you sure you want to delete this participant from the caravan?': [null, 'Tem certeza que deseja deletar o participante da caravana?']
     }
 };

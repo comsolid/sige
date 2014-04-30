@@ -2,13 +2,13 @@
 $this->headScript()
         ->prependFile($this->baseUrl('js/evento/submeter.js'), 'text/javascript')
         ->prependFile($this->baseUrl('js/jquery.qtip.min.js'), 'text/javascript')
-        ->prependFile($this->baseUrl('js/ckeditor.js'), 'text/javascript')
+        ->prependFile($this->baseUrl('js/ckeditor/ckeditor.js'), 'text/javascript')
         ->prependFile($this->baseUrl('js/parsley.min.js'), 'text/javascript')
         ->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
 
 $this->headLink()
            ->appendStylesheet($this->baseUrl('css/jquery.qtip.min.css'))
-           //->appendStylesheet($this->baseUrl('css/screen.css'))
+           ->appendStylesheet($this->baseUrl('css/form-evento.css'))
            ->appendStylesheet($this->baseUrl('css/evento/submeter.css'));
 ?>
 <br>

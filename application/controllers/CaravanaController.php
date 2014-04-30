@@ -50,7 +50,7 @@ class CaravanaController extends Zend_Controller_Action {
       
       if ($this->getRequest()->isPost()) {
          $submit = $this->getRequest()->getPost('submit');
-         if ($submit == "confimar") {
+         if (isset($submit)) {
             $array_id_pessoas = explode(",", $this->getRequest()->getPost('array_id_pessoas'));
             // se existirem e-mail a serem adicionados a caravana
             // explode retorna array(0 => "") http://php.net/manual/pt_BR/function.explode.php

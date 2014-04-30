@@ -4,11 +4,11 @@
        <i class="icon-plane"></i> <?php echo $this->translate("You are registered on this caravan"); ?>
    </legend>
 	<div class="acoes">
-		<a title="Sair desta caravana" 
-			href="<?php echo $this->url(array('controller' => 'caravana',
-	  'action' => 'sair'), 'default', true); ?>" onclick="return confirm('Tem certeza que deseja sair da caravana?')">
-			<img src="<?php echo $this->baseUrl('imagens/layout/bt_sairexcluir.png'); ?>"
-              alt="Sair" border="0"/>
+		<a href="<?php echo $this->url(array('controller' => 'caravana',
+	  'action' => 'sair'), 'default', true); ?>"
+      onclick="return confirm(_('Are you sure you want to leave this caravan?'))"
+      class="no-bottom">
+            <i class="icon-remove"></i> <?php echo $this->translate("Leave this caravan?"); ?>
 		</a>
 	</div>
 
@@ -26,7 +26,7 @@
       <dd><label><?= $this->participante['nome'] ?></label></dd>
    </dl>
 </fieldset>
-<?php endif; ?>
+<?php else: ?>
 
 <fieldset>
    <legend><?php echo $this->translate("You are responsable for a Caravan"); ?></legend>
@@ -95,3 +95,4 @@
       </a>
 	<?php endif; ?>
 </fieldset>
+<?php endif; ?>
