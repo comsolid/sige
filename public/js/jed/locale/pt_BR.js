@@ -22,6 +22,7 @@ var locale_data = {
         "one second": [null, "um segundo"],
         "%d seconds": [null, "%d segundos"],
         "Are you sure you want to leave this caravan?": [null, 'Tem certeza que deseja sair da caravana?'],
-        'Are you sure you want to delete this participant from the caravan?': [null, 'Tem certeza que deseja deletar o participante da caravana?']
+        'Are you sure you want to delete this participant from the caravan?': [null, 'Tem certeza que deseja deletar o participante da caravana?'],
+        'Are you sure you want you delete the speaker from this event?': [null, 'Tem certeza que deseja deletar o palestrante do evento?']
     }
 };

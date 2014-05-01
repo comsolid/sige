@@ -17,8 +17,8 @@
          <strong><?=$this->evento['nome_evento'] ?></strong>.</span><br/><br/>
       <input type="hidden" id="sel" name="array_id_pessoas" style="width: 500px;"/>
       <dl class="zend_form">
-         <input type="submit" name="cancelar" id="cancelar" value="cancelar" class="submitCancelar">
-         <input type="submit" name="submit" id="submit" value="confimar"/>
+         <input type="submit" name="cancelar" id="cancelar" value="<?php echo $this->translate("Cancel"); ?>" class="submitCancelar">
+         <input type="submit" name="submit" id="submit" value="<?php echo $this->translate("Confirm"); ?>"/>
       </dl>
    </form>
 </fieldset>
@@ -32,14 +32,14 @@
       <?php foreach ($this->palestrantes as $palestrante): ?>
          <tr>
             <td><?= $palestrante['nome'] ?></td>
-            <td><a title="Remover participante dessa caravana" 
+            <td><a title="<?php echo $this->translate("Remove the speaker from this event"); ?>"
                   href="<?php
                      echo $this->url(array('controller' => 'evento',
                          'action' => 'deletar-palestrante',
                          'pessoa' => $palestrante['id_pessoa'],
                          'evento' => $this->evento['id_evento']), 'default', true);
                      ?>" class="no-bottom"
-                     onclick="return confirm('Tem certeza que deseja deletar o palestrante do evento?')">
+                     onclick="return confirm(_('Are you sure you want you delete the speaker from this event?'))">
                   <i class="icon-remove"></i> <?php echo $this->translate("Delete"); ?>
                </a>&nbsp;&nbsp;&nbsp;
                <a href="mailto:<?=$palestrante['email'] ?>" target="_blank"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sige 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-29 19:21-0300\n"
-"PO-Revision-Date: 2014-04-29 19:22-0300\n"
+"POT-Creation-Date: 2014-04-30 20:28-0300\n"
+"PO-Revision-Date: 2014-04-30 20:28-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -109,6 +109,60 @@ msgstr "Tipo de usuário"
 #: controllers/ParticipanteController.php:81
 msgid "E-mail already registered."
 msgstr "E-mail já cadastrado."
+
+#: controllers/EventoController.php:17
+#, fuzzy
+msgid "Permission denied."
+msgstr "Permissão"
+
+#: controllers/EventoController.php:174
+#: controllers/EventoController.php:243
+#: controllers/EventoController.php:366
+#: controllers/EventoController.php:388
+#: controllers/EventoController.php:421
+#: controllers/EventoController.php:464
+#: controllers/EventoController.php:496
+#: controllers/EventoController.php:557
+msgid "An unexpected error ocurred.<br/> Details:&nbsp;"
+msgstr "Ocorreu um erro inesperado.<br/>Detalhes:&nbsp;"
+
+#: controllers/EventoController.php:445
+msgid "No speakers selected."
+msgstr "Nenhum palestrante foi selecionado."
+
+#: controllers/EventoController.php:455
+#, php-format
+msgid "one speaker added to this event successfully."
+msgid_plural "%d speakers added to this event successfully."
+msgstr[0] ""
+msgstr[1] ""
+
+#: controllers/EventoController.php:461
+msgid "Speaker already exists in this event."
+msgid_plural "One or more speakers exists in this event"
+msgstr[0] ""
+msgstr[1] ""
+
+#: controllers/EventoController.php:476
+#, fuzzy
+msgid "Event not found."
+msgstr "não encontrado."
+
+#: controllers/EventoController.php:484
+msgid "You don't have permission to edit this event."
+msgstr "Você não tem permissão de editar este evento."
+
+#: controllers/EventoController.php:628
+msgid "Tag added successfully."
+msgstr "Tag adicionada com sucesso."
+
+#: controllers/EventoController.php:631
+msgid "An unexpected error ocurred while saving <b>tag</b>."
+msgstr "Ocorreu um erro inesperado ao salvar <b>tag</b>."
+
+#: controllers/EventoController.php:635
+msgid "Tag already exists."
+msgstr "Tag já existe."
 
 #: forms/Pessoa.php:29
 msgid "Name:"
