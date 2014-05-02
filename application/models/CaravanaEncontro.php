@@ -41,38 +41,39 @@ class Application_Model_CaravanaEncontro extends Zend_Db_Table_Abstract {
 	}
      
 	public function updateParticipantesCaravana($where) {
-	  	  	
-	  	$select= "UPDATE encontro_participante SET id_caravana = ? WHERE id_encontro = ?
-	  	  			AND id_pessoa IN
+
+        $select = "UPDATE encontro_participante SET id_caravana = ? WHERE id_encontro = ?
+                    AND id_pessoa IN
                   (SELECT p.id_pessoa FROM pessoa p 
                   INNER JOIN encontro_participante ep ON (p.id_pessoa = ep.id_pessoa)
-	  	  			WHERE id_encontro = ? AND id_caravana IS NULL AND p.id_pessoa IN (";
-			  	
-      $quant = count($where);
-      $numParam = 3;
-      $pessoas_validas = 0;
-      // concatena os id_pessoa que vem de $data
-		for ($i = $numParam; $i < $quant; $i++) {
-         if (intval($where[$i]) > 0) {
-            $select .= " ?";
-            if ($i < $quant - 1) {
-               $select .= ", ";
+                    WHERE id_encontro = ? AND id_caravana IS NULL AND p.id_pessoa IN (";
+
+        $quant = count($where);
+        $numParam = 3;
+        $pessoas_validas = 0;
+        // concatena os id_pessoa que vem de $data
+        for ($i = $numParam; $i < $quant; $i++) {
+            if (intval($where[$i]) > 0) {
+                $select .= " ?";
+                if ($i < $quant - 1) {
+                    $select .= ", ";
+                }
+                $pessoas_validas++;
+            } else {
+                unset($where[$i]);
             }
-            $pessoas_validas++;
-         } else {
-            unset($where[$i]);
-         }
-      }
-      $select .= ")) ";
-      if ($pessoas_validas > 0) {
-         $this->getAdapter()->fetchAll($select,$where);
-         return 1; // true
-      } else {
-         return 0; // false
-      }
-	}
-     
-	public function deletarParticipante($data) {
+        }
+        $select .= ")) ";
+        
+        if ($pessoas_validas > 0) {
+            $result = $this->getAdapter()->query($select, $where);
+            return $result->rowCount(); // true
+        } else {
+            return 0; // false
+        }
+    }
+
+    public function deletarParticipante($data) {
 	  	$select= "UPDATE encontro_participante SET id_caravana = NULL WHERE id_encontro = ? AND id_pessoa = ? ";
   		$this->getAdapter()->fetchAll($select,$data);
 	}

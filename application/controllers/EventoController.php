@@ -90,7 +90,7 @@ class EventoController extends Zend_Controller_Action {
                 "{$value['data']}",
                 "{$value['h_inicio']} - {$value['h_fim']}",
                 "<a id=\"{$value['evento']}\" class=\"marcar no-bottom\">
-                  <i class=\"icon-bookmark\"></i> Marcar</a>"
+                  <i class=\"icon-bookmark\"></i> " . _("Bookmark") . "</a>"
             );
         }
 
@@ -122,7 +122,7 @@ class EventoController extends Zend_Controller_Action {
             $json->ok = true;
         } catch (Zend_Db_Exception $ex) {
             $json->ok = false;
-            $json->erro = "Ocorreu um erro inesperado ao marcar interesse em evento.<br/>Detalhes"
+            $json->erro = _("An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;")
                     . $ex->getMessage();
         }
         header("Pragma: no-cache");
@@ -143,9 +143,9 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
+            $notice = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => "O Período de inscrição "
-                        . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
+                    array('notice' => $notice));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
@@ -165,7 +165,7 @@ class EventoController extends Zend_Controller_Action {
                 $evento->insert($data);
 
                 $this->_helper->flashMessenger->addMessage(
-                        array('success' => 'Trabalho submetido. Aguarde contato por e-mail.'));
+                        array('success' => _('Paper was submitted. Wait for a contact by e-mail.')));
                 return $this->_helper->redirector->goToRoute(array(
                             'controller' => 'evento'
                                 ), null, true);
@@ -188,9 +188,9 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
+            $notice = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => "O Período de inscrição "
-                        . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
+                    array('notice' => $notice));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
@@ -230,12 +230,12 @@ class EventoController extends Zend_Controller_Action {
                 try {
                     if ($idPessoa != $data['responsavel'] and ! $admin) {
                         $this->_helper->flashMessenger->addMessage(
-                                array('error' => 'Somente o autor pode editar o Evento.'));
+                                array('error' => _('Only the author can edit the Event.')));
                         return $this->redirecionar();
                     } else {
                         $evento->update($data, $select);
                         $this->_helper->flashMessenger->addMessage(
-                                array('success' => 'Evento atualizado com sucesso.'));
+                                array('success' => _('Event successfully updated.')));
                         return $this->redirecionar($admin, $idEvento);
                     }
                 } catch (Zend_Db_Exception $ex) {
@@ -254,14 +254,14 @@ class EventoController extends Zend_Controller_Action {
                 // e se não é admin, sendo admin é permitido editar
                 if ($idPessoa != $array['responsavel'] and ! $admin) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => 'Somente o autor pode editar o Evento.'));
+                            array('error' => _('Only the author can edit the Event.')));
                     return $this->redirecionar();
                 } else {
                     $form->populate($row->toArray());
                 }
             } else {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => 'Evento não encontrado.'));
+                        array('error' => _('Event not found.')));
                 return $this->redirecionar($admin, $idEvento);
             }
         }
@@ -348,7 +348,7 @@ class EventoController extends Zend_Controller_Action {
 
             if (!isset($id) || $id == 0) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => 'Evento não encontrado.'));
+                        array('error' => _('Event not found.')));
                 $this->_helper->redirector->goToRoute(array(
                     'controller' => 'participante',
                     'action' => 'index'), 'default', true);
@@ -360,7 +360,7 @@ class EventoController extends Zend_Controller_Action {
                         "id_pessoa = ?" => $idPessoa);
                     $model->delete($where);
                     $this->_helper->flashMessenger->addMessage(
-                            array('success' => 'Evento desmarcado com sucesso.'));
+                            array('success' => _('Event was successfully removed from the Bookmarks.')));
                 } catch (Exception $e) {
                     $this->_helper->flashMessenger->addMessage(
                             array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
@@ -374,7 +374,7 @@ class EventoController extends Zend_Controller_Action {
             $id = $this->_getParam('id', 0);
             if ($id == 0) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => 'Evento não encontrado.'));
+                        array('error' => _('Event not found.')));
                 $this->_helper->redirector->goToRoute(array(
                     'controller' => 'participante',
                     'action' => 'index'), 'default', true);
@@ -408,7 +408,7 @@ class EventoController extends Zend_Controller_Action {
             $data = $evento->buscaEventoPessoa($idEvento);
             if (empty($data)) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => 'Evento não encontrado.'));
+                        array('notice' => _('Event not found.')));
             } else {
                 $this->view->evento = $data[0];
                 $this->view->outros = $evento->buscarOutrosPalestrantes($idEvento);
@@ -452,7 +452,7 @@ class EventoController extends Zend_Controller_Action {
                     }
 
                     $success = sprintf(
-                            ngettext("one speaker added to this event successfully.", "%d speakers added to this event successfully.", $numParticipantes), $numParticipantes);
+                            ngettext("One speaker added to this event successfully.", "%d speakers added to this event successfully.", $numParticipantes), $numParticipantes);
                     $this->_helper->flashMessenger->addMessage(
                             array('success' => $success));
                 } catch (Zend_Db_Exception $ex) {
@@ -551,7 +551,7 @@ class EventoController extends Zend_Controller_Action {
             try {
                 $model->getAdapter()->delete("evento_palestrante", "id_pessoa = {$pessoa} AND id_evento = {$evento}");
                 $this->_helper->flashMessenger->addMessage(
-                        array('success' => 'Palestrante removido do evento com sucesso.'));
+                        array('success' => _('Speaker was successfuly removed from the event.')));
             } catch (Exception $e) {
                 $this->_helper->flashMessenger->addMessage(
                         array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
@@ -559,7 +559,7 @@ class EventoController extends Zend_Controller_Action {
             }
         } else {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => 'Nenhum palestrante foi selecionado.'));
+                    array('notice' => _('No speaker was selected.')));
         }
         $this->_helper->redirector->goToRoute(array('controller' => 'evento',
             'action' => 'outros-palestrantes', 'id' => $evento), 'default', true);
@@ -576,7 +576,7 @@ class EventoController extends Zend_Controller_Action {
         $data = $evento->buscaEventoPessoa($idEvento);
         if (empty($data)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => 'Evento não encontrado.'));
+                    array('notice' => _('Event not found.')));
             return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
         } else {
             $this->view->evento = $data[0];

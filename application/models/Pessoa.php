@@ -129,7 +129,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 	public function buscarUltimoEncontro($idPessoa) {
       //$select =  "SELECT id_encontro, id_pessoa, id_instituicao, id_municipio, id_caravana, 
 		$select =  "SELECT id_encontro, id_pessoa, id_instituicao, id_municipio,
-				id_tipo_usuario FROM encontro_participante
+				id_tipo_usuario, validado FROM encontro_participante
 				WHERE id_pessoa = ? ORDER BY id_encontro DESC LIMIT 1";
 		
 		// "select * from encontro_participante where id_pessoa = ? order by id_pessoa desc limit 1";

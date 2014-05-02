@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sige 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-30 20:28-0300\n"
-"PO-Revision-Date: 2014-04-30 20:28-0300\n"
+"POT-Creation-Date: 2014-05-02 20:44-0300\n"
+"PO-Revision-Date: 2014-05-02 20:44-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -110,11 +110,15 @@ msgstr "Tipo de usuário"
 msgid "E-mail already registered."
 msgstr "E-mail já cadastrado."
 
-#: controllers/EventoController.php:17
-#, fuzzy
-msgid "Permission denied."
-msgstr "Permissão"
-
+#: controllers/ParticipanteController.php:84
+#: controllers/ParticipanteController.php:181
+#: controllers/ParticipanteController.php:328
+#: controllers/ParticipanteController.php:375
+#: controllers/CaravanaController.php:78
+#: controllers/CaravanaController.php:144
+#: controllers/CaravanaController.php:167
+#: controllers/CaravanaController.php:233
+#: controllers/CaravanaController.php:296
 #: controllers/EventoController.php:174
 #: controllers/EventoController.php:243
 #: controllers/EventoController.php:366
@@ -126,16 +130,92 @@ msgstr "Permissão"
 msgid "An unexpected error ocurred.<br/> Details:&nbsp;"
 msgstr "Ocorreu um erro inesperado.<br/>Detalhes:&nbsp;"
 
+#: controllers/CaravanaController.php:56
+#: controllers/CaravanaController.php:149
+#, fuzzy
+msgid "No participant was selected."
+msgstr "Nenhum participante foi selecionado."
+
+#: controllers/CaravanaController.php:68
+#, php-format
+msgid "One participant added to this caravan successfully."
+msgid_plural "%d participants added to this caravan successfully."
+msgstr[0] ""
+msgstr[1] ""
+
+#: controllers/CaravanaController.php:74
+#, fuzzy
+msgid "No participant was added to this caravan."
+msgstr "Adicionar participantes à caravana:"
+
+#: controllers/CaravanaController.php:141
+#: controllers/CaravanaController.php:164
+msgid "Participant was removed from this caravan successfully."
+msgstr ""
+
+#: controllers/CaravanaController.php:230
+#: controllers/CaravanaController.php:293
+msgid "A caravan with this description already exists."
+msgstr ""
+
+#: controllers/EventoController.php:17
+#, fuzzy
+msgid "Permission denied."
+msgstr "Permissão"
+
+#: controllers/EventoController.php:93
+msgid "Bookmark"
+msgstr ""
+
+#: controllers/EventoController.php:125
+#, fuzzy
+msgid "An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;"
+msgstr "Ocorreu um erro inesperado ao salvar <b>tag</b>."
+
+#: controllers/EventoController.php:146
+#: controllers/EventoController.php:191
+#, php-format
+msgid "The submission period goes from %s to %s."
+msgstr ""
+
+#: controllers/EventoController.php:168
+msgid "Paper was submitted. Wait for a contact by e-mail."
+msgstr ""
+
+#: controllers/EventoController.php:233
+#: controllers/EventoController.php:257
+msgid "Only the author can edit the Event."
+msgstr ""
+
+#: controllers/EventoController.php:238
+#, fuzzy
+msgid "Event successfully updated."
+msgstr "Tag adicionada com sucesso."
+
+#: controllers/EventoController.php:264
+#: controllers/EventoController.php:351
+#: controllers/EventoController.php:377
+#: controllers/EventoController.php:411
+#: controllers/EventoController.php:476
+#: controllers/EventoController.php:579
+#, fuzzy
+msgid "Event not found."
+msgstr "não encontrado."
+
+#: controllers/EventoController.php:363
+msgid "Event was successfully removed from the Bookmarks."
+msgstr ""
+
 #: controllers/EventoController.php:445
 msgid "No speakers selected."
 msgstr "Nenhum palestrante foi selecionado."
 
 #: controllers/EventoController.php:455
-#, php-format
-msgid "one speaker added to this event successfully."
+#, fuzzy, php-format
+msgid "One speaker added to this event successfully."
 msgid_plural "%d speakers added to this event successfully."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tag adicionada com sucesso."
+msgstr[1] "Tag adicionada com sucesso."
 
 #: controllers/EventoController.php:461
 msgid "Speaker already exists in this event."
@@ -143,14 +223,18 @@ msgid_plural "One or more speakers exists in this event"
 msgstr[0] ""
 msgstr[1] ""
 
-#: controllers/EventoController.php:476
-#, fuzzy
-msgid "Event not found."
-msgstr "não encontrado."
-
 #: controllers/EventoController.php:484
 msgid "You don't have permission to edit this event."
 msgstr "Você não tem permissão de editar este evento."
+
+#: controllers/EventoController.php:554
+msgid "Speaker was successfuly removed from the event."
+msgstr ""
+
+#: controllers/EventoController.php:562
+#, fuzzy
+msgid "No speaker was selected."
+msgstr "Nenhum palestrante foi selecionado."
 
 #: controllers/EventoController.php:628
 msgid "Tag added successfully."
@@ -161,8 +245,30 @@ msgid "An unexpected error ocurred while saving <b>tag</b>."
 msgstr "Ocorreu um erro inesperado ao salvar <b>tag</b>."
 
 #: controllers/EventoController.php:635
+#, fuzzy
+msgid "Tag already added."
+msgstr "Tag já existe."
+
+#: controllers/EventoController.php:637
+#: controllers/EventoController.php:668
+#: controllers/EventoController.php:704
+#, fuzzy
+msgid "An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;"
+msgstr "Ocorreu um erro inesperado ao salvar <b>tag</b>."
+
+#: controllers/EventoController.php:666
 msgid "Tag already exists."
 msgstr "Tag já existe."
+
+#: controllers/EventoController.php:698
+#, fuzzy
+msgid "Tag removed successfully."
+msgstr "Tag adicionada com sucesso."
+
+#: controllers/EventoController.php:700
+#, fuzzy
+msgid "Tag not found."
+msgstr "não encontrado."
 
 #: forms/Pessoa.php:29
 msgid "Name:"
