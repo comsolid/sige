@@ -1,0 +1,17 @@
+{
+    "name": "comsolid/sige",
+    "description": "Sistema de Gerência de Eventos",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "atilacamurca",
+            "email": "camurca.home@gmail.com"
+        }
+    ],
+    "require": {
+        "zendframework/zendframework1": "1.x"
+    },
+	"require-dev": {
+		"phpunit/phpunit": "3.7.*"
+	}
+}
