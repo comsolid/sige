@@ -190,7 +190,8 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
          TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
          TO_CHAR(hora_fim, 'HH24:MM') as hora_fim, resumo, descricao,
          id_pessoa, twitter, ( SELECT COUNT(*) FROM evento_palestrante ep
-            WHERE ep.id_evento = er.id_evento ) as outros
+            WHERE ep.id_evento = er.id_evento ) as outros,
+         TO_CHAR(data, 'DDMM') as dia_mes
          FROM evento e 
          INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)

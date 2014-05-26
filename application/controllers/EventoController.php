@@ -269,18 +269,6 @@ class EventoController extends Zend_Controller_Action {
 
     public function programacaoAction() {
         $this->view->menu->setAtivo('programacao');
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/prettify.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/evento/programacao.css'));
-
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-migrate-1.2.1.min.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/prettify.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/init.prettify.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/programacao.js'));
-
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
         $model = new Application_Model_Evento();

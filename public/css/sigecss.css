@@ -76,6 +76,10 @@ body{
     border-top-right-radius: 5px;
 }
 
+.header3-orange {
+    border-color: orange !important;
+}
+
 /*MENU*/
 #menu {
    background-color: #FFFFFF;
