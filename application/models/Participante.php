@@ -19,7 +19,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
            'columns' => 'id_encontro',
            'onDelete' => self::RESTRICT,
            'onUpdate' => self::RESTRICT));
-   
+
    protected $_dependentTables = array(
        'pessoa',
        'encontro',
@@ -34,7 +34,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
    public function getMinhasCaravanaResponsavel($data) {
       $select = "SELECT c.id_caravana, apelido_caravana, nome_municipio, apelido_instituicao, p.nome
                   FROM caravana_encontro ce INNER JOIN pessoa p ON (ce.responsavel = p.id_pessoa)
-                          INNER JOIN caravana c ON (ce.id_caravana = c.id_caravana) 
+                          INNER JOIN caravana c ON (ce.id_caravana = c.id_caravana)
                      LEFT OUTER JOIN instituicao i ON (c.id_instituicao = i.id_instituicao)
                           INNER JOIN municipio m ON (c.id_municipio = m.id_municipio)
                   WHERE ce.id_encontro = ? AND p.id_pessoa = ?";
@@ -178,4 +178,14 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
       }
       return $this->getAdapter()->fetchAll($sql, array($idPessoa));
    }
+
+   public function ler($id_pessoa, $id_encontro) {
+       $sql = "SELECT p.id_pessoa, nome, email, apelido, twitter, endereco_internet,
+               id_sexo, to_char(nascimento, 'DD/MM/YYYY') as nascimento,
+               facebook, bio, slideshare, cpf, telefone, id_instituicao, id_municipio
+               FROM pessoa p
+               INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
+               WHERE p.id_pessoa = ? AND id_encontro = ?";
+        return $this->getAdapter()->fetchRow($sql, array($id_pessoa, $id_encontro));
+    }
 }

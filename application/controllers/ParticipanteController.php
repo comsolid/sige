@@ -36,14 +36,6 @@ class ParticipanteController extends Zend_Controller_Action {
      * 	/participar
      */
     public function criarAction() {
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/parsley.i18n/messages.pt_br.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/parsley.min.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/criar.js'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/participante/criar.css'));
-
         $this->view->menu = "";
         $form = new Application_Form_Pessoa();
         $this->view->form = $form;
@@ -65,13 +57,14 @@ class ParticipanteController extends Zend_Controller_Action {
             unset($data['municipio']);
             unset($data['instituicao']);
             unset($data['captcha']);
-            // inseri no banco ... e mantem uma trasacao 
+
             $adapter = $pessoa->getAdapter();
             try {
                 $adapter->beginTransaction();
-                $idPessoa = $pessoa->insert($data);
+                $idPessoa = $pessoa->criar($data);
                 $data2['id_pessoa'] = $idPessoa;
                 $participante->insert($data2);
+                // the commit occurs only after send email!
             } catch (Zend_Db_Exception $ex) {
                 $adapter->rollBack();
                 $sentinela = 1;
@@ -85,7 +78,7 @@ class ParticipanteController extends Zend_Controller_Action {
                                 . $ex->getMessage()));
                 }
             }
-            // codigo responsavel por enviar email para confirmacao 
+            // codigo responsavel por enviar email para confirmacao
             try {
                 if (!empty($idPessoa) and $idPessoa > 0) {
                     $mail = new Application_Model_EmailConfirmacao();
@@ -108,42 +101,28 @@ class ParticipanteController extends Zend_Controller_Action {
                 $adapter->commit();
                 return $this->_helper->redirector->goToRoute(array(
                             'controller' => 'participante',
-                            'action' => 'sucesso'
-                                ), 'default', true);
+                            'action' => 'sucesso'), 'default', true);
             }
         }
     }
 
     public function editarAction() {
         $this->autenticacao();
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/editar.js'));
-
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
-
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
         $form = new Application_Form_PessoaEdit();
         $this->view->form = $form;
 
+        // TODO: refazer este trecho usando INNER JOIN no banco de dados
+        // ao invés de array_merge, blargh!
         $pessoa = new Application_Model_Pessoa();
         $participante = new Application_Model_Participante();
 
-        $result = $pessoa->find($idPessoa);
-        $linha = $result[0];
+        $result = $participante->ler($idPessoa, $idEncontro);
 
-        $result = $participante->find($idPessoa, $idEncontro);
-        $linha1 = $result[0];
-
-        $form->populate(array_merge($linha->toArray(), $linha1->toArray()));
+        $form->populate($result);
 
         $data = $this->getRequest()->getPost();
 
@@ -158,15 +137,15 @@ class ParticipanteController extends Zend_Controller_Action {
 
             unset($data['id_municipio']);
             unset($data['id_instituicao']);
-            //alterar no banco ... e mantem uma trasacao 
+
             $sentinela = 0;
             $adapter = $pessoa->getAdapter();
             try {
                 $adapter->beginTransaction();
 
-                $where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
-                $pessoa->update($data, $where);
-                $data2['id_pessoa'] = $idPessoa;
+                //$where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+                $pessoa->atualizar($data, $idPessoa);
+
                 $where = $participante->getAdapter()
                                 ->quoteInto('id_pessoa = ?', $idPessoa)
                         . $participante->getAdapter()
@@ -176,7 +155,6 @@ class ParticipanteController extends Zend_Controller_Action {
             } catch (Zend_Db_Exception $ex) {
                 $adapter->rollBack();
                 $sentinela = 1;
-                $form->getElement('email')->setAttrib('mensagem', 'e-mail invalido');
                 $this->_helper->flashMessenger->addMessage(
                         array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                             . $ex->getMessage()));

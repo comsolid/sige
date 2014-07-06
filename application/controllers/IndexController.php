@@ -2,15 +2,14 @@
 
 class IndexController extends Zend_Controller_Action {
 
-   public function init() {
+    public function init() {
+    }
 
-   }
-
-   public function indexAction() {
-		$mobile = new Sige_Mobile_Browser();
-      if ($mobile->isMobile()) { // use "!" para testar em modo mobile
-         return $this->_helper->redirector->goToRoute(array(), 'login', true);
-      }
+    public function indexAction() {
+       $mobile = new Sige_Mobile_Browser();
+       if ($mobile->isMobile()) { // use "!" para testar em modo mobile
+           return $this->_helper->redirector->goToRoute(array(), 'login', true);
+       }
 	}
 
    /**
@@ -18,21 +17,19 @@ class IndexController extends Zend_Controller_Action {
     *    /login
     */
 	public function loginAction() {
-		
+
       $isMobile = false;
       $mobile = new Sige_Mobile_Browser();
       if ($mobile->isMobile()) { // use "!" para testar em modo mobile
          $this->_helper->layout->setLayout('mobile');
          $isMobile = true;
          $form = new Mobile_Form_Login();
-         //$this->_helper->viewRenderer->renderBySpec('login', array('module' => 
-         //   "mobile", 'controller' => "index"));
          $this->_helper->viewRenderer('mobile-login');
       } else {
          $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
          $form = new Application_Form_Login();
       }
-		$this->view->form = $form;
+      $this->view->form = $form;
       $data = $this->getRequest()->getPost();
       if ($this->getRequest()->isPost() && $form->isValid($data)) {
          // obtem de maneira segura somente parametros esperados.
@@ -69,7 +66,7 @@ class IndexController extends Zend_Controller_Action {
                   try {
                      $model->getAdapter()->insert("encontro_participante", $result);
                      $this->_helper->flashMessenger->addMessage(
-                             array('success' => 'Bem-vindo de volta. Sua inscrição foi confirmada!<br/>Por favor, atualize seus dados cadastrais.'));
+                             array('success' => _('Welcome back. Your registration was confirmed!<br/>Please update your profile data.')));
                      $irParaEditar = true;
                   } catch (Exception $e) {
                      $irParaEditar = false;
@@ -117,15 +114,15 @@ class IndexController extends Zend_Controller_Action {
                }
             } else {
                $this->_helper->flashMessenger->addMessage(
-                       array('error' => 'Senha está incorreta.'));
+                       array('error' => _('E-mail or Password incorrect.')));
             }
          } else {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Login está incorreto.'));
+                    array('error' => _('E-mail or Password incorrect.')));
          }
       }
 	}
-   
+
    public function mobileLoginAction() {
       // empty action
       // usada no login para mudar view para jquery mobile.
@@ -134,10 +131,10 @@ class IndexController extends Zend_Controller_Action {
 	public function logoutAction() {
 		$auth = Zend_Auth::getInstance();
 		$auth->clearIdentity();
-      
+
       return $this->_helper->redirector->goToRoute(array(), 'index', true);
 	}
-   
+
    public function recuperarSenhaAction() {
 		$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
 
@@ -147,6 +144,7 @@ class IndexController extends Zend_Controller_Action {
 
       if ($this->getRequest()->isPost() && $form->isValid($data)) {
          $data = $form->getValues();
+         unset($data['captcha']);
 
          $pessoa = new Application_Model_Pessoa();
 
@@ -165,14 +163,15 @@ class IndexController extends Zend_Controller_Action {
             $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro,
                     Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA);
             $this->_helper->flashMessenger->addMessage(
-                     array('success' => 'E-mail enviado com sucesso, verifique seu e-mail.'));
+                     array('success' => _('E-mail successfully sent, check your e-mail.')));
+            return $this->_helper->redirector->goToRoute(array(), 'index', true);
          } else {
             $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'E-mail não cadastrado.'));
+                     array('error' => _('E-mail not found.')));
          }
       }
    }
-   
+
    public function sobreAction() {
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);

@@ -23,18 +23,21 @@ class Url_Validator extends Zend_Validate_Abstract {
 
 class Application_Form_PessoaEdit extends Zend_Form {
 
-   public function init() {
-
+    public function init() {
+      // TODO: colocar a criação de elementos dentro de métodos
+      // TODO: criar classe compartilhada entre elementos que estão em criar e editar
       $nome = $this->createElement('text', 'nome', array('label' => '* ' . _('Name:')));
       $nome->setRequired(true)
               ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÇÁÉÍÓÚ]*$/'))
               ->addValidator('stringLength', false, array(1, 100))
-              ->addErrorMessage("Nome deve ter no mínimo 1 caracteres ou contém caracteres inválidos");
+              ->addErrorMessage(_("Name must have at least 1 character. Or contains invalid characters"));
 
       $apelido = $this->createElement('text', 'apelido', array('label' => '* ' . _('Nickname:')));
       $apelido->setRequired(true)
-              ->addValidator('stringLength', false, array(1, 100))
-              ->addErrorMessage("Apelido deve ter no mínimo 1 caracteres");
+              ->addValidator('stringLength', false, array(1, 20))
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->addErrorMessage(_("Nickname must have at least 1, max. 20 characters"));
 
       $modelSexo = new Application_Model_Sexo();
       $rs = $modelSexo->fetchAll(null, 'id_sexo ASC');
@@ -63,23 +66,16 @@ class Application_Form_PessoaEdit extends Zend_Form {
          $instituicao->addMultiOptions(array($item->id_instituicao => $item->nome_instituicao));
       }
 
-      $anoNascimento = $this->createElement('select', 'nascimento', array('label' => _('Birth Year:')));
-      $anoNascimento->setAttrib("class", "select2");
-      $date = new Zend_Date();
-      $ano = (int) $date->toString('YYYY');
-      for ($i = $ano; $i > 1899; $i--) {
-         $anoNascimento->addMultiOptions(array("$i-01-01" => $i));
-      }
-
       $this->addElement($nome)
               ->addElement($apelido)
               ->addElement($sexo)
               ->addElement($municipio)
               ->addElement($instituicao)
-              ->addElement($anoNascimento)
+              ->addElement($this->_nascimento())
+              ->addElement($this->_cpf())
+              ->addElement($this->_telefone())
               ->addElement($this->_bio());
-      
-      
+
       // grupo para tab-1
       $this->addDisplayGroup(array(
           'nome',
@@ -89,6 +85,8 @@ class Application_Form_PessoaEdit extends Zend_Form {
           'id_municipio',
           'id_instituicao',
           'nascimento',
+          'cpf',
+          'telefone',
           'bio'
          ), 'tab-1', array(
             'decorators' => array(
@@ -96,7 +94,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
               array('HtmlTag', array('tag' => 'div', 'id' => 'tab-1'))
             )
       ));
-            
+
       // grupo para tab-2
       $this->addElement($this->_twitter())
               ->addElement($this->_facebook())
@@ -111,9 +109,9 @@ class Application_Form_PessoaEdit extends Zend_Form {
             'decorators' => array(
               'FormElements',
               array('HtmlTag', array('tag' => 'div', 'id' => 'tab-2'))
-            )
+          )
       ));
-      
+
       $submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
       $this->addElement($submit);
       $reset = $this->createElement('reset', _('Reset'))->removeDecorator('DtDdWrapper');
@@ -129,33 +127,87 @@ class Application_Form_PessoaEdit extends Zend_Form {
               ->addFilter('StringTrim');
       return $e;
    }
-   
+
    private function _twitter() {
       $e = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
       $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
-              ->addErrorMessage("Twitter inválido");
+              ->addErrorMessage(_("Invalid Twitter username"));
       return $e;
    }
 
    private function _facebook() {
       $e = $this->createElement('text', 'facebook', array('label' => 'Facebook: '));
       $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
-              ->addErrorMessage("Facebook inválido");
+              ->addErrorMessage(_("Invalid Facebook username"));
       return $e;
    }
 
    private function _website() {
       $e = $this->createElement('text', 'endereco_internet', array('label' => _('Website:')));
-      $e->setAttrib("placeholder", "http://comsolid.org")
+      $e->setAttrib("placeholder", "http://www.comsolid.org")
               ->addValidator(new Url_Validator)
-              ->addErrorMessage("Site inválido (ex. http://comsolid.org)");
+              ->addErrorMessage(_("Invalid website"));
       return $e;
    }
 
    private function _slideshare() {
       $e = $this->createElement('text', 'slideshare', array('label' => 'Slideshare: '));
       $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
-              ->addErrorMessage("Usuário slideshare inválido");
+              ->addErrorMessage(_("Invalid Slideshare username"));
       return $e;
+   }
+
+   /**
+    * Uncomment this method if you want to use only the birth year
+    * @return {[Zend_Form_Element_Select]}
+    */
+   protected function _nascimento() {
+       $e = new Zend_Form_Element_Select('nascimento');
+       $e->setLabel('* ' . _('Birth Date:'));
+       $e->setAttrib("class", "select2");
+       $date = new Zend_Date();
+       $ano = (int) $date->toString('YYYY');
+       for($i = $ano; $i > 1959; $i--) {
+           $e->addMultiOptions(array("01/01/$i" => "$i"));
+       }
+
+       return $e;
+   }
+
+   /**
+    * Uncomment this method if you want to use the whole birth date
+    * @return {[Zend_Form_Element_Text]}
+    */
+   /*protected function _nascimento() {
+       $e = new Zend_Form_Element_Text('nascimento');
+       $e->setLabel('* ' . _('Birth Date:'));
+       $e->setRequired(true);
+       $e->setAttrib("class", "date");
+       $e->setAttrib("data-required", "true");
+       $e->addFilter('StripTags');
+       $e->addFilter('StringTrim');
+       $e->addValidator(new Zend_Validate_Date(array('format' => 'dd/MM/yyyy')));
+
+       return $e;
+   }*/
+
+   protected function _cpf() {
+       $e = new Zend_Form_Element_Text('cpf');
+       $e->setLabel(_('SSN:')); // SSN: Social Security Number
+       $e->addFilter('Digits');
+       $e->addValidator(new Sige_Validate_Cpf());
+       $e->setRequired(false); // change to true to be required.
+       // $e->setAttrib("data-required", "true"); // uncomment for validation through js
+
+       return $e;
+   }
+
+   protected function _telefone() {
+       $e = new Zend_Form_Element_Text('telefone');
+       $e->setLabel(_('Phone Number:'));
+       $e->addFilter('Digits');
+       $e->setRequired(false);
+
+       return $e;
    }
 }

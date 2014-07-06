@@ -1,29 +1,29 @@
 <?php
 
 class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
-    
+
 	protected $_name = 'pessoa';
 	protected $_primary = 'id_pessoa';
-  
-	protected $_referenceMap = array(  
-               array(  'refTableClass' => 'Application_Model_Participante',  
-               'refColumns' => 'id_pessoa',  
-               'columns' => 'id_pessoa',  
-               'onDelete'=> self::CASCADE,  
-               'onUpdate'=> self::RESTRICT), 
-               
-               array(  'refTableClass' => 'Application_Model_Evento',  
-               'refColumns' => 'responsavel',  
-               'columns' => 'id_pessoa',  
-               'onDelete'=> self::CASCADE,  
+
+	protected $_referenceMap = array(
+               array(  'refTableClass' => 'Application_Model_Participante',
+               'refColumns' => 'id_pessoa',
+               'columns' => 'id_pessoa',
+               'onDelete'=> self::CASCADE,
                'onUpdate'=> self::RESTRICT),
-               
-               array(  'refTableClass' => 'Application_Model_EventoDemanda',  
-               'refColumns' => 'id_pessoa',  
-               'columns' => 'id_pessoa',  
-               'onDelete'=> self::CASCADE,  
+
+               array(  'refTableClass' => 'Application_Model_Evento',
+               'refColumns' => 'responsavel',
+               'columns' => 'id_pessoa',
+               'onDelete'=> self::CASCADE,
                'onUpdate'=> self::RESTRICT),
-               
+
+               array(  'refTableClass' => 'Application_Model_EventoDemanda',
+               'refColumns' => 'id_pessoa',
+               'columns' => 'id_pessoa',
+               'onDelete'=> self::CASCADE,
+               'onUpdate'=> self::RESTRICT),
+
               );
 
 	public function gerarSenha() {
@@ -31,13 +31,11 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 			$qryIsValid = $this->getAdapter()->quoteInto("SELECT funcGerarSenha(?) AS c ", $this->email);
 			$senha=$this->getAdapter()->query($qryIsValid)->fetch();
 			$this->senha= $senha['c'];
-	     
-			return $senha['c']; 
+			return $senha['c'];
 		}catch (Exception $ex) {
-		  	
 		}
 	}
-	
+
 	/**
 	 * Utilização
 	 * 	/login
@@ -52,7 +50,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 
 		return $result;
 	}
-	
+
 	public function buscaPessoas($data){
 		 $select="SELECT p.id_pessoa, p.nome, p.cadastro_validado, apelido, email, twitter,
 			nome_municipio, apelido_instituicao, nome_caravana, ep.confirmado
@@ -61,7 +59,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 			INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio)
 			LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana)
 			WHERE id_encontro = ? ";
-		
+
 		if($data[2]=="nome"){
 			if($data[1] != NULL){
 				$data[1] = "%".$data[1]."%";
@@ -98,25 +96,25 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 				unset($data[1]);
 			}
 		}
-		unset($data[2]);	 
+		unset($data[2]);
 		$select = $select.' ORDER BY p.nome ASC LIMIT 20';
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
-	
+
 	public function buscaPessoasCoordenacao($data){
 		$select = "SELECT p.id_pessoa, nome, apelido, email FROM encontro_participante ep
 			INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa)
 			WHERE id_encontro = ? AND id_tipo_usuario = 1"; // 1: coordenação
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
-	
+
 	public function buscaPessoasOrganizacao($data){
 		$select = "SELECT p.id_pessoa, nome, apelido, email FROM encontro_participante ep
 			INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa)
 			WHERE id_encontro = ? AND id_tipo_usuario = 2"; // 2: organização
 		return $this->getAdapter()->fetchAll($select,$data);
 	}
-	
+
 	public function verificaEncontro($idEncontro, $idPessoa){
 		$select = "SELECT id_pessoa from encontro_participante where id_encontro = ? AND id_pessoa= ?";
 		$resp = $this->getAdapter()->fetchAll($select,array($idEncontro,$idPessoa));
@@ -125,13 +123,13 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 		}
 		return true;
 	}
-	
+
 	public function buscarUltimoEncontro($idPessoa) {
-      //$select =  "SELECT id_encontro, id_pessoa, id_instituicao, id_municipio, id_caravana, 
+      //$select =  "SELECT id_encontro, id_pessoa, id_instituicao, id_municipio, id_caravana,
 		$select =  "SELECT id_encontro, id_pessoa, id_instituicao, id_municipio,
 				id_tipo_usuario, validado FROM encontro_participante
 				WHERE id_pessoa = ? ORDER BY id_encontro DESC LIMIT 1";
-		
+
 		// "select * from encontro_participante where id_pessoa = ? order by id_pessoa desc limit 1";
 		$rs = $this->getAdapter()->fetchAll($select, $idPessoa);
 		if (count($rs) > 0) {
@@ -139,7 +137,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
@@ -148,10 +146,10 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 			values(?,?,?,?,?,?)";
 	   return $this->getAdapter()->fetchAll($select,$encontro);
 	}
-	
+
 	public function buscarPermissaoUsuarios($idEncontro, $termo = "",
            $buscar_por = "nome", $tipo_usuario = 0) {
-      
+
       $sql = "SELECT p.id_pessoa, p.nome, p.apelido,
                p.email, p.administrador, tu.id_tipo_usuario, tu.descricao_tipo_usuario
          FROM encontro_participante ep
@@ -171,12 +169,12 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
             $where[] = (int) $termo;
          }
       }
-      
+
       if ($tipo_usuario > 0) {
          $sql .= " AND tu.id_tipo_usuario = ? ";
          $where[] = $tipo_usuario;
       }
-      
+
       $sql .= " ORDER BY p.nome LIMIT 50 ";
       return $this->getAdapter()->fetchAll($sql, $where);
    }
@@ -185,12 +183,12 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
         if (empty($slideshareUsername)) {
             return null;
         }
-        
+
         try {
             $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
             $api_key = $config->slideshare->api_key;
             $shared_secret = $config->slideshare->shared_secret;
-            
+
             // Caso o slideshare não esteja configurado retorna null.
             // TODO: jogar exceção para melhor mostrar ao usuário o que realmente
             // aconteceu. Do modo que está agora mostra como se o usuário
@@ -209,4 +207,57 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
         }
     }
 
+	/**
+	 * Cria nova pessoa
+	 * @param  {[array]} $data dados vindos do formulário
+	 */
+	public function criar($data) {
+		$sql = "INSERT INTO pessoa(nome, email, apelido, twitter, endereco_internet,
+		            id_sexo, nascimento, facebook, cpf, telefone)
+		    	VALUES (?, ?, ?, ?, ?, ?,
+		            to_date(?, 'DD/MM/YYYY'), ?, ?, ?) RETURNING id_pessoa";
+		$params = array(
+			$data['nome'],
+			$data['email'],
+			$data['apelido'],
+			$data['twitter'],
+			$data['endereco_internet'],
+			$data['id_sexo'],
+			$data['nascimento'],
+			$data['facebook'],
+			(empty($data['cpf']) ? NULL : $data['cpf']),
+			(empty($data['telefone']) ? NULL : $data['telefone'])
+		);
+		$result = $this->getAdapter()->fetchRow($sql, $params);
+		return $result['id_pessoa'];
+	}
+
+	/**
+	 * Atualiza dados da pessoa
+	 * @param  {[array]} $data dados vindos do formulário
+	 * @param  {[integer]} $id_pesoa
+	 */
+	public function atualizar($data, $id_pessoa) {
+		$sql = "UPDATE pessoa
+			  	SET nome = ?, apelido = ?, twitter = ?, endereco_internet = ?,
+			       id_sexo = ?, nascimento = to_date(?, 'DD/MM/YYYY'), facebook = ?,
+			       bio = ?, slideshare = ?, cpf = ?, telefone = ?
+				WHERE id_pessoa = ?";
+		$params = array(
+			$data['nome'],
+			$data['apelido'],
+			$data['twitter'],
+			$data['endereco_internet'],
+			$data['id_sexo'],
+			$data['nascimento'],
+			$data['facebook'],
+			$data['bio'],
+			$data['slideshare'],
+			(empty($data['cpf']) ? NULL : $data['cpf']),
+			(empty($data['telefone']) ? NULL : $data['telefone']),
+			$id_pessoa
+		);
+
+		$this->getAdapter()->query($sql, $params);
+	}
 }

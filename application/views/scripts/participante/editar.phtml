@@ -1,3 +1,16 @@
+<?php
+    $this->headScript()->appendFile($this->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/select2.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.maskedinput.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/participante/editar.js'));
+
+    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
+?>
+
 <h3><?php echo $this->translate("Edit your personal informations"); ?></h3>
 <div class="container">
     <div class="span-20" id="tabs">

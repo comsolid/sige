@@ -262,4 +262,9 @@ return array(
     "Invalid type given, value should be a string" => "O tipo especificado é inválido, o valor deve ser uma string",
     "'%value%' is less than %min% characters long" => "O tamanho de '%value%' é inferior a %min% caracteres",
     "'%value%' is more than %max% characters long" => "O tamanho de '%value%' é superior a %max% caracteres",
+
+    // Sige_Validate_CpAbstract
+    "'%value%' does not have the expected size" => "'%value%' não possui o tamanho esperado",
+    "'%value%' does not have an acceptable format" => "'%value%' não possui um formato aceitável",
+    "'%value%' is not a valid number" => "'%value%' não é um número válido",
 );

@@ -17,7 +17,7 @@ Programas necessários:
 
 ### Schema da Base de dados
 
-A instalação da base de dados é feita pelo arquivo `ddl-schema-2013.sql`. Abra o arquivo
+A instalação da base de dados é feita pelo arquivo `ddl-schema.sql`. Abra o arquivo
 e defina alguns parâmetros:
 
 Encoding do servidor
