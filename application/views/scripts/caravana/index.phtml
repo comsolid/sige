@@ -1,3 +1,11 @@
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/caravana/index.js'));
+
+    $this->headLink()->appendStylesheet($this->baseUrl('css/caravana/index.css'));
+?>
+
 <?php if (! is_null($this->participante)): ?>
 <fieldset>
    <legend>
@@ -29,13 +37,14 @@
 <?php else: ?>
 
 <fieldset>
-   <legend><?php echo $this->translate("You are responsable for a Caravan"); ?></legend>
    <?php if (is_null($this->caravanaResponsavel) and is_null($this->participante)): ?>
+      <legend><?php echo $this->translate("Are you responsable for a Caravan?"); ?></legend>
       <a href="<?php echo $this->baseUrl('caravana/criar'); ?>"
          class="no-bottom" style="float: right">
 			<i class="icon-plus"></i> <?php echo $this->translate("Create caravan"); ?>
 		</a>
    <?php elseif (! is_null($this->caravanaResponsavel)): ?>
+      <legend><?php echo $this->translate("You are responsable for a Caravan"); ?></legend>
       <dl class="detalhes">
          <dt id="nome_caravana-label">
             <label class="required" for="nome_caravana">
@@ -47,7 +56,7 @@
                 <?= $this->caravanaResponsavel["apelido_caravana"]; ?>
             </label>
          </dd>
-         
+
          <dt id="id_municipio-label">
             <label class="optional" for="id_municipio">
                 <?php echo $this->translate("District:"); ?>
@@ -58,7 +67,7 @@
                 <?= $this->caravanaResponsavel["nome_municipio"]; ?>
             </label>
          </dd>
-         
+
          <dt id="id_instituicao-label">
             <label class="optional" for="id_instituicao">
                 <?php echo $this->translate("Institution:"); ?>
@@ -69,7 +78,7 @@
                 <?= $this->caravanaResponsavel["apelido_instituicao"]; ?>
             </label>
          </dd>
-         
+
          <dt id="id_instituicao-label">
             <label class="optional" for="id_instituicao">
                 <?php echo $this->translate("Responsable:"); ?>
@@ -81,10 +90,10 @@
              </label>
          </dd>
       </dl>
-    
-      <a href="<?=$this->url(array(
+
+      <a href="<?php echo $this->url(array(
                   'controller' => 'caravana',
-                  'action' => 'participantes'), 'default', true)
+                  'action' => 'participantes'), 'default', true);
               ?>" class="no-bottom">
            <i class="icon-plus"></i> <?php echo $this->translate("Add participants"); ?>
       </a>&nbsp;&nbsp;&nbsp;

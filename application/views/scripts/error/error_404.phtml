@@ -38,28 +38,29 @@
 
 <div class="container">
    <div class="span-4 inicio">
-      <h3>Início</h3>
+      <h3><?php echo $this->translate('Home') ?></h3>
       <hr/>
-      <a href="/">Clique aqui para voltar a página inicial.</a>
+      <a href="/"><?php echo $this->translate('Click here to go back to the home page.') ?></a>
    </div>
    <div class="span-4 prepend-1 programacao">
-      <h3>Programação</h3>
+      <h3><?php echo $this->translate('Schedule') ?></h3>
       <hr/>
       <a href="<?= $this->url(array(), 'programacao', true) ?>">
-         Confira a programação do encontro que conta com Palestrar,
-         Minicursos e Oficinas.</a>
+         <?php echo $this->translate('Check the schedule of the conference which has Lectures, Mini courses and Workshops.') ?></a>
    </div>
    <div class="span-4 prepend-1 login">
-      <h3>Login</h3>
+      <h3><?php echo $this->translate('Login') ?></h3>
       <hr/>
-      <a href="<?= $this->url(array(), 'login', true) ?>">Faça o login no SiGE para ter acesso a sua página
-         de interesses, submissão de trabalhos, etc.</a>
+      <a href="<?= $this->url(array(), 'login', true) ?>">
+          <?php echo $this->translate('Login on SiGE to have access to your page of interest, paper submission, etc.') ?>
+       </a>
    </div>
    <div class="span-4 prepend-1 participar">
-      <h3>Participar</h3>
+      <h3><?php echo $this->translate('Get Involved') ?></h3>
       <hr/>
-      <a href="<?= $this->url(array(), 'participar', true) ?>">Junte-se a nós e participe do evento. Basta se cadastrar
-         e trazer 1 Kg de alimento no dia do evento.</a>
+      <a href="<?= $this->url(array(), 'participar', true) ?>">
+          <?php echo $this->translate('Join us and get involved in the conference. To do that just sign up and bring 1Kg of food on the conference day.') ?>
+       </a>
    </div>
 </div>
 

@@ -175,6 +175,5 @@ class IndexController extends Zend_Controller_Action {
    public function sobreAction() {
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
    }
 }

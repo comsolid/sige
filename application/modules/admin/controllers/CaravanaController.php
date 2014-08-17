@@ -19,30 +19,23 @@ class Admin_CaravanaController extends Zend_Controller_Action {
    }
 
    public function indexAction() {
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('/js/admin/caravana/index.js'));
    }
 
    public function ajaxBuscarAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
-      
+
       $sessao = Zend_Auth :: getInstance()->getIdentity();
       $idEncontro = $sessao["idEncontro"];
-      
+
       $termo = $this->_request->getParam("termo", "");
       $model = new Admin_Model_Caravana();
-      
+
       $rs = $model->buscar($idEncontro, $termo);
       $json = new stdClass;
       $json->size = count($rs);
       $json->itens = array();
-      
+
       foreach($rs as $value) {
          if ($value['validada']) {
             $validada = "Sim";
@@ -77,16 +70,16 @@ class Admin_CaravanaController extends Zend_Controller_Action {
 	 * 	/c/validar/:id
 	 * 	/c/invalidar/:id
 	 */
-   public function situacaoAction() {
-		$this->_helper->layout()->disableLayout();
-      $this->_helper->viewRenderer->setNoRender(true);
-		
+    public function situacaoAction() {
+	    $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
 		$id = $this->_getParam('id', 0);
 		$validar = $this->_getParam('validar', 'f');
 
 		$sessao = Zend_Auth::getInstance()->getIdentity();
-      $idEncontro = $sessao["idEncontro"];
-      
+        $idEncontro = $sessao["idEncontro"];
+
 		$model = new Application_Model_Caravana();
 		try {
 			$select = "UPDATE caravana_encontro SET validada = ? WHERE id_caravana = ? AND id_encontro = ?";
@@ -98,11 +91,10 @@ class Admin_CaravanaController extends Zend_Controller_Action {
                      array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                          . $ex->getMessage()));
 		}
-		
+
 		return $this->_helper->redirector->goToRoute(array(
 			'module' => 'admin',
 			'controller' => 'caravana',
 			'action' => 'index'), 'default', true);
 	}
 }
-

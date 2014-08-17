@@ -1,3 +1,8 @@
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/participante/inicio.js'));
+?>
 
 <fieldset>
     <legend><?php echo $this->translate("Interest List"); ?></legend>
@@ -17,7 +22,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ( $this->listaParticipanteEventoTabela as $item ): ?>
+		<?php foreach ($this->listaParticipanteEventoTabela as $item): ?>
 			<tr>
 				<td>
                <?php if (!$item['validada']): ?>

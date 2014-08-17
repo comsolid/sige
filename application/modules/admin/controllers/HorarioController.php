@@ -35,7 +35,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
       if ($this->getRequest()->isPost() && $form->isValid($data)) {
          $data = $form->getValues();
          $data['id_evento'] = $idEvento;
-         
+
          try {
             $sessao = Zend_Auth::getInstance()->getIdentity();
             $idEncontro = $sessao ["idEncontro"];
@@ -46,7 +46,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
                 $data['hora_inicio'],
                 $data['hora_fim']
             ));
-            
+
             if (! $existe) {
                $model->insert($data);
                return $this->_helper->redirector->goToRoute(array(
@@ -70,7 +70,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
       $form = new Application_Form_Horarios();
       $form->cria();
       $this->view->form = $form;
-      
+
       $model = new Application_Model_EventoRealizacao();
       $evento = $this->_request->getParam('evento', 0);
 
@@ -90,7 +90,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
                   $data['hora_inicio'],
                   $data['hora_fim']
                ));
-               
+
                // se id for igual ao id existe, pode atualizar, pois se trata do mesmo evento
                if (! $existe or ($id == $existe)) {
                   $model->update($data, 'evento = ' . $id);
@@ -121,10 +121,10 @@ class Admin_HorarioController extends Zend_Controller_Action {
                FROM evento_realizacao WHERE evento = " . $id));
          }
       }
-      
-      $select = "SELECT TO_CHAR(data, 'DD/MM/YYYY') as data, 
-         TO_CHAR(hora_inicio, 'HH24:MI') as hora_inicio, 
-         TO_CHAR(hora_fim, 'HH24:MI') as hora_fim FROM evento_realizacao 
+
+      $select = "SELECT TO_CHAR(data, 'DD/MM/YYYY') as data,
+         TO_CHAR(hora_inicio, 'HH24:MI') as hora_inicio,
+         TO_CHAR(hora_fim, 'HH24:MI') as hora_fim FROM evento_realizacao
          WHERE id_evento = ?";
       $this->view->idEvento = $evento;
       $this->view->horariosEventos = $model->getAdapter()->fetchAll($select, $evento);
@@ -133,7 +133,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
    public function deletarAction() {
       $model = new Admin_Model_EventoRealizacao();
       $evento = $this->_request->getParam('evento', 0);
-      
+
       if ($this->getRequest()->isPost()) {
          $del = $this->getRequest()->getPost('del');
          $id = (int) $this->getRequest()->getPost('id');
@@ -175,4 +175,3 @@ class Admin_HorarioController extends Zend_Controller_Action {
       }
    }
 }
-

@@ -15,16 +15,8 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
-
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/index.js'));
-
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/caravana/index.css'));
         $model = new Application_Model_CaravanaEncontro();
-
         $this->view->participante = $model->lerParticipanteCaravana($sessao["idEncontro"], $sessao["idPessoa"]);
         $this->view->caravanaResponsavel = $model->lerResponsavelCaravana($sessao["idEncontro"], $sessao["idPessoa"]);
     }
@@ -172,11 +164,6 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function criarAction() {
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-
         $data = $this->getRequest()->getPost();
         if (isset($data['cancelar'])) {
             return $this->_helper->redirector->goToRoute(array(
@@ -194,45 +181,44 @@ class CaravanaController extends Zend_Controller_Action {
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'caravana',
                         'action' => 'editar'), null, true);
-        } else {
+        }
 
-            $form = new Application_Form_Caravana();
-            $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'criar')));
+        $form = new Application_Form_Caravana();
+        $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'criar')));
 
-            $this->view->form = $form;
-            $data = $this->getRequest()->getPost();
+        $this->view->form = $form;
+        $data = $this->getRequest()->getPost();
 
-            if ($this->getRequest()->isPost() && $form->isValid($data)) {
-                $caravana = new Application_Model_Caravana();
-                $caravana_encontro = new Application_Model_CaravanaEncontro();
-                $data = $form->getValues();
+        if ($this->getRequest()->isPost() && $form->isValid($data)) {
+            $caravana = new Application_Model_Caravana();
+            $caravana_encontro = new Application_Model_CaravanaEncontro();
+            $data = $form->getValues();
 
-                $adapter = $caravana->getAdapter();
-                try {
-                    $adapter->beginTransaction();
-                    $m_encontro = new Application_Model_Encontro();
-                    $data['criador'] = $idPessoa;
+            $adapter = $caravana->getAdapter();
+            try {
+                $adapter->beginTransaction();
+                $m_encontro = new Application_Model_Encontro();
+                $data['criador'] = $idPessoa;
 
-                    $data2['id_encontro'] = $m_encontro->getEncontroAtual();
-                    $data2['responsavel'] = $idPessoa;
-                    $data2['id_caravana'] = $caravana->insert($data);
+                $data2['id_encontro'] = $m_encontro->getEncontroAtual();
+                $data2['responsavel'] = $idPessoa;
+                $data2['id_caravana'] = $caravana->insert($data);
 
-                    $caravana_encontro->insert($data2);
-                    $adapter->commit();
-                    return $this->_helper->redirector->goToRoute(array(
-                                'controller' => 'caravana',
-                                'action' => 'index'), null, true);
-                } catch (Zend_Db_Exception $ex) {
-                    $adapter->rollBack();
-                    // 23505 UNIQUE VIOLATION
-                    if ($ex->getCode() == 23505) {
-                        $this->_helper->flashMessenger->addMessage(
-                                array('error' => _('A caravan with this description already exists.')));
-                    } else {
-                        $this->_helper->flashMessenger->addMessage(
-                                array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
-                                    . $ex->getMessage()));
-                    }
+                $caravana_encontro->insert($data2);
+                $adapter->commit();
+                return $this->_helper->redirector->goToRoute(array(
+                            'controller' => 'caravana',
+                            'action' => 'index'), null, true);
+            } catch (Zend_Db_Exception $ex) {
+                $adapter->rollBack();
+                // 23505 UNIQUE VIOLATION
+                if ($ex->getCode() == 23505) {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('error' => _('A caravan with this description already exists.')));
+                } else {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                                . $ex->getMessage()));
                 }
             }
         }
@@ -243,11 +229,6 @@ class CaravanaController extends Zend_Controller_Action {
      * @return type
      */
     public function editarAction() {
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/select2.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/caravana/salvar.js'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/select2.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-
         $data = $this->getRequest()->getPost();
         if (isset($data['cancelar'])) {
             return $this->_helper->redirector->goToRoute(array(
@@ -265,9 +246,14 @@ class CaravanaController extends Zend_Controller_Action {
 
         $caravana = new Application_Model_Caravana();
         $caravana_encontro = new Application_Model_CaravanaEncontro();
-	
+
         $select = $caravana_encontro->select();
         $rows = $caravana_encontro->fetchAll($select->where('responsavel = ?', $idPessoa)->where('id_encontro = ?', $idEncontro));
+        if (count($rows) == 0) {
+            return $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'caravana',
+                        'action' => 'index'), null, true);
+        }
         $row = $rows[0];
 
         $select = $caravana->select();
@@ -299,5 +285,4 @@ class CaravanaController extends Zend_Controller_Action {
             }
         }
     }
-
 }

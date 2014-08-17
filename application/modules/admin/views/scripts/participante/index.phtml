@@ -1,4 +1,14 @@
-<?php echo $this->partial('menu.phtml'); ?>
+<?php
+	$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+
+	$this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+	$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+	$this->headScript()->appendFile($this->baseUrl('js/admin/participante/index.js'));
+	echo $this->partial('menu.phtml');
+?>
 
 <input type="hidden"  name="id_encontro" id="id_encontro" value="<?=$this->idEncontro?>" />
 
@@ -33,11 +43,12 @@
 			<th><?php echo $this->translate("E-mail"); ?></th>
 			<th><?php echo $this->translate("District"); ?></th>
 			<th><?php echo $this->translate("Institution"); ?></th>
-			<th><?php echo $this->translate("Caravan"); ?></th>	
+			<th><?php echo $this->translate("Caravan"); ?></th>
 			<th><?php echo $this->translate("Status"); ?></th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
 	<tbody id="resultado">
+		<!-- dados são trazidos via ajax -->
 	</tbody>
 </table>

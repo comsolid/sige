@@ -1,10 +1,9 @@
 <?php
-   $this->headScript()
-      ->prependFile($this->baseUrl('js/index/index.js'),'text/javascript')
-      ->prependFile($this->baseUrl('js/jquery.countdown.js'),'text/javascript');
-   
-   $this->headLink()
-           ->prependStylesheet($this->baseUrl('css/jquery.countdown.css'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/time-circles/TimeCircles.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/moment-with-langs.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/index/index.js'));
+
+   $this->headLink()->prependStylesheet($this->baseUrl('lib/css/time-circles/TimeCircles.css'));
 ?>
 
 <div>
@@ -16,6 +15,9 @@
       class="no-bottom"><i class="icon-hand-right"></i> <?php echo $this->translate("I want to participate!"); ?></a>.
 </div>
 
-<h3><?php echo $this->translate("It's getting closer ..."); ?></h3>
+<h3 id="countdown-title"><?php echo $this->translate("It's getting closer ..."); ?></h3>
 <div id="countdown"></div>
-<p id="note" style="text-align: center;"></p>
+
+<div id="banner-index" style="display: none">
+	<img src="/img/comsolid7-banner-sige-index.png" alt="banner" id="banner">
+</div>

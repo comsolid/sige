@@ -20,11 +20,11 @@ class Admin_ConfigController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        
+
     }
 
     public function permissaoUsuariosAction() {
-        
+
     }
 
     public function ajaxBuscarUsuariosAction() {
@@ -73,13 +73,6 @@ class Admin_ConfigController extends Zend_Controller_Action {
     }
 
     public function editarPermissaoAction() {
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/iphone-style-checkbox.css'));
-
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/iphone-style-checkboxes.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/config/editar-permissao.js'));
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idEncontro = $sessao ["idEncontro"];
 

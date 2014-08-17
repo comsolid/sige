@@ -1,4 +1,13 @@
-<?php echo $this->partial('menu.phtml'); ?>
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/admin/caravana/index.js'));
+    echo $this->partial('menu.phtml');
+?>
 
 <input type="text" class="text" name="termo" id="termo"
        placeholder="<?php echo $this->translate("Search caravan..."); ?>" size="50" style="float: left;" />
@@ -20,5 +29,6 @@
       </tr>
    </thead>
    <tbody>
+       <!-- busca é feita via ajax -->
    </tbody>
 </table>

@@ -17,10 +17,6 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/participante/inicio.js'));
-
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
@@ -115,15 +111,10 @@ class ParticipanteController extends Zend_Controller_Action {
         $form = new Application_Form_PessoaEdit();
         $this->view->form = $form;
 
-        // TODO: refazer este trecho usando INNER JOIN no banco de dados
-        // ao invés de array_merge, blargh!
         $pessoa = new Application_Model_Pessoa();
         $participante = new Application_Model_Participante();
-
         $result = $participante->ler($idPessoa, $idEncontro);
-
         $form->populate($result);
-
         $data = $this->getRequest()->getPost();
 
         if ($this->getRequest()->isPost() && $form->isValid($data)) {
@@ -262,7 +253,6 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadosAction() {
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
         $sessao = Zend_Auth :: getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 

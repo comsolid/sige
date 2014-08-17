@@ -30,18 +30,10 @@ class EventoController extends Zend_Controller_Action {
 
     /**
      * Mapeada como
-     *    /submissao 
+     *    /submissao
      */
     public function indexAction() {
         $this->autenticacao();
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tipsy.css'));
-
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.tipsy.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/inicio.js'));
-
-
         $this->view->menu->setAtivo('submissao');
         $sessao = Zend_Auth :: getInstance()->getIdentity();
 
@@ -277,15 +269,6 @@ class EventoController extends Zend_Controller_Action {
 
     public function interesseAction() {
         $this->autenticacao();
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/evento/busca_evento.js'));
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idEncontro = $sessao["idEncontro"];
         $idPessoa = $sessao["idPessoa"];
@@ -385,11 +368,10 @@ class EventoController extends Zend_Controller_Action {
 
     /**
      * Mapeada como
-     *    /e/:id 
+     *    /e/:id
      */
     public function verAction() {
         $this->view->menu->setAtivo('programacao');
-
         try {
             $idEvento = $this->_request->getParam('id', 0);
             $evento = new Application_Model_Evento();
@@ -492,7 +474,7 @@ class EventoController extends Zend_Controller_Action {
         if (!$this->autenticacao(true)) {
             return;
         }
-        
+
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -532,12 +514,13 @@ class EventoController extends Zend_Controller_Action {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $pessoa = $this->_getParam('pessoa', 0);
-        $evento = $this->_getParam('evento', 0);
+        $pessoa = (int) $this->_getParam('pessoa', 0);
+        $evento = (int) $this->_getParam('evento', 0);
         if ($pessoa > 0 and $evento > 0) {
             $model = new Application_Model_Evento();
             try {
-                $model->getAdapter()->delete("evento_palestrante", "id_pessoa = {$pessoa} AND id_evento = {$evento}");
+                $model->getAdapter()->delete("evento_palestrante", "id_pessoa = {$pessoa}
+                    AND id_evento = {$evento}");
                 $this->_helper->flashMessenger->addMessage(
                         array('success' => _('Speaker was successfuly removed from the event.')));
             } catch (Exception $e) {

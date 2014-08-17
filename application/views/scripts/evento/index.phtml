@@ -1,3 +1,11 @@
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tipsy.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.tipsy.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/evento/inicio.js'));
+?>
 
 <a href="<?php echo $this->url(array('controller'=>'evento',
     'action'=>'submeter'), 'default');?>" class="no-bottom">
@@ -15,8 +23,8 @@
             <th><?php echo $this->translate("Submission Date"); ?></th>
             <th style="width: 100px;">&nbsp;</th>
          </tr>
-      </thead> 
-      <tbody> 
+      </thead>
+      <tbody>
          <?php foreach ($this->meusEventos as $linha): ?>
             <tr>
                <td><?= $linha["nome_tipo_evento"] ?></td>

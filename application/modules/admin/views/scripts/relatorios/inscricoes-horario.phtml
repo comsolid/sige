@@ -1,4 +1,14 @@
-<?php echo $this->partial('menu.phtml'); ?>
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/morris.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('js/raphael-min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/morris.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/sprintf-0.6.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/relatorio/relatorio-utils.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/relatorio/inscricoes-horario.js'));
+    echo $this->partial('menu.phtml');
+?>
 
 <div class="error" style="display: none;margin-top: 10px;"></div>
 <div class="container">

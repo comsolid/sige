@@ -10,7 +10,7 @@
          $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
          $this->headLink()->prependStylesheet($this->baseUrl('css/flash-messages.css'));
       ?>
-      
+
       <?php
         $this->headScript()->prependFile($this->baseUrl('js/utils.js'));
         $this->headScript()->prependFile($this->baseUrl('js/jed/jed-init.js'));
@@ -18,7 +18,7 @@
         $this->headScript()->prependFile($this->baseUrl('js/jed/jed.js'));
         $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
       ?>
-      
+
       <?= $this->headLink() ?>
       <?= $this->headStyle() ?>
       <link rel="shortcut icon" href="<?php echo $this->baseUrl('imagens/layout/favicon_sige.png'); ?>" type="image/x-icon" />
@@ -44,7 +44,7 @@
 
             <div id="conteudo">
                <?php echo (is_object($this->menu)) ? $this->menu->getView() : ""; ?>
-               
+
                <?php if (!empty($this->deprecated)): ?>
                   <p style="color: red;"><?= $this->deprecated ?></p>
                <?php endif; ?>

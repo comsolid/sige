@@ -1,4 +1,7 @@
-<?php echo $this->partial('menu.phtml'); ?>
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    echo $this->partial('menu.phtml');
+?>
 
 <div class="container">
     <div class="span-8 prepend-1">

@@ -17,25 +17,16 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
              'action' => 'index'), 'default', true);
       }
       $this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
-      
+
    }
 
    /**
     * Mapeada como
-    *    /inscricoes 
+    *    /inscricoes
     */
    public function indexAction() {
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idEncontro = $sessao ["idEncontro"];
-
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/tabela_sort.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/screen.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-      $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/jquery.dataTables.js'));
-      $this->view->headScript()->appendFile($this->view->baseUrl('js/admin/participante/index.js'));
       $this->view->idEncontro = $idEncontro;
    }
 
@@ -48,14 +39,14 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       $data = $pessoas->buscaPessoas($dataTodosUsuarios);
 
       $json = new stdClass; // objeto anonymous http://va.mu/cEGn
-      
+
       $json->size = count($data);
       $json->aaData = array();
-      
+
       foreach ($data as $value) {
          if ($value['confirmado']) {
             $isValidado = "Confimado!";
-            $acao = "<a class=\"situacao\" 
+            $acao = "<a class=\"situacao\"
                data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">Desfazer</a>";
          } else {
             $isValidado = "Não confimado!";
@@ -73,30 +64,30 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
              $acao
          );
       }
-      
+
       header("Pragma: no-cache");
       header("Cache: no-cahce");
       header("Cache-Control: no-cache, must-revalidate");
       header("Content-type: text/json");
       echo json_encode($json);
    }
-   
+
    /**
     * Mapeada como:
     *    /u/confirmar/:id
     *    /u/desfazer-confirmar/:id
-    * @return type 
+    * @return type
     */
    public function presencaAction() {
       $this->_helper->layout()->disableLayout();
       $this->_helper->viewRenderer->setNoRender(true);
-      
+
       $id = $this->_getParam('id', 0);
       $confirmar = $this->_getParam('confirmar', 'f');
       $sessao = Zend_Auth::getInstance()->getIdentity();
       $idEncontro = $sessao ["idEncontro"];
       $model = new Application_Model_Pessoa();
-      
+
       $json = new stdClass;
       try {
          if ($confirmar == 't') {
@@ -106,7 +97,7 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
             $data = 'null';
             $json->msg = "Desfazer confirmação participante com sucesso.";
          }
-         $select = "UPDATE encontro_participante SET confirmado = ?, 
+         $select = "UPDATE encontro_participante SET confirmado = ?,
          data_confirmacao = {$data} where id_pessoa = ? AND id_encontro = ?";
          $model->getAdapter()->fetchAll($select, array($confirmar, $id, $idEncontro));
          $json->ok = true;
@@ -123,4 +114,3 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
       echo json_encode($json);
    }
 }
-

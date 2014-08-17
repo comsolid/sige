@@ -1,4 +1,14 @@
-<?php echo $this->partial('menu.phtml'); ?>
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/admin/evento/index.js'));
+    echo $this->partial('menu.phtml');
+?>
 
 <div class="container">
    <div class="span-10" id="radioset_evento">
@@ -18,7 +28,7 @@
 
    <div class="span-10" id="radioset_situacao">
       <i class="icon-filter"></i> <?php echo $this->translate("Status"); ?>:<br/>
-      <input type="radio" class="radio situacao" name="atividades" 
+      <input type="radio" class="radio situacao" name="atividades"
              id="sit_todos" value="0" checked="checked"/>
              <label for="sit_todos"><?php echo $this->translate("All"); ?></label>
       <input type="radio" class="radio situacao" name="atividades"
