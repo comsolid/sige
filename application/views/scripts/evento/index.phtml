@@ -7,58 +7,98 @@
     $this->headScript()->appendFile($this->baseUrl('js/evento/inicio.js'));
 ?>
 
-<a href="<?php echo $this->url(array('controller'=>'evento',
-    'action'=>'submeter'), 'default');?>" class="no-bottom">
-   <i class="icon-file"></i> <?php echo $this->translate("Submit Paper"); ?></a>
-<br/><br/>
+<?php if(count($this->meusEventos) > 0): ?>
 
-<?php if(count($this->meusEventos)>0): ?>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Trabalhos Submetidos</h3>
+    </div>
+    <div class="col-md-6">
+        <a href="<?php echo $this->url(array('controller'=>'evento',
+            'action'=>'submeter'), 'default');?>" class="btn btn-primary btn-lg pull-right">
+           <i class="fa fa-file"></i> <?php echo $this->translate("Submit Paper"); ?>
+        </a>
+    </div>
+</div>
 
-   <table class="display" cellpadding="0" cellspacing="0" border="0" >
-      <thead>
-         <tr>
-            <th><?php echo $this->translate("Event Type"); ?></th>
-            <th><?php echo $this->translate("Event"); ?></th>
-            <th><?php echo $this->translate("Validated"); ?></th>
-            <th><?php echo $this->translate("Submission Date"); ?></th>
-            <th style="width: 100px;">&nbsp;</th>
-         </tr>
-      </thead>
-      <tbody>
-         <?php foreach ($this->meusEventos as $linha): ?>
-            <tr>
-               <td><?= $linha["nome_tipo_evento"] ?></td>
-               <td><?= $linha["nome_evento"] ?></td>
-               <td>
-                  <?php if ($linha["validada"]): ?>
-                     <i class="icon-thumbs-up-alt"></i> <?php echo $this->translate("Yes"); ?>
-                  <?php else: ?>
-                     <i class="icon-thumbs-down-alt"></i> <?php echo $this->translate("No"); ?>
-                  <?php endif; ?>
-               </td>
-               <td><?= $linha["data_submissao"] ?></td>
-               <td>
-                  <a href="<?php echo $this->url(array('controller'=>'evento',
-                     'action'=>'editar',
-                      'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom">
-                     <i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?></a>&nbsp;&nbsp;&nbsp;
-                  <a href="<?php echo $this->url(array('controller'=>'evento',
-                     'action'=>'outros-palestrantes',
-                     'id'=>$linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
-                     title="<?php echo $this->translate("Add other speakers"); ?>">
-                     <i class="icon-group"></i></a>&nbsp;&nbsp;&nbsp;
-                  <a href="<?php echo $this->url(array('controller'=>'evento',
-                     'action' => 'tags',
-                     'id' => $linha['id_evento']), 'default', true);?>" class="no-bottom tooltip"
-                     title="<?php echo $this->translate("Create/Edit tags"); ?>">
-                     <i class="icon-tags"></i></a>
-               </td>
-            </tr>
-         <?php endforeach; ?>
-      </tbody>
-   </table>
-<br>
+<hr>
+
+    <?php foreach ($this->meusEventos as $linha): ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="label label-primary"><?= $linha["nome_tipo_evento"] ?></span>
+                <i class="fa fa-chevron-right"></i>
+                <?= $linha["nome_evento"] ?>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <?= $linha["resumo"] ?>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    Submetido em <?= $linha["data_submissao"] ?>
+                </div>
+                <div class="col-md-4">
+                    <?php if ($linha["validada"]): ?>
+                       <span class="label label-success">
+                           <?php echo $this->translate("Validated"); ?>
+                       </span>
+                    <?php else: ?>
+                       <span class="label label-warning">
+                           <?php echo $this->translate("Not validated yet"); ?>
+                       </span>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-4">
+                    <div class="btn-group pull-right">
+                        <a href="<?php echo $this->url(array('controller'=>'evento',
+                           'action'=>'editar',
+                            'id'=>$linha['id_evento']), 'default', true);?>" class="btn btn-default">
+                           <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
+                        </a>
+                        <a href="<?php echo $this->url(array('controller'=>'evento',
+                           'action'=>'outros-palestrantes',
+                           'id'=>$linha['id_evento']), 'default', true);?>" class="btn btn-default"
+                           title="<?php echo $this->translate("Add other speakers"); ?>">
+                           <i class="fa fa-group"></i>
+                        </a>
+                        <a href="<?php echo $this->url(array('controller'=>'evento',
+                           'action' => 'tags',
+                           'id' => $linha['id_evento']), 'default', true);?>" class="btn btn-default"
+                           title="<?php echo $this->translate("Create/Edit tags"); ?>">
+                           <i class="fa fa-tags"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
 
 <?php else: ?>
-   <br><?php echo $this->translate("What about submit a paper and participate?"); ?>
+   <div class="row">
+       <div class="col-md-12">
+           <h3 class="text-center">
+               <?php echo $this->translate("What about submit a paper and participate?"); ?>
+           </h3>
+       </div>
+   </div>
+
+   <div class="row">
+       <div class="col-md-4"><hr></div>
+       <div class="col-md-4">
+           <a href="<?php echo $this->url(array(
+               'controller'=>'evento',
+               'action'=>'submeter'), 'default');?>"
+               class="btn btn-primary btn-lg btn-block">
+              <i class="fa fa-file"></i> <?php echo $this->translate("Submit Paper"); ?>
+           </a>
+       </div>
+       <div class="col-md-4"><hr></div>
+   </div>
 <?php endif; ?>

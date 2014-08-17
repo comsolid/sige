@@ -6,6 +6,7 @@ $(function() {
 		//"sPaginationType" : "full_numbers",
 		"aaSorting": [  ]
 	});
-   
+
    $('.tooltip').tipsy({gravity: 's'});
+
 });

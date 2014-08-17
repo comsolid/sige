@@ -5,6 +5,7 @@ class EventoController extends Zend_Controller_Action {
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3');
     }
 
     private function autenticacao($isAjax = false) {

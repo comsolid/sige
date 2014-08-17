@@ -2,3 +2,5 @@
 /public/captcha/*
 
 /vendor/
+/node_modules/
+/library/HTMLPurifier/DefinitionCache/Serializer/HTML/*
