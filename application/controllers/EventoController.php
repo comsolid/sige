@@ -36,13 +36,13 @@ class EventoController extends Zend_Controller_Action {
     public function indexAction() {
         $this->autenticacao();
         $this->view->menu->setAtivo('submission');
-        $sessao = Zend_Auth :: getInstance()->getIdentity();
+        $sessao = Zend_Auth::getInstance()->getIdentity();
 
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
 
         $evento = new Application_Model_Evento();
-        $this->view->meusEventos = $evento->listarEventosParticipante($idEncontro, $idPessoa);
+        $this->view->eventos = $evento->listarEventosParticipante($idEncontro, $idPessoa);
     }
 
     public function ajaxBuscarAction() {
@@ -127,6 +127,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function submeterAction() {
         $this->autenticacao();
+        $this->_helper->viewRenderer->setRender('salvar');
+        $this->view->menu->setAtivo('submission');
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $id_pessoa = $sessao["idPessoa"];
@@ -142,10 +144,8 @@ class EventoController extends Zend_Controller_Action {
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
-
-        $this->view->menu->setAtivo('submission');
+        
         $data = $this->getRequest()->getPost();
-
         $form = new Application_Form_Evento();
         $this->view->form = $form;
 
@@ -172,11 +172,18 @@ class EventoController extends Zend_Controller_Action {
 
     public function editarAction() {
         $this->autenticacao();
+        $this->_helper->viewRenderer->setRender('salvar');
+        $this->view->menu->setAtivo('submission');
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $id_encontro = $sessao["idEncontro"];
         $admin = $sessao["administrador"]; // boolean
         $idPessoa = $sessao["idPessoa"];
+        $idEvento = $this->_request->getParam('id', 0);
+        
+        if (isset($data['cancelar'])) {
+            return $this->redirecionar($admin, $idEvento);
+        }
 
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
@@ -187,11 +194,8 @@ class EventoController extends Zend_Controller_Action {
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
-
-        $this->view->menu->setAtivo('submission');
+        
         $data = $this->getRequest()->getPost();
-
-        $idEvento = $this->_request->getParam('id', 0);
         $form = new Application_Form_Evento();
         $this->view->form = $form;
 
@@ -199,22 +203,9 @@ class EventoController extends Zend_Controller_Action {
         $evento_realizacao = new Application_Model_EventoRealizacao();
 
         $select = $evento->select();
-        $select_realizacao = $evento_realizacao->select();
 
         /* lista de horários */
-        $this->view->realizacao = array();
-        $linhas_realizacao = $evento_realizacao->fetchAll($select_realizacao->where('id_evento = ?', $idEvento));
-
-        foreach ($linhas_realizacao as $linha) {
-            $sala = $linha->findDependentRowset('Application_Model_Sala')->current();
-            $linha->data = date('d/m/Y', strtotime($linha->data));
-            $concatena = array_merge($linha->toArray(), $sala->toArray());
-            $this->view->realizacao[] = $concatena;
-        }
-
-        if (isset($data['cancelar'])) {
-            return $this->redirecionar($admin, $idEvento);
-        }
+        $this->view->realizacao = $evento_realizacao->listarHorariosPorEvento($idEvento);
 
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($data)) {
@@ -226,6 +217,8 @@ class EventoController extends Zend_Controller_Action {
                                 array('error' => _('Only the author can edit the Event.')));
                         return $this->redirecionar();
                     } else {
+                        $data['id_encontro'] = $id_encontro;
+                        $data['responsavel'] = $idPessoa;
                         $evento->update($data, $select);
                         $this->_helper->flashMessenger->addMessage(
                                 array('success' => _('Event successfully updated.')));

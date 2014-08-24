@@ -6,8 +6,6 @@
     $this->headScript()->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
 
     $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.qtip.min.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/form-evento.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/evento/submeter.css'));
 ?>
 
 <h4><?php echo $this->translate("Submit a paper"); ?></h4><hr/>
@@ -109,3 +107,36 @@ $form = $this->form;
 </div>
 
 </form>
+
+<?php if (count($this->realizacao) > 0): ?>
+
+<hr>
+<h4>Horários Confirmados</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <hr>
+        <table class="table table-striped tabled-hover">
+            <thead>
+                <th><?php echo $this->translate("Date"); ?></th>
+                <th><?php echo $this->translate("Place"); ?></th>
+            </thead>
+            <tbody>
+            <?php foreach ($this->realizacao as $linha): ?>
+                <tr>
+                    <td>
+                        <?=$linha["data"] ?>
+                        <?php echo $this->translate("from"); ?>
+                        <?=$linha["hora_inicio"] ?>
+                        <?php echo $this->translate("to"); ?>
+                        <?=$linha["hora_fim"] ?>
+                    </td>
+                    <td><?=$linha["nome_sala"] ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>  
+
+<?php endif; ?>

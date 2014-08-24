@@ -7,7 +7,7 @@
     $this->headScript()->appendFile($this->baseUrl('js/evento/inicio.js'));
 ?>
 
-<?php if(count($this->meusEventos) > 0): ?>
+<?php if(count($this->eventos) > 0): ?>
 
 <div class="row">
     <div class="col-md-6">
@@ -23,7 +23,7 @@
 
 <hr>
 
-    <?php foreach ($this->meusEventos as $linha): ?>
+    <?php foreach ($this->eventos as $linha): ?>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -40,7 +40,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-4">
-                    Submetido em <?= $linha["data_submissao"] ?>
+                    <?php echo $this->translate("Submited at"); ?> <?= $linha["data_submissao"] ?>
                 </div>
                 <div class="col-md-4">
                     <?php if ($linha["validada"]): ?>

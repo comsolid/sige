@@ -49,4 +49,13 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
       return false;
    }
 
+    public function listarHorariosPorEvento($id_evento) {
+        $sql = "SELECT to_char(data, 'DD \"de\" TMMon') as data, to_char(hora_inicio, 'HH24:MI') as hora_inicio,
+                to_char(hora_fim, 'HH24:MI') as hora_fim, descricao, nome_sala
+                FROM evento_realizacao er
+                INNER JOIN sala s ON er.id_sala = s.id_sala
+                WHERE id_evento = ?
+                ORDER BY data, hora_inicio";
+        return $this->getAdapter()->fetchAll($sql, array($id_evento));
+    }
 }
