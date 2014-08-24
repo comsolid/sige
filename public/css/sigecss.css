@@ -16,10 +16,6 @@
    clear: right;
 }
 
-body{
-   font-family:  Arial,Helvetica,sans-serif;
-}
-
 #principal{
    margin: 0 auto;
    width: 927px;
@@ -180,6 +176,10 @@ ul.unstyled li {
    list-style: none;
    color: #a94442;
    margin-top: 5px;
+}
+
+#master-container {
+    min-height: 512px;
 }
 
 /* Set the fixed height of the footer here */

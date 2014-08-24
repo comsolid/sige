@@ -28,7 +28,6 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 <span class="label label-primary"><?= $linha["nome_tipo_evento"] ?></span>
-                <i class="fa fa-chevron-right"></i>
                 <?= $linha["nome_evento"] ?>
             </h3>
         </div>
@@ -46,10 +45,12 @@
                 <div class="col-md-4">
                     <?php if ($linha["validada"]): ?>
                        <span class="label label-success">
+                           <i class="fa fa-check"></i>
                            <?php echo $this->translate("Validated"); ?>
                        </span>
                     <?php else: ?>
                        <span class="label label-warning">
+                           <i class="fa fa-times"></i>
                            <?php echo $this->translate("Not validated yet"); ?>
                        </span>
                     <?php endif; ?>

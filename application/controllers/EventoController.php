@@ -4,7 +4,7 @@ class EventoController extends Zend_Controller_Action {
 
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->view->menu = new Sige_Desktop_Menu($this->view, 'home', $sessao['administrador']);
         $this->_helper->layout->setLayout('twbs3');
     }
 
@@ -35,7 +35,7 @@ class EventoController extends Zend_Controller_Action {
      */
     public function indexAction() {
         $this->autenticacao();
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
         $sessao = Zend_Auth :: getInstance()->getIdentity();
 
         $idPessoa = $sessao["idPessoa"];
@@ -143,7 +143,7 @@ class EventoController extends Zend_Controller_Action {
                         'controller' => 'evento'), 'default', true);
         }
 
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
         $data = $this->getRequest()->getPost();
 
         $form = new Application_Form_Evento();
@@ -188,7 +188,7 @@ class EventoController extends Zend_Controller_Action {
                         'controller' => 'evento'), 'default', true);
         }
 
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
         $data = $this->getRequest()->getPost();
 
         $idEvento = $this->_request->getParam('id', 0);
@@ -261,7 +261,7 @@ class EventoController extends Zend_Controller_Action {
     }
 
     public function programacaoAction() {
-        $this->view->menu->setAtivo('programacao');
+        $this->view->menu->setAtivo('schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
         $model = new Application_Model_Evento();
@@ -372,7 +372,7 @@ class EventoController extends Zend_Controller_Action {
      *    /e/:id
      */
     public function verAction() {
-        $this->view->menu->setAtivo('programacao');
+        $this->view->menu->setAtivo('schedule');
         try {
             $idEvento = $this->_request->getParam('id', 0);
             $evento = new Application_Model_Evento();
@@ -396,7 +396,7 @@ class EventoController extends Zend_Controller_Action {
 
     public function outrosPalestrantesAction() {
         $this->autenticacao();
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
 
         $evento = new Application_Model_Evento();
         $idEvento = $this->_request->getParam('id', 0);
@@ -539,7 +539,7 @@ class EventoController extends Zend_Controller_Action {
 
     public function tagsAction() {
         $this->autenticacao();
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
         $model = new Application_Model_EventoTags();
         $idEvento = $this->_getParam('id', 0);
         $this->view->tags = $model->listarPorEvento($idEvento);
