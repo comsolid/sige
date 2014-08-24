@@ -4,7 +4,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
     }
 
     private function autenticacao() {
@@ -217,6 +217,7 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function verAction() {
+        $this->_helper->layout->setLayout('twbs3');
         $model = new Application_Model_Pessoa();
         $id = $this->_getParam('id', "");
         if (!empty($id)) {
