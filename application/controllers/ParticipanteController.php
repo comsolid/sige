@@ -105,6 +105,8 @@ class ParticipanteController extends Zend_Controller_Action {
     public function editarAction() {
         $this->autenticacao();
 
+        $this->_helper->layout->setLayout('twbs3');
+
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -159,6 +161,9 @@ class ParticipanteController extends Zend_Controller_Action {
                                 ), 'default', true);
             }
         }
+        $this->view->id = $idPessoa;
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $this->view->user = $pessoa->fetchRow($sql);
     }
 
     public function sucessoAction() {
@@ -218,6 +223,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
     public function verAction() {
         $this->_helper->layout->setLayout('twbs3');
+        
         $model = new Application_Model_Pessoa();
         $id = $this->_getParam('id', "");
         if (!empty($id)) {
@@ -254,6 +260,7 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadosAction() {
+        $this->autenticacao();
         $sessao = Zend_Auth :: getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 
@@ -264,6 +271,7 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadoParticipanteAction() {
+        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -303,6 +311,7 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadoPalestranteAction() {
+        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 

@@ -1,0 +1,44 @@
+
+<?php $form = $this->form; ?>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-4">
+        <?php echo $form->twitter->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->twitter->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->twitter->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <?php echo $form->facebook->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->facebook->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->facebook->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $form->slideshare->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->slideshare->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->slideshare->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <?php echo $form->endereco_internet->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->endereco_internet->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->endereco_internet->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>

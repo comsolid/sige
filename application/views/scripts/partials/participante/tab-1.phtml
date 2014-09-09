@@ -1,0 +1,91 @@
+<style>
+    .radio-id-sexo label {
+        margin-right: 10px;
+    }
+</style>
+
+<?php $form = $this->form; ?>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-5">
+        <?php echo $form->nome->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->nome->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->nome->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <?php echo $form->apelido->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->apelido->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->apelido->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $form->id_sexo->renderLabel() ?>
+        <div class="radio radio-id-sexo">
+            <?php echo $form->id_sexo->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->id_sexo->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <?php echo $form->nascimento->renderLabel() ?>
+        <div class="radio">
+            <?php echo $form->nascimento->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->nascimento->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $form->id_municipio->renderLabel() ?>
+        <div class="radio">
+            <?php echo $form->id_municipio->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->id_municipio->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <?php echo $form->id_instituicao->renderLabel() ?>
+        <div class="radio">
+            <?php echo $form->id_instituicao->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->id_instituicao->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $form->cpf->renderLabel() ?>
+        <div class="radio">
+            <?php echo $form->cpf->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->cpf->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <?php echo $form->telefone->renderLabel() ?>
+        <div class="radio">
+            <?php echo $form->telefone->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->telefone->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>

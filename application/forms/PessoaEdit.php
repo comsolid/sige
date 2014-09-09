@@ -27,12 +27,14 @@ class Application_Form_PessoaEdit extends Zend_Form {
       // TODO: colocar a criação de elementos dentro de métodos
       // TODO: criar classe compartilhada entre elementos que estão em criar e editar
       $nome = $this->createElement('text', 'nome', array('label' => '* ' . _('Name:')));
+      $nome->setAttrib('class', 'form-control');
       $nome->setRequired(true)
               ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÇÁÉÍÓÚ]*$/'))
               ->addValidator('stringLength', false, array(1, 100))
               ->addErrorMessage(_("Name must have at least 1 character. Or contains invalid characters"));
 
       $apelido = $this->createElement('text', 'apelido', array('label' => '* ' . _('Nickname:')));
+      $apelido->setAttrib('class', 'form-control');
       $apelido->setRequired(true)
               ->addValidator('stringLength', false, array(1, 20))
               ->addFilter('StripTags')
@@ -74,48 +76,22 @@ class Application_Form_PessoaEdit extends Zend_Form {
               ->addElement($this->_nascimento())
               ->addElement($this->_cpf())
               ->addElement($this->_telefone())
-              ->addElement($this->_bio());
-
-      // grupo para tab-1
-      $this->addDisplayGroup(array(
-          'nome',
-          'email',
-          'apelido',
-          'id_sexo',
-          'id_municipio',
-          'id_instituicao',
-          'nascimento',
-          'cpf',
-          'telefone',
-          'bio'
-         ), 'tab-1', array(
-            'decorators' => array(
-              'FormElements',
-              array('HtmlTag', array('tag' => 'div', 'id' => 'tab-1'))
-            )
-      ));
-
-      // grupo para tab-2
-      $this->addElement($this->_twitter())
+              ->addElement($this->_bio())
+              ->addElement($this->_twitter())
               ->addElement($this->_facebook())
               ->addElement($this->_slideshare())
               ->addElement($this->_website());
-      $this->addDisplayGroup(array(
-          'twitter',
-          'facebook',
-          'slideshare',
-          'endereco_internet'
-         ), 'tab-2', array(
-            'decorators' => array(
-              'FormElements',
-              array('HtmlTag', array('tag' => 'div', 'id' => 'tab-2'))
-          )
-      ));
 
-      $submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
+      $submit = new Zend_Form_Element_Submit('submit');
+      $submit->setLabel(_("Confirm"))
+              ->setAttrib('id', 'submitbutton')
+              ->setAttrib('class', 'btn btn-primary');
+      $submit->setDecorators(array(
+          'ViewHelper',
+          'Description',
+          'Errors',
+      ));
       $this->addElement($submit);
-      $reset = $this->createElement('reset', _('Reset'))->removeDecorator('DtDdWrapper');
-      $this->addElement($reset);
    }
 
    protected function _bio() {
@@ -132,6 +108,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
       $e = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
       $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
               ->addErrorMessage(_("Invalid Twitter username"));
+      $e->setAttrib('class', 'form-control');
       return $e;
    }
 
@@ -139,6 +116,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
       $e = $this->createElement('text', 'facebook', array('label' => 'Facebook: '));
       $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
               ->addErrorMessage(_("Invalid Facebook username"));
+      $e->setAttrib('class', 'form-control');
       return $e;
    }
 
@@ -147,6 +125,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
       $e->setAttrib("placeholder", "http://www.comsolid.org")
               ->addValidator(new Url_Validator)
               ->addErrorMessage(_("Invalid website"));
+      $e->setAttrib('class', 'form-control');
       return $e;
    }
 
@@ -154,11 +133,13 @@ class Application_Form_PessoaEdit extends Zend_Form {
       $e = $this->createElement('text', 'slideshare', array('label' => 'Slideshare: '));
       $e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
               ->addErrorMessage(_("Invalid Slideshare username"));
+      $e->setAttrib('class', 'form-control');
       return $e;
    }
 
    /**
     * Uncomment this method if you want to use only the birth year
+    * Descomente este método se você deseja usar somente o ano de nascimento
     * @return {[Zend_Form_Element_Select]}
     */
    protected function _nascimento() {
@@ -176,6 +157,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
 
    /**
     * Uncomment this method if you want to use the whole birth date
+    * Descomente este método se você deseja usar a data de nascimento completa
     * @return {[Zend_Form_Element_Text]}
     */
    /*protected function _nascimento() {
@@ -199,6 +181,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
        $e->setRequired(false); // change to true to be required.
        // $e->setAttrib("data-required", "true"); // uncomment for validation through js
 
+       $e->setAttrib('class', 'form-control');
        return $e;
    }
 
@@ -208,6 +191,7 @@ class Application_Form_PessoaEdit extends Zend_Form {
        $e->addFilter('Digits');
        $e->setRequired(false);
 
+       $e->setAttrib('class', 'form-control');
        return $e;
    }
 }
