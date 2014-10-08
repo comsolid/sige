@@ -241,7 +241,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
     */
    public function listarEventosParticipante($id_encontro, $responsavel) {
       $sql = "SELECT id_evento, nome_evento, validada,
-         TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MI') as data_submissao,
+         TO_CHAR(data_submissao, 'YYYY-MM-DD HH24:MI') as data_submissao,
 		nome_tipo_evento, resumo
             FROM evento e
             INNER JOIN tipo_evento te ON e.id_tipo_evento = te.id_tipo_evento

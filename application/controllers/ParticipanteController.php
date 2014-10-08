@@ -171,9 +171,14 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function alterarSenhaAction() {
-        $this->view->menu->setAtivo('alterarsenha');
+        //$this->view->menu->setAtivo('alterarsenha');
         $this->autenticacao();
 
+        $this->_helper->layout->setLayout('twbs3');
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $idPessoa = $sessao["idPessoa"];
+
+        $pessoa = new Application_Model_Pessoa();
         $form = new Application_Form_AlterarSenha();
         $this->view->form = $form;
 
@@ -187,11 +192,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost() && $form->isValid($data)) {
             $data = $form->getValues();
-
-            $pessoa = new Application_Model_Pessoa();
-            $sessao = Zend_Auth::getInstance()->getIdentity();
             $email = $sessao["email"];
-
             $resultadoConsulta = $pessoa->avaliaLogin($email, $data['senhaAntiga']);
 
             if ($resultadoConsulta != null) {
@@ -219,11 +220,15 @@ class ParticipanteController extends Zend_Controller_Action {
                 }
             }
         }
+
+        $this->view->id = $idPessoa;
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $this->view->user = $pessoa->fetchRow($sql);
     }
 
     public function verAction() {
         $this->_helper->layout->setLayout('twbs3');
-        
+
         $model = new Application_Model_Pessoa();
         $id = $this->_getParam('id', "");
         if (!empty($id)) {
@@ -261,6 +266,8 @@ class ParticipanteController extends Zend_Controller_Action {
 
     public function certificadosAction() {
         $this->autenticacao();
+        $this->_helper->layout->setLayout('twbs3');
+
         $sessao = Zend_Auth :: getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 
@@ -268,6 +275,11 @@ class ParticipanteController extends Zend_Controller_Action {
         $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
         $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
         $this->view->certsPalestrante = array_merge($this->view->certsPalestrante, $model->listarCertificadosPalestrantesOutros($idPessoa));
+
+        $this->view->id = $idPessoa;
+        $pessoa = new Application_Model_Pessoa();
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $this->view->user = $pessoa->fetchRow($sql);
     }
 
     public function certificadoParticipanteAction() {
