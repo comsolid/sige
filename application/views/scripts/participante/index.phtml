@@ -1,49 +1,79 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/participante/inicio.js'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    //$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/participante/index.js'));
 ?>
 
-<fieldset>
-    <legend><?php echo $this->translate("Interest List"); ?></legend>
-    <a style="float:right; clear:right;"
-			href="<?=$this->url(array('controller' => 'evento',
-             'action' => 'interesse')) ?>" class="no-bottom">
-		<i class="icon-plus"></i> <?php echo $this->translate("View and add events of your interest"); ?>
-	</a>
-	<table class="display" cellpadding="0" cellspacing="0" border="0">
-		<thead>
-			<tr>
-				<th><?php echo $this->translate("Description"); ?></th>
-				<th><?php echo $this->translate("Date"); ?></th>
-				<th><?php echo $this->translate("Time"); ?></th>
-				<th><?php echo $this->translate("Place"); ?></th>
-				<td style="width: 90px;">&nbsp;</td>
-			</tr>
-		</thead>
-		<tbody>
-		<?php foreach ($this->listaParticipanteEventoTabela as $item): ?>
-			<tr>
-				<td>
-               <?php if (!$item['validada']): ?>
-                  <i class="icon-warning-sign"
-                     title="<?php echo $this->translate("This event was invalidated and could not be given."); ?>"></i>
-               <?php endif; ?>
-               <?php echo $item["nome_tipo_evento"];?> -
-               <?php echo $item["nome_evento"];?>
-            </td>
-				<td><?php echo $item["data"];?></td>
-				<td><?php echo $item["hora_inicio"];?> - <?php echo $item["hora_fim"];?></td>
-				<td><?php echo $item["nome_sala"];?></td>
-				<td>
-					<a href="<?=$this->url(array(
-                   'controller' => 'evento',
-                   'action' => 'desfazer-interesse',
-                   'id' => $item["evento"])) ?>" class="no-bottom">
-                  <i class="icon-reply"></i> Desfazer</a>
-				</td>
-		  </tr>
-		<?php endforeach; ?>
-		</tbody>
-	</table>
-</fieldset>
+<div class="row">
+    <div class="col-md-6">
+        <h3><?php echo $this->translate("Interest List"); ?></h3>
+    </div>
+    <div class="col-md-6">
+        <a href="<?=$this->url(array('controller' => 'evento',
+                 'action' => 'interesse')) ?>" class="btn btn-primary btn-lg pull-right">
+            <i class="fa fa-plus"></i>
+            <?php echo $this->translate("Events of Interest"); ?>
+        </a>
+    </div>
+</div>
+
+<hr>
+
+<?php if (empty($this->listaParticipanteEventoTabela)): ?>
+    <div class="alert alert-info">
+        <?php echo $this->translate("You don't have any events added. Click in 'Events of Interest' and browse to see date, time and place of events of interest."); ?>
+    </div>
+<?php else: ?>
+    <div class="row">
+    <?php foreach ($this->listaParticipanteEventoTabela as $item): ?>
+        <?php
+            $css_painel_type = "panel-default";
+            if (!$item['validada']) {
+                $css_painel_type = "panel-warning";
+            }
+        ?>
+        <div class="col-md-4">
+            <div class="panel <?php echo $css_painel_type; ?>">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="label label-primary"><?php echo $item["nome_tipo_evento"];?></span>
+                        <?php echo $item["nome_evento"];?>
+                        <a href="<?=$this->url(array(
+                           'controller' => 'evento',
+                           'action' => 'desfazer-interesse',
+                           'id' => $item["evento"])) ?>" class="close pull-right"
+                           data-toggle="tooltip" data-placement="top"
+                           title="<?php echo $this->translate("Remove"); ?>">
+                           <span aria-hidden="true">&times;</span>
+                           <span class="sr-only">Close</span>
+                        </a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <?php echo $this->translate("Date"); ?>:
+                        <?php echo $item["data"];?>
+                    </div>
+                    <div>
+                        <?php echo $this->translate("Time"); ?>:
+                        <?php echo $item["hora_inicio"];?> - <?php echo $item["hora_fim"];?>
+                    </div>
+                    <div>
+                        <?php echo $this->translate("Place"); ?>:
+                        <?php echo $item["data"];?>
+                        <?php echo $item["nome_sala"];?>
+                    </div>
+
+                    <?php if (!$item['validada']): ?>
+                    <div class="text-warning">
+                        <i class="fa fa-warning"></i>
+                        <?php echo $this->translate("This event was invalidated and could not be given."); ?>
+                    </div>
+                    <?php endif; ?>
+
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+<?php endif; ?>

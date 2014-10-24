@@ -5,6 +5,7 @@ class ParticipanteController extends Zend_Controller_Action {
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3');
     }
 
     private function autenticacao() {
@@ -105,8 +106,6 @@ class ParticipanteController extends Zend_Controller_Action {
     public function editarAction() {
         $this->autenticacao();
 
-        $this->_helper->layout->setLayout('twbs3');
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -174,7 +173,6 @@ class ParticipanteController extends Zend_Controller_Action {
         //$this->view->menu->setAtivo('alterarsenha');
         $this->autenticacao();
 
-        $this->_helper->layout->setLayout('twbs3');
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 
@@ -227,8 +225,6 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function verAction() {
-        $this->_helper->layout->setLayout('twbs3');
-
         $model = new Application_Model_Pessoa();
         $id = $this->_getParam('id', "");
         if (!empty($id)) {
@@ -266,7 +262,6 @@ class ParticipanteController extends Zend_Controller_Action {
 
     public function certificadosAction() {
         $this->autenticacao();
-        $this->_helper->layout->setLayout('twbs3');
 
         $sessao = Zend_Auth :: getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
@@ -369,5 +364,4 @@ class ParticipanteController extends Zend_Controller_Action {
                         'action' => 'certificados'), 'default', true);
         }
     }
-
 }

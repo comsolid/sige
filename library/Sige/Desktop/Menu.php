@@ -1,17 +1,17 @@
 <?php
 
 class Sige_Desktop_Menu {
-    
+
     private $menu_items;
     private $menu_ativo;
-    
+
     public function __construct($view, $ativo = "", $isAdmin = false) {
-        
+
         $this->menu_ativo = $ativo;
         $this->menu_items = array(
             // url : ícone : texto : ativo?
             'home' => array(
-                'url' => $view->url(array(), 'default', true),
+                'url' => $view->url(array('controller' => 'participante'), 'default', true),
                 'icon' => 'fa-home',
                 'text' => _("Home"),
             ),
@@ -31,7 +31,7 @@ class Sige_Desktop_Menu {
                 'text' => _("Paper Submission"),
             ),
         );
-        
+
         if ($isAdmin) {
             $this->menu_items['admin'] = array(
                 'url' => $view->url(array(), 'admin', true),
@@ -40,11 +40,11 @@ class Sige_Desktop_Menu {
             );
         }
     }
-    
+
     public function setAtivo($item) {
         $this->menu_ativo = $item;
     }
-    
+
     public function getView() {
         $result = "";
         foreach ($this->menu_items as $key => $value) {
@@ -53,7 +53,7 @@ class Sige_Desktop_Menu {
         }
         return $result;
     }
-    
+
     private function ativar($item) {
         if (strcmp($this->menu_ativo, $item) == 0) {
             return 'class="active"';
