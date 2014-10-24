@@ -144,7 +144,7 @@ class EventoController extends Zend_Controller_Action {
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
-        
+
         $data = $this->getRequest()->getPost();
         $form = new Application_Form_Evento();
         $this->view->form = $form;
@@ -180,7 +180,7 @@ class EventoController extends Zend_Controller_Action {
         $admin = $sessao["administrador"]; // boolean
         $idPessoa = $sessao["idPessoa"];
         $idEvento = $this->_request->getParam('id', 0);
-        
+
         if (isset($data['cancelar'])) {
             return $this->redirecionar($admin, $idEvento);
         }
@@ -194,7 +194,7 @@ class EventoController extends Zend_Controller_Action {
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
-        
+
         $data = $this->getRequest()->getPost();
         $form = new Application_Form_Evento();
         $this->view->form = $form;
@@ -300,6 +300,42 @@ class EventoController extends Zend_Controller_Action {
         }
     }
 
+    public function ajaxDesfazerInteresseAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->autenticacao();
+
+        $json = new stdClass;
+        if ($this->getRequest()->isPost()) {
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $idPessoa = $sessao["idPessoa"];
+            $model = new Application_Model_EventoDemanda();
+            $id = (int) $this->getRequest()->getPost('id_evento');
+            try {
+                $where = array(
+                    "evento = ?" => $id,
+                    "id_pessoa = ?" => $idPessoa);
+                $model->delete($where);
+                $json->ok = true;
+            } catch (Exception $e) {
+                $json->ok = false;
+                $json->error = _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage();
+            }
+        } else {
+            $json->ok = false;
+            $json->error = _("The request can not be completed.");
+        }
+
+        header("Pragma: no-cache");
+        header("Cache: no-cache");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Content-type: text/json");
+        echo json_encode($json);
+    }
+
+    /**
+     * @deprecated use ajaxDesfazerInteresseAction
+     */
     public function desfazerInteresseAction() {
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -497,7 +533,7 @@ class EventoController extends Zend_Controller_Action {
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);

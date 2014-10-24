@@ -1,8 +1,14 @@
 <?php
     //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    //$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/bootstrap/bootbox.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/index.js'));
 ?>
+
+<style>
+    .panel-title {
+        line-height: 1.4;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-6">
@@ -32,18 +38,21 @@
                 $css_painel_type = "panel-warning";
             }
         ?>
-        <div class="col-md-4">
+        <div class="col-md-4" id="panel_event_<?php echo $item["evento"]; ?>">
             <div class="panel <?php echo $css_painel_type; ?>">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <span class="label label-primary"><?php echo $item["nome_tipo_evento"];?></span>
                         <?php echo $item["nome_evento"];?>
-                        <a href="<?=$this->url(array(
+                        <?php /* <?=$this->url(array(
                            'controller' => 'evento',
                            'action' => 'desfazer-interesse',
-                           'id' => $item["evento"])) ?>" class="close pull-right"
-                           data-toggle="tooltip" data-placement="top"
-                           title="<?php echo $this->translate("Remove"); ?>">
+                           'id' => $item["evento"])) ?> */ ?>
+                        <a href="#" onclick="return false;"
+                            class="close pull-right"
+                            data-id-evento="<?php echo $item["evento"]; ?>"
+                            data-toggle="tooltip" data-placement="top"
+                            title="<?php echo $this->translate("Remove"); ?>">
                            <span aria-hidden="true">&times;</span>
                            <span class="sr-only">Close</span>
                         </a>
