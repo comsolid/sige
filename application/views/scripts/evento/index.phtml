@@ -90,24 +90,24 @@
     <?php endforeach; ?>
 
 <?php else: ?>
-   <div class="row">
-       <div class="col-md-12">
-           <h3 class="text-center">
-               <?php echo $this->translate("What about submit a paper and participate?"); ?>
-           </h3>
-       </div>
-   </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">
+                <?php echo $this->translate("What about submit a paper and participate?"); ?>
+            </h3>
+        </div>
+    </div>
 
-   <div class="row">
-       <div class="col-md-4"><hr></div>
-       <div class="col-md-4">
-           <a href="<?php echo $this->url(array(
-               'controller'=>'evento',
-               'action'=>'submeter'), 'default');?>"
-               class="btn btn-primary btn-lg btn-block">
-              <i class="fa fa-file"></i> <?php echo $this->translate("Submit Paper"); ?>
-           </a>
-       </div>
-       <div class="col-md-4"><hr></div>
-   </div>
+    <div class="row">
+        <div class="col-md-4"><hr></div>
+        <div class="col-md-4">
+            <a href="<?php echo $this->url(array(
+                'controller'=>'evento',
+                'action'=>'submeter'), 'default');?>"
+                class="btn btn-primary btn-lg btn-block">
+                <i class="fa fa-file"></i> <?php echo $this->translate("Submit Paper"); ?>
+            </a>
+        </div>
+        <div class="col-md-4"><hr></div>
+    </div>
 <?php endif; ?>

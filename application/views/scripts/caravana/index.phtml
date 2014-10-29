@@ -1,107 +1,99 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/caravana/index.js'));
-
-    $this->headLink()->appendStylesheet($this->baseUrl('css/caravana/index.css'));
+	//$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+	//$this->headLink()->appendStylesheet($this->baseUrl('css/caravana/index.css'));
+	
+	//$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+	//$this->headScript()->appendFile($this->baseUrl('js/caravana/index.js'));
 ?>
 
-<?php if (! is_null($this->participante)): ?>
-<fieldset>
-   <legend>
-       <i class="icon-plane"></i> <?php echo $this->translate("You are registered on this caravan"); ?>
-   </legend>
-	<div class="acoes">
-		<a href="<?php echo $this->url(array('controller' => 'caravana',
-	  'action' => 'sair'), 'default', true); ?>"
-      onclick="return confirm(_('Are you sure you want to leave this caravan?'))"
-      class="no-bottom">
-            <i class="icon-remove"></i> <?php echo $this->translate("Leave this caravan?"); ?>
+<?php if (!is_null($this->participante)): ?>
+<div class="row">
+	<div class="col-md-6">
+		<h4>
+			<i class="fa fa-plane"></i> <?php echo $this->translate("You are registered on this caravan"); ?>
+		</h4>
+		<hr>
+		<p>
+			<?php echo $this->translate("Caravan:"); ?>
+			<strong><?=$this->participante['apelido_caravana'] ?></strong>
+		</p>
+		<p>
+			<?php echo $this->translate("District:"); ?>
+			<strong><?=$this->participante['nome_municipio'] ?></strong>
+		</p>
+		<p>
+			<?php echo $this->translate("Institution:"); ?>
+			<strong><?=$this->participante['apelido_instituicao'] ?></strong>
+		</p>
+		<p>
+			<?php echo $this->translate("Responsable:"); ?>
+			<strong><?=$this->participante['nome'] ?></strong>
+		</p>
+	</div>
+	<div class="col-md-6">
+		<a href="<?php echo $this->url(array('controller' => 'caravana', 'action' => 'sair'), 'default', true); ?>"
+			onclick="return confirm(_('Are you sure you want to leave this caravan?'))"
+			class="btn btn-danger pull-right">
+            <i class="fa fa-times"></i> <?php echo $this->translate("Leave this caravan?"); ?>
 		</a>
 	</div>
+</div>
 
-   <dl class="detalhes">
-      <dt><label>Caravana:</label></dt>
-      <dd><label><?= $this->participante['apelido_caravana'] ?></label></dd>
-
-      <dt><label>Município:</label></dt>
-      <dd><label><?= $this->participante['nome_municipio'] ?></label></dd>
-
-      <dt><label>Instituição:</label></dt>
-      <dd><label><?= $this->participante['apelido_instituicao'] ?></label></dd>
-
-      <dt><label>Responsável:</label></dt>
-      <dd><label><?= $this->participante['nome'] ?></label></dd>
-   </dl>
-</fieldset>
 <?php else: ?>
 
-<fieldset>
-   <?php if (is_null($this->caravanaResponsavel) and is_null($this->participante)): ?>
-      <legend><?php echo $this->translate("Are you responsable for a Caravan?"); ?></legend>
-      <a href="<?php echo $this->baseUrl('caravana/criar'); ?>"
-         class="no-bottom" style="float: right">
-			<i class="icon-plus"></i> <?php echo $this->translate("Create caravan"); ?>
+
+	<?php if (is_null($this->caravanaResponsavel) and is_null($this->participante)): ?>
+<div class="row">
+	<div class="col-md-12">
+	   <h3 class="text-center">
+		   <?php echo $this->translate("Are you responsable for a Caravan?"); ?>
+	   </h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4"><hr></div>
+	<div class="col-md-4">
+		<a href="<?php echo $this->url(array('controller' => 'caravana', 'action' => 'criar')); ?>"
+			class="btn btn-primary btn-lg btn-block">
+			<i class="fa fa-plus"></i> <?php echo $this->translate("Create caravan"); ?>
 		</a>
-   <?php elseif (! is_null($this->caravanaResponsavel)): ?>
-      <legend><?php echo $this->translate("You are responsable for a Caravan"); ?></legend>
-      <dl class="detalhes">
-         <dt id="nome_caravana-label">
-            <label class="required" for="nome_caravana">
-                <?php echo $this->translate("Caravan:"); ?>
-            </label>
-         </dt>
-         <dd id="nome_caravana-element">
-            <label class="required" for="nome_caravana">
-                <?= $this->caravanaResponsavel["apelido_caravana"]; ?>
-            </label>
-         </dd>
-
-         <dt id="id_municipio-label">
-            <label class="optional" for="id_municipio">
-                <?php echo $this->translate("District:"); ?>
-            </label>
-         </dt>
-         <dd id="id_municipio-element">
-            <label class="required" for="nome_caravana">
-                <?= $this->caravanaResponsavel["nome_municipio"]; ?>
-            </label>
-         </dd>
-
-         <dt id="id_instituicao-label">
-            <label class="optional" for="id_instituicao">
-                <?php echo $this->translate("Institution:"); ?>
-            </label>
-         </dt>
-         <dd id="id_instituicao-element">
-            <label class="required" for="nome_caravana">
-                <?= $this->caravanaResponsavel["apelido_instituicao"]; ?>
-            </label>
-         </dd>
-
-         <dt id="id_instituicao-label">
-            <label class="optional" for="id_instituicao">
-                <?php echo $this->translate("Responsable:"); ?>
-            </label>
-         </dt>
-         <dd id="id_instituicao-element">
-             <label>
-                <?= $this->caravanaResponsavel["nome"]; ?>
-             </label>
-         </dd>
-      </dl>
-
-      <a href="<?php echo $this->url(array(
-                  'controller' => 'caravana',
-                  'action' => 'participantes'), 'default', true);
-              ?>" class="no-bottom">
-           <i class="icon-plus"></i> <?php echo $this->translate("Add participants"); ?>
-      </a>&nbsp;&nbsp;&nbsp;
-      <a href="<?=$this->url(array('controller' => 'caravana',
-               'action' => 'editar'), 'default', true) ?>"
-               class="no-bottom">
-          <i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?>
-      </a>
+	</div>
+	<div class="col-md-4"><hr></div>
+</div>
+	
+	<?php else: ?>
+<div class="row">
+	<div class="col-md-6">
+		<h3><?php echo $this->translate("You are responsable for a Caravan"); ?></h3><hr>
+		<p>
+			<?php echo $this->translate("Caravan:"); ?>
+			<strong><?php echo $this->caravanaResponsavel["apelido_caravana"]; ?></strong>
+		</p>
+		<p>
+			<?php echo $this->translate("District:"); ?>
+			<strong><?php echo $this->caravanaResponsavel["nome_municipio"]; ?></strong>
+		</p>
+		<p>
+			<?php echo $this->translate("Institution:"); ?>
+			<strong><?php echo $this->caravanaResponsavel["apelido_instituicao"]; ?></strong>
+		</p>
+		<hr>
+		<div class="btn-group">
+			<a href="<?php echo $this->url(array(
+				'controller' => 'caravana',
+				'action' => 'participantes'), 'default', true); ?>"
+				class="btn btn-default">
+				<i class="fa fa-plus"></i> <?php echo $this->translate("Add participants"); ?>
+			</a>
+			<a href="<?php echo $this->url(array(
+				'controller' => 'caravana',
+				'action' => 'editar'), 'default', true) ?>"
+				   class="btn btn-default">
+			  <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
+			</a>
+		</div>
+	</div>
+</div>
 	<?php endif; ?>
-</fieldset>
 <?php endif; ?>

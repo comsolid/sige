@@ -11,7 +11,8 @@ class CaravanaController extends Zend_Controller_Action {
         }
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'caravana', $sessao['administrador']);
+        $this->view->menu = new Sige_Desktop_Menu($this->view, 'caravan', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3');
     }
 
     public function indexAction() {

@@ -78,12 +78,11 @@ class EventoController extends Zend_Controller_Action {
             }
 
             $json->itens[] = array(
-                "{$value['nome_tipo_evento']}",
-                "{$descricao}",
+                "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span> {$descricao}",
                 "{$value['data']}",
                 "{$value['h_inicio']} - {$value['h_fim']}",
-                "<a id=\"{$value['evento']}\" class=\"marcar no-bottom\">
-                  <i class=\"icon-bookmark\"></i> " . _("Bookmark") . "</a>"
+                "<a id=\"{$value['evento']}\" class=\"marcar btn btn-default\">
+                  <i class=\"fa fa-bookmark\"></i> " . _("Bookmark") . "</a>"
             );
         }
 

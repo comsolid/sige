@@ -1,5 +1,4 @@
 <?php
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/bootstrap/bootbox.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/index.js'));
 ?>
@@ -44,10 +43,6 @@
                     <h3 class="panel-title">
                         <span class="label label-primary"><?php echo $item["nome_tipo_evento"];?></span>
                         <?php echo $item["nome_evento"];?>
-                        <?php /* <?=$this->url(array(
-                           'controller' => 'evento',
-                           'action' => 'desfazer-interesse',
-                           'id' => $item["evento"])) ?> */ ?>
                         <a href="#" onclick="return false;"
                             class="close pull-right"
                             data-id-evento="<?php echo $item["evento"]; ?>"
