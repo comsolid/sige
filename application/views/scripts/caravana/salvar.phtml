@@ -1,0 +1,72 @@
+<?php
+	$this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2-bootstrap.css'));
+
+	$this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
+	$this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
+	$this->headScript()->appendFile($this->baseUrl('js/caravana/salvar.js'));
+?>
+
+<h3><?php echo $this->title; ?></h3><hr>
+
+<?php
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo
+	$form->getAction()?>">
+
+<div class="row">
+	<div class="col-md-5">
+		<?php echo $form->nome_caravana->renderLabel() ?>
+		<div class="form-group">
+			<?php echo $form->nome_caravana->renderViewHelper() ?>
+			<div class="form-errors">
+				<?php echo $form->nome_caravana->renderErrors() ?>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<?php echo $form->apelido_caravana->renderLabel() ?>
+		<div class="form-group">
+			<?php echo $form->apelido_caravana->renderViewHelper() ?>
+			<div class="form-errors">
+				<?php echo $form->apelido_caravana->renderErrors() ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<?php echo $form->id_municipio->renderLabel() ?>
+		<div class="form-group">
+			<?php echo $form->id_municipio->renderViewHelper() ?>
+			<div class="form-errors">
+				<?php echo $form->id_municipio->renderErrors() ?>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<?php echo $form->id_instituicao->renderLabel() ?>
+		<div class="form-group">
+			<?php echo $form->id_instituicao->renderViewHelper() ?>
+			<div class="form-errors">
+				<?php echo $form->id_instituicao->renderErrors() ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div class="row">
+	<div class="col-md-6">
+		<a href="<?php echo $this->url(array('controller' => 'caravana'), 'default', true)?>" class="btn btn-default">
+		<?php echo $this->translate("Cancel"); ?>
+	</a>
+		<?php echo $form->submit->renderViewHelper() ?>
+	</div>
+</div>
+
+</form>

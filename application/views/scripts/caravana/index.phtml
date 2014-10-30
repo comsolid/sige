@@ -1,7 +1,7 @@
 <?php
 	//$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
 	//$this->headLink()->appendStylesheet($this->baseUrl('css/caravana/index.css'));
-	
+
 	//$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
 	//$this->headScript()->appendFile($this->baseUrl('js/caravana/index.js'));
 ?>
@@ -33,7 +33,7 @@
 	<div class="col-md-6">
 		<a href="<?php echo $this->url(array('controller' => 'caravana', 'action' => 'sair'), 'default', true); ?>"
 			onclick="return confirm(_('Are you sure you want to leave this caravan?'))"
-			class="btn btn-danger pull-right">
+			class="btn btn-danger btn-lg pull-right">
             <i class="fa fa-times"></i> <?php echo $this->translate("Leave this caravan?"); ?>
 		</a>
 	</div>
@@ -61,7 +61,7 @@
 	</div>
 	<div class="col-md-4"><hr></div>
 </div>
-	
+
 	<?php else: ?>
 <div class="row">
 	<div class="col-md-6">
@@ -83,13 +83,13 @@
 			<a href="<?php echo $this->url(array(
 				'controller' => 'caravana',
 				'action' => 'participantes'), 'default', true); ?>"
-				class="btn btn-default">
+				class="btn btn-default btn-lg">
 				<i class="fa fa-plus"></i> <?php echo $this->translate("Add participants"); ?>
 			</a>
 			<a href="<?php echo $this->url(array(
 				'controller' => 'caravana',
 				'action' => 'editar'), 'default', true) ?>"
-				   class="btn btn-default">
+				   class="btn btn-default btn-lg">
 			  <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
 			</a>
 		</div>

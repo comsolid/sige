@@ -172,6 +172,8 @@ class CaravanaController extends Zend_Controller_Action {
                         'action' => 'index'
                             ), null, true);
         }
+
+        $this->_helper->viewRenderer->setRender('salvar');
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -223,6 +225,8 @@ class CaravanaController extends Zend_Controller_Action {
                 }
             }
         }
+
+        $this->view->title = _('Create Caravan');
     }
 
     /**
@@ -237,6 +241,7 @@ class CaravanaController extends Zend_Controller_Action {
                         'action' => 'index'), null, true);
         }
 
+        $this->_helper->viewRenderer->setRender('salvar');
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -285,5 +290,7 @@ class CaravanaController extends Zend_Controller_Action {
                 }
             }
         }
+
+        $this->view->title = _('Edit Caravan');
     }
 }
