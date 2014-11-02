@@ -13,13 +13,13 @@ $(function() {
 		}
 	});
 
-   $("#termo").select();
-   getValores();
-   $("#termo").autocomplete({
-      source: function() {
-         getValores();
-      }
-   });
+    $("#termo").select();
+    getValores();
+    $("#termo").autocomplete({
+        source: function() {
+            getValores();
+        }
+    });
 
 	// evento Usado quando seleciar uma data do evento
 	$('input:radio').change(function() {
@@ -44,8 +44,10 @@ function getValores() {
 	var termo = $("#termo").val();
 	var data_evento = getDataEvento();
 	var tipo_evento = getTipoEvento();
+    var url = "/evento/ajax-buscar/termo/" + termo
+        + "/id_tipo_evento/" + tipo_evento + "/data/" + data_evento;
 
-	$.getJSON("/evento/ajax-buscar/termo/"+termo+"/id_tipo_evento/"+tipo_evento+"/data/"+data_evento, function(json){
+	$.getJSON(url, function(json){
 		oTable.fnClearTable();
 		if (json.size > 0) {
 			oTable.fnAddData(json.itens);
@@ -58,11 +60,14 @@ function getValores() {
 function addEvento(id) {
 
 	if (id > 0) {
-		$.getJSON("/evento/ajax-interesse/id/"+id, function(json) {
+        var url = "/evento/ajax-interesse/id/" + id;
+		$.getJSON(url, function(json) {
 			if (json.ok) {
-				mostrarMensagem("div#msg-success", _("Interesting event bookmarked."));
+				//mostrarMensagem("div#msg-success", _("Interesting event bookmarked."));
+                alertify.success(_("Interesting event bookmarked."));
 			} else if (json.erro != null) {
-				mostrarMensagem("div#msg-error", json.erro);
+				//mostrarMensagem("div#msg-error", json.erro);
+                alertify.error(json.erro);
 			}
 		}).complete(function() {
 			getValores();

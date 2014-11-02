@@ -34,6 +34,7 @@ class EventoController extends Zend_Controller_Action {
      *    /submissao
      */
     public function indexAction() {
+    
         $this->autenticacao();
         $this->view->menu->setAtivo('submission');
         $sessao = Zend_Auth::getInstance()->getIdentity();

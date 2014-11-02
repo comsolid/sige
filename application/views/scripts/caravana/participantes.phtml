@@ -1,16 +1,16 @@
 <?php
-    //$this->headLink()->prependStylesheet($this->baseUrl('css/tabela_sort.css'));
-    //$this->headLink()->prependStylesheet($this->baseUrl('css/form.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2-bootstrap.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
 
     $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('js/caravana/participantes.js'));
-    
 ?>
 
 <h3>
@@ -52,8 +52,7 @@
                             'action' => 'deletar-participante',
                             'pessoa' => $participante['id_pessoa'],
                             'caravana' => $this->caravana['id_caravana']));
-                            ?>" class="btn btn-danger"
-                            onclick="return confirm(_('Are you sure you want to delete this participant from the caravan?'))">
+                            ?>" class="btn btn-danger deletar">
                             <i class="fa fa-times"></i> <?php echo $this->translate("Delete"); ?>
                         </a>
                     </td>

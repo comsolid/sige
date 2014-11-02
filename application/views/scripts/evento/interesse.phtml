@@ -1,6 +1,10 @@
 <?php
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
 
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
@@ -68,14 +72,7 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-success" id="msg-success" style="display: none;"></div>
-        <div class="alert alert-danger" id="msg-error" style="display: none;"></div>
-    </div>
-</div>
-
-<table id="example" cellpadding="0" cellspacing="0" class="table table-striped">
+<table cellpadding="0" cellspacing="0" class="table table-striped">
     <thead>
         <tr>
             <th><?php echo $this->translate("Description"); ?></th>
@@ -85,6 +82,7 @@
         </tr>
     </thead>
     <tbody id="resultado">
+        <!-- preenchido via ajax -->
     </tbody>
 </table>
 

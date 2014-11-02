@@ -23,23 +23,27 @@ class Zend_View_Helper_FlashMessages extends Zend_View_Helper_Abstract {
 
       if (!empty($messages)) {
          foreach ($messages as $message) {
-            $output .= '<div class="' . key($message) . '">';
-            $output .= '<div class="msg-header">';
+            $output .= '<div class="alert alert-' . key($message) . '" role="alert">';
+            $output .= '<button type="button" class="close" data-dismiss="alert">';
+            $output .= '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
+            $output .= '<strong>';
             switch (key($message)) {
-               case 'notice':
-                  $output .= 'Atenção!';
+               case 'notice': // TODO: remover notice
+               case 'warning':
+                  $output .= _('Heads up!');
                   break;
                case 'info':
-                  $output .= 'Mantenha-se informado!';
+                  $output .= _('Warning!');
                   break;
-               case 'error':
-                  $output .= 'Erro!';
+               case 'error': // TODO: remover error
+               case 'danger':
+                  $output .= _('Error!');
                   break;
                case 'success':
-                  $output .= 'Sucesso!';
+                  $output .= _('Success!');
                   break;
             }
-            $output .= '</div><div>'. current($message) . '</div></div>';
+            $output .= '</strong> '. current($message) . '</div>';
          }
       }
       return $output;

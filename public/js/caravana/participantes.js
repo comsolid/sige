@@ -20,4 +20,12 @@ $(function() {
             });
         }
     });
+    
+    $('a.deletar').click(function () {
+        var url = $(this).attr('href');
+        alertify.confirm(_('Are you sure you want to delete this participant from the caravan?'), function() {
+            window.location = url;
+        }).set('reverseButtons', true);
+        return false;
+    });
 });

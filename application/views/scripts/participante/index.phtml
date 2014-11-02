@@ -1,5 +1,9 @@
 <?php
-    $this->headScript()->appendFile($this->baseUrl('lib/js/bootstrap/bootbox.min.js'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/index.js'));
 ?>
 
