@@ -34,7 +34,7 @@ class EventoController extends Zend_Controller_Action {
      *    /submissao
      */
     public function indexAction() {
-    
+
         $this->autenticacao();
         $this->view->menu->setAtivo('submission');
         $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -138,9 +138,9 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
-            $notice = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
+            $warning = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => $notice));
+                    array('warning' => $warning));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
@@ -188,9 +188,9 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
-            $notice = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
+            $warning = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => $notice));
+                    array('warning' => $warning));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
@@ -408,7 +408,7 @@ class EventoController extends Zend_Controller_Action {
             $data = $evento->buscaEventoPessoa($idEvento);
             if (empty($data)) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => _('Event not found.')));
+                        array('warning' => _('Event not found.')));
             } else {
                 $this->view->evento = $data[0];
                 $this->view->outros = $evento->buscarOutrosPalestrantes($idEvento);
@@ -442,7 +442,7 @@ class EventoController extends Zend_Controller_Action {
             $count_array_id_pessoas = count($array_id_pessoas);
             if (empty($array_id_pessoas[0])) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => _('No speakers selected.')));
+                        array('warning' => _('No speakers selected.')));
             } else {
                 $numParticipantes = 0;
                 try {
@@ -473,7 +473,7 @@ class EventoController extends Zend_Controller_Action {
             $data = $evento->buscaEventoPessoa($idEvento);
             if (empty($data)) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => _('Event not found.')));
+                        array('warning' => _('Event not found.')));
             } else {
                 $this->view->evento = $data[0];
 
@@ -481,7 +481,7 @@ class EventoController extends Zend_Controller_Action {
                 $sessao = Zend_Auth::getInstance()->getIdentity();
                 if ($this->view->evento['id_pessoa'] != $sessao['idPessoa']) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('notice' => _("You don't have permission to edit this event.")));
+                            array('warning' => _("You don't have permission to edit this event.")));
                     return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
                 }
             }
@@ -560,7 +560,7 @@ class EventoController extends Zend_Controller_Action {
             }
         } else {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => _('No speaker was selected.')));
+                    array('warning' => _('No speaker was selected.')));
         }
         $this->_helper->redirector->goToRoute(array('controller' => 'evento',
             'action' => 'outros-palestrantes', 'id' => $evento), 'default', true);
@@ -577,7 +577,7 @@ class EventoController extends Zend_Controller_Action {
         $data = $evento->buscaEventoPessoa($idEvento);
         if (empty($data)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => _('Event not found.')));
+                    array('warning' => _('Event not found.')));
             return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
         } else {
             $this->view->evento = $data[0];
