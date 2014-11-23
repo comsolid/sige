@@ -141,5 +141,5 @@ de encontros, Criar ou Editar encontro, Editar mensagens de e-mail.
 
 Essa tela serve para procurar participantes e torná-los administradores ou
 usuários comuns, e ainda definir se ele é da Organização ou Coordenação do
-encontro. Essa última opção ainda não influei no sistema mas para
+encontro. Essa última opção ainda não influencia no sistema, mas para
 as próximas versões podemos usar essa informação.
