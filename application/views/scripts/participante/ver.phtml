@@ -107,63 +107,63 @@ if (! empty($tw_user)) {
 ?>
 <p><?=$twitter ?></p>
 
-<?php
-   if (!is_null($this->slides)):
-?>
-<hr/>
-<div class="row">
-    <div class="col-md-12">
-        <a href="http://slideshare.net" target="_blank">
-         <img src="<?php echo $this->baseUrl('img/slideshare_200x50.png'); ?>"/>
-      </a>
-    </div>
-    <div class="col-md-12">
-        <h4 style="padding-top: 6px;"><?php echo $this->translate("Slideshows of"); ?>
-         <a href="http://slideshare.net/<?php echo $this->user->slideshare ?>" target="_blank">
-            <?php echo $this->user->slideshare ?>
-         </a>
-      </h4>
-    </div>
+    <?php if (!is_null($this->slides)): ?>
     <hr/>
-</div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="http://slideshare.net" target="_blank">
+             <img src="<?php echo $this->baseUrl('img/slideshare_200x50.png'); ?>"/>
+          </a>
+        </div>
+        <div class="col-md-12">
+            <h4 style="padding-top: 6px;"><?php echo $this->translate("Slideshows of"); ?>
+             <a href="http://slideshare.net/<?php echo $this->user->slideshare ?>" target="_blank">
+                <?php echo $this->user->slideshare ?>
+             </a>
+          </h4>
+        </div>
+        <hr/>
+    </div>
 
-<?php
-      $maxEmbedSlides = 3;
-      $i = 0;
-      foreach ($this->slides as $item):
-?>
-<div class="row">
-   <div class="col-md-8">
-        <?php if ($i < $maxEmbedSlides): ?>
-            <?php echo ($item->getEmbedCode()); ?>
-        <?php else: ?>
-            <i class='icon-external-link'></i>
-            <a href="<?php echo $item->getPermaLink(); ?>" target="_blank">
-            <?php echo $item->getTitle(); ?></a>
-        <?php endif; ?>
-   </div>
-</div><hr/>
-<?php
-         $i++;
-      endforeach;
-         
-      else:
-?>
-<p>
-    <?php echo $this->translate("Create an account on"); ?>
-    <a href="http://www.slideshare.net/" class="no-bottom" target="_blank">
-        <img src="<?php echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare
-    </a>
-    <?php echo $this->translate("so your presentations can appear here."); ?>
-</p>
-   <?php endif; // end: slides not null ?>
-<?php else: // end: not empty user ?>
-    <p><?php echo $this->translate("Participant not found."); ?></p>
-<?php endif; ?>
+    <?php
+        $maxEmbedSlides = 4;
+        $i = 0;
+    ?>
 
-<?php
-    if (isset($this->slideshareError)):
-?>
+    <div class="row">
+    <?php foreach ($this->slides as $item): ?>
+       <div class="col-md-6">
+            <?php if ($i < $maxEmbedSlides): ?>
+                <?php echo ($item->getEmbedCode()); ?>
+            <?php else: ?>
+                <i class='fa fa-external-link'></i>
+                <a href="<?php echo $item->getPermaLink(); ?>" target="_blank">
+                <?php echo $item->getTitle(); ?></a>
+            <?php endif; ?>
+       </div>
+
+    <?php
+            $i++;
+        endforeach;
+    ?>    
+    </div><!-- end of .row -->
+
+    <?php else: // else: slides not null ?>
+    <p>
+        <?php echo $this->translate("Create an account on"); ?>
+        <a href="http://www.slideshare.net/" target="_blank">
+            <i class="fa fa-slideshare"></i>
+            Slideshare
+        </a>
+        <?php echo $this->translate("so your presentations can appear here."); ?>
+    </p>
+    <?php endif; // end: slides not null ?>
+
+<?php else: // else: not empty user ?>
+    <div class="alert alert-warning"><?php echo $this->translate("Participant not found."); ?></div>
+<?php endif; // end: not empty user ?>
+
+<?php if (isset($this->slideshareError)): ?>
 <div class="alert alert-warning" role="alert">
     <strong><?php echo $this->translate("Attention!"); ?></strong>
     <div>
@@ -176,6 +176,4 @@ if (! empty($tw_user)) {
         <?php echo $this->slideshareError; ?>
     </div>
 </div>
-<?php
-    endif;
-?>
+<?php endif; ?>
