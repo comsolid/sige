@@ -1,46 +1,49 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/evento/programacao.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('js/jquery-migrate-1.2.1.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/evento/programacao.js'));
 ?>
 
-<div class="container">
-   <div class="span-12">
-      <h3><?php echo $this->translate("Schedule"); ?></h3>
-   </div>
-    <div class="span-3">
-        <input type="checkbox" id="auto-scroll"/>
-        <label for="auto-scroll"><?php echo $this->translate("Auto scroll?"); ?></label>
+<div class="row">
+    <div class="col-md-6">
+        <h3><?php echo $this->translate("Schedule"); ?></h3>
     </div>
-   <div class="span-6">
-      <div style="float: right">
-         <?php echo $this->translate("Mode:"); ?>
-         <a href="#" id="modo-normal" onclick="return false;" class="no-bottom">
-             <?php echo $this->translate("Normal"); ?>
-         </a> |
-         <a href="#" id="modo-impressao" onclick="return false;" class="no-bottom">
-             <?php echo $this->translate("Print"); ?>
-         </a>
-      </div>
-   </div>
+    <div class="col-md-2">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="auto-scroll"/>
+                <?php echo $this->translate("Auto scroll?"); ?>
+            </label>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group pull-right" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="mode" id="normal-mode" autocomplete="off" checked>
+                <?php echo $this->translate("Normal"); ?>
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="mode" id="print-mode" autocomplete="off">
+                <?php echo $this->translate("Print"); ?>
+            </label>
+        </div>
+    </div>
 </div>
 
 <hr/>
+
 <?php
 $data_atual = null;
 if (! empty($this->lista)):
    foreach ($this->lista as $item): ?>
-<div class="container">
-   <div class="span-2">
+<div class="row">
+   <div class="col-md-1 col-md-offset-1">
       <?php
       if ($item['data'] != $data_atual) {
          $date = new Zend_Date($item['data'], 'dd/MM/y');
@@ -55,7 +58,7 @@ if (! empty($this->lista)):
       }
       ?>
    </div>
-   <div class="span-18 <?php echo $item['dia_mes'] ?>"
+   <div class="col-md-7 <?php echo $item['dia_mes'] ?>"
         data-data="<?php echo $item['data'] ?>"
         data-hora="<?php echo $item['hora_inicio'] ?>">
       <div class="acc-evento">
@@ -96,11 +99,11 @@ if (! empty($this->lista)):
          </div>
       </div>
    </div>
-   <div class="span-1">
-      <a href="<?=$this->url(array('id' => $item['id_evento']),
-              'ver_evento', true) ?>#disqus_thread" class="no-bottom"
+   <div class="col-md-1">
+      <a href="<?=$this->url(array('id' => $item['id_evento']), 'ver_evento', true) ?>#disqus_thread"
+              class="btn btn-default" rel="tooltip"
               title="<?php echo $this->translate("View and post comments"); ?>">
-              <i class="icon-comments-alt"></i>
+              <i class="fa fa-comments-o"></i>
       </a>
    </div>
 </div>

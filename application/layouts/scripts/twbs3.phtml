@@ -27,6 +27,13 @@
 
     <?= $this->headLink() ?>
     <?= $this->headStyle() ?>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500">
+    <style>
+        body {
+            font-family: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial;
+            font-size: 15px;
+        }
+    </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -39,9 +46,9 @@
   </head>
 
   <body>
-      <?php
-         $this->usuaLogado = Zend_Auth::getInstance()->getIdentity();
-      ?>
+    <?php
+        $this->usuaLogado = Zend_Auth::getInstance()->getIdentity();
+    ?>
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">

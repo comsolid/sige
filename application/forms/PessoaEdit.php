@@ -94,15 +94,16 @@ class Application_Form_PessoaEdit extends Zend_Form {
       $this->addElement($submit);
    }
 
-   protected function _bio() {
-      $e = new Zend_Form_Element_Textarea('bio');
-      $e->setLabel('Bio:')
-              ->setAttrib('rows', 10)
+    protected function _bio() {
+        $e = new Zend_Form_Element_Textarea('bio');
+        $e->setLabel('Bio:')
+              ->setAttrib('rows', 5)
               ->setAttrib('placeholder', _('Write a little about yourself...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
-      return $e;
-   }
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
 
    private function _twitter() {
       $e = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));

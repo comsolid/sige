@@ -78,6 +78,7 @@ class EventoController extends Zend_Controller_Action {
                 $descricao = "{$descricao} ({$value['descricao']})";
             }
 
+            // TODO: montar html no cliente, enviar apenas os dados.
             $json->itens[] = array(
                 "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span> {$descricao}",
                 "{$value['data']}",
@@ -279,6 +280,7 @@ class EventoController extends Zend_Controller_Action {
         $model = new Application_Model_EventoRealizacao();
         $eventoRealizacao = $model->fetchAll();
 
+        // TODO: refezer este trecho usando join ao invés de findDependentRowset
         $this->view->eventosTabela = array();
         foreach ($eventoRealizacao as $item) {
 
@@ -605,7 +607,7 @@ class EventoController extends Zend_Controller_Action {
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -629,20 +631,20 @@ class EventoController extends Zend_Controller_Action {
                 $json->msg = _("Tag added successfully.");
             } else {
                 $json->ok = false;
-                $json->erro = _("An unexpected error ocurred while saving <b>tag</b>.");
+                $json->error = _("An unexpected error ocurred while saving <b>tag</b>.");
             }
         } catch (Exception $e) {
             if ($e->getCode() == 23505) {
-                $json->erro = _("Tag already added.");
+                $json->error = _("Tag already added.");
             } else {
-                $json->erro = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
+                $json->error = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
                         . $e->getMessage();
             }
             $json->ok = false;
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -664,16 +666,16 @@ class EventoController extends Zend_Controller_Action {
             $json->id = $model->getAdapter()->lastSequenceId("tags_id_seq");
         } catch (Exception $e) {
             if ($e->getCode() == 23505) {
-                $json->erro = _("Tag already exists.");
+                $json->error = _("Tag already exists.");
             } else {
-                $json->erro = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
+                $json->error = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
                         . $e->getMessage();
             }
             $json->ok = false;
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -698,17 +700,17 @@ class EventoController extends Zend_Controller_Action {
                 $json->ok = true;
                 $json->msg = _("Tag removed successfully.");
             } else {
-                $json->erro = _("Tag not found.");
+                $json->error = _("Tag not found.");
                 $json->ok = false;
             }
         } catch (Exception $e) {
-            $json->erro = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
+            $json->error = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
                     . $e->getMessage();
             $json->ok = false;
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
