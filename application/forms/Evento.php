@@ -1,12 +1,12 @@
 <?php
 
 class Application_Form_Evento extends Zend_Form {
-   
+
    private $modoEdicao = false;
-   
+
    /**
     * @deprecated
-    * @param type $options 
+    * @param type $options
     */
    public function __construct($options = null) {
       parent::__construct($options);
@@ -31,19 +31,26 @@ class Application_Form_Evento extends Zend_Form {
           $this->_tecnologias_envolvidas(),
           $this->_preferencia_horario(),
       ));
-      
+
       $responsavel = $this->createElement('hidden', 'responsavel');
       $this->addElement($responsavel);
-      
-      $submit = Sige_Form_Element_ButtonFactory::createSubmit();
-      $submit->setLabel(_("Confirm"));
+
+      $submit = new Zend_Form_Element_Submit('submit');
+      $submit->setLabel(_("Confirm"))
+              ->setAttrib('id', 'submitbutton')
+              ->setAttrib('class', 'btn btn-primary');
+      $submit->setDecorators(array(
+          'ViewHelper',
+          'Description',
+          'Errors',
+      ));
       $this->addElement($submit);
       $cancel = Sige_Form_Element_ButtonFactory::createCancel();
       $cancel->setUrl(_("Cancel"),
               array(), 'submissao', true);
       $this->addElement($cancel);
 	}
-   
+
    protected function _nome_evento() {
       $e = new Zend_Form_Element_Text('nome_evento');
       $e->setLabel(_('Title:'))
@@ -53,7 +60,7 @@ class Application_Form_Evento extends Zend_Form {
               ->setAttrib("data-rangelength", "[1,100]")
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->setAttrib('class', 'large');
+              ->setAttrib('class', 'form-control');
 
       $e->setDecorators(array(
           'ViewHelper',
@@ -64,17 +71,18 @@ class Application_Form_Evento extends Zend_Form {
       ));
       return $e;
    }
-   
+
    protected function _id_tipo_evento() {
       $e = new Zend_Form_Element_Select('id_tipo_evento');
       $e->setRequired(true)
               ->setLabel(_('Event type:'));
+      $e->setAttrib('class', 'form-control');
       $model = new Application_Model_TipoEvento();
       $rs = $model->fetchAll();
       foreach ($rs as $item) {
          $e->addMultiOption($item->id_tipo_evento, $item->nome_tipo_evento);
       }
-      
+
       $e->setDecorators(array(
           'ViewHelper',
           'Description',
@@ -84,17 +92,18 @@ class Application_Form_Evento extends Zend_Form {
       ));
       return $e;
    }
-   
+
    protected function _id_dificuldade_evento() {
       $e = new Zend_Form_Element_Select('id_dificuldade_evento');
       $e->setRequired(true)
               ->setLabel(_('Level:'));
+      $e->setAttrib('class', 'form-control');
       $model = new Application_Model_DificuldadeEvento();
       $rs = $model->fetchAll();
       foreach ($rs as $item) {
          $e->addMultiOption($item->id_dificuldade_evento, $item->descricao_dificuldade_evento);
       }
-      
+
       $e->setDecorators(array(
           'ViewHelper',
           'Description',
@@ -104,7 +113,7 @@ class Application_Form_Evento extends Zend_Form {
       ));
       return $e;
    }
-   
+
    protected function _perfil_minimo() {
       $e = new Zend_Form_Element_Textarea('perfil_minimo');
       $e->setLabel(_('Minimum profile:'))
@@ -114,6 +123,7 @@ class Application_Form_Evento extends Zend_Form {
               ->setAttrib('placeholder', _('Describe what your audience should basically know...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
+      $e->setAttrib('class', 'form-control');
 
       $e->setDecorators(array(
           'ViewHelper',
@@ -124,12 +134,12 @@ class Application_Form_Evento extends Zend_Form {
       ));
       return $e;
    }
-   
+
    protected function _id_encontro() {
       $e = new Zend_Form_Element_Hidden('id_encontro');
       return $e;
    }
-   
+
    protected function _resumo() {
       $e = new Zend_Form_Element_Textarea('resumo');
       $e->setLabel(_('Abstract:'))
@@ -151,7 +161,7 @@ class Application_Form_Evento extends Zend_Form {
       ));
       return $e;
    }
-   
+
    protected function _preferencia_horario() {
       $e = new Zend_Form_Element_Textarea('preferencia_horario');
       $e->setLabel(_('Time preferences:'))
@@ -159,6 +169,7 @@ class Application_Form_Evento extends Zend_Form {
               ->setAttrib('placeholder', _('Date and time more convenient...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
+      $e->setAttrib('class', 'form-control');
 
       $e->setDecorators(array(
           'ViewHelper',
@@ -174,9 +185,10 @@ class Application_Form_Evento extends Zend_Form {
       $e = new Zend_Form_Element_Textarea('tecnologias_envolvidas');
       $e->setLabel(_('Technologies involved:'))
               ->setAttrib('rows', 5)
-              ->setAttrib('placeholder', _('Need of an especific program ou tool, distro, IDE, etc...'))
+              ->setAttrib('placeholder', _('Need of an especific program or tool, distro, IDE, etc...'))
               ->addFilter('StripTags')
               ->addFilter('StringTrim');
+      $e->setAttrib('class', 'form-control');
 
       $e->setDecorators(array(
           'ViewHelper',

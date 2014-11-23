@@ -1,31 +1,39 @@
 <?php
-   $this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
+   //$this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
 ?>
 <?php if (! empty($this->user)): ?>
-<p>
-   <a href="<?=$this->url(array('id' => $this->id),
+<ul class="nav nav-pills">
+    <li class="active">
+        <a href="<?=$this->url(array('id' => $this->id),
         'ver') ?>" class="no-bottom">
-       <i class='icon-user'></i>
-           <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
-   </a>
-   <?php if ($this->mostrarEditar): ?>
-   &nbsp;&nbsp;&nbsp;
-   <a href="<?php echo $this->url(array('controller'=>'participante',
+            <i class='icon-user'></i>
+            <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
+        </a>
+    </li>
+    <?php if ($this->mostrarEditar): ?>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'editar'), 'default', true);?>" class="no-bottom">
-      <i class='icon-edit'></i> <?php echo $this->translate("Edit"); ?>
-   </a>
-   &nbsp;&nbsp;&nbsp;
-   <a href="<?php echo $this->url(array('controller'=>'participante',
+            <i class='icon-edit'></i> 
+            <?php echo $this->translate("Edit"); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
-      <i class='icon-lock'></i> <?php echo $this->translate("Alter Password"); ?>
-   </a>
-   &nbsp;&nbsp;&nbsp;
-   <a href="<?php echo $this->url(array('controller'=>'participante',
+            <i class='icon-lock'></i> 
+            <?php echo $this->translate("Alter Password"); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'certificados'), 'default', true);?>" class="no-bottom">
-      <i class='icon-credit-card'></i> <?php echo $this->translate("Certificates"); ?>
-   </a>
-   <?php endif; ?>
-</p>
+            <i class='icon-credit-card'></i> 
+            <?php echo $this->translate("Certificates"); ?>
+        </a>
+    </li>
+    <?php endif; ?>
+</ul>
 
 <!-- BEGIN : botão curtir do facebook -->
 <div id="fb-root"></div>
@@ -38,11 +46,24 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 <!-- END : botão curtir do facebook -->
 
-<div class="container">
-   <div class="span-13">
-      <p><?php echo $this->translate("My name is"); ?> <?=$this->user->nome ?>.</p>
+<hr>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <?php echo $this->translate("About me:"); ?>
+            </div>
+            <div class="panel-body">
+                <?php if(! empty($this->user->bio)): ?>
+                <?php echo $this->user->bio; ?>
+                <?php else: ?>
+                <span class="text-muted"><?php echo $this->translate("No description yet..."); ?></span>
+                <?php endif; ?>
+            </div>
+        </div>
    </div>
-   <div class="span-social">
+   <div class="col-md-1">
       <!-- twitter button -->
       <?php $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
       <a href="https://twitter.com/share" class="twitter-share-button"
@@ -53,13 +74,13 @@
            data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
    </div>
-   <div class="span-social">   
+   <div class="col-md-1">   
       <!-- facebook button -->
       <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
            'ver', true) ?>" data-send="false" data-layout="button_count"
            data-width="450" data-show-faces="false"></div>
    </div>
-   <div class="span-social">
+   <div class="col-md-1">
       <!-- Place this tag in your head or just before your close body tag. -->
       <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
         {lang: 'pt-BR'}
@@ -70,84 +91,89 @@
            'ver', true) ?>"></div>
    </div>
 </div>
-<p>
-   <?php echo $this->translate("About me:"); ?> <?=$this->user->bio ?>
-</p>
+
 <?php
 // HACK: usuários não devem ter @ no username do twitter, é um caractere implicito
 // ao invés disso ele deve ser usado concatenando o @
 // DONE: remover todos os @ de usuários da base de dados antes de remover este HACK!
 $tw_user = str_replace("@", "", $this->user->twitter);
 if (! empty($tw_user)) {
-   $twitter = sprintf($this->translate("Follow me on %s."),
-        '<a href="https://twitter.com/#!/' . $tw_user . '" class="no-bottom" target="_blank"><i class="icon-twitter"></i> Twitter</a>');
+   $twitter = sprintf($this->translate("Follow me on %s"),
+        '<a href="https://twitter.com/#!/' . $tw_user . '" class="btn btn-primary" target="_blank"><i class="fa fa-twitter"></i> Twitter</a>');
 } else {
-   $twitter = sprintf($this->translate("I still don't have %s."),
-        "<a href='https://twitter.com' class='no-bottom' target='_blank'><i class='icon-twitter'></i> Twitter</a>");
+   $twitter = sprintf($this->translate("I still don't have %s"),
+        '<a href="https://twitter.com" class="btn btn-primary" target="_blank"><i class="fa fa-twitter"></i> Twitter</a>');
 }
 ?>
 <p><?=$twitter ?></p>
 
-   <?php
-   if (!is_null($this->slides)):
-   ?>
-<hr/> 
-<div class="container">
-   <div class="span-6">
-      <a href="http://slideshare.net" target="_blank">
-         <img src="<?php echo $this->baseUrl('img/slideshare_200x50.png'); ?>"/>
-      </a>
-   </div>
-   <div class="span-12">
-      <h4 style="padding-top: 6px;"><?php echo $this->translate("Slideshows of"); ?>
-         <a href="http://slideshare.net/<?php echo $this->user->slideshare ?>" target="_blank">
-            <?php echo $this->user->slideshare ?>
-         </a>
-      </h4>
-   </div>
-   <hr/>
-</div>
-      <?php
-      $maxEmbedSlides = 3;
-      $i = 0;
-      foreach ($this->slides as $item): ?>
-<div class="container">
-   <div class="span-20">
-        <?php if ($i < $maxEmbedSlides): ?>
-            <?php echo ($item->getEmbedCode()); ?>
-        <?php else: ?>
-            <i class='icon-external-link'></i>
-            <a href="<?php echo $item->getPermaLink(); ?>" target="_blank">
-         <?php echo $item->getTitle(); ?></a>
-        <?php endif; ?>
-   </div>
-</div><hr/>
-      <?php
-         $i++;
-      endforeach;
-         
-      else: ?>
-    <?php echo $this->translate("Create an account on"); ?>
-    <a href="http://www.slideshare.net/" class="no-bottom" target="_blank">
-        <img src="<?php echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare
-    </a>
-    <?php echo $this->translate("so your presentations can appear here."); ?>
-   <?php endif; ?>
-<?php else: // end: not empty user ?>
-<p><?php echo $this->translate("Participant not found."); ?></p>
-<?php endif; ?>
+    <?php if (!is_null($this->slides)): ?>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="http://slideshare.net" target="_blank">
+             <img src="<?php echo $this->baseUrl('img/slideshare_200x50.png'); ?>"/>
+          </a>
+        </div>
+        <div class="col-md-12">
+            <h4 style="padding-top: 6px;"><?php echo $this->translate("Slideshows of"); ?>
+             <a href="http://slideshare.net/<?php echo $this->user->slideshare ?>" target="_blank">
+                <?php echo $this->user->slideshare ?>
+             </a>
+          </h4>
+        </div>
+        <hr/>
+    </div>
 
-<?php
-    if (isset($this->slideshareError)):
-?>
-<div class="notice">
-    <div class="msg-header"><?php echo $this->translate("Attention!"); ?></div>
-    <div><?php echo $this->translate("Slideshare user"); ?>
-        <?php echo $this->user->slideshare; ?>
+    <?php
+        $maxEmbedSlides = 4;
+        $i = 0;
+    ?>
+
+    <div class="row">
+    <?php foreach ($this->slides as $item): ?>
+       <div class="col-md-6">
+            <?php if ($i < $maxEmbedSlides): ?>
+                <?php echo ($item->getEmbedCode()); ?>
+            <?php else: ?>
+                <i class='fa fa-external-link'></i>
+                <a href="<?php echo $item->getPermaLink(); ?>" target="_blank">
+                <?php echo $item->getTitle(); ?></a>
+            <?php endif; ?>
+       </div>
+
+    <?php
+            $i++;
+        endforeach;
+    ?>    
+    </div><!-- end of .row -->
+
+    <?php else: // else: slides not null ?>
+    <p>
+        <?php echo $this->translate("Create an account on"); ?>
+        <a href="http://www.slideshare.net/" target="_blank">
+            <i class="fa fa-slideshare"></i>
+            Slideshare
+        </a>
+        <?php echo $this->translate("so your presentations can appear here."); ?>
+    </p>
+    <?php endif; // end: slides not null ?>
+
+<?php else: // else: not empty user ?>
+    <div class="alert alert-warning"><?php echo $this->translate("Participant not found."); ?></div>
+<?php endif; // end: not empty user ?>
+
+<?php if (isset($this->slideshareError)): ?>
+<div class="alert alert-warning" role="alert">
+    <strong><?php echo $this->translate("Attention!"); ?></strong>
+    <div>
+        <?php echo $this->translate("Slideshare user"); ?>
+        <strong><?php echo $this->user->slideshare; ?></strong>
         <?php echo $this->translate("not found."); ?>
     </div>
-    <div><?php echo $this->translate("Details:"); ?> <?php echo $this->slideshareError; ?></div>
+    <div>
+        <?php echo $this->translate("Details:"); ?>
+        <?php echo $this->slideshareError; ?>
+    </div>
 </div>
-<?php
-    endif;
-?>
+<?php endif; ?>

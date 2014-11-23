@@ -1,51 +1,74 @@
 <?php
-   $this->headScript()
-      ->prependFile($this->baseUrl('js/evento/outros-palestrantes.js'),'text/javascript')
-      ->prependFile($this->baseUrl('js/jquery.tipsy.js'),'text/javascript')
-      ->prependFile($this->baseUrl('js/jquery.dataTables.js'),'text/javascript')
-      ->prependFile($this->baseUrl('js/select2.js'),'text/javascript');
-   
-   $this->headLink()
-           ->prependStylesheet($this->baseUrl('css/tipsy.css'))
-           ->prependStylesheet($this->baseUrl('css/tabela_sort.css'))
-           ->prependStylesheet($this->baseUrl('css/form.css'))
-           ->prependStylesheet($this->baseUrl('css/select2.css'));
-?>
-<fieldset>
-   <form action="<?=$this->url(array('action' => 'outros-palestrantes')) ?>" method="post">
-      <span><?php echo $this->translate("Add other speakers:"); ?>
-         <strong><?=$this->evento['nome_evento'] ?></strong>.</span><br/><br/>
-      <input type="hidden" id="sel" name="array_id_pessoas" style="width: 500px;"/>
-      <dl class="zend_form">
-         <input type="submit" name="cancelar" id="cancelar" value="<?php echo $this->translate("Cancel"); ?>" class="submitCancelar">
-         <input type="submit" name="submit" id="submit" value="<?php echo $this->translate("Confirm"); ?>"/>
-      </dl>
-   </form>
-</fieldset>
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2-bootstrap.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
 
-<table class="display" cellpadding="0" cellspacing="0" border="0">
-   <thead>
-      <th><?php echo $this->translate("Speakers"); ?></th>
-      <th style="width: 70px;">&nbsp;</th>
-   </thead>
-   <tbody> 
-      <?php foreach ($this->palestrantes as $palestrante): ?>
-         <tr>
-            <td><?= $palestrante['nome'] ?></td>
-            <td><a title="<?php echo $this->translate("Remove the speaker from this event"); ?>"
-                  href="<?php
-                     echo $this->url(array('controller' => 'evento',
-                         'action' => 'deletar-palestrante',
-                         'pessoa' => $palestrante['id_pessoa'],
-                         'evento' => $this->evento['id_evento']), 'default', true);
-                     ?>" class="no-bottom"
-                     onclick="return confirm(_('Are you sure you want you delete the speaker from this event?'))">
-                  <i class="icon-remove"></i> <?php echo $this->translate("Delete"); ?>
-               </a>&nbsp;&nbsp;&nbsp;
-               <a href="mailto:<?=$palestrante['email'] ?>" target="_blank"
-                  title="Enviar e-mail" class="no-bottom tooltip"><i class="icon-envelope"></i></a>
-            </td>
-         </tr>
-   <?php endforeach; ?>
-   </tbody>
-</table>
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/evento/outros-palestrantes.js'));
+
+?>
+
+<h4>
+    <?php echo $this->translate("Add other speakers:"); ?>
+    <strong><?=$this->evento['nome_evento'] ?></strong>
+</h4>
+
+<hr>
+
+<form action="<?=$this->url(array('action' => 'outros-palestrantes')) ?>" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="hidden" id="sel" name="array_id_pessoas" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <input type="submit" name="submit" id="submit"
+            class="btn btn-primary"
+            value="<?php echo $this->translate("Confirm"); ?>"/>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table table-striped">
+            <thead>
+                <th><?php echo $this->translate("Speakers"); ?></th>
+                <th>&nbsp;</th>
+            </thead>
+            <tbody>
+            <?php foreach ($this->palestrantes as $palestrante): ?>
+                <tr>
+                    <td><?= $palestrante['nome'] ?></td>
+                    <td>
+                        <div class="btn-group pull-right">
+                            <a title="<?php echo $this->translate("Remove the speaker from this event"); ?>"
+                              href="<?php echo $this->url(array('controller' => 'evento',
+                                     'action' => 'deletar-palestrante',
+                                     'pessoa' => $palestrante['id_pessoa'],
+                                     'evento' => $this->evento['id_evento']), 'default', true);
+                                ?>" class="btn btn-danger deletar"
+                                data-toggle="tooltip" data-placement="top">
+                              <i class="fa fa-times"></i> <?php echo $this->translate("Delete"); ?>
+                            </a>
+                            <a href="mailto:<?=$palestrante['email'] ?>" target="_blank"
+                                class="btn btn-default"
+                                title="<?php echo $this->translate("Send e-mail"); ?>"
+                                data-toggle="tooltip" data-placement="top">
+                                <i class="fa fa-envelope-o"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

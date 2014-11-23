@@ -6,12 +6,12 @@
 class Application_Model_Evento extends Zend_Db_Table_Abstract {
 	protected $_name = 'evento';
 	protected $_primary = 'id_evento';
-  
-	protected $_referenceMap = array(  
-            array(  'refTableClass' => 'Application_Model_EventoRealizacao',  
-               'refColumns' => 'id_evento',  
-               'columns' => 'id_evento',  
-               'onDelete'=> self::CASCADE,  
+
+	protected $_referenceMap = array(
+            array(  'refTableClass' => 'Application_Model_EventoRealizacao',
+               'refColumns' => 'id_evento',
+               'columns' => 'id_evento',
+               'onDelete'=> self::CASCADE,
                'onUpdate'=> self::RESTRICT));
 
    /**
@@ -25,7 +25,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 			WHERE id_encontro = ? ORDER BY TO_CHAR(data, 'DD/MM/YYYY')";
 		return $this->getAdapter()->fetchAll($select,$idEncontro);
 	}
-   
+
    /**
     * Lista de datas onde há eventos no encontro.
     * @param int $idEncontro id do encontro atual
@@ -37,7 +37,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 			WHERE id_encontro = ? ORDER BY TO_CHAR(data, 'DD/MM/YYYY')";
 		return $this->getAdapter()->fetchAll($select,$idEncontro);
 	}
-	
+
    /**
     * Lista eventos do encontro, retirando os eventos do usuário logado.
     * Pode filtrar por data, tipo do evento ou parte do nome do evento.
@@ -86,7 +86,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
       $select .= " LIMIT 100";
       return $this->getAdapter()->fetchAll($select, $where);
    }
-   
+
    /**
     * Lista eventos mostrados no module admin.
     * @param array $data [ 0: id_encontro ]
@@ -134,7 +134,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 
       return $this->getAdapter()->fetchAll($select, $where);
    }
-   
+
    /**
     * Lista todos os detalhes do evento.
     * TODO: retornar apenas elemento 0 do array! Tem impacto grande, verifique todos os usos.
@@ -142,13 +142,13 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
     * @return array
     */
    public function buscaEventoPessoa($idEvento) {
-      $select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento, 
-            validada, TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MI') as data_submissao, nome, resumo,
-            tecnologias_envolvidas, perfil_minimo, 
-            descricao_dificuldade_evento, email, preferencia_horario, bio, apresentado FROM evento e 
-            INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
-            INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento) 
-            INNER JOIN dificuldade_evento de ON (de.id_dificuldade_evento = e.id_dificuldade_evento) 
+      $select = "SELECT id_pessoa, id_evento, nome_tipo_evento, nome_evento,
+            validada, TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MI') as data_submissao_f,
+            nome, resumo, data_submissao, tecnologias_envolvidas, perfil_minimo,
+            descricao_dificuldade_evento, email, preferencia_horario, bio, apresentado FROM evento e
+            INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
+            INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
+            INNER JOIN dificuldade_evento de ON (de.id_dificuldade_evento = e.id_dificuldade_evento)
             WHERE e.id_evento = ? ";
 
       return $this->getAdapter()->fetchAll($select, $idEvento);
@@ -178,7 +178,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
 
       return $this->getAdapter()->fetchAll($select, $data);
    }
-   
+
    /**
     * Lista a programação básica dos eventos.
     * @param int $id_encontro
@@ -192,8 +192,8 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
          id_pessoa, twitter, ( SELECT COUNT(*) FROM evento_palestrante ep
             WHERE ep.id_evento = er.id_evento ) as outros,
          TO_CHAR(data, 'DDMM') as dia_mes
-         FROM evento e 
-         INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa) 
+         FROM evento e
+         INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
          INNER JOIN evento_realizacao er on e.id_evento = er.id_evento
          INNER JOIN sala s on er.id_sala = s.id_sala
@@ -201,7 +201,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
          ORDER BY data asc, hora_inicio asc";
       return $this->getAdapter()->fetchAll($sql, array($id_encontro));
    }
-   
+
    /**
     * Adiciona palestrantes a um evento, retornando o número de linhas afetadas
     * para contar quantos realmente foram adicionados.
@@ -218,7 +218,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
       }
       return 0; // nenhuma linha afetada.
    }
-   
+
    /**
     * Lista outros palestrantes de um evento, se houver.
     * @param int $idEvento
@@ -231,7 +231,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
                WHERE ep.id_evento = ?";
       return $this->getAdapter()->fetchAll($sql, array($idEvento));
    }
-   
+
    /**
     * Utilização
     *    /evento/index mapeado como /submissao
@@ -241,7 +241,8 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
     */
    public function listarEventosParticipante($id_encontro, $responsavel) {
       $sql = "SELECT id_evento, nome_evento, validada,
-         TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MI') as data_submissao, nome_tipo_evento
+         TO_CHAR(data_submissao, 'YYYY-MM-DD HH24:MI') as data_submissao,
+		nome_tipo_evento, resumo
             FROM evento e
             INNER JOIN tipo_evento te ON e.id_tipo_evento = te.id_tipo_evento
             WHERE id_encontro = ?

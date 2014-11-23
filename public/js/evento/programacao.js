@@ -3,11 +3,12 @@ $(function () {
     // padrão: modo normal
     modoNormal();
 
-    $("#modo-normal").click(function () {
+    // usando 'on' devido uso do bootstrap 3, radio buttons
+    $("#normal-mode").on('change', function () {
         modoNormal();
     });
 
-    $("#modo-impressao").click(function () {
+    $("#print-mode").on('change', function () {
         modoImpressao();
     });
 
@@ -43,6 +44,8 @@ $(function () {
         var eventos = $("." + dia_mes);
         var scrollTo = null; // element to scroll to
         $.each(eventos, function (idx, el) {
+            // escolhe o primeiro elemento para ser a referência
+            // até onde o scroll deve ir.
             if (idx === 0) {
                 scrollTo = el;
             }

@@ -1,25 +1,88 @@
 <?php
-    $this->headScript()->appendFile($this->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
+    //$this->headScript()->appendFile($this->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
     $this->headScript()->appendFile($this->baseUrl('js/select2.js'));
     $this->headScript()->appendFile($this->baseUrl('js/jquery.maskedinput.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/editar.js'));
 
-    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
 ?>
 
-<h3><?php echo $this->translate("Edit your personal informations"); ?></h3>
-<div class="container">
-    <div class="span-20" id="tabs">
-        <ul>
-            <li><a href="#tab-1"><?php echo $this->translate("Profile"); ?></a></li>
-            <li><a href="#tab-2"><?php echo $this->translate("Social Networks"); ?></a></li>
+<ul class="nav nav-pills">
+    <li>
+        <a href="<?=$this->url(array('id' => $this->id),
+        'ver') ?>" class="no-bottom">
+            <i class='icon-user'></i>
+            <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
+        </a>
+    </li>
+    <li class="active">
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'editar'), 'default', true);?>" class="no-bottom">
+            <i class='icon-edit'></i>
+            <?php echo $this->translate("Edit"); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
+            <i class='icon-lock'></i>
+            <?php echo $this->translate("Alter Password"); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'certificados'), 'default', true);?>" class="no-bottom">
+            <i class='icon-credit-card'></i>
+            <?php echo $this->translate("Certificates"); ?>
+        </a>
+    </li>
+</ul>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-9">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab-1" role="tab" data-toggle="tab">
+                    <?php echo $this->translate("Profile"); ?>
+                </a>
+            </li>
+            <li>
+                <a href="#tab-2" role="tab" data-toggle="tab">
+                    <?php echo $this->translate("Social Networks"); ?>
+                </a>
+            </li>
         </ul>
-        <?php
-            echo $this->form;
-        ?>
     </div>
 </div>
+
+<?php
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab-1">
+            <?php echo $this->partial('partials/participante/tab-1.phtml', array('form' => $form)); ?>
+        </div>
+        <div class="tab-pane" id="tab-2">
+            <?php echo $this->partial('partials/participante/tab-2.phtml', array('form' => $form)); ?>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="<?php echo $this->url(array(
+                'controller' => 'participante',
+                'action' => 'ver'), 'default', true)?>" class="btn btn-default">
+            <?php echo $this->translate("Cancel"); ?>
+        </a>
+            <?php echo $form->submit->renderViewHelper() ?>
+        </div>
+    </div>
+</form>

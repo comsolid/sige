@@ -4,7 +4,8 @@ class ParticipanteController extends Zend_Controller_Action {
 
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3');
     }
 
     private function autenticacao() {
@@ -159,6 +160,9 @@ class ParticipanteController extends Zend_Controller_Action {
                                 ), 'default', true);
             }
         }
+        $this->view->id = $idPessoa;
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $this->view->user = $pessoa->fetchRow($sql);
     }
 
     public function sucessoAction() {
@@ -166,9 +170,13 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function alterarSenhaAction() {
-        $this->view->menu->setAtivo('alterarsenha');
+        //$this->view->menu->setAtivo('alterarsenha');
         $this->autenticacao();
 
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $idPessoa = $sessao["idPessoa"];
+
+        $pessoa = new Application_Model_Pessoa();
         $form = new Application_Form_AlterarSenha();
         $this->view->form = $form;
 
@@ -182,11 +190,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost() && $form->isValid($data)) {
             $data = $form->getValues();
-
-            $pessoa = new Application_Model_Pessoa();
-            $sessao = Zend_Auth::getInstance()->getIdentity();
             $email = $sessao["email"];
-
             $resultadoConsulta = $pessoa->avaliaLogin($email, $data['senhaAntiga']);
 
             if ($resultadoConsulta != null) {
@@ -214,6 +218,10 @@ class ParticipanteController extends Zend_Controller_Action {
                 }
             }
         }
+
+        $this->view->id = $idPessoa;
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $this->view->user = $pessoa->fetchRow($sql);
     }
 
     public function verAction() {
@@ -253,6 +261,8 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadosAction() {
+        $this->autenticacao();
+
         $sessao = Zend_Auth :: getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 
@@ -260,9 +270,15 @@ class ParticipanteController extends Zend_Controller_Action {
         $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
         $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
         $this->view->certsPalestrante = array_merge($this->view->certsPalestrante, $model->listarCertificadosPalestrantesOutros($idPessoa));
+
+        $this->view->id = $idPessoa;
+        $pessoa = new Application_Model_Pessoa();
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $this->view->user = $pessoa->fetchRow($sql);
     }
 
     public function certificadoParticipanteAction() {
+        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -302,6 +318,7 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadoPalestranteAction() {
+        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -347,5 +364,4 @@ class ParticipanteController extends Zend_Controller_Action {
                         'action' => 'certificados'), 'default', true);
         }
     }
-
 }

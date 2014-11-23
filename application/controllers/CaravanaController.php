@@ -11,7 +11,8 @@ class CaravanaController extends Zend_Controller_Action {
         }
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'caravana', $sessao['administrador']);
+        $this->view->menu = new Sige_Desktop_Menu($this->view, 'caravan', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3');
     }
 
     public function indexAction() {
@@ -45,7 +46,7 @@ class CaravanaController extends Zend_Controller_Action {
                 // explode retorna array(0 => "") http://php.net/manual/pt_BR/function.explode.php
                 if (count($array_id_pessoas) == 1 && empty($array_id_pessoas[0])) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('notice' => _('No participant was selected.')));
+                            array('warning' => _('No participant was selected.')));
                 } else {
                     $where = array(
                         $this->view->caravana['id_caravana'],
@@ -63,11 +64,11 @@ class CaravanaController extends Zend_Controller_Action {
                                     array('success' => $success));
                         } else {
                             $this->_helper->flashMessenger->addMessage(
-                                    array('notice' => _('No participant was added to this caravan.')));
+                                    array('warning' => _('No participant was added to this caravan.')));
                         }
                     } catch (Exception $e) {
                         $this->_helper->flashMessenger->addMessage(
-                                array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                                array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                     . $e->getMessage()));
                     }
                 }
@@ -133,12 +134,12 @@ class CaravanaController extends Zend_Controller_Action {
                         array('success' => _('Participant was removed from this caravan successfully.')));
             } catch (Exception $e) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                             . $e->getMessage()));
             }
         } else {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => _('No participant was selected.')));
+                    array('warning' => _('No participant was selected.')));
         }
         $this->_helper->redirector->goToRoute(array('controller' => 'caravana',
             'action' => 'participantes'), 'default', true);
@@ -156,7 +157,7 @@ class CaravanaController extends Zend_Controller_Action {
                     array('success' => _('Participant was removed from this caravan successfully.')));
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                         . $e->getMessage()));
         }
         $this->_helper->redirector->goToRoute(array('controller' => 'caravana',
@@ -171,6 +172,8 @@ class CaravanaController extends Zend_Controller_Action {
                         'action' => 'index'
                             ), null, true);
         }
+
+        $this->_helper->viewRenderer->setRender('salvar');
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -214,14 +217,16 @@ class CaravanaController extends Zend_Controller_Action {
                 // 23505 UNIQUE VIOLATION
                 if ($ex->getCode() == 23505) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('A caravan with this description already exists.')));
+                            array('danger' => _('A caravan with this description already exists.')));
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $ex->getMessage()));
                 }
             }
         }
+
+        $this->view->title = _('Create Caravan');
     }
 
     /**
@@ -236,6 +241,7 @@ class CaravanaController extends Zend_Controller_Action {
                         'action' => 'index'), null, true);
         }
 
+        $this->_helper->viewRenderer->setRender('salvar');
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
@@ -276,13 +282,15 @@ class CaravanaController extends Zend_Controller_Action {
                 // 23505 UNIQUE VIOLATION
                 if ($ex->getCode() == 23505) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('A caravan with this description already exists.')));
+                            array('danger' => _('A caravan with this description already exists.')));
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $ex->getMessage()));
                 }
             }
         }
+
+        $this->view->title = _('Edit Caravan');
     }
 }

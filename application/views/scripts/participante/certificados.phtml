@@ -1,26 +1,93 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
 ?>
-<fieldset>
-   <legend><?php echo $this->translate("Participant Certificates"); ?></legend>
-   <ul>
-      <?php foreach($this->certsParticipante as $cert): ?>
-      <li><a href="<?=$this->url(array('controller' => 'participante',
-         'action' => 'certificado-participante',
-          'id_encontro' => $cert['id_encontro']), 'default', true) ?>"
-         ><?=$cert['nome_encontro'] ?></a></li>
-      <?php endforeach; ?>
-   </ul>
-</fieldset>
 
-<fieldset>
-   <legend><?php echo $this->translate("Speaker Certificates"); ?></legend>
-   <ul>
-      <?php foreach($this->certsPalestrante as $cert): ?>
-      <li><a href="<?=$this->url(array('controller' => 'participante',
-         'action' => 'certificado-palestrante',
-          'id' => $cert['id_evento']), 'default', true) ?>"
-         ><?=$cert['nome_tipo_evento'] ?>: <?=$cert['nome_evento'] ?> - <?=$cert['nome_encontro'] ?></a></li>
-      <?php endforeach; ?>
-   </ul>
-</fieldset>
+<style>
+    .list-group-item-text {
+        margin-top: 10px;
+    }
+</style>
+
+<ul class="nav nav-pills">
+    <li>
+        <a href="<?=$this->url(array('id' => $this->id),
+        'ver') ?>" class="no-bottom">
+            <i class='icon-user'></i>
+            <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'editar'), 'default', true);?>" class="no-bottom">
+            <i class='icon-edit'></i>
+            <?php echo $this->translate("Edit"); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
+            <i class='icon-lock'></i>
+            <?php echo $this->translate("Alter Password"); ?>
+        </a>
+    </li>
+    <li class="active">
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'certificados'), 'default', true);?>" class="no-bottom">
+            <i class='icon-credit-card'></i>
+            <?php echo $this->translate("Certificates"); ?>
+        </a>
+    </li>
+</ul>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-6">
+        <fieldset>
+            <legend><?php echo $this->translate("Participant Certificates"); ?></legend>
+            <?php if (empty($this->certsParticipante)): ?>
+                <div class="alert alert-info">
+                    <?php echo $this->translate("You have no participant certificates yet."); ?>
+                </div>
+            <?php else: ?>
+            <div class="list-group">
+            <?php foreach($this->certsParticipante as $cert): ?>
+                <a class="list-group-item"
+                    href="<?=$this->url(array('controller' => 'participante',
+                        'action' => 'certificado-participante',
+                        'id_encontro' => $cert['id_encontro']), 'default', true) ?>">
+                    <?=$cert['nome_encontro'] ?>
+                </a>
+            <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+        </fieldset>
+    </div>
+    <div class="col-md-6">
+        <fieldset>
+            <legend><?php echo $this->translate("Speaker Certificates"); ?></legend>
+            <?php if (empty($this->certsPalestrante)): ?>
+                <div class="alert alert-info">
+                    <?php echo $this->translate("You have no speaker certificates yet."); ?>
+                </div>
+            <?php else: ?>
+            <div class="list-group">
+            <?php foreach($this->certsPalestrante as $cert): ?>
+                <a class="list-group-item"
+                    href="<?=$this->url(array('controller' => 'participante',
+                        'action' => 'certificado-palestrante',
+                        'id' => $cert['id_evento']), 'default', true) ?>">
+                    <h4 class="list-group-item-heading">
+                        <span class="label label-primary"><?=$cert['nome_tipo_evento'] ?></span>
+                        <?=$cert['nome_evento'] ?>
+                    </h4>
+                    <p class="list-group-item-text">
+                        <?=$cert['nome_encontro'] ?>
+                    </p>
+                </a>
+            <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+        </fieldset>
+    </div>
+</div>

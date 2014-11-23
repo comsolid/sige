@@ -1,68 +1,97 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
 
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/evento/busca_evento.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/evento/interesse.js'));
 ?>
 
-<div class="container">
-   <div class="span-14" id="radioset_data">
-      <i class="icon-calendar"></i>
-      <input type="radio" name="data_evento" class="data_evento"
-             id="radio_data_todos" value="todas" checked="checked" />
-      <label for="radio_data_todos"><?php echo $this->translate("All"); ?></label>
-      <?php foreach ($this->diasEncontro as $value): ?>
-      <input type="radio" name="data_evento" class="data_evento" id="radio_<?= $value['data'] ?>"
-                value="<?= str_replace('/', '-', $value['data']) ?>" />
-      <label for="radio_<?= $value['data'] ?>"><?= $value['data'] ?></label>
-      <?php endforeach; ?>
-   </div>
-</div><br/>
-<div class="container">
-   <div class="span-14" id="radioset_tipo">
-      <i class="icon-star"></i>
-      <input type="radio" name="tipo_evento" class="tipo_evento" id="radio_tipo_todos"
-             value="0" checked="checked" /><label for="radio_tipo_todos"><?php echo $this->translate("All"); ?></label>
-      <?php foreach ($this->tipoEvento as $tipoEvento): ?>
-      <input type="radio" name="tipo_evento" class="tipo_evento"
-                id="radio_<?= $tipoEvento->id_tipo_evento ?>"
-                value="<?= $tipoEvento->id_tipo_evento ?>" />
-      <label for="radio_<?= $tipoEvento->id_tipo_evento ?>"><?= $tipoEvento->nome_tipo_evento ?></label>
-      <?php endforeach; ?>
-   </div>
-</div>
-<br>
-<input type="text" class="text" name="termo" id="termo"
-       value="" size="50" maxlength="50" placeholder="<?php echo $this->translate("Search event..."); ?>" style="float: left;" />
-<img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
-     style="display: none; float: left;" />
-<br><br>
-<div class="success" style="display: none;"></div>
-<div class="error" style="display: none;"></div>
+<h3><?php echo $this->translate("Add events of your interest"); ?></h3><hr>
 
-<fieldset>
-   <table class="display" cellpadding="0" cellspacing="0" border="0"  >
-      <thead>
-         <tr>
-            <th><?php echo $this->translate("Event"); ?></th>
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            <i class="fa fa-calendar"></i>
+            <b>Dias:</b>
+        </p>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="data_evento" class="data_evento"
+                       id="radio_data_todos" value="todas" checked="checked" />
+                <?php echo $this->translate("All"); ?>
+            </label>
+            <?php foreach ($this->diasEncontro as $value): ?>
+            <label class="btn btn-default">
+                <input type="radio" name="data_evento" class="data_evento"
+                       id="radio_<?= $value['data'] ?>"
+                       value="<?= str_replace('/', '-', $value['data']) ?>" />
+                <?php echo $value['data']; ?>
+            </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <p>
+            <i class="fa fa-star"></i>
+            <b>Tipo de evento:</b>
+        </p>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="tipo_evento" class="tipo_evento"
+                       id="radio_tipo_todos" value="0" checked="checked" />
+                <?php echo $this->translate("All"); ?>
+            </label>
+            <?php foreach ($this->tipoEvento as $tipoEvento): ?>
+            <label class="btn btn-default">
+                <input type="radio" name="tipo_evento" class="tipo_evento"
+                       id="radio_<?= $tipoEvento->id_tipo_evento ?>"
+                       value="<?= $tipoEvento->id_tipo_evento ?>" />
+                <?php echo $tipoEvento->nome_tipo_evento; ?>
+            </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="text" id="termo" class="form-control input-lg"
+                placeholder="<?php echo $this->translate("Search event..."); ?>"/>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <i class="fa fa-spinner fa-2x fa-spin" id="loading"></i>
+    </div>
+</div>
+
+<table cellpadding="0" cellspacing="0" class="table table-striped">
+    <thead>
+        <tr>
             <th><?php echo $this->translate("Description"); ?></th>
             <th><?php echo $this->translate("Date"); ?></th>
             <th><?php echo $this->translate("Time"); ?></th>
             <th>&nbsp;</th>
-         </tr>
-      </thead>
-      <tbody id="resultado">
-      </tbody>
-   </table>
-</fieldset>
+        </tr>
+    </thead>
+    <tbody id="resultado">
+        <!-- preenchido via ajax -->
+    </tbody>
+</table>
 
-<div class="notice">
-   <p><strong><?php echo $this->translate("Attention!"); ?></strong>
-      <?php echo $this->translate("Bookmark an event do not guarantee your spot. So arrive early."); ?><br/>
-      <?php echo $this->translate("Bookmark events it's only a way to organize the places depending on demand."); ?>
+<hr>
+
+<div class="alert alert-warning">
+   <p>
+       <strong><?php echo $this->translate("Attention!"); ?></strong>
+       <?php echo $this->translate("Bookmark an event do not guarantee your spot. So arrive early."); ?><br/>
+       <?php echo $this->translate("Bookmark events it's only a way to organize the places depending on demand."); ?>
    </p>
 </div>

@@ -1,0 +1,142 @@
+<?php
+    $this->headScript()->prependFile($this->baseUrl('js/evento/submeter.js'), 'text/javascript');
+    $this->headScript()->prependFile($this->baseUrl('js/jquery.qtip.min.js'), 'text/javascript');
+    $this->headScript()->prependFile($this->baseUrl('js/ckeditor/ckeditor.js'), 'text/javascript');
+    $this->headScript()->prependFile($this->baseUrl('js/parsley.min.js'), 'text/javascript');
+    $this->headScript()->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
+
+    $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.qtip.min.css'));
+?>
+
+<h4><?php echo $this->translate("Submit a paper"); ?></h4><hr/>
+
+<?php
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo
+    $form->getAction()?>">
+
+<div class="row">
+    <div class="col-md-6">
+        <?php echo $form->nome_evento->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->nome_evento->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->nome_evento->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $form->id_tipo_evento->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->id_tipo_evento->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->id_tipo_evento->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-md-offset-1">
+        <?php echo $form->id_dificuldade_evento->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->id_dificuldade_evento->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->id_dificuldade_evento->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <?php echo $form->perfil_minimo->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->perfil_minimo->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->perfil_minimo->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10">
+        <?php echo $form->resumo->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->resumo->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->resumo->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <?php echo $form->preferencia_horario->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->preferencia_horario->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->preferencia_horario->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <?php echo $form->tecnologias_envolvidas->renderLabel() ?>
+        <div class="form-group">
+            <?php echo $form->tecnologias_envolvidas->renderViewHelper() ?>
+            <div class="form-errors">
+                <?php echo $form->tecnologias_envolvidas->renderErrors() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href="<?php echo $this->url(array(), 'submissao', true)?>" class="btn btn-default">
+            <?php echo $this->translate("Cancel"); ?>
+        </a>
+        <?php echo $form->submit->renderViewHelper() ?>
+    </div>
+</div>
+
+</form>
+
+<?php if (count($this->realizacao) > 0): ?>
+
+<hr>
+<h4>Horários Confirmados</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <hr>
+        <table class="table table-striped tabled-hover">
+            <thead>
+                <th><?php echo $this->translate("Date"); ?></th>
+                <th><?php echo $this->translate("Place"); ?></th>
+            </thead>
+            <tbody>
+            <?php foreach ($this->realizacao as $linha): ?>
+                <tr>
+                    <td>
+                        <?=$linha["data"] ?>
+                        <?php echo $this->translate("from"); ?>
+                        <?=$linha["hora_inicio"] ?>
+                        <?php echo $this->translate("to"); ?>
+                        <?=$linha["hora_fim"] ?>
+                    </td>
+                    <td><?=$linha["nome_sala"] ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php endif; ?>

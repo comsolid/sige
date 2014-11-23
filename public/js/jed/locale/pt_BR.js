@@ -5,7 +5,6 @@ var locale_data = {
             "lang": "pt_BR",
             "plural-forms": "nplurals=2; plural=(n!=1);"
         },
-        "hello": [null, "olá"],
         "to the ESL I!": [null, "para o ESL I!"],
         "It's starts!": [null, "Começou!"],
         "Interesting event bookmarked.": [null, "Evento marcado como interessante."],
@@ -27,6 +26,9 @@ var locale_data = {
         'Days': [null, 'Dias'],
         'Hours': [null, 'Horas'],
         'Minutes': [null, 'Minutos'],
-        'Seconds': [null, 'Segundos']
+        'Seconds': [null, 'Segundos'],
+        'OK': [null, 'Confirmar'],
+        'Cancel': [null, 'Cancelar'],
+        'Are you sure?': [null, 'Você tem certeza?']
     }
 };

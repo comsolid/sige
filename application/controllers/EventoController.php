@@ -4,7 +4,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->view->menu = new Sige_Desktop_Menu($this->view, 'home', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3');
     }
 
     private function autenticacao($isAjax = false) {
@@ -33,15 +34,16 @@ class EventoController extends Zend_Controller_Action {
      *    /submissao
      */
     public function indexAction() {
+
         $this->autenticacao();
-        $this->view->menu->setAtivo('submissao');
-        $sessao = Zend_Auth :: getInstance()->getIdentity();
+        $this->view->menu->setAtivo('submission');
+        $sessao = Zend_Auth::getInstance()->getIdentity();
 
         $idPessoa = $sessao["idPessoa"];
         $idEncontro = $sessao["idEncontro"];
 
         $evento = new Application_Model_Evento();
-        $this->view->meusEventos = $evento->listarEventosParticipante($idEncontro, $idPessoa);
+        $this->view->eventos = $evento->listarEventosParticipante($idEncontro, $idPessoa);
     }
 
     public function ajaxBuscarAction() {
@@ -76,13 +78,13 @@ class EventoController extends Zend_Controller_Action {
                 $descricao = "{$descricao} ({$value['descricao']})";
             }
 
+            // TODO: montar html no cliente, enviar apenas os dados.
             $json->itens[] = array(
-                "{$value['nome_tipo_evento']}",
-                "{$descricao}",
+                "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span> {$descricao}",
                 "{$value['data']}",
                 "{$value['h_inicio']} - {$value['h_fim']}",
-                "<a id=\"{$value['evento']}\" class=\"marcar no-bottom\">
-                  <i class=\"icon-bookmark\"></i> " . _("Bookmark") . "</a>"
+                "<a id=\"{$value['evento']}\" class=\"marcar btn btn-default\">
+                  <i class=\"fa fa-bookmark\"></i> " . _("Bookmark") . "</a>"
             );
         }
 
@@ -126,6 +128,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function submeterAction() {
         $this->autenticacao();
+        $this->_helper->viewRenderer->setRender('salvar');
+        $this->view->menu->setAtivo('submission');
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $id_pessoa = $sessao["idPessoa"];
@@ -135,16 +139,14 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
-            $notice = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
+            $warning = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => $notice));
+                    array('warning' => $warning));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
 
-        $this->view->menu->setAtivo('submissao');
         $data = $this->getRequest()->getPost();
-
         $form = new Application_Form_Evento();
         $this->view->form = $form;
 
@@ -171,26 +173,30 @@ class EventoController extends Zend_Controller_Action {
 
     public function editarAction() {
         $this->autenticacao();
+        $this->_helper->viewRenderer->setRender('salvar');
+        $this->view->menu->setAtivo('submission');
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $id_encontro = $sessao["idEncontro"];
         $admin = $sessao["administrador"]; // boolean
         $idPessoa = $sessao["idPessoa"];
+        $idEvento = $this->_request->getParam('id', 0);
+
+        if (isset($data['cancelar'])) {
+            return $this->redirecionar($admin, $idEvento);
+        }
 
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
-            $notice = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
+            $warning = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => $notice));
+                    array('warning' => $warning));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'evento'), 'default', true);
         }
 
-        $this->view->menu->setAtivo('submissao');
         $data = $this->getRequest()->getPost();
-
-        $idEvento = $this->_request->getParam('id', 0);
         $form = new Application_Form_Evento();
         $this->view->form = $form;
 
@@ -198,22 +204,9 @@ class EventoController extends Zend_Controller_Action {
         $evento_realizacao = new Application_Model_EventoRealizacao();
 
         $select = $evento->select();
-        $select_realizacao = $evento_realizacao->select();
 
         /* lista de horários */
-        $this->view->realizacao = array();
-        $linhas_realizacao = $evento_realizacao->fetchAll($select_realizacao->where('id_evento = ?', $idEvento));
-
-        foreach ($linhas_realizacao as $linha) {
-            $sala = $linha->findDependentRowset('Application_Model_Sala')->current();
-            $linha->data = date('d/m/Y', strtotime($linha->data));
-            $concatena = array_merge($linha->toArray(), $sala->toArray());
-            $this->view->realizacao[] = $concatena;
-        }
-
-        if (isset($data['cancelar'])) {
-            return $this->redirecionar($admin, $idEvento);
-        }
+        $this->view->realizacao = $evento_realizacao->listarHorariosPorEvento($idEvento);
 
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($data)) {
@@ -225,6 +218,8 @@ class EventoController extends Zend_Controller_Action {
                                 array('error' => _('Only the author can edit the Event.')));
                         return $this->redirecionar();
                     } else {
+                        $data['id_encontro'] = $id_encontro;
+                        $data['responsavel'] = $idPessoa;
                         $evento->update($data, $select);
                         $this->_helper->flashMessenger->addMessage(
                                 array('success' => _('Event successfully updated.')));
@@ -260,7 +255,7 @@ class EventoController extends Zend_Controller_Action {
     }
 
     public function programacaoAction() {
-        $this->view->menu->setAtivo('programacao');
+        $this->view->menu->setAtivo('schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
         $model = new Application_Model_Evento();
@@ -285,6 +280,7 @@ class EventoController extends Zend_Controller_Action {
         $model = new Application_Model_EventoRealizacao();
         $eventoRealizacao = $model->fetchAll();
 
+        // TODO: refezer este trecho usando join ao invés de findDependentRowset
         $this->view->eventosTabela = array();
         foreach ($eventoRealizacao as $item) {
 
@@ -306,6 +302,42 @@ class EventoController extends Zend_Controller_Action {
         }
     }
 
+    public function ajaxDesfazerInteresseAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->autenticacao();
+
+        $json = new stdClass;
+        if ($this->getRequest()->isPost()) {
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $idPessoa = $sessao["idPessoa"];
+            $model = new Application_Model_EventoDemanda();
+            $id = (int) $this->getRequest()->getPost('id_evento');
+            try {
+                $where = array(
+                    "evento = ?" => $id,
+                    "id_pessoa = ?" => $idPessoa);
+                $model->delete($where);
+                $json->ok = true;
+            } catch (Exception $e) {
+                $json->ok = false;
+                $json->error = _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage();
+            }
+        } else {
+            $json->ok = false;
+            $json->error = _("The request can not be completed.");
+        }
+
+        header("Pragma: no-cache");
+        header("Cache: no-cache");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Content-type: text/json");
+        echo json_encode($json);
+    }
+
+    /**
+     * @deprecated use ajaxDesfazerInteresseAction
+     */
     public function desfazerInteresseAction() {
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -371,14 +403,14 @@ class EventoController extends Zend_Controller_Action {
      *    /e/:id
      */
     public function verAction() {
-        $this->view->menu->setAtivo('programacao');
+        $this->view->menu->setAtivo('schedule');
         try {
             $idEvento = $this->_request->getParam('id', 0);
             $evento = new Application_Model_Evento();
             $data = $evento->buscaEventoPessoa($idEvento);
             if (empty($data)) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => _('Event not found.')));
+                        array('warning' => _('Event not found.')));
             } else {
                 $this->view->evento = $data[0];
                 $this->view->outros = $evento->buscarOutrosPalestrantes($idEvento);
@@ -395,7 +427,7 @@ class EventoController extends Zend_Controller_Action {
 
     public function outrosPalestrantesAction() {
         $this->autenticacao();
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
 
         $evento = new Application_Model_Evento();
         $idEvento = $this->_request->getParam('id', 0);
@@ -412,7 +444,7 @@ class EventoController extends Zend_Controller_Action {
             $count_array_id_pessoas = count($array_id_pessoas);
             if (empty($array_id_pessoas[0])) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => _('No speakers selected.')));
+                        array('warning' => _('No speakers selected.')));
             } else {
                 $numParticipantes = 0;
                 try {
@@ -443,7 +475,7 @@ class EventoController extends Zend_Controller_Action {
             $data = $evento->buscaEventoPessoa($idEvento);
             if (empty($data)) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('notice' => _('Event not found.')));
+                        array('warning' => _('Event not found.')));
             } else {
                 $this->view->evento = $data[0];
 
@@ -451,7 +483,7 @@ class EventoController extends Zend_Controller_Action {
                 $sessao = Zend_Auth::getInstance()->getIdentity();
                 if ($this->view->evento['id_pessoa'] != $sessao['idPessoa']) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('notice' => _("You don't have permission to edit this event.")));
+                            array('warning' => _("You don't have permission to edit this event.")));
                     return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
                 }
             }
@@ -503,7 +535,7 @@ class EventoController extends Zend_Controller_Action {
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -530,7 +562,7 @@ class EventoController extends Zend_Controller_Action {
             }
         } else {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => _('No speaker was selected.')));
+                    array('warning' => _('No speaker was selected.')));
         }
         $this->_helper->redirector->goToRoute(array('controller' => 'evento',
             'action' => 'outros-palestrantes', 'id' => $evento), 'default', true);
@@ -538,7 +570,7 @@ class EventoController extends Zend_Controller_Action {
 
     public function tagsAction() {
         $this->autenticacao();
-        $this->view->menu->setAtivo('submissao');
+        $this->view->menu->setAtivo('submission');
         $model = new Application_Model_EventoTags();
         $idEvento = $this->_getParam('id', 0);
         $this->view->tags = $model->listarPorEvento($idEvento);
@@ -547,7 +579,7 @@ class EventoController extends Zend_Controller_Action {
         $data = $evento->buscaEventoPessoa($idEvento);
         if (empty($data)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('notice' => _('Event not found.')));
+                    array('warning' => _('Event not found.')));
             return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
         } else {
             $this->view->evento = $data[0];
@@ -575,7 +607,7 @@ class EventoController extends Zend_Controller_Action {
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -599,20 +631,20 @@ class EventoController extends Zend_Controller_Action {
                 $json->msg = _("Tag added successfully.");
             } else {
                 $json->ok = false;
-                $json->erro = _("An unexpected error ocurred while saving <b>tag</b>.");
+                $json->error = _("An unexpected error ocurred while saving <b>tag</b>.");
             }
         } catch (Exception $e) {
             if ($e->getCode() == 23505) {
-                $json->erro = _("Tag already added.");
+                $json->error = _("Tag already added.");
             } else {
-                $json->erro = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
+                $json->error = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
                         . $e->getMessage();
             }
             $json->ok = false;
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -634,16 +666,16 @@ class EventoController extends Zend_Controller_Action {
             $json->id = $model->getAdapter()->lastSequenceId("tags_id_seq");
         } catch (Exception $e) {
             if ($e->getCode() == 23505) {
-                $json->erro = _("Tag already exists.");
+                $json->error = _("Tag already exists.");
             } else {
-                $json->erro = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
+                $json->error = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
                         . $e->getMessage();
             }
             $json->ok = false;
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -668,17 +700,17 @@ class EventoController extends Zend_Controller_Action {
                 $json->ok = true;
                 $json->msg = _("Tag removed successfully.");
             } else {
-                $json->erro = _("Tag not found.");
+                $json->error = _("Tag not found.");
                 $json->ok = false;
             }
         } catch (Exception $e) {
-            $json->erro = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
+            $json->error = _("An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;")
                     . $e->getMessage();
             $json->ok = false;
         }
 
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);

@@ -16,10 +16,6 @@
    clear: right;
 }
 
-body{
-   font-family:  Arial,Helvetica,sans-serif;
-}
-
 #principal{
    margin: 0 auto;
    width: 927px;
@@ -53,7 +49,7 @@ body{
 }
 
 #info_usu span{
-   color: #f48533;	
+   color: #f48533;
    font-weight: bold;
 }
 
@@ -144,19 +140,19 @@ body{
    margin: 21px 18%;
 }
 
-#rodape img {   
+#rodape img {
    padding: 9px;
 }
 /*FIM RODAPE*/
 
-a {cursor: pointer;}
+/*a {cursor: pointer;}
 a.no-bottom {text-decoration: none}
-a.no-bottom:hover {border-bottom: 1px solid}
+a.no-bottom:hover {border-bottom: 1px solid}*/
 
-fieldset {padding:0 1.4em 1.4em 1.4em;margin:0 0 1.5em 0;border:1px solid #ccc;}
+/*fieldset {padding:0 1.4em 1.4em 1.4em;margin:0 0 1.5em 0;border:1px solid #ccc;}
 legend {font-size:1.2em;margin-top:-0.2em;margin-bottom:1em;}
 fieldset, #IE8#HACK {padding-top:1.4em;}
-legend, #IE8#HACK {margin-top:0;margin-bottom:0;}
+legend, #IE8#HACK {margin-top:0;margin-bottom:0;}*/
 
 div.header3 {
    font-size: 12.5pt;
@@ -167,11 +163,31 @@ div.header3 {
    color: #444;
 }
 
-ul.unstyled {
+/*ul.unstyled {
    list-style: none;
    margin-left: 0;
 }
 
 ul.unstyled li {
    padding: 5px 0;
+}*/
+
+.form-errors ul {
+   list-style: none;
+   color: #a94442;
+   margin-top: 5px;
+}
+
+#master-container {
+    min-height: 512px;
+}
+
+/* Set the fixed height of the footer here */
+footer {
+  height: 120px;
+  background-color: #414141;
+  margin-top:50px;
+  padding-top:20px;
+  padding-bottom:20px;
+  color: #eee;
 }

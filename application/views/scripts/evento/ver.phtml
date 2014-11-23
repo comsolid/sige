@@ -1,13 +1,11 @@
 
 <?php
-   $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+   //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
    $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-   $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-   $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-   $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
+   //$this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
+   //$this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
 
-   $this->headScript()->appendFile($this->baseUrl('js/jquery-migrate-1.2.1.min.js'));
-   $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+   //$this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
    $this->headScript()->appendFile($this->baseUrl('js/jquery.timeago.min.js'));
    $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
    $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
@@ -36,119 +34,151 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));</script>
 
-   <div class="container">
-      <div class="span-13">
-         <h3><?= $this->evento['nome_tipo_evento'] ?>:
-            <strong><?= $this->evento['nome_evento'] ?></strong>
-         </h3>
-      </div>
-      <div class="span-social">
-         <!-- twitter button -->
-         <a href="https://twitter.com/share" class="twitter-share-button"
+    <div class="row">
+        <div class="col-md-9">
+            <h3><?= $this->evento['nome_tipo_evento'] ?>:
+                <strong><?= $this->evento['nome_evento'] ?></strong>
+            </h3>
+        </div>
+        <div class="col-md-1">
+            <!-- twitter button -->
+            <a href="https://twitter.com/share" class="twitter-share-button"
             data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
               'ver_evento', true) ?>"
               data-text="<?= $this->evento['nome_evento'] ?> por <?= $this->evento['nome'] ?>"
               data-via="<?=$config->twitter->username ?>"
               data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
-         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-      </div>
-      <div class="span-social">   
-         <!-- facebook button -->
-         <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
-              'ver_evento', true) ?>" data-send="false" data-layout="button_count"
-              data-width="450" data-show-faces="false"></div>
-      </div>
-      <div class="span-social">
-         <!-- Place this tag in your head or just before your close body tag. -->
-         <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-           {lang: 'pt-BR'}
-         </script>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+        <div class="col-md-1">   
+            <!-- facebook button -->
+            <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
+                  'ver_evento', true) ?>" data-send="false" data-layout="button_count"
+                  data-width="450" data-show-faces="false"></div>
+            </div>
+        <div class="col-md-1">
+            <!-- Place this tag in your head or just before your close body tag. -->
+            <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+               {lang: 'pt-BR'}
+            </script>
 
-         <!-- Place this tag where you want the +1 button to render. -->
-         <div class="g-plusone" data-size="medium" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
-              'ver_evento', true) ?>"></div>
-      </div>
-      <hr/>
-   </div>
-
-   <div class="container">
-      <div class="span-12">
-         <?php echo $this->translate("Speaker:"); ?>
-         <?= $this->evento['nome'] ?>
-      </div>
-   </div>
-
-   <br/>
-
-   <div class="container">
-      <div class="span-3">
-         <?php echo $this->translate("Submited at:"); ?>
-      </div>
-      <div class="span-6">
-         <?php $date = new Zend_Date($this->evento['data_submissao']); ?>
-         <abbr class="timeago" title="<?= $this->evento['data_submissao'] ?>">
-            <?=$date->toString("dd 'de' MMMM 'de' y") ?>
-         </abbr>
-      </div>
-      <div class="span-1">
-         <?php echo $this->translate("Level:"); ?>
-      </div>
-      <div class="span-4">
-         <?= $this->evento['descricao_dificuldade_evento'] ?>
-      </div>
-   </div>
-
-   <br/>
-
-   <div class="container">
-      <div class="span-20 prepend-2" id="tabs">
-         <ul>
-            <li><a href="#tab-1"><?php echo $this->translate("Abstract"); ?></a></li>
-            <li><a href="#tab-2"><?php echo $this->translate("Other Speakers"); ?></a></li>
-            <li><a href="#tab-3"><?php echo $this->translate("Profile"); ?></a></li>
-            <li><a href="#tab-4"><?php echo $this->translate("Bio"); ?></a></li>
-            <li><a href="#tab-5"><?php echo $this->translate("Tags"); ?></a></li>
-         </ul>
-         <div id="tab-1">
-            <?= $this->evento['resumo'] ?>
-         </div>
-         <div id="tab-2">
-            <ul>
-            <?php if (! empty($this->outros)):
-                  foreach ($this->outros as $outro): ?>
-               <?php
-               $url = "/u/";
-               $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
-               ?>
-               <li><a href="<?=$url ?>" title="<?=$outro['apelido'] ?>"
-                      target="_blank"><?=$outro['nome'] ?></a></li>
-            <?php    endforeach;
-               endif; ?>
-            </ul>
-         </div>
-         <div id="tab-3">
-            <?= $this->evento['perfil_minimo'] ?>
-         </div>
-         <div id="tab-4">
-            <?= $this->evento['bio'] ?>
-         </div>
-         <div id="tab-5" class="select2-container select2-container-multi" style="width: 450px;">
-            <ul class="select2-choices">
-            <?php if (! empty($this->tags)):
-                  foreach ($this->tags as $tag): ?>
-               <li class="select2-search-choice select2-locked">
-                  <a><?=$tag['descricao'] ?></a>
-               </li>
-            <?php    endforeach;
-               endif; ?>
-            </ul>
-         </div>
-      </div>
-   </div>
-   <br/><hr/>
+            <!-- Place this tag where you want the +1 button to render. -->
+            <div class="g-plusone" data-size="medium" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
+                  'ver_evento', true) ?>"></div>
+        </div>
+    </div>
    
-   <div id="disqus_thread"></div>
-   <script type="text/javascript">
+    <hr/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <?php echo $this->translate("Speaker:"); ?>
+            <?= $this->evento['nome'] ?>
+        </div>
+        <div class="col-md-3">
+            <?php echo $this->translate("Submited"); ?>
+            <?php $date = new Zend_Date($this->evento['data_submissao_f']); ?>
+            <abbr class="timeago" title="<?= $this->evento['data_submissao'] ?>">
+                <?=$date->toString("dd 'de' MMMM 'de' y") ?>
+            </abbr>
+        </div>
+        <div class="col-md-3">
+            <?php echo $this->translate("Level:"); ?>
+            <?= $this->evento['descricao_dificuldade_evento'] ?>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" role="tabpanel">
+        
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#tab-1" aria-controls="home" role="tab" data-toggle="tab">
+                        <?php echo $this->translate("Abstract"); ?>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab-2" aria-controls="home" role="tab" data-toggle="tab">
+                        <?php echo $this->translate("Other Speakers"); ?>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab-3" aria-controls="home" role="tab" data-toggle="tab">
+                        <?php echo $this->translate("Profile"); ?>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab-4" aria-controls="home" role="tab" data-toggle="tab">
+                        <?php echo $this->translate("Bio"); ?>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab-5" aria-controls="home" role="tab" data-toggle="tab">
+                        <?php echo $this->translate("Tags"); ?>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab-1">
+                    <p style="margin-top: 10px;"><?= $this->evento['resumo'] ?></p>
+                </div>
+                
+                <div role="tabpanel" class="tab-pane" id="tab-2">
+                    
+                    <?php if (! empty($this->outros)): ?>
+                    <div class="list-group" style="margin-top: 10px; width: 400px;">
+                    <?php foreach ($this->outros as $outro): ?>
+                    <?php
+                        $url = "/u/";
+                        $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
+                    ?>
+                        <a class="list-group-item" href="<?=$url ?>" target="_blank"><?=$outro['nome'] ?></a>
+                    <?php endforeach; ?>
+                    </div>
+                    <?php else: ?>
+                    <p style="margin-top: 10px;">Palestrante único</p>
+                    <?php endif; ?>
+                </div>
+                
+                <div role="tabpanel" class="tab-pane" id="tab-3">
+                    <p style="margin-top: 10px;"><?= $this->evento['perfil_minimo'] ?></p>
+                </div>
+                
+                <div role="tabpanel" class="tab-pane" id="tab-4">
+                    <p style="margin-top: 10px;"><?= $this->evento['bio'] ?></p>
+                </div>
+                
+                <div role="tabpanel" class="tab-pane" id="tab-5">
+                    <div class="panel panel-default" style="margin-top: 10px; width: 400px;">
+                        <ul class="list-group">
+                        <?php if (! empty($this->tags)):
+                            foreach ($this->tags as $tag): ?>
+                            <li class="list-group-item">
+                                <?=$tag['descricao'] ?>
+                            </li>
+                        <?php    endforeach;
+                        endif; ?>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div><!-- end of Tab panes -->
+        </div><!-- end of role=tabpanel -->
+    </div><!-- end of .row -->
+   
+    <hr/>
+   
+    <div class="row">
+        <div class="col-md-12">
+            <div id="disqus_thread"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
        var disqus_shortname = 'comsolid';
        var disqus_title = '<?= $this->evento['nome_evento'] ?>';
@@ -160,9 +190,9 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
        })();
-   </script>
-   <noscript>Por favor, habilite o JavaScript para ver os <a href="http://disqus.com/?ref_noscript">comentários do Disqus.</a></noscript>
-   <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </script>
+    <noscript>Por favor, habilite o JavaScript para ver os <a href="http://disqus.com/?ref_noscript">comentários do Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 <?php endif; ?>
 

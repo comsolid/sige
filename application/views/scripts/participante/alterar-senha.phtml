@@ -1,9 +1,88 @@
 <?php
-   $this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
-   $this->headLink()->prependStylesheet($this->baseUrl('css/form.css'));
+   //$this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
+   //$this->headLink()->prependStylesheet($this->baseUrl('css/form.css'));
 ?>
+
+<ul class="nav nav-pills">
+    <li>
+        <a href="<?=$this->url(array('id' => $this->id),
+        'ver') ?>" class="no-bottom">
+            <i class='icon-user'></i>
+            <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'editar'), 'default', true);?>" class="no-bottom">
+            <i class='icon-edit'></i>
+            <?php echo $this->translate("Edit"); ?>
+        </a>
+    </li>
+    <li class="active">
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
+            <i class='icon-lock'></i>
+            <?php echo $this->translate("Alter Password"); ?>
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('controller'=>'participante',
+         'action'=>'certificados'), 'default', true);?>" class="no-bottom">
+            <i class='icon-credit-card'></i>
+            <?php echo $this->translate("Certificates"); ?>
+        </a>
+    </li>
+</ul>
+
+<hr>
 
 <h4><?php echo $this->translate("Alter Password") ?></h4><hr>
 
 <?php
-	echo $this->form;
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-4">
+            <?php echo $form->senhaAntiga->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->senhaAntiga->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->senhaAntiga->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <?php echo $form->senhaNova->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->senhaNova->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->senhaNova->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <?php echo $form->senhaNovaRepeticao->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->senhaNovaRepeticao->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->senhaNovaRepeticao->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="<?php echo $this->url(array(
+                'controller' => 'participante',
+                'action' => 'ver'), 'default', true)?>" class="btn btn-default">
+            <?php echo $this->translate("Cancel"); ?>
+        </a>
+            <?php echo $form->submit->renderViewHelper() ?>
+        </div>
+    </div>
+</form>
