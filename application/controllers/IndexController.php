@@ -9,6 +9,7 @@ class IndexController extends Zend_Controller_Action {
         if ($mobile->isMobile()) { // use "!" para testar em modo mobile
             return $this->_helper->redirector->goToRoute(array(), 'login', true);
         }
+        $this->_helper->layout->setLayout('front-page');
     }
 
     /**
