@@ -162,15 +162,3 @@ $(function(){
         , item);
     }
 });
-
-
-/**
- * <div class="col-sm-10 col-sm-offset-2 text-center">
-        <h3>Atividades</h3>
-        <p>
-            Assista Palestras, participe de Oficinas e Mini cursos sobre o que há de melhor
-            na tecnologia atual.
-        </p>
-        <i class="fa fa-graduation-cap fa-5x"></i>
-    </div>
- */

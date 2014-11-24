@@ -22,19 +22,19 @@ e defina alguns parâmetros:
 
 Encoding do servidor
 
-~~~
+~~~sql
 SET client_encoding = 'LATIN1';
 ~~~
 
 ou
 
-~~~
+~~~sql
 SET client_encoding = 'UTF8';
 ~~~
 
 Permissão ao usuário do banco de dados
 
-~~~
+~~~sql
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
@@ -51,13 +51,13 @@ o comando `ROLLBACK;` por `COMMIT;` e execute novamente o script.
 
 Para PostgreSQL 9.2 para trás comentar a linha 12:
 
-~~~
+~~~sql
 SET lock_timeout = 0;
 ~~~
 
 Para isso basta colocar `--` no início, dessa forma:
 
-~~~
+~~~sql
 --SET lock_timeout = 0;
 ~~~
 
@@ -80,7 +80,7 @@ Teste a execução de script e remova `START TRANSACTION;` e `ROLLBACK;`.
 O primeiro passo para criar um encontro, e adicionar um registro na tabela `encontro`
 da seguinte forma:
 
-~~~
+~~~sql
 INSERT INTO encontro(nome_encontro, apelido_encontro, data_inicio, data_fim,
     periodo_submissao_inicio, periodo_submissao_fim)
     VALUES ('I Encontro de Software Livre', 'I ESL', '2013-11-07', '2013-11-09',
@@ -92,7 +92,7 @@ INSERT INTO encontro(nome_encontro, apelido_encontro, data_inicio, data_fim,
 Depois verifique o `id_encontro` gerado e crie dois registros na tabela `mensagem_email`,
 um para cada mensagem de `tipo_mensagem_email`:
 
-~~~
+~~~sql
 INSERT INTO mensagem_email(id_encontro, id_tipo_mensagem_email,
 		mensagem, assunto, link)
     VALUES (1, 1, 'Nome: {nome}, E-mail: {email}, Senha: {senha},
@@ -111,7 +111,7 @@ Para isso adicione `SET client_encoding = 'LATIN1';` no início do *insert*.
 
 Da mesma forma crie a mensagem de recuperação de senha:
 
-~~~
+~~~sql
 INSERT INTO mensagem_email(id_encontro, id_tipo_mensagem_email,
 		mensagem, assunto, link)
     VALUES (1, 2, 'Nome: {nome}, E-mail: {email}, Senha: {senha},
@@ -130,21 +130,21 @@ a partir do SiGE em `/adim/encontro/criar/`.
 
 ### Zend
 
-A versão utilizada pelo SiGE é [Zend 1.12.6][Zend_1.12.6].
+A versão utilizada pelo SiGE é [Zend 1.12.9][Zend_1.12.9].
 
-[Zend_1.12.6]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.6"
+[Zend_1.12.9]: http://framework.zend.com/downloads/latest#ZF1 "Zend 1.12.9"
 
 A instalação é bem simples. Basta copiarmos o Zend para um diretório de bibliotecas do sistema.
 Baixe o pacote Full, descompacte e siga as instruções em um terminal:
 
 ~~~
 $ sudo su
-# mv ZendFramework-1.12.6 /usr/local/lib
+# mv ZendFramework-1.12.9 /usr/local/lib
 # cd /usr/local/lib
-# ln -s ZendFramework-1.12.6 zend
+# ln -s ZendFramework-1.12.9 zend
 ~~~
 
-### Baixando SiGE do Github
+### Baixando SiGE do Github para desenvolvimento
 
 Para realizar clone da última versão do SiGE:
 
@@ -194,6 +194,8 @@ Adicionaremos o `ServerName` ao `/etc/hosts`:
 127.0.0.1       sige.local
 ~~~
 
+**Obs.:** este trecho deve ser feito apenas em ambiente de desenvolvimento.
+
 Habilite o `mod rewrite` do apache: `$ sudo a2enmod rewrite`.
 
 Reinicie o Apache: `$ sudo service apache2 restart`.
@@ -215,7 +217,7 @@ Caso você não tenha permissão para instalar bibliotecas no sistema, por exemp
 serviço externo, você pode copiar o Zend diretamente na pasta `library` do SiGE. Faça:
 
 ~~~
-$ cp -R /caminho/para/ZendFramework1.12.6/library/Zend ${SiGE}/library
+$ cp -R /caminho/para/ZendFramework1.12.9/library/Zend ${SiGE}/library
 ~~~
 
 Caso use FTP suba o diretório para o mesmo local.
@@ -249,7 +251,7 @@ Dentro do diretório do projeto abra o arquivo `${SiGE}/application/configs/appl
 copie os dados para a seção `[production]` (cole abaixo de `autoloaderNamespaces[] = "Sige"`)
 e edite os parâmetros abaixo:
 
-~~~
+~~~ini
 resources.db.params.host     = "localhost"
 resources.db.params.dbname   = "database"
 resources.db.params.username = "postgres"
@@ -262,7 +264,7 @@ Temos também que configurar o envio de e-mail para validar participantes, recup
 senhas, etc. Ainda no arquivo `${SiGE}/application/configs/application.ini`,
 copie o trecho a seguir e cole logo abaixo dos dados da conexão com o banco. Edite o trecho:
 
-~~~
+~~~ini
 resources.mail.transport.type = "smtp"; não precisa editar
 resources.mail.transport.host = "smtp.esl.com"; servidor gmail: smtp.gmail.com
 resources.mail.transport.port = "587";465
@@ -293,7 +295,7 @@ Mais detalhes em [Zend_Mail][Zend_Mail].
 Após criar um encontro no banco de dados, temos um `id_encontro`. No arquivo
 `${SiGE}/application/configs/application.ini` edite a linha:
 
-~~~
+~~~ini
 encontro.codigo = 1
 ~~~
 
@@ -313,7 +315,7 @@ No banco de dados, na tebela `pessoa`, modifique a coluna `administrador` para `
 Para traduzir as mensagens do SiGE você deve editar o arquivo `${SiGE}/application/Bootstrap.php`.
 Na função `_initTranslate` edite a linha:
 
-~~~
+~~~php
 $locale = "pt_BR";
 ~~~
 
@@ -321,11 +323,11 @@ Verifique as traduções disponíveis em `${SiGE}/application/langs`. Coloque em
 nome do diretório da sua língua padrão.
 
 Para traduzir as mensagens que estão nos arquivos Javascript abra o arquivo
-`${SiGE}/application/layouts/scripts/layout.phtml`.
+`${SiGE}/application/layouts/scripts/twbs3.phtml`.
 
 Procure a linha:
 
-~~~
+~~~php
 $this->headScript()->prependFile($this->baseUrl('js/jed/locale/pt_BR.js'));
 ~~~
 
@@ -392,15 +394,26 @@ ${SiGE}/public/img/certificados/
 
 ### Dados do evento
 
+A página inicial contém os dados do evento. Para modificar os dados basta editar o arquivo
+`${SiGE}/public/js/index/index.js`.
+
+Nesse arquivo temos um objeto chamado `conference`, no qual você vai descrever seu encontro.
+
+Comece editando o nome curto do encontro, juntamente com o nome completo, por exemplo:
+
+~~~javascript
+short_name: 'COMSOLiD',
+full_name: 'Comunidade Maracanauense de Software Livre e Inclusão Digital',
+~~~
+
 #### Contagem Regressiva
 
 Para modficar a data e os dados referentes a contagem regressiva que aparece na página
-inicial do SiGE vá até o arquivo `${SiGE}/public/js/index/index.js`
-e modifique as linhas:
+inicial do SiGE, modifique os atributos `starts_at` e `ends_at`, por exemplo:
 
-~~~
-// data do evento
-ts = new Date(2013, 10, 5),
+~~~javascript
+starts_at:  moment(new Date(2014, 11, 16, 8, 0)),
+ends_at:  moment(new Date(2014, 11, 19, 17, 0)),
 ~~~
 
 **obs.:** lembrando que em Javascript os meses vão de 0 a 11.
@@ -412,48 +425,133 @@ month
 
 Fonte: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date>
 
-e
+#### Características do encontro
 
+Defina as características ou _features_ do seu encontro, por exemplo:
+
+~~~javascript
+features: {
+    columns: 3,
+    list: [
+        {
+            title: 'Feature 1',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+            icon: 'fa-graduation-cap'
+        },
+        {
+            title: 'Feature 2',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+            icon: 'fa-gamepad'
+        },
+        {
+            title: 'Feature 3',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+            icon: 'fa-desktop'
+        }
+    ]
+},
 ~~~
-// mude para o nome do seu evento
-MSG_EVENTO = "para o ESL I!";
+
+O atributo `columns` pode ter valor `2` ou `3`.
+Você pode criar quantas `features` quiser adicionando ao atributo `list`.
+
+É recomendado que você crie no máximo `6` features, para que não polua muito a página.
+
+Os ícones são do _toolkit_ [FontAwesome](https://fortawesome.github.io/Font-Awesome/).
+Acesse o link [Icons](https://fortawesome.github.io/Font-Awesome/icons/) e veja as opções.
+
+#### Mapa
+
+Modifique as coordenadas do local onde acontecerá seu encontro, por exemplo:
+
+~~~javascript
+map: {
+    latitude: -3.87259,
+    longitude: -38.610976,
+    zoom: 17,
+    address: 'IFCE - Campus Maracanaú - Av. Parque Central...'
+}
 ~~~
+
+**Obs.:** Existem algumas políticas de uso referentes ao OpenStreetMap (api usada para mostrar o mapa).
+Para um bom uso da api:
+
+* Use somente `User-Agent` válidos;
+* Não envie cabeçalhos `no-cache` ("Cache-Control: no-cache", "Pragma: no-cache" etc);
+* Faça cache do `Tile` (`Tile` é a imagem do mapa obitida através da api, como o local não deve mudar, esse recurso deve ficar em cache);
+* No máximo são usadas duas threads de download.
+
+Browsers modernos com a configuração padrão geralmente passam por todas as especificações acima.
+
+Referência:
+
+* <http://wiki.openstreetmap.org/wiki/Tile_usage_policy>
+* <https://leanpub.com/leaflet-tips-and-tricks/read>
+
+#### Redes Sociais
+
+A última página contém os links para as redes sociais do seu encontro.
+Edite de acordo com o exemplo abaixo:
+
+~~~javascript
+social_networks: [
+    {
+        url: 'https://twitter.com/comsolid',
+        channel: 'twitter'
+    },
+    {
+        url: 'https://facebook.com/comsolid',
+        channel: 'facebook'
+    },
+    {
+        url: 'https://github.com/comsolid',
+        channel: 'github'
+    },
+],
+~~~
+
+Os botões são gerados usando o [Social Buttons 3](http://noizwaves.github.io/bootstrap-social-buttons/3/),
+utilize os nomes oferecidos pela api.
+
+#### Por que as configurações em JS e não no banco de dados?
+
+Você pode estar se perguntado isso e a resposta é:
+
+> Essas configurações são feitas apenas uma vez, e nós da COMSOLiD achamos que seria trabalhoso para o servidor ter que
+    carregar essas informações do banco de dados cada vez que a página fosse acessada.
 
 #### Twitter
 
 No arquivo `${SiGE}/application/configs/application.ini`
 altere as linhas:
 
-~~~
+~~~ini
 twitter.username = "els"; sem "@"
 twitter.hashtags = "els1"; sem "#" e separadas por ","
 ~~~
 
-### Cores do sistema
+### Layout do Sistema
 
-Para alterar a cor dos _links_ abra o `arquivo ${SiGE}/public/css/sigecss.css` altere o trecho:
+Por usar o Twitter Bootstrap 3, fica mais fácil mudar o tema, ou até mesmo criar um.
 
+O SiGE suporta por padrão 3 temas:
+
+* [Padrão](http://getbootstrap.com/)
+* [Lumen](http://bootswatch.com/lumen/)
+* [Darkly](http://bootswatch.com/darkly/)
+
+Outros temas podem ser encontrados em [Bootswatch](http://bootswatch.com/).
+
+Para editar o tema edite o arquivo `${SiGE}/application/layouts/twbs3.phtml`, procure pela linha:
+
+~~~php
+$this->headLink()->prependStylesheet(
+    $this->baseUrl('lib/css/bootstrap/default/bootstrap.min.css'));
 ~~~
-#corpo a {
-   /* ... */
-}
-~~~
 
-Para alterar a cor dos menus abra o arquivo `arquivo ${SiGE}/public/css/sigecss.css` altere o trecho:
+e mude `default` para `lumen` ou `darkly` ou ainda um tema que você tenha baixado.
 
-~~~
-#menu {
-   /* ... */
-}
-
-#menu a {
-   /* ... */
-}
-
-#menu a.active, #menu a:hover {
-   /* ... */
-}
-~~~
+Os temas devem ficar em `${SiGE}/lib/css/bootstrap/`.
 
 ### Banner do Sistema
 
