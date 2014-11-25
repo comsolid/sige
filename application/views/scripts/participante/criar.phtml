@@ -1,17 +1,180 @@
 <?php
-    $this->headScript()->appendFile($this->baseUrl('js/select2.js'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2-bootstrap.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
     $this->headScript()->appendFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'));
     $this->headScript()->appendFile($this->baseUrl('js/parsley.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/jquery.maskedinput.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/criar.js'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/participante/criar.css'));
 ?>
 
-<a href="<?=$this->url(array(), 'login', true) ?>"
-      class="no-bottom"><i class="icon-signin"></i> <?php echo $this->translate("Login"); ?></a>
+<style>
+    .radio-id-sexo label {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-2">
+        <a href="<?=$this->url(array(), 'login', true) ?>"
+            class="btn btn-link btn-lg">
+            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+        </a>
+    </div>
+    <div class="col-md-10">
+        <h3 style="margin-top: 8px;"><?php echo $this->translate("Create an account"); ?></h3>
+    </div>
+</div>
+
+<hr>
+
 <?php
-    echo $this->form;
+$form = $this->form;
 ?>
-<br/><br/><font color="#828282">* <?php echo $this->translate("Required fields"); ?></font>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-5">
+            <?php echo $form->email->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->email->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->email->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-5">
+            <?php echo $form->nome->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->nome->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->nome->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <?php echo $form->apelido->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->apelido->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->apelido->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $form->id_sexo->renderLabel() ?>
+            <div class="radio radio-id-sexo">
+                <?php echo $form->id_sexo->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->id_sexo->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <?php echo $form->nascimento->renderLabel() ?>
+            <div class="radio">
+                <?php echo $form->nascimento->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->nascimento->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <?php echo $form->endereco_internet->renderLabel() ?>
+            <div class="radio">
+                <?php echo $form->endereco_internet->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->endereco_internet->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $form->id_municipio->renderLabel() ?>
+            <div class="radio">
+                <?php echo $form->id_municipio->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->id_municipio->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <?php echo $form->id_instituicao->renderLabel() ?>
+            <div class="radio">
+                <?php echo $form->id_instituicao->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->id_instituicao->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <?php echo $form->cpf->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->cpf->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->cpf->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <?php echo $form->telefone->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->telefone->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->telefone->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <?php echo $form->twitter->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->twitter->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->twitter->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <?php echo $form->facebook->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->facebook->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->facebook->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <?php $captcha = $form->captcha->getCaptcha()->generate(); ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $form->captcha->renderLabel(); ?>
+        </div>
+        <div class="col-md-2">
+            <img class="img-captcha" src="captcha/<?php echo $captcha; ?>.png" alt="captcha">
+        </div>
+        <div class="col-md-2">
+            <input type="hidden" name="captcha[id]" value="<?php echo $captcha; ?>"
+                id="captcha-id">
+        
+            <input type="text" name="captcha[input]" id="captcha-input"
+            class="form-control">
+        </div>
+        <div class="col-md-2 col-md-offset-4">
+            <?php echo $form->submit->renderViewHelper(); ?>
+        </div>
+    </div>
+</form>

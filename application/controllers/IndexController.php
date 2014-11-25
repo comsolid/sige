@@ -115,7 +115,8 @@ class IndexController extends Zend_Controller_Action {
     }
 
     public function recuperarSenhaAction() {
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+        //$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+        $this->_helper->layout->setLayout('twbs3/front-page');
         $form = new Application_Form_RecuperarSenha();
         $this->view->form = $form;
         $data = $this->getRequest()->getPost();

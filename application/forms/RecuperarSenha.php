@@ -3,17 +3,18 @@
 class Application_Form_RecuperarSenha extends Zend_Form {
 
 	public function init() {
-        $login = $this->createElement('text', 'email',array('label' => _('E-mail:')));
-        $login->setRequired(true)
-            ->addValidator('EmailAddress')
-            ->addErrorMessage(_("Invalid E-mail."));
+        $login = $this->createElement('text', 'email');
+        $login->setRequired(true);
+        $login->addValidator('EmailAddress');
+        $login->addErrorMessage(_("Invalid E-mail."));
+        $login->setAttrib('class', 'form-control input-lg');
+        $login->setAttrib('placeholder', _('E-mail'));
 
         $this->addElement($login);
         $this->addElement($this->_captcha());
-        $submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
+        $submit = $this->createElement('submit', 'submit', array('label' => _('Confirm')));
+        $submit->setAttrib('class', 'btn btn-lg btn-info btn-block');
         $this->addElement($submit);
-        $resetar = $this->createElement('reset', _('Reset'))->removeDecorator('DtDdWrapper');
-        $this->addElement($resetar);
 	}
 
 	protected function _captcha() {
@@ -36,13 +37,7 @@ class Application_Form_RecuperarSenha extends Zend_Form {
 				)
 			)
 		));
-
-		$e->setDecorators(array(
-			'Description',
-			'Errors',
-			array('HtmlTag', '<dd/>'),
-			array('Label', '<dt/>'),
-		));
+        //$e->setAttrib('class', 'form-control input-lg');
 		return $e;
 	}
 }

@@ -55,9 +55,19 @@ $form = $this->form;
                         class="form-signin">
                         <fieldset>
                             <?php echo $form->email->renderViewHelper() ?>
+                            <?php if ($form->email->hasErrors()): ?>
+                            <?php foreach($form->email->getMessages() as $item): ?>
+                                <p class="text-danger"><?php echo $item; ?></p>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
                             <div class="row">
                                 <div class="col-md-8">
                                     <?php echo $form->senha->renderViewHelper() ?>
+                                    <?php if ($form->senha->hasErrors()): ?>
+                                    <?php foreach($form->senha->getMessages() as $item): ?>
+                                        <p class="text-danger"><?php echo $item; ?></p>
+                                    <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col-md-4">
                                     <?php echo $form->submit->renderViewHelper() ?>

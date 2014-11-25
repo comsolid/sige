@@ -47,7 +47,7 @@
 
   <body>
     <?php
-        $this->usuaLogado = Zend_Auth::getInstance()->getIdentity();
+        $usuario = Zend_Auth::getInstance()->getIdentity();
     ?>
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,12 +65,13 @@
           <ul class="nav navbar-nav">
             <?php echo (is_object($this->menu)) ? $this->menu->getView() : ""; ?>
           </ul>
+          <?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
           <ul class="nav navbar-nav navbar-right">
             <li>
                 <a href="<?php echo $this->url(array('controller' => 'participante',
                     'action' => 'ver'), 'default', true); ?>">
                     <i class="fa fa-user"></i>
-                    <?= $this->usuaLogado['apelido'] ?>
+                    <?= $usuario['apelido'] ?>
                 </a>
             </li>
             <li>
@@ -80,6 +81,7 @@
                 </a>
             </li>
           </ul>
+          <?php endif; ?>
         </div><!--/.nav-collapse -->
       </div>
     </div>

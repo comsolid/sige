@@ -26,90 +26,124 @@ class Application_Form_Pessoa extends Zend_Form {
 	public function init() {
 		$this->setAttrib("data-validate", "parsley");
 
-		$nome = $this->createElement('text', 'nome', array('label' => '* ' . _('Name:')));
-		$nome->setRequired(true)
+		$this->addElement($this->_nome())
+				->addElement($this->_email())
+				->addElement($this->_apelido())
+				->addElement($this->_sexo())
+				->addElement($this->_twitter())
+				->addElement($this->_facebook())
+				->addElement($this->_endereco_internet())
+				->addElement($this->_municipio())
+				->addElement($this->_instituicao())
+				->addElement($this->_nascimento())
+                ->addElement($this->_cpf())
+                ->addElement($this->_telefone())
+                ->addElement($this->_captcha());
+
+		$submit = $this->createElement('submit', 'submit', array('label' => _('Confirm')));
+        $submit->setAttrib('class', 'btn btn-lg btn-primary btn-block');
+        $this->addElement($submit);
+	}
+    
+    protected function _nome() {
+        $e = $this->createElement('text', 'nome', array('label' => '* ' . _('Name:')));
+		$e->setRequired(true)
             ->setAttrib("data-required", "true")
             ->setAttrib("data-rangelength", "[1,100]")
             ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÁÉÍÓÚ]*$/'))
             ->addValidator('stringLength', false, array(1, 100))
             ->addErrorMessage(_("Name must have at least 1 character. Or contains invalid characters"));
-
-		$email = $this->createElement('text', 'email', array('label' => '* ' . _('E-mail:')));
-		$email->setRequired(true)
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _email() {
+        $e = $this->createElement('text', 'email', array('label' => '* ' . _('E-mail:')));
+		$e->setRequired(true)
             ->setAttrib("data-required", "true")
             ->setAttrib("data-type", "email")
             ->addValidator('EmailAddress')
             ->addErrorMessage(_("Invalid E-mail."));
-
-		$apelido = $this->createElement('text', 'apelido', array('label' => '* ' . _('Nickname:')));
-		$apelido->setRequired(true)
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _apelido() {
+        $e = $this->createElement('text', 'apelido', array('label' => '* ' . _('Nickname:')));
+		$e->setRequired(true)
             ->setAttrib("data-required", "true")
             ->setAttrib("data-rangelength", "[1,20]")
             ->addValidator('stringLength', false, array(1, 20))
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addErrorMessage(_("Nickname must have at least 1, max. 20 characters"));
-
-        $modelSexo = new Application_Model_Sexo();
-		$rs = $modelSexo->fetchAll(null, 'id_sexo ASC');
-		$sexo = $this->createElement('radio', 'id_sexo', array('label' => _('Gender:')));
-		$sexo->setRequired(true)
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _sexo() {
+        $model = new Application_Model_Sexo();
+		$rs = $model->fetchAll(null, 'id_sexo ASC');
+		$e = $this->createElement('radio', 'id_sexo', array('label' => _('Gender:')));
+		$e->setRequired(true)
             ->setValue('0') // '0' valor padrão para 'Não Informado'
             ->setSeparator('');
         foreach($rs as $row) {
-			$sexo->addMultiOption($row->id_sexo, $row->descricao_sexo);
+			$e->addMultiOption($row->id_sexo, $row->descricao_sexo);
 		}
-
-		$twitter = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
-		$twitter->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
+        //$e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _twitter() {
+        $e = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
+		$e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
            ->addErrorMessage(_("Invalid Twitter username"));
-
-		$facebook = $this->createElement('text', 'facebook', array('label' => 'Facebook:'));
-		$facebook->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _facebook() {
+        $e = $this->createElement('text', 'facebook', array('label' => 'Facebook:'));
+		$e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
             ->addErrorMessage(_("Invalid Facebook username"));
-
-		$site = $this->createElement('text', 'endereco_internet', array('label' => _('Website:')));
-		$site->addValidator(new Url_Validator)
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _endereco_internet() {
+        $e = $this->createElement('text', 'endereco_internet', array('label' => _('Website:')));
+		$e->addValidator(new Url_Validator)
             ->setAttrib("data-type", "urlstrict")
             ->addErrorMessage(_("Invalid website"));
+        $e->setAttrib('class', 'form-control');
+        return $e;
+    }
+    
+    protected function _municipio() {
+        $model = new Application_Model_Municipio();
+		$list  = $model->fetchAll(null, 'nome_municipio');
 
-		$cidade = new Application_Model_Municipio();
-		$listaCiddades  = $cidade->fetchAll(null, 'nome_municipio');
-
-		$municipio = $this->createElement('select', 'municipio', array('label' => _('District:')));
-		$municipio->setAttrib("class", "select2");
-		foreach($listaCiddades as $item) {
-            $municipio->addMultiOptions(array($item->id_municipio => $item->nome_municipio));
+		$e = $this->createElement('select', 'id_municipio', array('label' => _('District:')));
+		foreach($list as $item) {
+            $e->addMultiOptions(array($item->id_municipio => $item->nome_municipio));
 		}
+        $e->setAttrib('class', 'form-control select2');
+        return $e;
+    }
+    
+    protected function _instituicao() {
+        $model = new Application_Model_Instituicao();
+		$list  = $model->fetchAll(null, 'nome_instituicao');
 
-		$ins = new Application_Model_Instituicao();
-		$listaIns  = $ins->fetchAll(null, 'nome_instituicao');
-
-		$instituicao = $this->createElement('select', 'instituicao', array('label' => _('Institution:')));
-		$instituicao->setAttrib("class", "select2");
-		foreach($listaIns as $item) {
-			$instituicao->addMultiOptions(array($item->id_instituicao => $item->nome_instituicao));
+		$e = $this->createElement('select', 'id_instituicao', array('label' => _('Institution:')));
+		$e->setAttrib("class", "select2");
+		foreach($list as $item) {
+			$e->addMultiOptions(array($item->id_instituicao => $item->nome_instituicao));
 		}
-
-		$this->addElement($nome)
-				->addElement($email)
-				->addElement($apelido)
-				->addElement($sexo)
-				->addElement($twitter)
-				->addElement($facebook)
-				->addElement($site)
-				->addElement($municipio)
-				->addElement($instituicao)
-				->addElement($this->_nascimento())
-                ->addElement($this->_cpf())
-                ->addElement($this->_telefone())
-                ->addElement($this->_captcha());
-
-		$submit = $this->createElement('submit', _('Confirm'))->removeDecorator('DtDdWrapper');
-		$this->addElement($submit);
-		$resetar = $this->createElement('reset', _('Reset'))->removeDecorator('DtDdWrapper');
-		$this->addElement($resetar);
-	}
+        $e->setAttrib('class', 'form-control select2');
+        return $e;
+    }
 
     /**
      * Uncomment this method if you want to use only the birth year
@@ -118,7 +152,7 @@ class Application_Form_Pessoa extends Zend_Form {
     protected function _nascimento() {
         $e = new Zend_Form_Element_Select('nascimento');
         $e->setLabel('* ' . _('Birth Date:'));
-        $e->setAttrib("class", "select2");
+        $e->setAttrib("class", "form-control select2");
         $date = new Zend_Date();
         $ano = (int) $date->toString('YYYY');
         for($i = $ano; $i > 1899; $i--) {
@@ -183,7 +217,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->addValidator(new Sige_Validate_Cpf());
         $e->setRequired(false); // change to true to be required.
         // $e->setAttrib("data-required", "true"); // uncomment for validation through js
-
+        $e->setAttrib('class', 'form-control');
         return $e;
     }
 
@@ -192,7 +226,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->setLabel(_('Phone Number:'));
         $e->addFilter('Digits');
         $e->setRequired(false);
-
+        $e->setAttrib('class', 'form-control');
         return $e;
     }
 }

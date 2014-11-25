@@ -1,5 +1,116 @@
-<a href="<?=$this->url(array(), 'login', true) ?>"
-    class="no-bottom"><i class="icon-signin"></i> <?php echo $this->translate("Login"); ?></a>
-<br/>
+
+<style>
+    body {
+        background: url('img/background-login.png');
+    }
+
+    .form-signin input[type="text"] {
+        margin-bottom: 10px;
+    }
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+    }
+
+    .vertical-offset-100 {
+        padding-top: 100px;
+    }
+    
+    .img-responsive {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: auto;
+    }
+    
+    .panel {
+        margin-bottom: 20px;
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
+    
+    .img-captcha {
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        width: 150px;
+        heigth: 50px;
+    }
+</style>
+
 <?php
-	echo $this->form;
+$form = $this->form;
+?>
+
+<div class="container">
+
+    <div class="row vertical-offset-100">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row-fluid user-row">
+                        <img src="<?php echo $this->baseUrl('img/banner-login.png'); ?>" class="img-responsive" alt="Conxole Admin"/>
+                    </div>
+                </div>
+                
+                <div class="panel-body">
+                    <?php echo $this->flashMessages(); ?>
+                
+                    <form method="<?php echo $form->getMethod() ?>"
+                        action="<?php echo $form->getAction()?>"
+                        class="form-signin">
+                        <fieldset>
+                            <?php echo $form->email->renderViewHelper() ?>
+                            <?php if ($form->email->hasErrors()): ?>
+                            <?php foreach($form->email->getMessages() as $item): ?>
+                                <p class="text-danger"><?php echo $item; ?></p>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            
+                            <?php $captcha = $form->captcha->getCaptcha()->generate(); ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <?php echo $form->captcha->renderLabel(); ?>
+                                </div>
+                                <div class="col-md-4">
+                                    <img class="img-captcha" src="captcha/<?php echo $captcha; ?>.png" alt="captcha">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="hidden" name="captcha[id]" value="<?php echo $captcha; ?>"
+                                        id="captcha-id">
+                                
+                                    <input type="text" name="captcha[input]" id="captcha-input"
+                                    class="form-control input-lg">
+                                </div>
+                                <div class="col-md-4">
+                                    <?php echo $form->submit->renderViewHelper(); ?>
+                                </div>
+                                <div class="col-md-8 col-md-offset-4">
+                                    <?php if ($form->captcha->hasErrors()): ?>
+                                    <?php foreach($form->captcha->getMessages() as $item): ?>
+                                        <p class="text-danger"><?php echo $item; ?></p>
+                                    <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="<?=$this->url(array(), 'login', true) ?>"
+                                class="btn btn-link">
+                                <i class="fa fa-sign-in"></i>
+                                <?php echo $this->translate("Login"); ?>
+                            </a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
