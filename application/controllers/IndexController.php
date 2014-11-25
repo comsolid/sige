@@ -5,11 +5,19 @@ class IndexController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+        $hasIdentity = Zend_Auth::getInstance()->hasIdentity();
+        
         $mobile = new Sige_Mobile_Browser();
-        if ($mobile->isMobile()) { // use "!" para testar em modo mobile
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
+        if ($mobile->isMobile()) {
+            if ($hasIdentity) {
+                return $this->_helper->redirector->goToRoute(array(), 'mobile', true);
+            } else {
+                return $this->_helper->redirector->goToRoute(array(), 'login', true);
+            }
+        } else if ($hasIdentity) {
+            return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
         }
-        $this->_helper->layout->setLayout('front-page');
+        $this->_helper->layout->setLayout('twbs3/front-page');
     }
 
     /**
@@ -19,13 +27,13 @@ class IndexController extends Zend_Controller_Action {
     public function loginAction() {
         $isMobile = false;
         $mobile = new Sige_Mobile_Browser();
-        if ($mobile->isMobile()) { // use "!" para testar em modo mobile
+        if ($mobile->isMobile()) {
             $this->_helper->layout->setLayout('mobile');
             $isMobile = true;
             $form = new Mobile_Form_Login();
             $this->_helper->viewRenderer('mobile-login');
         } else {
-            $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
+            $this->_helper->layout->setLayout('twbs3/front-page');
             $form = new Application_Form_Login();
         }
         $this->view->form = $form;
@@ -87,10 +95,10 @@ class IndexController extends Zend_Controller_Action {
                         }
                     }
                 } else {
-                    $this->_helper->flashMessenger->addMessage(array('error' => _('E-mail or Password incorrect.')));
+                    $this->_helper->flashMessenger->addMessage(array('danger' => _('E-mail or Password incorrect.')));
                 }
             } else {
-                $this->_helper->flashMessenger->addMessage(array('error' => _('E-mail or Password incorrect.')));
+                $this->_helper->flashMessenger->addMessage(array('danger' => _('E-mail or Password incorrect.')));
             }
         }
     }

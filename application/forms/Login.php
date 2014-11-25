@@ -3,31 +3,34 @@
 class Application_Form_Login extends Zend_Form {
 	
 	public function init() {
-		$this->setAction($this->getView()->url())
-           ->setMethod('post');
+		$this->setMethod('post');
     
         $this->addElement($this->_email())
 			   ->addElement($this->_senha());
-	    $submit = $this->createElement('submit', _('Login'))->removeDecorator('DtDdWrapper');
+	    $submit = $this->createElement('submit', 'submit', array('label' => _('Login')));
+        $submit->setAttrib('class', 'btn btn-lg btn-success btn-block');
+        
 		$this->addElement($submit);
-		$resetar = $this->createElement('reset', _('Reset'))->removeDecorator('DtDdWrapper');
-		$this->addElement($resetar);
 	}
    
     protected function _email() {
-        $email = $this->createElement('text', 'email', array('label' => _('E-mail:')));
-        $email->setRequired(true)
-          ->addValidator('EmailAddress')
-          ->addErrorMessage(_("Invalid E-mail."));
-        return $email;
+        $e = $this->createElement('text', 'email');
+        $e->setRequired(true);
+        $e->addValidator('EmailAddress');
+        $e->addErrorMessage(_("Invalid E-mail."));
+        $e->setAttrib('class', 'form-control input-lg');
+        $e->setAttrib('placeholder', _('E-mail'));
+        return $e;
     }
    
     protected function _senha() {
-        $senha = $this->createElement('password', 'senha', array('label' => _('Password:')));
-        $senha->addValidator('stringLength', false, array(6, 255))
-            ->setRequired(true)
-            ->addErrorMessage(_("You enter a very small or very large password. Min.: 6, Max.: 255"));
-        return $senha;
+        $e = $this->createElement('password', 'senha');
+        $e->addValidator('StringLength', false, array(6, 255));
+        $e->setRequired(true);
+        $e->addErrorMessage(_("You enter a very small or very large password. Min.: 6, Max.: 255"));
+        $e->setAttrib('class', 'form-control input-lg');
+        $e->setAttrib('placeholder', _('Password'));
+        return $e;
     }
 }
 
