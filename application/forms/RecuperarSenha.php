@@ -37,7 +37,6 @@ class Application_Form_RecuperarSenha extends Zend_Form {
 				)
 			)
 		));
-        //$e->setAttrib('class', 'form-control input-lg');
 		return $e;
 	}
 }

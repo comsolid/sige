@@ -48,11 +48,11 @@ class ParticipanteController extends Zend_Controller_Action {
 
             $data2 = array(
                 'id_encontro' => $idEncontro,
-                'id_municipio' => $data['municipio'],
-                'id_instituicao' => $data['instituicao']
+                'id_municipio' => $data['id_municipio'],
+                'id_instituicao' => $data['id_instituicao']
             );
-            unset($data['municipio']);
-            unset($data['instituicao']);
+            unset($data['id_municipio']);
+            unset($data['id_instituicao']);
             unset($data['captcha']);
 
             $adapter = $pessoa->getAdapter();
@@ -68,10 +68,10 @@ class ParticipanteController extends Zend_Controller_Action {
                 // 23505 = foreign key exception
                 if ($ex->getCode() == 23505) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('E-mail already registered.')));
+                            array('warning' => _('E-mail already registered.')));
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $ex->getMessage()));
                 }
             }
@@ -90,7 +90,7 @@ class ParticipanteController extends Zend_Controller_Action {
                 $adapter->rollBack();
                 $sentinela = 1;
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => 'Ocorreu um erro inesperado ao enviar e-mail.<br/>Detalhes: '
+                        array('danger' => 'Ocorreu um erro inesperado ao enviar e-mail.<br/>Detalhes: '
                             . $ex->getMessage()));
             }
 
@@ -148,7 +148,7 @@ class ParticipanteController extends Zend_Controller_Action {
                 $adapter->rollBack();
                 $sentinela = 1;
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                             . $ex->getMessage()));
             }
 
@@ -170,7 +170,6 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function alterarSenhaAction() {
-        //$this->view->menu->setAtivo('alterarsenha');
         $this->autenticacao();
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -210,11 +209,11 @@ class ParticipanteController extends Zend_Controller_Action {
                                         ), 'default', true);
                     } else {
                         $this->_helper->flashMessenger->addMessage(
-                                array('error' => 'Nova senha não confere!'));
+                                array('danger' => 'Nova senha não confere!'));
                     }
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => 'Senha antiga incorreta!'));
+                            array('danger' => 'Senha antiga incorreta!'));
                 }
             }
         }
@@ -246,7 +245,7 @@ class ParticipanteController extends Zend_Controller_Action {
             $this->view->mostrarEditar = true;
         } else {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Participante não encontrado.'));
+                    array('danger' => 'Participante não encontrado.'));
             return;
         }
         $this->view->id = $id;
@@ -291,7 +290,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
         if (is_null($rs)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Você não participou deste Encontro.'));
+                    array('danger' => 'Você não participou deste Encontro.'));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'participante',
                         'action' => 'certificados'), 'default', true);
@@ -309,7 +308,7 @@ class ParticipanteController extends Zend_Controller_Action {
             echo $pdfData;
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                         . $e->getMessage()));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'participante',
@@ -335,7 +334,7 @@ class ParticipanteController extends Zend_Controller_Action {
 
         if (is_null($rs)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Você não apresentou esse trabalho neste Encontro.'));
+                    array('danger' => 'Você não apresentou esse trabalho neste Encontro.'));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'participante',
                         'action' => 'certificados'), 'default', true);
@@ -357,7 +356,7 @@ class ParticipanteController extends Zend_Controller_Action {
             echo $pdfData;
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                         . $e->getMessage()));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'participante',

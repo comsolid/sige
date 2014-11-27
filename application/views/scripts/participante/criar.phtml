@@ -4,9 +4,9 @@
 
     $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/parsley.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.maskedinput.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/messages.pt_br.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/parsley.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/maskedinput/jquery.maskedinput.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/criar.js'));
 ?>
 
@@ -34,7 +34,9 @@
 $form = $this->form;
 ?>
 
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+<form method="<?php echo $form->getMethod() ?>"
+    action="<?php echo $form->getAction()?>"
+    data-validate="parsley">
     <div class="row" style="margin-top: 20px;">
         <div class="col-md-5">
             <?php echo $form->email->renderLabel() ?>
@@ -173,7 +175,14 @@ $form = $this->form;
             <input type="text" name="captcha[input]" id="captcha-input"
             class="form-control">
         </div>
-        <div class="col-md-2 col-md-offset-4">
+        <div class="col-md-4">
+            <?php if ($form->captcha->hasErrors()): ?>
+            <?php foreach($form->captcha->getMessages() as $item): ?>
+                <p class="text-danger"><?php echo $item; ?></p>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-md-2">
             <?php echo $form->submit->renderViewHelper(); ?>
         </div>
     </div>

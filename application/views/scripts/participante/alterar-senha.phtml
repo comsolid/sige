@@ -1,12 +1,8 @@
-<?php
-   //$this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
-   //$this->headLink()->prependStylesheet($this->baseUrl('css/form.css'));
-?>
 
 <ul class="nav nav-pills">
     <li>
-        <a href="<?=$this->url(array('id' => $this->id),
-        'ver') ?>" class="no-bottom">
+        <a href="<?php echo $this->url(array('controller' => 'participante',
+                    'action' => 'ver'), 'default', true); ?>">
             <i class='icon-user'></i>
             <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
         </a>

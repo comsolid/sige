@@ -1,30 +1,8 @@
 <?php
 
-class Url_Validator extends Zend_Validate_Abstract
-{
-    const INVALID_URL = 'invalidUrl';
-
-    protected $_messageTemplates = array(
-        self::INVALID_URL   => "'%value%' is not a valid URL.",
-    );
-
-    public function isValid($value)
-    {
-        $valueString = (string) $value;
-        $this->_setValue($valueString);
-
-        if (!Zend_Uri::check($value)) {
-            $this->_error(self::INVALID_URL);
-            return false;
-        }
-        return true;
-    }
-}
-
 class Application_Form_Pessoa extends Zend_Form {
 
 	public function init() {
-		$this->setAttrib("data-validate", "parsley");
 
 		$this->addElement($this->_nome())
 				->addElement($this->_email())
@@ -50,7 +28,7 @@ class Application_Form_Pessoa extends Zend_Form {
 		$e->setRequired(true)
             ->setAttrib("data-required", "true")
             ->setAttrib("data-rangelength", "[1,100]")
-            ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÁÉÍÓÚ]*$/'))
+            ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÁÉÍÓÚÊ]*$/'))
             ->addValidator('stringLength', false, array(1, 100))
             ->addErrorMessage(_("Name must have at least 1 character. Or contains invalid characters"));
         $e->setAttrib('class', 'form-control');
@@ -91,7 +69,6 @@ class Application_Form_Pessoa extends Zend_Form {
         foreach($rs as $row) {
 			$e->addMultiOption($row->id_sexo, $row->descricao_sexo);
 		}
-        //$e->setAttrib('class', 'form-control');
         return $e;
     }
     
@@ -113,10 +90,11 @@ class Application_Form_Pessoa extends Zend_Form {
     
     protected function _endereco_internet() {
         $e = $this->createElement('text', 'endereco_internet', array('label' => _('Website:')));
-		$e->addValidator(new Url_Validator)
+		$e->addValidator(new Sige_Validate_Url)
             ->setAttrib("data-type", "urlstrict")
             ->addErrorMessage(_("Invalid website"));
         $e->setAttrib('class', 'form-control');
+        $e->setAttrib('placeholder', 'ex. http://www.site.com.br');
         return $e;
     }
     
@@ -199,13 +177,6 @@ class Application_Form_Pessoa extends Zend_Form {
                     'badCaptcha' => _('Entered value is not valid.')
                 )
             )
-        ));
-
-        $e->setDecorators(array(
-            'Description',
-            'Errors',
-            array('HtmlTag', '<dd/>'),
-            array('Label', '<dt/>'),
         ));
         return $e;
     }

@@ -1,39 +1,40 @@
 <?php
-    //$this->headScript()->appendFile($this->baseUrl('js/participante/jquery-ui-1.10.0.tabs-only.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/select2.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.maskedinput.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/participante/editar.js'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2-bootstrap.css'));
 
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/messages.pt_br.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/parsley.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/maskedinput/jquery.maskedinput.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/participante/editar.js'));
 ?>
 
 <ul class="nav nav-pills">
     <li>
-        <a href="<?=$this->url(array('id' => $this->id),
-        'ver') ?>" class="no-bottom">
+        <a href="<?php echo $this->url(array('controller' => 'participante',
+                    'action' => 'ver'), 'default', true); ?>">
             <i class='icon-user'></i>
             <?php echo sprintf($this->translate("%s's page"), $this->user->nome); ?>
         </a>
     </li>
     <li class="active">
         <a href="<?php echo $this->url(array('controller'=>'participante',
-         'action'=>'editar'), 'default', true);?>" class="no-bottom">
+         'action'=>'editar'), 'default', true);?>">
             <i class='icon-edit'></i>
             <?php echo $this->translate("Edit"); ?>
         </a>
     </li>
     <li>
         <a href="<?php echo $this->url(array('controller'=>'participante',
-         'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
+         'action'=>'alterar-senha'), 'default', true);?>">
             <i class='icon-lock'></i>
             <?php echo $this->translate("Alter Password"); ?>
         </a>
     </li>
     <li>
         <a href="<?php echo $this->url(array('controller'=>'participante',
-         'action'=>'certificados'), 'default', true);?>" class="no-bottom">
+         'action'=>'certificados'), 'default', true);?>">
             <i class='icon-credit-card'></i>
             <?php echo $this->translate("Certificates"); ?>
         </a>
@@ -64,14 +65,16 @@
 $form = $this->form;
 ?>
 
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+<form method="<?php echo $form->getMethod() ?>"
+    action="<?php echo $form->getAction()?>"
+    data-validate="parsley">
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="tab-1">
-            <?php echo $this->partial('partials/participante/tab-1.phtml', array('form' => $form)); ?>
+            <?php echo $this->partial('partials/participante/editar/tab-1.phtml', array('form' => $form)); ?>
         </div>
         <div class="tab-pane" id="tab-2">
-            <?php echo $this->partial('partials/participante/tab-2.phtml', array('form' => $form)); ?>
+            <?php echo $this->partial('partials/participante/editar/tab-2.phtml', array('form' => $form)); ?>
         </div>
     </div>
     <hr>

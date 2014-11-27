@@ -184,10 +184,25 @@ ul.unstyled li {
 
 /* Set the fixed height of the footer here */
 footer {
-  height: 120px;
-  background-color: #414141;
-  margin-top:50px;
-  padding-top:20px;
-  padding-bottom:20px;
-  color: #eee;
+	background-color:#494949;
+    color:#ddd;
+    min-height:200px;
+    padding-top:20px;
+    padding-bottom:40px;
+    margin-top:50px;
+}
+
+footer h4 {
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 5px;
+}
+
+footer .nav>li>a {
+    padding:3px;
+    color:#ccc;
+}
+
+footer .nav>li>a:hover {
+    background-color:transparent;
+	color:#fff;
 }
