@@ -22,6 +22,18 @@
       <?= $this->headLink() ?>
       <?= $this->headStyle() ?>
       <link rel="shortcut icon" href="<?php echo $this->baseUrl('imagens/layout/favicon_sige.png'); ?>" type="image/x-icon" />
+      <style>
+      a {cursor: pointer;}
+      a.no-bottom {text-decoration: none}
+      a.no-bottom:hover {border-bottom: 1px solid}
+      ul.unstyled {
+          list-style: none;
+          margin-left: 0;
+      }
+      ul.unstyled li {
+          padding: 5px 0;
+      }
+      </style>
   	</head>
    <body>
       <div id="principal">

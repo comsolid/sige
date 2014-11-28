@@ -4,12 +4,12 @@
  * TODO: mover para forms do admin
  */
 class Application_Form_Horarios extends Zend_Form {
-   
+
 	private  $descricao;
 	const HORA_INI = 'hora_inicio';
 	const HORA_FIM = 'hora_fim';
-	
-	
+
+
   /**
 	 * @return the $descricao
 	 */
@@ -25,22 +25,22 @@ class Application_Form_Horarios extends Zend_Form {
 	}
 
 	public function init(){
-  
+
 	}
-  
+
    public function cria(){
-  	
+
 		$this->setMethod("post");
-		
+
 		$descricao = $this->createElement('text', 'descricao', array('label' => 'Descrição: '));
 		$descricao->setValue($this->getDescricao())
               ->setAttrib('placeholder', 'Turma 1 ou Parte 1...');
 
 		$salas = new Application_Model_Sala();
 		$salas->fetchAll();
-		
+
 		$salasForm = $this->createElement('select', 'id_sala', array('label'=>'Salas: '));
-		
+
 		foreach ($salas->fetchAll() as $sala){
 			$salasForm->addMultiOptions(array($sala->id_sala => $sala->nome_sala));
 		}
@@ -50,7 +50,7 @@ class Application_Form_Horarios extends Zend_Form {
 	      ->addElement($this->_data())
 	      ->addElement($this->_hora(self::HORA_INI, 'Horário Inicio:'))
 	      ->addElement($this->_hora(self::HORA_FIM, 'Horário Término:'));
-		
+
 		$botao = $this->createElement('submit', 'confimar')->removeDecorator('DtDdWrapper');
 		$this->addElement($botao);
 		$botao = $this->createElement('reset', 'cancelar')->removeDecorator('DtDdWrapper');

@@ -120,7 +120,7 @@ class EventoController extends Zend_Controller_Action {
                     . $ex->getMessage();
         }
         header("Pragma: no-cache");
-        header("Cache: no-cahce");
+        header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
@@ -288,17 +288,6 @@ class EventoController extends Zend_Controller_Action {
             $tipoItem = $eventoItem->findDependentRowset('Application_Model_TipoEvento')->current();
 
             $this->view->eventosTabela[] = array_merge($item->toArray(), $eventoItem->toArray(), $tipoItem->toArray());
-        }
-
-        $form = new Application_Form_PessoaAddEvento();
-        $this->view->form = $form;
-
-        $form->criarFormulario($this->view->eventosTabela);
-
-        $data = $this->getRequest()->getPost();
-
-        if ($this->getRequest()->isPost() && $form->isValid($data)) {
-            $data = $form->getValues();
         }
     }
 

@@ -3,8 +3,8 @@
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
    public function _initRoutes() {
-              
-      $frontController = Zend_Controller_Front::getInstance(); 
+
+      $frontController = Zend_Controller_Front::getInstance();
       $frontController->getRouter()->addDefaultRoutes();
       $router = $frontController->getRouter();
 
@@ -16,7 +16,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('index', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/inscricoes',
          array(
@@ -36,7 +36,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('admin', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/login',
          array(
@@ -45,7 +45,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('login', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/logout',
          array(
@@ -54,7 +54,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('logout', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/sobre',
          array(
@@ -63,7 +63,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('sobre', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/submissao',
          array(
@@ -72,7 +72,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('submissao', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/participar',
          array(
@@ -81,7 +81,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('participar', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/recuperar-senha',
          array(
@@ -90,7 +90,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('recuperar-senha', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/u/:id',
          array(
@@ -99,7 +99,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('ver', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/mobile/u/:id',
          array(
@@ -109,7 +109,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('mobile_ver', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/u/confirmar/:id',
          array(
@@ -120,7 +120,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('confirmar_participante', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/u/desfazer-confirmar/:id',
          array(
@@ -131,7 +131,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('des_confirmar_participante', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
             '/admin/evento/validar/:id',
             array(
@@ -142,7 +142,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('validar_evento', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
             '/admin/evento/invalidar/:id',
             array(
@@ -153,7 +153,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('invalidar_evento', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
             '/admin/evento/apresentado/:id',
             array(
@@ -164,7 +164,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('evento_apresentado', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
             '/admin/evento/desfazer-apresentado/:id',
             array(
@@ -175,7 +175,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('evento_desfazer_apresentado', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
             '/admin/evento/outros-palestrantes/confirmar/:pessoa/:evento',
             array(
@@ -186,7 +186,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('confirmar_outro_palestrante', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
             '/admin/evento/outros-palestrantes/desfazer/:pessoa/:evento',
             array(
@@ -197,7 +197,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             )
       );
       $router->addRoute('des_confirmar_outro_palestrante', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/programacao',
          array(
@@ -206,7 +206,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('programacao', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/c/validar/:id',
          array(
@@ -217,7 +217,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('validar_caravana', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/c/invalidar/:id',
          array(
@@ -228,7 +228,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('invalidar_caravana', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/e/:id',
          array(
@@ -237,7 +237,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('ver_evento', $route);
-      
+
       $route = new Zend_Controller_Router_Route(
          '/mobile/e/:id',
          array(
@@ -247,7 +247,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('mobile_ver_evento', $route);
-      
+
       $route = new Zend_Controller_Router_Route_Static(
          '/mobile',
          array(
@@ -258,28 +258,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       );
       $router->addRoute('mobile', $route);
    }
-   
+
    /**
     * Referência:
     * http://www.codeforest.net/multilanguage-support-in-zend-framework
     */
     protected function _initTranslate() {
         $locale = "pt_BR";
-        
+
         $translatorArray = new Zend_Translate(array(
             'adapter' => 'array',
             'content' => '../resources/languages',
             'locale' => $locale,
             'scan' => Zend_Translate::LOCALE_DIRECTORY
         ));
-        
+
         $translate = new Zend_Translate('gettext',
                 APPLICATION_PATH . "/langs/",
                 $locale,
                 array('scan' => Zend_Translate::LOCALE_DIRECTORY));
-        
+
         $translate->addTranslation($translatorArray);
-        
+
         Zend_Validate_Abstract::setDefaultTranslator($translate);
         $registry = Zend_Registry::getInstance();
         $registry->set('Zend_Translate', $translate);
