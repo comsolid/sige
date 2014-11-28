@@ -49,7 +49,7 @@ class Mobile_ParticipanteController extends Zend_Controller_Action {
          }
       } else {
          $this->_helper->flashMessenger->addMessage(
-                 array('error' => 'Participante não encontrado.'));
+                 array('danger' => 'Participante não encontrado.'));
          return;
       }
       $this->view->id = $id;

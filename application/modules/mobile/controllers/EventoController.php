@@ -45,7 +45,7 @@ class Mobile_EventoController extends Zend_Controller_Action {
          }
       } catch (Exception $e) {
          $this->_helper->flashMessenger->addMessage(
-                 array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                 array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                      . $e->getMessage()));
       }
    }

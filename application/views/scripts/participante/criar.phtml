@@ -4,8 +4,8 @@
 
     $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
-    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/messages.pt_br.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/parsley.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/pt-br.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/maskedinput/jquery.maskedinput.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/participante/criar.js'));
 ?>
@@ -17,14 +17,8 @@
 </style>
 
 <div class="row">
-    <div class="col-md-2">
-        <a href="<?=$this->url(array(), 'login', true) ?>"
-            class="btn btn-link btn-lg">
-            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
-        </a>
-    </div>
-    <div class="col-md-10">
-        <h3 style="margin-top: 8px;"><?php echo $this->translate("Create an account"); ?></h3>
+    <div class="col-md-12">
+        <h3><?php echo $this->translate("Create an account"); ?></h3>
     </div>
 </div>
 
@@ -36,7 +30,8 @@ $form = $this->form;
 
 <form method="<?php echo $form->getMethod() ?>"
     action="<?php echo $form->getAction()?>"
-    data-validate="parsley">
+    data-parsley-validate
+    id="<?php echo $form->getName()?>">
     <div class="row" style="margin-top: 20px;">
         <div class="col-md-5">
             <?php echo $form->email->renderLabel() ?>
@@ -48,7 +43,7 @@ $form = $this->form;
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-5">
             <?php echo $form->nome->renderLabel() ?>
@@ -69,7 +64,7 @@ $form = $this->form;
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->id_sexo->renderLabel() ?>
@@ -99,7 +94,7 @@ $form = $this->form;
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->id_municipio->renderLabel() ?>
@@ -159,7 +154,7 @@ $form = $this->form;
             </div>
         </div>
     </div>
-    
+
     <?php $captcha = $form->captcha->getCaptcha()->generate(); ?>
     <div class="row">
         <div class="col-md-12">
@@ -171,7 +166,7 @@ $form = $this->form;
         <div class="col-md-2">
             <input type="hidden" name="captcha[id]" value="<?php echo $captcha; ?>"
                 id="captcha-id">
-        
+
             <input type="text" name="captcha[input]" id="captcha-input"
             class="form-control">
         </div>

@@ -3,6 +3,7 @@
 class Application_Form_Pessoa extends Zend_Form {
 
 	public function init() {
+		$this->setName('criar_pessoa');
 
 		$this->addElement($this->_nome())
 				->addElement($this->_email())
@@ -22,35 +23,35 @@ class Application_Form_Pessoa extends Zend_Form {
         $submit->setAttrib('class', 'btn btn-lg btn-primary btn-block');
         $this->addElement($submit);
 	}
-    
+
     protected function _nome() {
         $e = $this->createElement('text', 'nome', array('label' => '* ' . _('Name:')));
 		$e->setRequired(true)
-            ->setAttrib("data-required", "true")
-            ->setAttrib("data-rangelength", "[1,100]")
+            ->setAttrib("data-parsley-required", "true")
+            ->setAttrib("data-parsley-range", "[1,100]")
             ->addValidator('regex', false, array('/^[ a-zA-ZáéíóúàìòùãẽĩõũâêîôûäëïöüçÁÉÍÓÚÊ]*$/'))
             ->addValidator('stringLength', false, array(1, 100))
             ->addErrorMessage(_("Name must have at least 1 character. Or contains invalid characters"));
         $e->setAttrib('class', 'form-control');
         return $e;
     }
-    
+
     protected function _email() {
         $e = $this->createElement('text', 'email', array('label' => '* ' . _('E-mail:')));
 		$e->setRequired(true)
-            ->setAttrib("data-required", "true")
-            ->setAttrib("data-type", "email")
+            ->setAttrib("data-parsley-required", "true")
+            ->setAttrib("data-parsley-type", "email")
             ->addValidator('EmailAddress')
             ->addErrorMessage(_("Invalid E-mail."));
         $e->setAttrib('class', 'form-control');
         return $e;
     }
-    
+
     protected function _apelido() {
         $e = $this->createElement('text', 'apelido', array('label' => '* ' . _('Nickname:')));
 		$e->setRequired(true)
-            ->setAttrib("data-required", "true")
-            ->setAttrib("data-rangelength", "[1,20]")
+            ->setAttrib("data-parsley-required", "true")
+            ->setAttrib("data-parsley-range", "[1,20]")
             ->addValidator('stringLength', false, array(1, 20))
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
@@ -58,7 +59,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->setAttrib('class', 'form-control');
         return $e;
     }
-    
+
     protected function _sexo() {
         $model = new Application_Model_Sexo();
 		$rs = $model->fetchAll(null, 'id_sexo ASC');
@@ -71,7 +72,7 @@ class Application_Form_Pessoa extends Zend_Form {
 		}
         return $e;
     }
-    
+
     protected function _twitter() {
         $e = $this->createElement('text', 'twitter', array('label' => 'Twitter: @'));
 		$e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
@@ -79,7 +80,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->setAttrib('class', 'form-control');
         return $e;
     }
-    
+
     protected function _facebook() {
         $e = $this->createElement('text', 'facebook', array('label' => 'Facebook:'));
 		$e->addValidator('regex', false, array('/^[A-Za-z0-9_]*$/'))
@@ -87,17 +88,17 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->setAttrib('class', 'form-control');
         return $e;
     }
-    
+
     protected function _endereco_internet() {
         $e = $this->createElement('text', 'endereco_internet', array('label' => _('Website:')));
 		$e->addValidator(new Sige_Validate_Url)
-            ->setAttrib("data-type", "urlstrict")
+            ->setAttrib("data-parsley-type", "url")
             ->addErrorMessage(_("Invalid website"));
         $e->setAttrib('class', 'form-control');
         $e->setAttrib('placeholder', 'ex. http://www.site.com.br');
         return $e;
     }
-    
+
     protected function _municipio() {
         $model = new Application_Model_Municipio();
 		$list  = $model->fetchAll(null, 'nome_municipio');
@@ -109,7 +110,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->setAttrib('class', 'form-control select2');
         return $e;
     }
-    
+
     protected function _instituicao() {
         $model = new Application_Model_Instituicao();
 		$list  = $model->fetchAll(null, 'nome_instituicao');
@@ -149,7 +150,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->setLabel('* ' . _('Birth Date:'));
         $e->setRequired(true);
         $e->setAttrib("class", "date");
-        $e->setAttrib("data-required", "true");
+        $e->setAttrib("data-parsley-required", "true");
         $e->addFilter('StripTags');
         $e->addFilter('StringTrim');
         $e->addValidator(new Zend_Validate_Date(array('format' => 'dd/MM/yyyy')));
@@ -187,7 +188,7 @@ class Application_Form_Pessoa extends Zend_Form {
         $e->addFilter('Digits');
         $e->addValidator(new Sige_Validate_Cpf());
         $e->setRequired(false); // change to true to be required.
-        // $e->setAttrib("data-required", "true"); // uncomment for validation through js
+        // $e->setAttrib("data-parsley-required", "true"); // uncomment for validation through js
         $e->setAttrib('class', 'form-control');
         return $e;
     }

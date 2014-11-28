@@ -56,11 +56,11 @@ class Admin_HorarioController extends Zend_Controller_Action {
                            'id' => $idEvento), 'default', true);
             } else {
                $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
+                     array('danger' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
             }
          } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                     array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                          . $e->getMessage()));
          }
       }
@@ -101,11 +101,11 @@ class Admin_HorarioController extends Zend_Controller_Action {
                               'id' => $evento), 'default', true);
                } else {
                   $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
+                     array('danger' => 'Já existe um evento no mesmo dia, mesma sala e mesmo horário.'));
                }
             } catch (Exception $e) {
                $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                     array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                          . $e->getMessage()));
             }
          } else {
@@ -139,7 +139,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
          $id = (int) $this->getRequest()->getPost('id');
          if (!isset($id)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Horário não encontrado.'));
+                    array('danger' => 'Horário não encontrado.'));
          } else if ($del == "confimar") {
             try {
                $where = array(
@@ -151,10 +151,10 @@ class Admin_HorarioController extends Zend_Controller_Action {
             } catch (Zend_Db_Exception $e) {
                if ($e->getCode() == 23503){
                   $this->_helper->flashMessenger->addMessage(
-                          array('error' => 'Esse hórario não pode ser removido, pois já existem participantes inscritos.'));
+                          array('danger' => 'Esse hórario não pode ser removido, pois já existem participantes inscritos.'));
                } else {
                   $this->_helper->flashMessenger->addMessage(
-                        array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                        array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                               . $e->getMessage()));
                }
             }
@@ -170,7 +170,7 @@ class Admin_HorarioController extends Zend_Controller_Action {
             $this->view->horario = $model->ler($id);
          } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => $e->getMessage()));
+                    array('danger' => $e->getMessage()));
          }
       }
    }

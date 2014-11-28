@@ -88,7 +88,7 @@ class Admin_CaravanaController extends Zend_Controller_Action {
                     array('success' => 'Caravana atualizada com sucesso.'));
 		} catch (Exception $ex) {
 			 $this->_helper->flashMessenger->addMessage(
-                     array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                     array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                          . $ex->getMessage()));
 		}
 

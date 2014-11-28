@@ -6,7 +6,7 @@ class IndexController extends Zend_Controller_Action {
 
     public function indexAction() {
         $hasIdentity = Zend_Auth::getInstance()->hasIdentity();
-        
+
         $mobile = new Sige_Mobile_Browser();
         if ($mobile->isMobile()) {
             if ($hasIdentity) {
@@ -67,7 +67,7 @@ class IndexController extends Zend_Controller_Action {
                             $irParaEditar = true;
                         } catch(Exception $e) {
                             $irParaEditar = false;
-                            $this->_helper->flashMessenger->addMessage(array('error' => $e->getMessage()));
+                            $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
                         }
                     } else if (!$result['validado']) {
                         // se participante ainda não está validado no encontro
@@ -109,13 +109,14 @@ class IndexController extends Zend_Controller_Action {
     }
 
     public function logoutAction() {
-        $auth = Zend_Auth::getInstance();
-        $auth->clearIdentity();
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $auth = Zend_Auth::getInstance();
+            $auth->clearIdentity();
+        }
         return $this->_helper->redirector->goToRoute(array(), 'index', true);
     }
 
     public function recuperarSenhaAction() {
-        //$this->view->headLink()->appendStylesheet($this->view->baseUrl('css/form.css'));
         $this->_helper->layout->setLayout('twbs3/front-page');
         $form = new Application_Form_RecuperarSenha();
         $this->view->form = $form;
@@ -133,15 +134,18 @@ class IndexController extends Zend_Controller_Action {
                 $mail = new Application_Model_EmailConfirmacao();
                 $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro, Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA);
                 $this->_helper->flashMessenger->addMessage(array('success' => _('E-mail successfully sent, check your e-mail.')));
-                return $this->_helper->redirector->goToRoute(array(), 'index', true);
+                return $this->_helper->redirector->goToRoute(array(), 'login', true);
             } else {
-                $this->_helper->flashMessenger->addMessage(array('error' => _('E-mail not found.')));
+                $this->_helper->flashMessenger->addMessage(array('danger' => _('E-mail not found.')));
             }
         }
     }
 
     public function sobreAction() {
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $this->view->menu = new Application_Form_Menu($this->view, 'inicio', $sessao['administrador']);
+        $this->_helper->layout->setLayout('twbs3/layout');
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
+        }
     }
 }

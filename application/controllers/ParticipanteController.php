@@ -5,7 +5,7 @@ class ParticipanteController extends Zend_Controller_Action {
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
-        $this->_helper->layout->setLayout('twbs3');
+        $this->_helper->layout->setLayout('twbs3/layout');
     }
 
     private function autenticacao() {

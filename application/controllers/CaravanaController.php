@@ -12,7 +12,7 @@ class CaravanaController extends Zend_Controller_Action {
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'caravan', $sessao['administrador']);
-        $this->_helper->layout->setLayout('twbs3');
+        $this->_helper->layout->setLayout('twbs3/layout');
     }
 
     public function indexAction() {

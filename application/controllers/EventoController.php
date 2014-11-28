@@ -5,7 +5,7 @@ class EventoController extends Zend_Controller_Action {
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'home', $sessao['administrador']);
-        $this->_helper->layout->setLayout('twbs3');
+        $this->_helper->layout->setLayout('twbs3/layout');
     }
 
     private function autenticacao($isAjax = false) {
@@ -165,7 +165,7 @@ class EventoController extends Zend_Controller_Action {
                                 ), null, true);
             } catch (Zend_Db_Exception $ex) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                             . $ex->getMessage()));
             }
         }
@@ -215,7 +215,7 @@ class EventoController extends Zend_Controller_Action {
                 try {
                     if ($idPessoa != $data['responsavel'] and ! $admin) {
                         $this->_helper->flashMessenger->addMessage(
-                                array('error' => _('Only the author can edit the Event.')));
+                                array('danger' => _('Only the author can edit the Event.')));
                         return $this->redirecionar();
                     } else {
                         $data['id_encontro'] = $id_encontro;
@@ -227,7 +227,7 @@ class EventoController extends Zend_Controller_Action {
                     }
                 } catch (Zend_Db_Exception $ex) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $ex->getMessage()));
                 }
             } else {
@@ -241,14 +241,14 @@ class EventoController extends Zend_Controller_Action {
                 // e se não é admin, sendo admin é permitido editar
                 if ($idPessoa != $array['responsavel'] and ! $admin) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('Only the author can edit the Event.')));
+                            array('danger' => _('Only the author can edit the Event.')));
                     return $this->redirecionar();
                 } else {
                     $form->populate($row->toArray());
                 }
             } else {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('Event not found.')));
+                        array('danger' => _('Event not found.')));
                 return $this->redirecionar($admin, $idEvento);
             }
         }
@@ -351,7 +351,7 @@ class EventoController extends Zend_Controller_Action {
 
             if (!isset($id) || $id == 0) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('Event not found.')));
+                        array('danger' => _('Event not found.')));
                 $this->_helper->redirector->goToRoute(array(
                     'controller' => 'participante',
                     'action' => 'index'), 'default', true);
@@ -366,7 +366,7 @@ class EventoController extends Zend_Controller_Action {
                             array('success' => _('Event was successfully removed from the Bookmarks.')));
                 } catch (Exception $e) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $e->getMessage()));
                 }
             }
@@ -377,7 +377,7 @@ class EventoController extends Zend_Controller_Action {
             $id = $this->_getParam('id', 0);
             if ($id == 0) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('Event not found.')));
+                        array('danger' => _('Event not found.')));
                 $this->_helper->redirector->goToRoute(array(
                     'controller' => 'participante',
                     'action' => 'index'), 'default', true);
@@ -388,7 +388,7 @@ class EventoController extends Zend_Controller_Action {
                     $this->view->evento = $model->lerEvento($where);
                 } catch (Exception $e) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $e->getMessage()));
                     $this->_helper->redirector->goToRoute(array(
                         'controller' => 'participante',
@@ -420,7 +420,7 @@ class EventoController extends Zend_Controller_Action {
             }
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                         . $e->getMessage()));
         }
     }
@@ -460,10 +460,10 @@ class EventoController extends Zend_Controller_Action {
                 } catch (Zend_Db_Exception $ex) {
                     if ($ex->getCode() == 23505) {
                         $this->_helper->flashMessenger->addMessage(
-                                array('error' => ngettext('Speaker already exists in this event.', 'One or more speakers exists in this event', $count_array_id_pessoas)));
+                                array('danger' => ngettext('Speaker already exists in this event.', 'One or more speakers exists in this event', $count_array_id_pessoas)));
                     } else {
                         $this->_helper->flashMessenger->addMessage(
-                                array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                                array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                     . $ex->getMessage()));
                     }
                 }
@@ -495,7 +495,7 @@ class EventoController extends Zend_Controller_Action {
             $this->view->palestrantes = $palestrantes;
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                         . $e->getMessage()));
         }
     }
@@ -557,7 +557,7 @@ class EventoController extends Zend_Controller_Action {
                         array('success' => _('Speaker was successfuly removed from the event.')));
             } catch (Exception $e) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                             . $e->getMessage()));
             }
         } else {

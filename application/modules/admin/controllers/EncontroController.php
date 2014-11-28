@@ -63,7 +63,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
             } catch (Exception $e) {
                $model->getAdapter()->rollBack();
                $this->_helper->flashMessenger->addMessage(
-                     array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                     array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                          . $e->getMessage()));
             }
          } else {
@@ -101,7 +101,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
                   'action' => 'index'), 'default', true);
             } catch (Exception $e) {
                $this->_helper->flashMessenger->addMessage(
-                     array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                     array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                          . $e->getMessage()));
             }
          } else {
@@ -149,7 +149,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
                                 'action' => 'index'), 'default', true);
                 } catch (Exception $e) {
                     $this->_helper->flashMessenger->addMessage(
-                            array('error' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                                 . $e->getMessage()));
                 }
             } else {

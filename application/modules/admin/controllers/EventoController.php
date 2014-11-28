@@ -67,7 +67,7 @@ class Admin_EventoController extends Zend_Controller_Action {
          $sql = "UPDATE evento SET validada = ? WHERE id_evento = ?";
          $evento->getAdapter()->fetchAll($sql, array($validar, $idEvento));
       } catch (Exception $e) {
-         $this->_helper->flashMessenger->addMessage(array('error' =>
+         $this->_helper->flashMessenger->addMessage(array('danger' =>
              'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
       }
 
@@ -92,7 +92,7 @@ class Admin_EventoController extends Zend_Controller_Action {
          $sql = "UPDATE evento SET apresentado = ? WHERE id_evento = ?";
          $evento->getAdapter()->fetchAll($sql, array($apresentado, $idEvento));
       } catch (Exception $e) {
-         $this->_helper->flashMessenger->addMessage(array('error' =>
+         $this->_helper->flashMessenger->addMessage(array('danger' =>
              'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
       }
 
@@ -167,7 +167,7 @@ class Admin_EventoController extends Zend_Controller_Action {
          $this->_helper->flashMessenger->addMessage(
                      array('success' => $msg));
       } catch (Exception $e) {
-         $this->_helper->flashMessenger->addMessage(array('error' =>
+         $this->_helper->flashMessenger->addMessage(array('danger' =>
              'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
       }
 
