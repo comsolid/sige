@@ -4,3 +4,4 @@
 /vendor/
 /node_modules/
 /library/HTMLPurifier/DefinitionCache/Serializer/HTML/*
+/tests/log/

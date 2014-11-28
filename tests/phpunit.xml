@@ -1,6 +1,6 @@
 <phpunit bootstrap="./application/bootstrap.php" colors="true">
-    <testsuite name="My Application Tests">
-        <directory>./</directory>
+    <testsuite name="Application Tests">
+        <directory>./application</directory>
     </testsuite>
     
     <filter>
