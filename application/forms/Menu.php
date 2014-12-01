@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TODO: pensar numa maneira mais elegante de escrever o menu!
+ * @deprecated usar Sige_Desktop_Menu
  */
 class Application_Form_Menu extends Zend_Form
 {
