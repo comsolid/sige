@@ -1,11 +1,6 @@
 <?php
 
-class Default_IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase {
-    
-    public function setUp() {
-        $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
-        parent::setUp();
-    }
+class Default_IndexControllerTest extends Default_AbstractControllerTest {
     
     public function testAccessIndexAction() {
         $params = array('action' => 'index', 'controller' => 'Index', 'module' => 'default');
@@ -50,4 +45,28 @@ class Default_IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase {
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
+    
+    public function testSuccessfulLogin() {
+        $this->request->setMethod('POST')
+                      ->setPost(array(
+                          'email' => 'comsolid@comsolid.org',
+                          'senha' => '123456',
+                      ));
+        $this->dispatch('/login');
+        $this->assertRedirectTo('/participante');
+    }
+    
+    public function testSuccessfulLogout() {
+        $this->mockLogin();
+        
+        $this->dispatch('/logout');
+        $this->assertRedirectTo('/');
+    }
+    
+    /*public function testAccessLoginOnMobile() {
+        $this->request->setHeader('User-Agent', 'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
+        $this->dispatch('/');
+        
+        $this->assertRedirectTo('/login');
+    }*/
 }
