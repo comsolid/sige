@@ -9,7 +9,7 @@
     <meta name="author" content="COMSOLiD -  Comunidade Maracanauense de Software Livre e Inclusão Digital">
     <link rel="icon" href="<?php echo $this->baseUrl('imagens/layout/favicon_sige.png'); ?>">
 
-    <title>SiGE - COMSOLiD</title>
+    <title>SiGE | COMSOLiD</title>
     <?php
         $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css'));
         $this->headLink()->prependStylesheet($this->baseUrl('lib/css/font-awesome/font-awesome.min.css'));
@@ -26,8 +26,8 @@
         $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
     ?>
 
-    <?= $this->headLink() ?>
-    <?= $this->headStyle() ?>
+    <?php echo $this->headLink(); ?>
+    <?php echo $this->headStyle(); ?>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500">
     <style>
         body {
@@ -105,11 +105,11 @@
 
     <footer id="footer">
         <div class="container">
-            <?php echo $this->render('twbs3/footer.phtml') ?>
+            <?php echo $this->render('twbs3/footer.phtml'); ?>
         </div>
     </footer>
 
-    <?= $this->headScript() ?>
+    <?php echo $this->headScript(); ?>
 </body>
 
 </html>

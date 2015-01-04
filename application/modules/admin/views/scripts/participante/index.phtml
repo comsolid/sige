@@ -1,44 +1,68 @@
 <?php
-	$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-	$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-	$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-	$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
 
+	$this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+	$this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
 	$this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-	$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
+	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
 	$this->headScript()->appendFile($this->baseUrl('js/admin/participante/index.js'));
-	echo $this->partial('menu.phtml');
+	//echo $this->partial('menu.phtml');
 ?>
 
 <input type="hidden"  name="id_encontro" id="id_encontro" value="<?=$this->idEncontro?>" />
 
-<div id="radioset_tipo_busca">
-	<i class="icon-search"></i> <?php echo $this->translate("Search by"); ?>:
-	<input type="radio" id="b_nome" name="t_busca" value="nome" checked="checked"/>
-	<label for="b_nome"><?php echo $this->translate("Name"); ?></label>
-	<input type="radio" id="b_email" name="t_busca" value="email"/>
-	<label for="b_email"><?php echo $this->translate("E-mail"); ?></label>
-	<input type="radio" id="b_municipio" name="t_busca" value="municipio"/>
-	<label for="b_municipio"><?php echo $this->translate("District"); ?></label>
-	<input type="radio" id="b_caravana" name="t_busca" value="caravana"/>
-	<label for="b_caravana"><?php echo $this->translate("Caravan"); ?></label>
-	<input type="radio" id="b_instituicao" name="t_busca" value="instituicao"/>
-	<label for="b_instituicao"><?php echo $this->translate("Institution"); ?></label>
+<div class="row">
+	<div class="col-md-6">
+		<p>
+			<i class="fa fa-search"></i>
+			<?php echo $this->translate("Search by"); ?>:
+		</p>
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-default active">
+				<input type="radio" id="b_nome" name="t_busca" value="nome" checked="checked"/>
+				<?php echo $this->translate("Name"); ?>
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" id="b_email" name="t_busca" value="email"/>
+				<?php echo $this->translate("E-mail"); ?>
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" id="b_municipio" name="t_busca" value="municipio"/>
+				<?php echo $this->translate("District"); ?>
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" id="b_caravana" name="t_busca" value="caravana"/>
+				<?php echo $this->translate("Caravan"); ?>
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" id="b_instituicao" name="t_busca" value="instituicao"/>
+				<?php echo $this->translate("Institution"); ?>
+			</label>
+		</div>
+	</div>
 </div>
-<br/>
 
-<input type="text" class="text" name="termo" id="termo" value=""
-      placeholder="<?php echo $this->translate("Search participant..."); ?>" size="50" maxlength="50" style="float: left;"/>
-<img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
-     style="display: none; float: left;" />
+<hr>
 
-<br/><br/>
-<div class="success" style="display: none;margin-top: 10px;"></div>
-<div class="error" style="display: none;margin-top: 10px;"></div>
-<table id="pessoas" class="display" cellpadding="0" cellspacing="0" border="0">
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			<input type="text" id="termo" class="form-control input-lg"
+			placeholder="<?php echo $this->translate("Search participant..."); ?>"/>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<i class="fa fa-spinner fa-2x fa-spin" id="loading"></i>
+	</div>
+</div>
+
+<table id="pessoas" class="table table-hover">
 	<thead>
 		<tr>
-         <th style="width: 250px;"><?php echo $this->translate("Name"); ?></th>
+        	<th style="width: 250px;"><?php echo $this->translate("Name"); ?></th>
 			<th><?php echo $this->translate("Nickname"); ?></th>
 			<th><?php echo $this->translate("E-mail"); ?></th>
 			<th><?php echo $this->translate("District"); ?></th>

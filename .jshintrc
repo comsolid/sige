@@ -23,6 +23,7 @@
     "moment": false,
     "$": false,
     "L": false,
-    "sprintf": false
+    "sprintf": false,
+    "alertify": false
   }
 }

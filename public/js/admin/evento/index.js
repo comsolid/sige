@@ -5,19 +5,19 @@ $(function() {
       "aaSorting": [ ],
       "bFilter": false
 	});
-   
+
    $("#termo").select();
    $("#radioset_evento, #radioset_situacao").buttonset();
-   
+
    // buscar ao iniciar página.
    buscar();
-   
+
    $("#termo").autocomplete({
 		source: function() {
 			buscar();
 		}
 	});
-   
+
    $("input:radio").click(function() {
       buscar();
       $("#termo").select();

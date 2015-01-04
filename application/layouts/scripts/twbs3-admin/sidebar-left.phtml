@@ -1,0 +1,146 @@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="left-side sidebar-offcanvas">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="<?php echo $this->baseUrl('img/avatar.png'); ?>" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+                <p>Hello, Jane</p>
+
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <span class="input-group-btn">
+                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="<?php echo $this->url(array(), 'admin', true); ?>">
+                    <i class="fa fa-dashboard"></i> <span><?php echo $this->translate("Dashboard"); ?></span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $this->url(array(), 'inscricoes', true); ?>">
+                    <i class="fa fa-pencil"></i> <span><?php echo $this->translate("Registration"); ?></span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'evento',
+                    'action' => 'index'), 'default', true); ?>">
+                    <i class="fa fa-star"></i> <span><?php echo $this->translate("Events"); ?></span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $this->url(array('module' => 'admin',
+                'controller' => 'caravana',
+                'action' => 'index'), 'default', true); ?>">
+                    <i class="fa fa-plane"></i> <span><?php echo $this->translate("Caravan"); ?></span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <span><?php echo $this->translate("Reports"); ?></span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'relatorios',
+                            'action' => 'index'), 'default', true); ?>">
+                            <i class="fa fa-eye"></i>
+                            <?php echo $this->translate("View All"); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'relatorios',
+                            'action' => 'inscricoes-sexo'), 'default', true); ?>">
+                            <i class="fa fa-user"></i>
+                            <?php echo $this->translate("Registrations per gender"); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'relatorios',
+                            'action' => 'inscricoes-municipio-15-mais'), 'default', true); ?>">
+                            <i class="fa fa-flag"></i>
+                            <?php echo $this->translate("Registrations per district (15+)"); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'relatorios',
+                            'action' => 'inscricoes-municipio'), 'default', true); ?>">
+                            <i class="fa fa-flag"></i>
+                            <?php echo $this->translate("Registrations per district (All)"); ?>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cogs"></i>
+                    <span><?php echo $this->translate("Configurations"); ?></span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'config',
+                            'action' => 'index'), 'default', true); ?>">
+                            <i class="fa fa-eye"></i>
+                            <?php echo $this->translate("View All"); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'encontro',
+                            'action' => 'index'), 'default', true); ?>">
+                            <i class="fa fa-bullhorn"></i>
+                            <?php echo $this->translate("Manage Conferences"); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'encontro',
+                            'action' => 'criar'), 'default', true); ?>">
+                            <i class="fa fa-plus"></i>
+                            <?php echo $this->translate("Create Conference"); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'config',
+                            'action' => 'permissao-usuarios'), 'default', true); ?>">
+                            <i class="fa fa-lock"></i>
+                            <?php echo $this->translate("User permissions"); ?>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
