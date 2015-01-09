@@ -91,12 +91,14 @@ $(function(){
     var intervalId = setInterval(function () {
         if (countdown.getTime() <= 0) {
             countdown.end().fadeOut(400, function () {
-                $('#countdown-title').hide();
-                $('#banner-index').show();
+                $('#countdown-title').hide().addClass('fadeOutRight animated');
+                $('#banner-index').show().addClass('lightSpeedIn animated');;
             });
             clearInterval(intervalId);
         }
     }, 1000);
+
+    //var EVENT_ANIMATION_END = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
     $('#fullpage').fullpage({
         sectionsColor: ['#ffffff', '#feb23c', '#61c8fa', '#abe15c', '#fd5936'],
@@ -106,6 +108,25 @@ $(function(){
         loopBottom: true,
         css3: true,
         resize: false,
+        afterLoad: function (anchorLink, index) {
+            if(anchorLink == 'page-1') {
+                $('.col-features').addClass('show fadeInUp animated');
+                $('#header-features').addClass('show fadeInDown animated');
+            } else if(anchorLink == 'page-2') {
+                $('#col-address').addClass('show fadeInLeft animated');
+                $('#col-map').addClass('show fadeInRight animated');
+            } else if(anchorLink == 'page-3') {
+                var socialButtons = $('#social-buttons');
+                socialButtons.addClass('show');
+                socialButtons.children('.btn').addClass('bounceInUp animated');
+                $('#col-social').addClass('show flipInX animated');
+                $('#col-footer').addClass('show fadeInUp animated');
+            }
+        },
+        afterRender: function () {
+            $('#col-login').addClass('show fadeInLeft animated');
+            $('#col-participate').addClass('show fadeInRight animated');
+        }
     });
 
     function generateConferenceFeatures(features) {
@@ -116,6 +137,7 @@ $(function(){
         } else {
             columnClass = 'col-md-4 col-sm-4';
         }
+        columnClass += ' col-features hide';
 
         var row = $('#features');
 
