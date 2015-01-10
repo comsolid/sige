@@ -49,7 +49,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Blank page
+                    <?php echo (isset($this->title) ? $this->title : 'Blank page') ?>
                     <small>Control panel</small>
                 </h1>
                 <ol class="breadcrumb">

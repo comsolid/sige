@@ -14,7 +14,7 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
         if (!$sessao["administrador"]) {
             $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
         }
-        $this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
+        //$this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
     }
 
     /**
@@ -23,6 +23,9 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
      */
     public function indexAction() {
         $this->_helper->layout->setLayout('twbs3-admin/layout');
+        $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'registration');
+        $this->view->title = _('Registration');
+
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idEncontro = $sessao["idEncontro"];
         $this->view->idEncontro = $idEncontro;
@@ -40,11 +43,11 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
         $json->aaData = array();
         foreach ($data as $value) {
             if ($value['confirmado']) {
-                $isValidado = _("Confirmed!");
+                $isValidado = '<span class="label label-success">' . _("Confirmed!") . '</span>';
                 $acao = "<a href=\"#\" class=\"situacao\"
                data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">Desfazer</a>";
             } else {
-                $isValidado = _("Not confirmed!");
+                $isValidado = '<span class="label label-danger">' . _("Not confirmed!") . '</span>';
                 $acao = "<a href=\"#\" class=\"situacao\"
                data-url=\"/u/confirmar/{$value["id_pessoa"]}\">Confirmar</a>";
             }
