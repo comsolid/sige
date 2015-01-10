@@ -1,75 +1,102 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
     $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/admin/evento/index.js'));
-    echo $this->partial('menu.phtml');
+    //echo $this->partial('menu.phtml');
 ?>
 
-<div class="container">
-   <div class="span-10" id="radioset_evento">
-      <i class="icon-star"></i> <?php echo $this->translate("Event"); ?>:<br/>
-      <input type="radio" class="radio tipo_evento" name="tipo_evento"
-             id="tipo_evento_0" value="0" checked="checked" />
-      <label for="tipo_evento_0"><?php echo $this->translate("All"); ?></label>
-      <?php foreach ($this->tipoEvento as $tipoEvento): ?>
-         <input type="radio" class="radio tipo_evento" name="tipo_evento"
-                id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
-                value="<?= $tipoEvento->id_tipo_evento ?>" />
-         <label for="tipo_evento<?= $tipoEvento->id_tipo_evento ?>">
-            <?= $tipoEvento->nome_tipo_evento ?>
-         </label>
-      <?php endforeach; ?>
-   </div>
-
-   <div class="span-10" id="radioset_situacao">
-      <i class="icon-filter"></i> <?php echo $this->translate("Status"); ?>:<br/>
-      <input type="radio" class="radio situacao" name="atividades"
-             id="sit_todos" value="0" checked="checked"/>
-             <label for="sit_todos"><?php echo $this->translate("All"); ?></label>
-      <input type="radio" class="radio situacao" name="atividades"
-             id="sit_validadas" value="1"/>
-             <label for="sit_validadas"><?php echo $this->translate("Valid"); ?></label>
-      <input type="radio" class="radio situacao" name="atividades"
-             id="sit_nao_validadas" value="2"/>
-             <label for="sit_nao_validadas"><?php echo $this->translate("Not valid"); ?></label>
-   </div>
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            <i class="fa fa-star"></i>
+            <?php echo $this->translate("Event"); ?>:
+        </p>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="tipo_evento" value="0"
+                    id="tipo_evento_0" checked="checked" class="tipo_evento"/>
+                <?php echo $this->translate("All"); ?>
+            </label>
+            <?php foreach ($this->tipoEvento as $tipoEvento): ?>
+            <label class="btn btn-default">
+                <input type="radio" name="tipo_evento"
+                    value="<?= $tipoEvento->id_tipo_evento ?>"
+                    id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
+                    class="tipo_evento">
+                <?= $tipoEvento->nome_tipo_evento ?>
+            </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <p>
+            <i class="fa fa-filter"></i>
+            <?php echo $this->translate("Status"); ?>:
+        </p>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="atividades" value="0"
+                    id="sit_todos" checked="checked" class="situacao"/>
+                <?php echo $this->translate("All"); ?>
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="atividades" value="1"
+                    id="sit_validadas" class="situacao"/>
+                <?php echo $this->translate("Valid"); ?>
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="atividades" value="2"
+                    id="sit_nao_validadas" class="situacao"/>
+                <?php echo $this->translate("Not valid"); ?>
+            </label>
+        </div>
+    </div>
 </div>
 
-<br>
+<hr>
 
-<div class="container" style="margin-bottom: 15px;">
-   <div class="span-10">
-      <input type="text" class="text" name="termo" id="termo"
-             placeholder="<?php echo $this->translate("Search event..."); ?>" size="40" maxlength="50" style="float: left;" />
-      <img id="loading" src="<?= $this->baseUrl('img/loading.gif') ?>"
-           style="display: none; float: left;" />
-   </div>
-   <div class="span-5">
-      <a href="<?php echo $this->url(array('module' => 'admin',
-          'controller' => 'evento',
-          'action' => 'programacao-parcial'), 'default', true) ?>" class="no-bottom">
-         <i class="icon-calendar-empty"></i> <?php echo $this->translate("Parcial Schedule"); ?>
-      </a>
-   </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="text" id="termo" class="form-control input-lg"
+            placeholder="<?php echo $this->translate("Search event..."); ?>"/>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <i class="fa fa-spinner fa-2x fa-spin" id="loading"></i>
+    </div>
+    <div class="col-md-4">
+        <a href="<?php echo $this->url(array('module' => 'admin',
+            'controller' => 'evento',
+            'action' => 'programacao-parcial'), 'default', true) ?>" class="btn btn-info btn-lg pull-right">
+            <i class="fa fa-calendar-o"></i>
+            <?php echo $this->translate("Parcial Schedule"); ?>
+        </a>
+    </div>
 </div>
 
-
-<table id="eventos" class="display" cellpadding="0" cellspacing="0" border="0">
-   <thead>
-      <tr>
-         <th style="width: 10px;"><?php echo $this->translate("Type"); ?></th>
-         <th style="width: 250px;"><?php echo $this->translate("Event"); ?></th>
-         <th style="width: 20px;"><?php echo $this->translate("Valid"); ?></th>
-         <th style="width: 80px;"><?php echo $this->translate("Submission"); ?></th>
-         <th><?php echo $this->translate("Responsable"); ?></th>
-         <th>&nbsp;</th>
-      </tr>
-   </thead>
-   <tbody>
-   </tbody>
-</table>
+<div class="row">
+    <div class="col-md-12">
+        <table id="eventos" class="table table-hover">
+            <thead>
+                <tr>
+                    <th><?php echo $this->translate("Type"); ?></th>
+                    <th><?php echo $this->translate("Event"); ?></th>
+                    <th><?php echo $this->translate("Valid"); ?></th>
+                    <th><?php echo $this->translate("Submission"); ?></th>
+                    <th><?php echo $this->translate("Responsable"); ?></th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

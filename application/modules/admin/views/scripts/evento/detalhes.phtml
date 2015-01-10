@@ -1,185 +1,260 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
     $this->headScript()->appendFile($this->baseUrl('js/jquery-migrate-1.2.1.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
     $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/evento/detalhes.js'));
 ?>
 
-<a href="<?php echo $this->url(array('module' => 'admin',
-   'controller' => 'evento',
-   'action' => 'index'), 'default', true) ?>"
-   class="no-bottom"><i class="icon-reply"></i> <?php echo $this->translate("Back"); ?></a>&nbsp;&nbsp;&nbsp;
+<div class="row">
+    <div class="col-md-4">
+        <div class="btn-group">
+            <a href="<?php echo $this->url(array('module' => 'admin',
+                    'controller' => 'evento',
+                    'action' => 'index'), 'default', true) ?>"
+                class="btn btn-default">
+                <i class="fa fa-chevron-left"></i>
+                <?php echo $this->translate("Back"); ?>
+            </a>
+            <a href="<?=$this->url(array('controller' => 'evento',
+                    'action' => 'editar',
+                    'id' => $this->evento['id_evento']), 'default', true) ?>"
+                class="btn btn-default">
+                <i class="fa fa-edit"></i>
+                <?php echo $this->translate("Edit"); ?>
+            </a>
+        </div>
+        <div class="btn-group">
+            <?=$this->url_situacao ?>
 
-<?=$this->url_situacao ?>&nbsp;&nbsp;&nbsp;
-
-<a href="<?=$this->url(array('controller' => 'evento',
-   'action' => 'editar',
-   'id' => $this->evento['id_evento']), 'default', true) ?>"
-   class="no-bottom"><i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?></a>&nbsp;&nbsp;&nbsp;
-
-<?=$this->url_apresentado ?>
-
-<br><br>
-
-<div class="container">
-   <div class="span-2">
-      <?php echo $this->translate("Title"); ?>:
-   </div>
-   <div class="span-10">
-      <?=$this->evento['nome_evento'] ?>
-   </div>
+            <?=$this->url_apresentado ?>
+        </div>
+    </div>
 </div>
 
-<hr/>
+<hr>
 
-<div class="container">
-   <div class="span-6">
-      <?php echo $this->translate("Speaker"); ?>:
-      <?=$this->evento['nome'] ?>
-   </div>
-   <div class="span-4">
-      <?php echo $this->translate("Type"); ?>:
-      <?=$this->evento['nome_tipo_evento'] ?>
-   </div>
-   <div class="span-8">
-      <?php echo $this->translate("Send e-mail"); ?>:&nbsp;
-      <a href="mailto:<?=$this->evento['email'] ?>"
-         target="_blank" class="no-bottom">
-         <i class="icon-envelope"></i> <?=$this->evento['email'] ?>
-      </a>
-   </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <span class="label label-primary"><?php echo $this->evento['nome_tipo_evento']; ?></span>
+                    <?php echo $this->evento['nome_evento']; ?>
+                </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label><?php echo $this->translate("Speaker"); ?>:</label>
+                        <div>
+                            <?php echo $this->evento['nome']; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label><?php echo $this->translate("Send e-mail"); ?>:</label>
+                        <div>
+                            <a href="mailto:<?=$this->evento['email'] ?>"
+                                target="_blank" class="btn btn-default">
+                                <i class="fa fa-envelope"></i> <?php echo $this->evento['email']; ?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->translate("Submited"); ?>
+                        <span data-moment="<?php echo $this->evento['data_submissao']; ?>">
+                            <?php echo $this->evento['data_submissao']; ?>
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <?php if ($this->evento['validada']): ?>
+                            <span class="label label-success pull-right">
+                                <i class="fa fa-check"></i>
+                                <?php echo $this->translate("Validated"); ?>
+                            </span>
+                        <?php else: ?>
+                            <span class="label label-warning pull-right">
+                                <i class="fa fa-times"></i>
+                                <?php echo $this->translate("Not validated yet"); ?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("Details"); ?></h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-1" data-toggle="tab"><?php echo $this->translate("Abstract"); ?></a>
+                        </li>
+                        <li>
+                            <a href="#tab-2" data-toggle="tab"><?php echo $this->translate("Time preferences"); ?></a>
+                        </li>
+                        <li>
+                            <a href="#tab-3" data-toggle="tab"><?php echo $this->translate("Technologies involved"); ?></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-1">
+                            <?= $this->evento['resumo']; ?>
+                        </div>
+                        <div id="tab-2" class="tab-pane">
+                            <?= $this->evento['preferencia_horario']; ?>
+                        </div>
+                        <div id="tab-3" class="tab-pane">
+                            <?= $this->evento['tecnologias_envolvidas']; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<br/>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><i class="icon-time"></i> <?php echo $this->translate("Schedule"); ?></h3>
+                <div class="box-tools pull-right">
+                    <a href="<?php echo $this->url(array(
+                            'controller' => 'horario',
+                            'action' => 'criar',
+                            'id' => $this->evento['id_evento'])); ?>"
+                        class="btn btn-primary" style="color: white">
+                        <i class="fa fa-plus"></i>
+                        <?php echo $this->translate("New Schedule"); ?>
+                    </a>
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="horarios" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate("Description"); ?></th>
+                            <th><?php echo $this->translate("Date"); ?></th>
+                            <th><?php echo $this->translate("Time"); ?></th>
+                            <th><?php echo $this->translate("Place"); ?></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->horarios as $item): ?>
+                        <tr>
+                            <td><?php echo $item["descricao"]; ?></td>
+                            <td><?php echo $item["data"]; ?></td>
+                            <td><?php echo $item["inicio"]; ?> - <?php echo $item["fim"]; ?></td>
+                            <td><?php echo $item["nome_sala"]; ?></td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="<?=$this->url(array('module' => 'admin',
+                                            'controller' => 'horario',
+                                            'action' => 'editar',
+                                            'id' => $item['evento'],
+                                            'evento' => $this->evento['id_evento']), 'default', true) ?>"
+                                        class="btn btn-default" title="<?php echo $this->translate("Edit"); ?>">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="<?=$this->url(array('module' => 'admin',
+                                            'controller' => 'horario',
+                                            'action' => 'deletar',
+                                            'id' => $item['evento'],
+                                            'evento' => $this->evento['id_evento']), 'default', true) ?>"
+                                        class="btn btn-danger" title="<?php echo $this->translate("Delete"); ?>">
+                                        <i class="fa fa-remove"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-<div class="container">
-   <div class="span-2">
-      <?php echo $this->translate("Submission"); ?>:
-   </div>
-   <div class="span-6">
-      <?=$this->evento['data_submissao'] ?>
-   </div>
-   <div class="span-1">
-      <?php echo $this->translate("Level"); ?>:
-   </div>
-   <div class="span-4">
-      <?=$this->evento['descricao_dificuldade_evento'] ?>
-   </div>
-   <div class="span-2">
-      <?php echo $this->translate("Validated"); ?>?:
-   </div>
-   <div class="span-2">
-      <?=($this->evento['validada'] ? $this->translate("Yes") : $this->translate("No")) ?>
-   </div>
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <i class="icon-group"></i>
+                    <?php echo $this->translate("Other Speakers"); ?>
+                </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate("Name"); ?></th>
+                            <th><?php echo $this->translate("Confirmed"); ?></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->outrosPalestrantes as $p): ?>
+                        <tr>
+                            <td><?=$p['nome'] ?></td>
+                            <td>
+                                <?php if($p['confirmado']): ?>
+                                    <span class="label label-success">
+                                        <i class="fa fa-check"></i>
+                                        <?php echo $this->translate("Yes"); ?>
+                                    </span>
+                                <?php else: ?>
+                                    <span class="label label-danger">
+                                        <i class="fa fa-times"></i>
+                                        <?php echo $this->translate("No"); ?>
+                                    </span>
+                                <?php endif; ?>
+                            </td>
+                            <?php
+                            if ($p['confirmado']) {
+                                $url = "<a href='/admin/evento/outros-palestrantes/desfazer/{$p['id_pessoa']}/{$this->evento['id_evento']}'
+                                    class='btn btn-warning'><i class='fa fa-reply'></i> {$this->translate("Undo")}</a>";
+                            } else {
+                                $url = "<a href='/admin/evento/outros-palestrantes/confirmar/{$p['id_pessoa']}/{$this->evento['id_evento']}'
+                                    class='btn btn-success'><i class='fa fa-check'></i> {$this->translate("Confirm")}</a>";
+                            }
+                            ?>
+                            <td>
+                                <?php echo $url; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
-<br/>
-
-<div class="container">
-   <div class="span-20 prepend-2" id="tabs">
-      <ul>
-			<li><a href="#tab-1"><?php echo $this->translate("Abstract"); ?></a></li>
-			<li><a href="#tab-2"><?php echo $this->translate("Time preferences"); ?></a></li>
-			<li><a href="#tab-3"><?php echo $this->translate("Technologies involved"); ?></a></li>
-		</ul>
-		<div id="tab-1">
-			<?= $this->evento['resumo'] ?>
-		</div>
-		<div id="tab-2">
-			<?= $this->evento['preferencia_horario'] ?>
-		</div>
-		<div id="tab-3">
-			<?= $this->evento['tecnologias_envolvidas'] ?>
-		</div>
-   </div>
-</div>
-
-<br><br>
-
-<fieldset>
-   <i class="icon-time"></i> <?php echo $this->translate("Schedule"); ?>:
-   <a href="<?php echo $this->url(array(
-      'controller' => 'horario',
-      'action' => 'criar',
-      'id' => $this->evento['id_evento']));
-   ?>" class="no-bottom" style="float: right"><i class="icon-plus"></i> <?php echo $this->translate("New Schedule"); ?></a><br>
-   <table id="horarios" class="display" cellpadding="0" cellspacing="0" border="0">
-      <thead>
-         <tr>
-            <th><?php echo $this->translate("Description"); ?></th>
-            <th style="width: 50px;"><?php echo $this->translate("Date"); ?></th>
-            <th style="width: 60px;"><?php echo $this->translate("Time"); ?></th>
-            <th><?php echo $this->translate("Place"); ?></th>
-            <th style="width: 100px;">&nbsp;</th>
-         </tr>
-      </thead>
-      <tbody>
-      <?php foreach ($this->horarios as $item): ?>
-			<tr>
-				<td><?php echo $item["descricao"]; ?></td>
-				<td><?php echo $item["data"]; ?></td>
-				<td><?php echo $item["inicio"]; ?> - <?php echo $item["fim"]; ?></td>
-				<td><?php echo $item["nome_sala"]; ?></td>
-				<td>
-					<a href="<?=$this->url(array('module' => 'admin',
-						'controller' => 'horario',
-						'action' => 'editar',
-						'id' => $item['evento'],
-						'evento' => $this->evento['id_evento']), 'default', true) ?>"
-						class="btn no-bottom" title="<?php echo $this->translate("Edit"); ?>"><i class="icon-edit"></i></a>
-					<a href="<?=$this->url(array('module' => 'admin',
-						'controller' => 'horario',
-						'action' => 'deletar',
-						'id' => $item['evento'],
-						'evento' => $this->evento['id_evento']), 'default', true) ?>"
-						class="btn no-bottom" title="<?php echo $this->translate("Delete"); ?>"><i class="icon-remove"></i></a>
-				</td>
-			</tr>
-      <?php endforeach; ?>
-      </tbody>
-   </table>
-
-</fieldset>
-<br/>
-
-<fieldset>
-   <i class="icon-group"></i> <?php echo $this->translate("Other Speakers"); ?>:<br>
-   <table class="display" cellpadding="0" cellspacing="0" border="0" >
-      <thead>
-         <tr>
-            <th><?php echo $this->translate("Name"); ?></th>
-            <th><?php echo $this->translate("Confirmed"); ?></th>
-            <th>&nbsp;</th>
-         </tr>
-      </thead>
-      <tbody>
-      <?php foreach ($this->outrosPalestrantes as $p): ?>
-         <tr>
-            <td><?=$p['nome'] ?></td>
-            <td><?=($p['confirmado'] ? $this->translate("Yes") : $this->translate("No")) ?></td>
-            <?php
-               if ($p['confirmado']) {
-                  $url = "<a href='/admin/evento/outros-palestrantes/desfazer/{$p['id_pessoa']}/{$this->evento['id_evento']}'
-                     class='no-bottom'><i class='icon-reply'></i> {$this->translate("Undo")}</a>";
-               } else {
-                  $url = "<a href='/admin/evento/outros-palestrantes/confirmar/{$p['id_pessoa']}/{$this->evento['id_evento']}'
-                     class='no-bottom'><i class='icon-ok'></i> {$this->translate("Confirm")}</a>";
-               }
-            ?>
-            <td>
-               <?=$url ?>
-            </td>
-         </tr>
-      <?php endforeach; ?>
-      </tbody>
-   </table>
-</fieldset>

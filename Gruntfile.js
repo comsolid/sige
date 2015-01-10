@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                 tasks: ['default']
             },
             html: {
-                files: ['application/views/scripts/**/*.phtml'],
+                files: ['application/views/scripts/**/*.phtml', 'application/modules/**/views/scripts/**/*.phtml'],
                 tasks: ['default']
             }
         }
