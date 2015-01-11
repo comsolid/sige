@@ -24,71 +24,76 @@
 
 <hr>
 
+<div class="row">
+
     <?php foreach ($this->eventos as $linha): ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <span class="label label-primary"><?= $linha["nome_tipo_evento"] ?></span>
-                <?= $linha["nome_evento"] ?>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <?= $linha["resumo"] ?>
-                </div>
+    <div class="col-md-6">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="label label-primary"><?= $linha["nome_tipo_evento"] ?></span>
+                    <?= $linha["nome_evento"] ?>
+                </h3>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-4">
-                    <?php echo $this->translate("Submited"); ?>
-                    <span data-moment="<?= $linha["data_submissao"] ?>">
-                        <?= $linha["data_submissao"] ?>
-                    </span>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?= $linha["resumo"] ?>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <?php if ($linha["validada"]): ?>
-                       <span class="label label-success">
-                           <i class="fa fa-check"></i>
-                           <?php echo $this->translate("Validated"); ?>
-                       </span>
-                    <?php else: ?>
-                       <span class="label label-warning">
-                           <i class="fa fa-times"></i>
-                           <?php echo $this->translate("Not validated yet"); ?>
-                       </span>
-                    <?php endif; ?>
-                </div>
-                <div class="col-md-4">
-                    <div class="btn-group pull-right">
-                        <a href="<?php echo $this->url(array('controller'=>'evento',
-                           'action'=>'editar',
-                            'id'=>$linha['id_evento']), 'default', true);?>" class="btn btn-default">
-                           <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
-                        </a>
-                        <a href="<?php echo $this->url(array('controller'=>'evento',
-                               'action'=>'outros-palestrantes',
-                               'id'=>$linha['id_evento']), 'default', true);?>"
-                           class="btn btn-default"
-                           data-toggle="tooltip" data-placement="top"
-                           title="<?php echo $this->translate("Add other speakers"); ?>">
-                           <i class="fa fa-group"></i>
-                        </a>
-                        <a href="<?php echo $this->url(array('controller'=>'evento',
-                               'action' => 'tags',
-                               'id' => $linha['id_evento']), 'default', true);?>"
-                           class="btn btn-default"
-                           data-toggle="tooltip" data-placement="top"
-                           title="<?php echo $this->translate("Create/Edit tags"); ?>">
-                           <i class="fa fa-tags"></i>
-                        </a>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->translate("Submited"); ?>
+                        <span data-moment="<?= $linha["data_submissao"] ?>">
+                            <?= $linha["data_submissao"] ?>
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <?php if ($linha["validada"]): ?>
+                           <span class="label label-success">
+                               <i class="fa fa-check"></i>
+                               <?php echo $this->translate("Validated"); ?>
+                           </span>
+                        <?php else: ?>
+                           <span class="label label-warning">
+                               <i class="fa fa-times"></i>
+                               <?php echo $this->translate("Not validated yet"); ?>
+                           </span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="btn-group pull-right">
+                            <a href="<?php echo $this->url(array('controller'=>'evento',
+                               'action'=>'editar',
+                                'id'=>$linha['id_evento']), 'default', true);?>" class="btn btn-default">
+                               <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
+                            </a>
+                            <a href="<?php echo $this->url(array('controller'=>'evento',
+                                   'action'=>'outros-palestrantes',
+                                   'id'=>$linha['id_evento']), 'default', true);?>"
+                               class="btn btn-default"
+                               data-toggle="tooltip" data-placement="top"
+                               title="<?php echo $this->translate("Add other speakers"); ?>">
+                               <i class="fa fa-group"></i>
+                            </a>
+                            <a href="<?php echo $this->url(array('controller'=>'evento',
+                                   'action' => 'tags',
+                                   'id' => $linha['id_evento']), 'default', true);?>"
+                               class="btn btn-default"
+                               data-toggle="tooltip" data-placement="top"
+                               title="<?php echo $this->translate("Create/Edit tags"); ?>">
+                               <i class="fa fa-tags"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <?php endforeach; ?>
-
+</div>
 <?php else: ?>
     <div class="row">
         <div class="col-md-12">

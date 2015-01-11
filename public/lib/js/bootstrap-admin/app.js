@@ -39,7 +39,10 @@ $(function() {
     });
 
     //Activate tooltips
-    $("[data-toggle='tooltip']").tooltip();
+    $('[data-toggle="tooltip"]').tooltip({
+        container: 'body',
+        viewport: '#main-content'
+    });
 
     /*
      * Add collapse and remove events to boxes

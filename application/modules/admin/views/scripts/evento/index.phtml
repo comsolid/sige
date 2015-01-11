@@ -1,15 +1,10 @@
 <?php
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
     $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/admin/evento/index.js'));
-    //echo $this->partial('menu.phtml');
 ?>
 
 <div class="row">
@@ -87,12 +82,12 @@
         <table id="eventos" class="table table-hover">
             <thead>
                 <tr>
-                    <th><?php echo $this->translate("Type"); ?></th>
+                    <!-- <th><?php echo $this->translate("Type"); ?></th> -->
                     <th><?php echo $this->translate("Event"); ?></th>
-                    <th><?php echo $this->translate("Valid"); ?></th>
-                    <th><?php echo $this->translate("Submission"); ?></th>
-                    <th><?php echo $this->translate("Responsable"); ?></th>
-                    <th>&nbsp;</th>
+                    <th style="width: 50px;"><?php echo $this->translate("Valid"); ?></th>
+                    <th style="width: 100px;"><?php echo $this->translate("Submission"); ?></th>
+                    <th style="width: 250px;"><?php echo $this->translate("Responsable"); ?></th>
+                    <th style="width: 50px;">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>

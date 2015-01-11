@@ -1,13 +1,5 @@
 
 $(function() {
-	$('.display').dataTable({
-      //"sPaginationType" : "full_numbers",
-      'aaSorting': [ ],
-      'bFilter': false
-	});
-
-	$('a.btn').button();
-	$('#tabs').tabs();
 
 	$('span[data-moment]').each(function(idx, item) {
 		var $item = $(item);

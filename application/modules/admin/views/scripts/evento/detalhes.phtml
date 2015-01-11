@@ -1,22 +1,20 @@
 <?php
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('js/jquery-migrate-1.2.1.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
     $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/evento/detalhes.js'));
 ?>
 
+<style>
+.box-title {
+    line-height: 1.4;
+}
+</style>
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="btn-group">
             <a href="<?php echo $this->url(array('module' => 'admin',
                     'controller' => 'evento',
@@ -47,12 +45,12 @@
     <div class="col-md-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">
+                <h3 class="box-title" style="width: 90%">
                     <span class="label label-primary"><?php echo $this->evento['nome_tipo_evento']; ?></span>
                     <?php echo $this->evento['nome_evento']; ?>
                 </h3>
                 <div class="box-tools pull-right">
-                    <button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
             <div class="box-body">
@@ -108,7 +106,7 @@
                     <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
-            <div class="box-body">
+            <div class="box-body no-padding">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active">
@@ -155,7 +153,13 @@
                     <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
-            <div class="box-body">
+            <div class="box-body no-padding">
+                <?php if (empty($this->horarios)): ?>
+                <div class="alert alert-info">
+                    <i class="fa fa-info"></i>
+                    <?php echo $this->translate("No schedule added yet."); ?>
+                </div>
+                <?php else: ?>
                 <table id="horarios" class="table table-hover">
                     <thead>
                         <tr>
@@ -175,12 +179,25 @@
                             <td><?php echo $item["nome_sala"]; ?></td>
                             <td>
                                 <div class="btn-group">
+                                    <a href="<?php echo $this->escape($this->mailTo($item,
+                                            $this->evento['nome'],
+                                            $this->evento['email'],
+                                            $this->evento['nome_tipo_evento'],
+                                            $this->evento['nome_evento']), false); ?>"
+                                        class="btn btn-default" target="_blank"
+                                        data-toggle="tooltip"
+                                        title="<?php echo $this->translate("Send E-mail"); ?>">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
+
                                     <a href="<?=$this->url(array('module' => 'admin',
                                             'controller' => 'horario',
                                             'action' => 'editar',
                                             'id' => $item['evento'],
                                             'evento' => $this->evento['id_evento']), 'default', true) ?>"
-                                        class="btn btn-default" title="<?php echo $this->translate("Edit"); ?>">
+                                        class="btn btn-default"
+                                        data-toggle="tooltip"
+                                        title="<?php echo $this->translate("Edit"); ?>">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a href="<?=$this->url(array('module' => 'admin',
@@ -188,7 +205,9 @@
                                             'action' => 'deletar',
                                             'id' => $item['evento'],
                                             'evento' => $this->evento['id_evento']), 'default', true) ?>"
-                                        class="btn btn-danger" title="<?php echo $this->translate("Delete"); ?>">
+                                        class="btn btn-danger"
+                                        data-toggle="tooltip"
+                                        title="<?php echo $this->translate("Delete"); ?>">
                                         <i class="fa fa-remove"></i>
                                     </a>
                                 </div>
@@ -197,6 +216,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -213,6 +233,12 @@
                 </div>
             </div>
             <div class="box-body">
+                <?php if (empty($this->outrosPalestrantes)): ?>
+                <div class="alert alert-info">
+                    <i class="fa fa-info"></i>
+                    <?php echo $this->translate("No others speakers."); ?>
+                </div>
+                <?php else: ?>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -254,6 +280,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>

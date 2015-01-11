@@ -120,8 +120,9 @@ class Admin_EventoController extends Zend_Controller_Action {
             $url = '<a href="' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
                 . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
             $json->itens[] = array(
-                substr($value['nome_tipo_evento'], 0, 1),
-                "{$value['nome_evento']}",
+                "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span> {$value['nome_evento']}",
+                // substr($value['nome_tipo_evento'], 0, 1),
+                // "{$value['nome_evento']}",
                 "{$validada}",
                 "{$date->toString("dd/MM/YYYY HH:mm") }",
                 "{$value['nome']}",
