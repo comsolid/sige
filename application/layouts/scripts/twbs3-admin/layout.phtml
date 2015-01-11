@@ -21,6 +21,8 @@
         $this->headScript()->prependFile($this->baseUrl('js/jed/locale/pt_BR.js'));
         $this->headScript()->prependFile($this->baseUrl('js/jed/jed.js'));
         $this->headScript()->prependFile($this->baseUrl('lib/js/bootstrap-admin/app.js'));
+        //$this->headScript()->prependFile($this->baseUrl('lib/js/bootstrap/bootstrap.min.js'));
+        //$this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
     ?>
 
     <?php echo $this->headLink(); ?>
@@ -61,7 +63,7 @@
             </section>
 
             <!-- Main content -->
-            <section class="content">
+            <section class="content" id="main-content">
 
                 <?php echo $this->flashMessages(); ?>
                 <?php echo $this->layout()->content; ?>
