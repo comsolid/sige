@@ -1,11 +1,5 @@
 <?php
-    //$this->headScript()->appendFile($this->baseUrl('js/jquery-1.6.2.min.js'));
-    //$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/horario/salvar.js'));
-
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
 ?>
 
 <?php
@@ -18,73 +12,78 @@ $form->getAction()?>">
 <div class="row">
     <div class="col-md-6">
 
-        <div class="row">
-            <div class="col-md-6">
-                <?php echo $form->descricao->renderLabel() ?>
-                <div class="form-group">
-                    <?php echo $form->descricao->renderViewHelper() ?>
-                    <div class="form-errors">
-                        <?php echo $form->descricao->renderErrors() ?>
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $form->descricao->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->descricao->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->descricao->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $form->id_sala->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->id_sala->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->id_sala->renderErrors() ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <?php echo $form->id_sala->renderLabel() ?>
-                <div class="form-group">
-                    <?php echo $form->id_sala->renderViewHelper() ?>
-                    <div class="form-errors">
-                        <?php echo $form->id_sala->renderErrors() ?>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <?php echo $form->data->renderLabel() ?>
+                        <div class="form-group">
+                            <div class="radio">
+                                <?php echo $form->data->renderViewHelper() ?>
+                            </div>
+                        </div>
+                        <div class="form-errors">
+                            <?php echo $form->data->renderErrors() ?>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $form->hora_inicio->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->hora_inicio->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->hora_inicio->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $form->hora_fim->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->hora_fim->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->hora_fim->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="<?=$this->url(array('module' => 'admin',
+                            'controller' => 'evento',
+                            'action' => 'detalhes',
+                            'id' => $this->idEvento), 'default', true) ?>"
+                            class="btn btn-default">
+                            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+                        </a>
+                        <?php echo $form->submit->renderViewHelper() ?>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-5">
-                <?php echo $form->data->renderLabel() ?>
-                <div class="form-group">
-                    <div class="radio">
-                        <?php echo $form->data->renderViewHelper() ?>
-                    </div>
-                </div>
-                <div class="form-errors">
-                    <?php echo $form->data->renderErrors() ?>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <?php echo $form->hora_inicio->renderLabel() ?>
-                <div class="form-group">
-                    <?php echo $form->hora_inicio->renderViewHelper() ?>
-                    <div class="form-errors">
-                        <?php echo $form->hora_inicio->renderErrors() ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <?php echo $form->hora_fim->renderLabel() ?>
-                <div class="form-group">
-                    <?php echo $form->hora_fim->renderViewHelper() ?>
-                    <div class="form-errors">
-                        <?php echo $form->hora_fim->renderErrors() ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <div class="row">
-            <div class="col-md-6">
-                <a href="<?=$this->url(array('module' => 'admin',
-                'controller' => 'evento',
-                'action' => 'detalhes',
-                'id' => $this->idEvento), 'default', true) ?>"
-                class="btn btn-default">
-                <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
-            </a>
-            <?php echo $form->submit->renderViewHelper() ?>
-            </div>
-        </div>
     </div>
 
     <div class="col-md-6">

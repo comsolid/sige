@@ -3,7 +3,7 @@
 class Admin_Model_Caravana extends Application_Model_Caravana {
 
 	public function buscar($idEncontro = 0, $termo = "") {
-		$sql = "SELECT c.id_caravana, nome_caravana, apelido_caravana, nome, 
+		$sql = "SELECT c.id_caravana, nome_caravana, apelido_caravana, nome,
 			nome_municipio, apelido_instituicao, validada,
 				 ( SELECT sum( CASE WHEN id_sexo = 1 THEN 1 ELSE 0 END )
 					FROM pessoa p INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
@@ -29,7 +29,8 @@ class Admin_Model_Caravana extends Application_Model_Caravana {
 		}
 
 		$sql .= "GROUP BY c.id_caravana, nome_caravana,
-			apelido_caravana, nome, nome_municipio, apelido_instituicao, validada";
+			apelido_caravana, nome, nome_municipio, apelido_instituicao, validada
+			ORDER BY nome";
 		return $this->getAdapter()->fetchAll($sql, $where);
 	}
 }

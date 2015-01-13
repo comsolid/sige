@@ -1,35 +1,45 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
 
     $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/admin/caravana/index.js'));
-    echo $this->partial('menu.phtml');
 ?>
 
-<input type="text" class="text" name="termo" id="termo"
-       placeholder="<?php echo $this->translate("Search caravan..."); ?>" size="50" style="float: left;" />
-<img id="loading" src="<?=$this->baseUrl('img/loading.gif') ?>"
-     style="display: none; float: left;" />
-<br/><br/>
-<table class="display" cellpadding="0" cellspacing="0" border="0">
-   <thead>
-      <tr>
-         <th><?php echo $this->translate("Name"); ?></th>
-         <th><?php echo $this->translate("Codename"); ?></th>
-         <th><?php echo $this->translate("Responsable"); ?></th>
-         <th><?php echo $this->translate("District"); ?></th>
-         <th><?php echo $this->translate("Institution"); ?></th>
-         <th><?php echo $this->translate("Valid"); ?></th>
-         <th><?php echo $this->translate("Men"); ?></th>
-         <th><?php echo $this->translate("Women"); ?></th>
-         <th style="width: 60px;">&nbsp;</th>
-      </tr>
-   </thead>
-   <tbody>
-       <!-- busca é feita via ajax -->
-   </tbody>
-</table>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="text" class="form-control input-lg" name="termo" id="termo"
+            placeholder="<?php echo $this->translate("Search caravan..."); ?>" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <i class="fa fa-spinner fa-2x fa-spin" id="loading"></i>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><?php echo $this->translate("Name"); ?></th>
+                    <th><?php echo $this->translate("Codename"); ?></th>
+                    <th><?php echo $this->translate("Responsable"); ?></th>
+                    <th><?php echo $this->translate("District"); ?></th>
+                    <th><?php echo $this->translate("Institution"); ?></th>
+                    <th><?php echo $this->translate("Valid"); ?></th>
+                    <th><?php echo $this->translate("Men"); ?></th>
+                    <th><?php echo $this->translate("Women"); ?></th>
+                    <th style="width: 60px;">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- busca é feita via ajax -->
+            </tbody>
+        </table>
+    </div>
+</div>

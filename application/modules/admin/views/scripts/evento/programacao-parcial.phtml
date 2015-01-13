@@ -1,78 +1,101 @@
 <?php
-   $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+   //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
 
-   echo $this->partial('menu.phtml');
+   //echo $this->partial('menu.phtml');
 ?>
 
-<h3><?php echo $this->translate("Parcial Schedule"); ?></h3><hr/>
+<style>
+.box-title {
+    line-height: 1.4;
+}
+</style>
 
+<!-- general row -->
+<div class="row">
 <?php
 $data_atual = null;
 if (! empty($this->lista)):
-   foreach ($this->lista as $item): ?>
-<div class="container">
-   <div class="span-2">
-      <?php $date = new Zend_Date($item['data'], 'dd/MM/y'); ?>
-      <div>
-         <p><?=$date->toString('dd') ?>/<?=$date->toString('MMM') ?></p>
-      </div>
-   </div>
-   <div class="span-18">
-      <div class="acc-evento">
-         <div class="header3">
-            <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
-            <?php if (! empty($item['descricao'])) : ?>
-            (<?=$item['descricao'] ?>)
-            <?php endif; ?>
-            <?php if ($item['validada']): ?>
-            <i class="icon-thumbs-up-alt right" title="<?php echo $this->translate("Valid"); ?>"></i>
-            <?php else: ?>
-            <i class="icon-thumbs-down-alt right" title="<?php echo $this->translate("Not Valid"); ?>"></i>
-            <?php endif; ?>
-         </div>
-         <div>
-            <div>
-               <?php echo $this->translate("Place"); ?>:
-               <?php if($item['nome_sala'] == null): ?>
-                  <span class="quiet">[<?php echo $this->translate("Not informed"); ?>]</span>
-               <?php else: ?>
-                  <?=$item['nome_sala']?>
-               <?php endif; ?>
-               -
-               <?php if($item['hora_inicio'] == null): ?>
-                  <span class="quiet">[<?php echo $this->translate("Schedule not defined"); ?>]</span>
-               <?php else: ?>
-                  <?php echo $this->translate("from"); ?>
-                  <?=$item['hora_inicio'] ?>
-                  <?php echo $this->translate("to"); ?>
-                  <?=$item['hora_fim'] ?>
-               <?php endif; ?>
+
+    foreach ($this->lista as $item): ?>
+    <div class="col-md-4">
+        <div class="box box-solid <?php echo ($item['validada'] ? "box-success" : "box-warning"); ?>">
+            <div class="box-header">
+                <h3 class="box-title" style="width: 90%">
+                    <span class="label"><?php echo $item['nome_tipo_evento']; ?></span>
+                    <?php echo $item['nome_evento']; ?>
+                </h3>
+                <i class="fa <?php echo ($item['validada'] ? "fa-check" : "fa-times"); ?> pull-right"
+                    data-toggle="tooltip"
+                    title="<?php echo ($item['validada'] ? $this->translate("Valid") : $this->translate("Not Valid")); ?>"></i>
             </div>
-            <hr/>
-            <?php
-            if (! empty($item['twitter'])) {
-               $id = $item['twitter'];
-            } else {
-               $id = $item['id_pessoa'];
-            }
-            ?>
-            <div>
-               <?php echo $this->translate("by"); ?>
-               <a href="<?=$this->url(array('id' => $id),
-                    'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
-               <?php if ($item['outros'] == 1): ?>
-                  <?php echo $this->translate("and other."); ?>
-               <?php elseif ($item['outros'] > 1): ?>
-                  <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
-               <?php endif; ?>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label><?php echo $this->translate("Place"); ?></label>
+                        <div>
+                            <?php if($item['nome_sala'] == null): ?>
+                                <span class="label label-default"><?php echo $this->translate("Not informed"); ?></span>
+                            <?php else: ?>
+                                <?php echo $item['nome_sala']; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <?php
+                        if (! empty($item['twitter'])) {
+                            $id = $item['twitter'];
+                        } else {
+                            $id = $item['id_pessoa'];
+                        }
+                        ?>
+                        <label><?php echo $this->translate("by"); ?></label>
+                        <div>
+                            <a href="<?=$this->url(array('id' => $id),
+                                'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
+                            <?php if ($item['outros'] == 1): ?>
+                                <?php echo $this->translate("and other."); ?>
+                            <?php elseif ($item['outros'] > 1): ?>
+                                <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p><?=$item['resumo'] ?></p>
-         </div>
-      </div>
-   </div>
-</div>
-<hr style="border: 1px dotted #666;"/>
+            <div class="box-footer">
+                <?php $date = new Zend_Date($item['data'], 'dd/MM/y'); ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php if($item['hora_inicio'] == null): ?>
+                            <span class="label label-warning"><?php echo $this->translate("Schedule not defined"); ?></span>
+                        <?php else: ?>
+                            <span class="label label-primary" style="margin-right: 5px">
+                                <?php echo $date->toString('dd'); ?>/<?php echo $date->toString('MMM'); ?>
+                            </span>
+
+                            <?php echo $this->translate("from"); ?>
+                            <?php echo $item['hora_inicio']; ?>
+                            <?php echo $this->translate("to"); ?>
+                            <?php echo$item['hora_fim']; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'evento',
+                            'action' => 'detalhes',
+                            'id' => $item['id_evento']
+                        )); ?>" class="btn btn-default btn-xs pull-right">
+                        <i class="fa fa-plus"></i>
+                        <?php echo $this->translate("Details"); ?>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php
    endforeach;
 endif;
 ?>
+
+</div>
