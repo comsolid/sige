@@ -1,102 +1,115 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    //$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
     $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/admin/encontro/index.js'));
-    echo $this->partial('menu.phtml');
 ?>
 
-<div class="container">
-    <div class="span-16">
+<div class="row">
+    <div class="col-md-8">
         <h3><?php echo $this->translate("Conferences"); ?></h3>
     </div>
-    <div class="span-5">
+    <div class="col-md-4">
         <a href="<?=$this->url(array(
             'module' => 'admin',
             'controller' => 'encontro',
             'action' => 'criar'), 'default', true); ?>"
-           class="no-bottom">
-            <i class="icon-plus"></i> <?php echo $this->translate("Create Conference"); ?>
+           class="btn btn-primary btn-lg pull-right">
+            <i class="fa fa-plus"></i> <?php echo $this->translate("Create Conference"); ?>
         </a>
     </div>
 </div>
 
 <hr/>
+
+<div class="row">
 <?php foreach ($this->lista as $value): ?>
-    <fieldset>
-        <div class="container">
-            <div class="span-2">
-                #<?= $value['id_encontro'] ?>
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <span class="label label-primary" style="margin-right: 6px;">
+                        #<?= $value['id_encontro'] ?>
+                    </span>
+                    <?= $value['apelido_encontro'] ?>
+                </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
             </div>
-            <div class="span-14">
-                <strong><?= $value['nome_encontro'] ?></strong>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $value['nome_encontro'] ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->translate("from"); ?>
+                        <?= $value['data_inicio'] ?>
+                        <?php echo $this->translate("to"); ?>
+                        <?= $value['data_fim'] ?>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 6px;">
+                    <div class="col-md-6">
+                        <label><?php echo $this->translate("Submission Period"); ?></label>
+                        <div>
+                            <?= $value['periodo_submissao_inicio'] ?>
+                            <?php echo $this->translate("to"); ?>
+                            <?= $value['periodo_submissao_fim'] ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div><br/>
-        <div class="container">
-            <div class="span-7">
-                <?php echo $this->translate("from"); ?>
-                <?= $value['data_inicio'] ?>
-                <?php echo $this->translate("to"); ?>
-                <?= $value['data_fim'] ?>
-            </div>
-            <div class="span-6">
-                <?php echo $this->translate("Codename"); ?>:
-                <?= $value['apelido_encontro'] ?>
-            </div>
-            <div class="span-7">
-                <?php echo $this->translate("Submission Period"); ?>:<br/>
-                <?= $value['periodo_submissao_inicio'] ?>
-                <?php echo $this->translate("to"); ?>
-                <?= $value['periodo_submissao_fim'] ?>
-            </div>
-        </div><br/>
-        <div class="container">
-            <div class="span-20">
-                <a href="<?php echo $this->url(array(
-                    'module' => 'admin',
-                    'controller' => 'encontro',
-                    'action' => 'editar',
-                    'id' => $value['id_encontro']), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-edit"></i> <?php echo $this->translate("Edit"); ?>
-                </a>&nbsp;&nbsp;&nbsp;
-                <a href="<?php echo $this->url(array(
-                    'module' => 'admin',
-                    'controller' => 'encontro',
-                    'action' => 'editar-mensagem-email-confirmacao',
-                    'id' => $value['id_encontro'],
-                    'id_tipo_mensagem' => $this->confirmacao), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-envelope-alt"></i>
-                    <?php echo $this->translate("E-mail confirmation message"); ?>
-                </a>&nbsp;&nbsp;&nbsp;
-                <a href="<?php echo $this->url(array(
-                    'module' => 'admin',
-                    'controller' => 'encontro',
-                    'action' => 'editar-mensagem-email-confirmacao',
-                    'id' => $value['id_encontro'],
-                    'id_tipo_mensagem' => $this->correcao), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-envelope-alt"></i>
-                    <?php echo $this->translate("E-mail recover password message"); ?>
-                </a>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group pull-right">
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'admin',
+                                'controller' => 'encontro',
+                                'action' => 'editar',
+                                'id' => $value['id_encontro']), 'default', true); ?>"
+                                class="btn btn-default">
+                                <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
+                            </a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-email-confirmacao',
+                                            'id' => $value['id_encontro'],
+                                            'id_tipo_mensagem' => $this->confirmacao), 'default', true); ?>">
+                                            <?php echo $this->translate("E-mail confirmation message"); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-email-confirmacao',
+                                            'id' => $value['id_encontro'],
+                                            'id_tipo_mensagem' => $this->correcao), 'default', true); ?>">
+                                            <?php echo $this->translate("E-mail recover password message"); ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </fieldset>
+    </div>
    <?php endforeach; ?>
-
-<hr/>
-
-<a href="<?=$this->url(array(
-       'module' => 'admin',
-       'controller' => 'encontro',
-       'action' => 'criar'), 'default', true); ?>"
-   class="no-bottom">
-    <i class="icon-plus"></i> <?php echo $this->translate("Create Conference"); ?>
-</a>
+</div><!-- end of .row -->

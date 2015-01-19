@@ -10,21 +10,22 @@ class Admin_ConfigController extends Zend_Controller_Action {
             $this->_helper->redirector->goToRoute(array(), 'login', true);
             return;
         }
+
         $sessao = Zend_Auth::getInstance()->getIdentity();
         if (!$sessao ["administrador"]) {
             $this->_helper->redirector->goToRoute(array(
                 'controller' => 'participante',
                 'action' => 'index'), 'default', true);
         }
-        $this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
+
+        $this->_helper->layout->setLayout('twbs3-admin/layout');
+        $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'config');
     }
 
     public function indexAction() {
-
     }
 
     public function permissaoUsuariosAction() {
-
     }
 
     public function ajaxBuscarUsuariosAction() {
