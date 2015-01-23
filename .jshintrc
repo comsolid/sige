@@ -24,6 +24,8 @@
     "$": false,
     "L": false,
     "sprintf": false,
-    "alertify": false
+    "alertify": false,
+    "Morris": false,
+    "Jed": false
   }
 }

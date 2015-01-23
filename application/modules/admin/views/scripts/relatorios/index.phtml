@@ -1,61 +1,56 @@
-<?php
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    //echo $this->partial('menu.phtml');
-?>
 
-<div class="container">
-    <div class="span-8 prepend-1">
-        <h3><?php echo $this->translate("Current Conference"); ?></h3><hr/>
-        <ul class="unstyled">
-            <li>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate("Current Conference"); ?></h3>
+            </div>
+            <div class="list-group">
                 <a href="<?php echo $this->url(array(
                     'module' => 'admin',
                     'controller' => 'relatorios',
                     'action' => 'inscricoes-por-dia'), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-calendar"></i>
+                    class="list-group-item">
+                    <i class="fa fa-calendar"></i>
                     <?php echo $this->translate("Registrations per day"); ?>
                 </a>
-            </li>
-            <li>
+
                 <a href="<?php echo $this->url(array(
-                       'module' => 'admin',
-                       'controller' => 'relatorios',
-                       'action' => 'inscricoes-horario'), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-time"></i>
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'inscricoes-horario'), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-clock-o"></i>
                     <?php echo $this->translate("Registrations per hour of day"); ?>
                 </a>
-            </li>
-            <li>
+
                 <a href="<?php echo $this->url(array(
-                       'module' => 'admin',
-                       'controller' => 'relatorios',
-                       'action' => 'inscricoes-sexo'), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-user"></i>
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'inscricoes-sexo'), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-user"></i>
                     <?php echo $this->translate("Registrations per gender"); ?>
                 </a>
-            </li>
-            <li>
+
                 <a href="<?php echo $this->url(array(
                     'module' => 'admin',
                     'controller' => 'relatorios',
                     'action' => 'inscricoes-municipio-15-mais'), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-flag"></i>
+                    class="list-group-item">
+                    <i class="fa fa-flag"></i>
                     <?php echo $this->translate("Registrations per district (15+)"); ?>
                 </a>
-            </li>
-            <li><a href="<?php echo $this->url(array(
+
+                <a href="<?php echo $this->url(array(
                     'module' => 'admin',
                     'controller' => 'relatorios',
                     'action' => 'inscricoes-municipio'), 'default', true); ?>"
-                   class="no-bottom">
-                    <i class="icon-flag"></i>
+                    class="list-group-item">
+                    <i class="fa fa-flag"></i>
                     <?php echo $this->translate("Registrations per district (All)"); ?>
                 </a>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,44 +1,46 @@
 <?php
-	$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-	$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-	
-	$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+	$this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
+
+	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
+	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
 	$this->headScript()->appendFile($this->baseUrl('js/admin/relatorio/inscricoes-municipio.js'));
 ?>
 
-<?php echo $this->partial('menu.phtml'); ?>
-
-<h3><?php echo $this->translate("Registrations per district (All)"); ?></h3>
-
-<hr/>
-
-<table class="display" cellpadding="0" cellspacing="0" border="0;" >
-   <thead>
-      <tr>
-         <th><?php echo $this->translate("District"); ?></th>
-         <th><?php echo $this->translate("Num. registries"); ?></th>
-         <th><?php echo $this->translate("Num. Confirmed"); ?></th>
-      </tr>
-   </thead>
-   <tbody>
-      <?php
-			$total_inscritos = $total_confirmados = 0;
-			foreach ($this->list as $item):
-				$total_inscritos += $item['num'];
-				$total_confirmados += $item['confirmados'];
-      ?>
-         <tr>
-            <td><?php echo $item["municipio"] ?></td>
-            <td class="col-right"><?php echo $item["num"] ?></td>
-            <td class="col-right"><?php echo $item["confirmados"] ?></td>
-         </tr>
-      <?php endforeach; ?>
-   </tbody>
-   <tfoot>
-		<tr>
-			<th>Total</th>
-			<th class="col-right"><?php echo $total_inscritos ?></th>
-			<th class="col-right"><?php echo $total_confirmados ?></th>
-		</tr>
-   </tfoot>
-</table>
+<div class="row">
+	<div class="col-md-9 col-md-offset-1">
+		<div class="box box-solid">
+			<div class="box-body">
+				<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate("District"); ?></th>
+							<th><?php echo $this->translate("Num. registries"); ?></th>
+							<th><?php echo $this->translate("Num. Confirmed"); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$total_inscritos = $total_confirmados = 0;
+						foreach ($this->list as $item):
+							$total_inscritos += $item['num'];
+							$total_confirmados += $item['confirmados'];
+							?>
+							<tr>
+								<td><?php echo $item["municipio"] ?></td>
+								<td class="col-right"><?php echo $item["num"] ?></td>
+								<td class="col-right"><?php echo $item["confirmados"] ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Total</th>
+							<th class="col-right"><?php echo $total_inscritos ?></th>
+							<th class="col-right"><?php echo $total_confirmados ?></th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,25 +1,32 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/morris.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/morris/morris.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('js/raphael-min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/morris.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/sprintf-0.6.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/morris/raphael-min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/morris/morris.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/sprintfjs/sprintf.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/relatorio/relatorio-utils.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/relatorio/inscricoes-municipio-15-mais.js'));
-    echo $this->partial('menu.phtml');
 ?>
 
-<div class="error" style="display: none;margin-top: 10px;"></div>
-<div class="container">
-   <div class="span-14">
-      <h3><?php echo $this->translate("Registrations per district (15+)"); ?></h3>
-   </div>
-   <div class="span-4">
-      <a id="reload" href="#" class="no-bottom" onclick="return false;">
-         <i class="icon-refresh"></i> <?php echo $this->translate("Reload"); ?>
-      </a>
-   </div>
+<div class="row">
+    <div class="col-md-9 col-md-offset-1">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <button id="reload" class="btn btn-primary">
+                            <i class="fa fa-refresh"></i> <?php echo $this->translate("Reload"); ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div id="bar-chart" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
 </div>
-<hr/>
-<div id="bar-chart" style="width: 800px;"></div>
