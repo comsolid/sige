@@ -31,7 +31,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          '/admin',
          array(
              'module' => 'admin',
-             'controller' => 'participante',
+             'controller' => 'dashboard',
              'action' => 'index'
          )
       );

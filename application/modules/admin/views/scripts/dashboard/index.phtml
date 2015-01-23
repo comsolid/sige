@@ -1,0 +1,51 @@
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery/jquery.ajaxQueue.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/dashboard/index.js'));
+?>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="small-box bg-aqua" id="user-registration">
+            <div class="inner">
+                <h3>0</h3>
+                <p>
+                    <?php echo $this->translate("User Registration"); ?>
+                </p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-user"></i>
+            </div>
+            <a href="<?php echo $this->url(array(), 'inscricoes', true) ?>"
+                class="small-box-footer">
+                <?php echo $this->translate("More info"); ?>
+                <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="small-box bg-green" id="total-events">
+            <div class="inner">
+                <h3>0</h3>
+                <p>
+                    <?php echo $this->translate("Total Events"); ?>
+                </p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-star"></i>
+            </div>
+            <a href="<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'evento',
+                'action' => 'index'), 'default', true) ?>"
+                class="small-box-footer">
+                <?php echo $this->translate("More info"); ?>
+                <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

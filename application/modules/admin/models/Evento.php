@@ -39,4 +39,14 @@ class Admin_Model_Evento extends Application_Model_Evento {
             ORDER BY data asc, hora_inicio asc";
         return $this->getAdapter()->fetchAll($sql, array($id_encontro));
     }
+
+    public function getTotalEvents() {
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+        $id = $config->encontro->codigo;
+
+        $sql = "SELECT COUNT(id_evento)
+            FROM evento
+            WHERE id_encontro = ? AND id_tipo_evento in (1, 2, 3)";
+        return $this->getAdapter()->fetchCol($sql, array($id));
+    }
 }
