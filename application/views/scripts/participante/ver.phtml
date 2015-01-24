@@ -14,21 +14,21 @@
     <li>
         <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'editar'), 'default', true);?>">
-            <i class='icon-edit'></i> 
+            <i class='icon-edit'></i>
             <?php echo $this->translate("Edit"); ?>
         </a>
     </li>
     <li>
         <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'alterar-senha'), 'default', true);?>">
-            <i class='icon-lock'></i> 
+            <i class='icon-lock'></i>
             <?php echo $this->translate("Alter Password"); ?>
         </a>
     </li>
     <li>
         <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'certificados'), 'default', true);?>">
-            <i class='icon-credit-card'></i> 
+            <i class='icon-credit-card'></i>
             <?php echo $this->translate("Certificates"); ?>
         </a>
     </li>
@@ -57,7 +57,28 @@
 <hr>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-3">
+        <div class="thumbnail">
+            <?php
+            $hash = md5(strtolower(trim($this->user->email)));
+            ?>
+            <img src="http://www.gravatar.com/avatar/<?php echo $hash; ?>?s=172&d=retro"
+                alt="profile-image" />
+            <div class="caption">
+                <p>
+                    <?php echo $this->translate("SiGE uses Gravatar for profile avatar."); ?>
+                </p>
+                <p>
+                    <a href="https://signup.wordpress.com/signup/?ref=oauth2&oauth2_redirect=f941fb72fe145f66fde68102b63b8802%40https%3A%2F%2Fpublic-api.wordpress.com%2Foauth2%2Fauthorize%2F%3Fclient_id%3D1854%26response_type%3Dcode%26blog_id%3D0%26state%3D829a6f7bbbb5c9da810d10bf289a6b85c8be54ddd9b8cbe323e4a383e2278c21%26redirect_uri%3Dhttps%253A%252F%252Fen.gravatar.com%252Fconnect%252F%253Faction%253Drequest_access_token%26jetpack-code%26jetpack-user-id%3D0%26action%3Doauth2-login&wpcom_connect=1"
+                        class="btn btn-primary btn-sm btn-block"
+                        target="_blank">
+                        <?php echo $this->translate("Configure Gravatar"); ?>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <?php echo $this->translate("About me:"); ?>
@@ -82,7 +103,7 @@
            data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
    </div>
-   <div class="col-md-1">   
+   <div class="col-md-1">
       <!-- facebook button -->
       <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
            'ver', true) ?>" data-send="false" data-layout="button_count"
@@ -153,7 +174,7 @@ if (! empty($tw_user)) {
     <?php
             $i++;
         endforeach;
-    ?>    
+    ?>
     </div><!-- end of .row -->
 
     <?php else: // else: slides not null ?>

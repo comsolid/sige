@@ -121,8 +121,6 @@ class Admin_EventoController extends Zend_Controller_Action {
                 . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
             $json->itens[] = array(
                 "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span> {$value['nome_evento']}",
-                // substr($value['nome_tipo_evento'], 0, 1),
-                // "{$value['nome_evento']}",
                 "{$validada}",
                 "{$date->toString("dd/MM/YYYY HH:mm") }",
                 "{$value['nome']}",
@@ -162,7 +160,9 @@ class Admin_EventoController extends Zend_Controller_Action {
         $this->view->title = _('Parcial Schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $id_encontro = $config->encontro->codigo;
+        $show = $this->_getParam('show', 'all');
+
         $model = new Admin_Model_Evento();
-        $this->view->lista = $model->programacaoParcial($id_encontro);
+        $this->view->lista = $model->programacaoParcial($id_encontro, $show);
     }
 }

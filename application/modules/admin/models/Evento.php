@@ -23,7 +23,7 @@ class Admin_Model_Evento extends Application_Model_Evento {
         return $this->getAdapter()->fetchAll($select, $idEvento);
     }
 
-    public function programacaoParcial($id_encontro) {
+    public function programacaoParcial($id_encontro, $show = 'all') {
         $sql = "SELECT e.id_evento, nome_tipo_evento, nome_evento,
             nome, nome_sala, TO_CHAR(data, 'DD/MM/YYYY') as data,
             TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
@@ -35,8 +35,15 @@ class Admin_Model_Evento extends Application_Model_Evento {
             INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
             LEFT JOIN evento_realizacao er on e.id_evento = er.id_evento
             LEFT JOIN sala s on er.id_sala = s.id_sala
-            WHERE id_encontro = ?
-            ORDER BY data asc, hora_inicio asc";
+            WHERE id_encontro = ? ";
+
+        if ("valid" === $show) {
+            $sql .= " AND validada = TRUE ";
+        } else if ("undefined" === $show) {
+            $sql .= " AND validada = FALSE ";
+        }
+
+        $sql .= "ORDER BY data asc, hora_inicio asc";
         return $this->getAdapter()->fetchAll($sql, array($id_encontro));
     }
 

@@ -1,7 +1,5 @@
 <?php
-   //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-
-   //echo $this->partial('menu.phtml');
+   $this->headScript()->appendFile($this->baseUrl('js/admin/evento/programacao-parcial.js'));
 ?>
 
 <style>
@@ -9,6 +7,40 @@
     line-height: 1.4;
 }
 </style>
+
+<div class="row">
+    <div class="col-md-6" id="total">
+        <h4>
+            <?php echo $this->translate("Valid"); ?>:
+            <span class="label label-success" id="valid-events" style="margin-right: 10px;">12</span>
+
+            <?php echo $this->translate("Undefined"); ?>:
+            <span class="label label-warning" id="undefined-events">12</span>
+        </h4>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+
+            <a href="<?php echo $this->url(array('show' => 'all')); ?>"
+                class="btn btn-primary">
+                <?php echo $this->translate("All"); ?>
+            </a>
+
+            <a href="<?php echo $this->url(array('show' => 'valid')); ?>"
+                class="btn btn-success">
+                <?php echo $this->translate("Only Valid"); ?>
+            </a>
+
+            <a href="<?php echo $this->url(array('show' => 'undefined')); ?>"
+                class="btn btn-warning">
+                <?php echo $this->translate("Only Undefined"); ?>
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<hr>
 
 <!-- general row -->
 <div class="row">
@@ -20,13 +52,14 @@ if (! empty($this->lista)):
     <div class="col-md-4">
         <div class="box box-solid <?php echo ($item['validada'] ? "box-success" : "box-warning"); ?>">
             <div class="box-header">
-                <h3 class="box-title" style="width: 90%">
+                <h3 class="box-title" style="">
+                    <i class="fa <?php echo ($item['validada'] ? "fa-check" : "fa-times"); ?>"
+                        data-toggle="tooltip"
+                        title="<?php echo ($item['validada'] ? $this->translate("Valid") : $this->translate("Waiting")); ?>"></i>
+
                     <span class="label"><?php echo $item['nome_tipo_evento']; ?></span>
                     <?php echo $item['nome_evento']; ?>
                 </h3>
-                <i class="fa <?php echo ($item['validada'] ? "fa-check" : "fa-times"); ?> pull-right"
-                    data-toggle="tooltip"
-                    title="<?php echo ($item['validada'] ? $this->translate("Valid") : $this->translate("Not Valid")); ?>"></i>
             </div>
             <div class="box-body">
                 <div class="row">
