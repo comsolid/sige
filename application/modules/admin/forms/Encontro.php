@@ -11,10 +11,15 @@ class Admin_Form_Encontro extends Zend_Form {
     public function init() {
         $this->setName('Encontro');
 
-        $submit = $this->createElement('submit', 'confimar', array('label' => _('Confirm')))->removeDecorator('DtDdWrapper');
-
-        $cancelar = $this->createElement('submit', 'cancelar', array('label' => _('Cancel')))->removeDecorator('DtDdWrapper');
-        $cancelar->setAttrib('class', 'submitCancelar');
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel(_("Confirm"))
+            ->setAttrib('id', 'submitbutton')
+            ->setAttrib('class', 'btn btn-primary pull-right');
+        $submit->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+        ));
 
         $this->addElements(array(
             $this->_nome_encontro(),
@@ -23,8 +28,7 @@ class Admin_Form_Encontro extends Zend_Form {
             $this->_data_fim(),
             $this->_periodo_submissao_inicio(),
             $this->_periodo_submissao_fim(),
-            $submit,
-            $cancelar
+            $submit
         ));
     }
 
@@ -48,7 +52,7 @@ class Admin_Form_Encontro extends Zend_Form {
                 ->addValidator('StringLength', false, array(1, 100))
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'large')
+                ->setAttrib('class', 'form-control')
                 ->setAttrib("placeholder", "I Encontro de Software Livre");
 
         $e->setDecorators(array(
@@ -68,7 +72,7 @@ class Admin_Form_Encontro extends Zend_Form {
                 ->addValidator('StringLength', false, array(1, 10))
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'normal')
+                ->setAttrib('class', 'form-control')
                 ->setAttrib("placeholder", "I ESL");
 
         $e->setDecorators(array(
@@ -87,7 +91,7 @@ class Admin_Form_Encontro extends Zend_Form {
                 ->setRequired(true)
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'date');
+                ->setAttrib('class', 'form-control date');
 
         if ($this->modo_edicao) {
             $e->setAttrib("disabled", "disabled");
@@ -109,7 +113,7 @@ class Admin_Form_Encontro extends Zend_Form {
                 ->setRequired(true)
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'date');
+                ->setAttrib('class', 'form-control date');
 
         if ($this->modo_edicao) {
             $e->setAttrib("disabled", "disabled");
@@ -131,7 +135,7 @@ class Admin_Form_Encontro extends Zend_Form {
                 ->setRequired(true)
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'date');
+                ->setAttrib('class', 'form-control date');
 
         $e->setDecorators(array(
             'ViewHelper',
@@ -149,7 +153,7 @@ class Admin_Form_Encontro extends Zend_Form {
                 ->setRequired(true)
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'date');
+                ->setAttrib('class', 'form-control date');
 
         $e->setDecorators(array(
             'ViewHelper',

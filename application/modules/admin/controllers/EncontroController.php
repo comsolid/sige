@@ -27,6 +27,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
     }
 
     public function criarAction() {
+        $this->view->title = _('New Conference');
+        $this->_helper->viewRenderer->setRender('salvar');
         $form = new Admin_Form_Encontro();
         $this->view->form = $form;
         if ($this->getRequest()->isPost()) {
@@ -57,6 +59,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
     }
 
     public function editarAction() {
+        $this->view->title = _('Edit Conference');
+        $this->_helper->viewRenderer->setRender('salvar');
         $form = new Admin_Form_Encontro();
         $this->view->form = $form;
         $model = new Admin_Model_Encontro();
@@ -94,13 +98,11 @@ class Admin_EncontroController extends Zend_Controller_Action {
         $model = new Admin_Model_MensagemEmail();
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
-            if (isset($formData['cancelar'])) {
-                return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro'), 'default', true);
-            }
+
             if ($form->isValid($formData)) {
                 $data = array('mensagem' => $form->getValue('mensagem'), 'assunto' => $form->getValue('assunto'), 'link' => $form->getValue('link'));
-                $idEncontro = (int)$form->getValue('id_encontro');
-                $idTipoMensagem = (int)$form->getValue('id_tipo_mensagem_email');
+                $idEncontro = (int) $form->getValue('id_encontro');
+                $idTipoMensagem = (int) $form->getValue('id_tipo_mensagem_email');
                 try {
                     $model->update($data, "id_encontro = {$idEncontro}
                      AND id_tipo_mensagem_email = {$idTipoMensagem}");

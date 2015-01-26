@@ -1,0 +1,101 @@
+
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-i18n.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-override.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/encontro/salvar.js'));
+?>
+
+<?php
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo
+$form->getAction()?>">
+
+<div class="row">
+    <div class="col-md-9 col-md-offset-1">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <?php echo $form->nome_encontro->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->nome_encontro->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->nome_encontro->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $form->apelido_encontro->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->apelido_encontro->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->apelido_encontro->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <?php echo $form->data_inicio->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->data_inicio->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->data_inicio->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $form->data_fim->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->data_fim->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->data_fim->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo $form->periodo_submissao_inicio->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->periodo_submissao_inicio->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->periodo_submissao_inicio->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $form->periodo_submissao_fim->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->periodo_submissao_fim->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->periodo_submissao_fim->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="<?=$this->url(array('module' => 'admin',
+                            'controller' => 'encontro',
+                            'action' => 'index'), 'default', true) ?>"
+                            class="btn btn-default">
+                            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+                        </a>
+
+                        <?php echo $form->submit->renderViewHelper() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>

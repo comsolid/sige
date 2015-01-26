@@ -33,7 +33,7 @@ class Admin_Form_Horarios extends Zend_Form {
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel(_("Confirm"))
             ->setAttrib('id', 'submitbutton')
-            ->setAttrib('class', 'btn btn-primary');
+            ->setAttrib('class', 'btn btn-primary pull-right');
         $submit->setDecorators(array(
             'ViewHelper',
             'Description',

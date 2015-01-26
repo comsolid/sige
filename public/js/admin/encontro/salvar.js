@@ -1,6 +1,6 @@
 
 $(function() {
-   $("#nome_encontro").select();
-   
-   $(".date").datepicker();
+    $('#nome_encontro').select();
+
+    $('.date').datepicker();
 });

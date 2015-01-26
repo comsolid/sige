@@ -3,10 +3,15 @@
 class Admin_Form_MensagemEmail extends Zend_Form {
 
     public function init() {
-        $submit = $this->createElement('submit', 'confimar', array('label' => _('Confirm')))->removeDecorator('DtDdWrapper');
-
-        $cancelar = $this->createElement('submit', 'cancelar', array('label' => _('Cancel')))->removeDecorator('DtDdWrapper');
-        $cancelar->setAttrib('class', 'submitCancelar');
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel(_("Confirm"))
+        ->setAttrib('id', 'submitbutton')
+        ->setAttrib('class', 'btn btn-primary pull-right');
+        $submit->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+        ));
 
         $this->addElements(array(
             $this->_id_encontro(),
@@ -14,8 +19,7 @@ class Admin_Form_MensagemEmail extends Zend_Form {
             $this->_mensagem(),
             $this->_assunto(),
             $this->_link(),
-            $submit,
-            $cancelar
+            $submit
         ));
     }
 
@@ -50,6 +54,7 @@ class Admin_Form_MensagemEmail extends Zend_Form {
         $e->setLabel(_('Message') . ":")
                 ->setRequired(true)
                 ->setAttrib('rows', 10)
+                ->setAttrib('class', 'form-control')
                 ->addFilter('StringTrim');
 
         $e->setDecorators(array(
@@ -69,7 +74,7 @@ class Admin_Form_MensagemEmail extends Zend_Form {
                 ->addValidator('StringLength', false, array(1, 200))
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'large');
+                ->setAttrib('class', 'form-control');
 
         $e->setDecorators(array(
             'ViewHelper',
@@ -87,7 +92,7 @@ class Admin_Form_MensagemEmail extends Zend_Form {
                 ->addValidator('StringLength', false, array(1, 70))
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-                ->setAttrib('class', 'large')
+                ->setAttrib('class', 'form-control')
                 ->setAttrib('placeholder', 'ex. http://www.esl.org/login');
 
         $e->setDecorators(array(
