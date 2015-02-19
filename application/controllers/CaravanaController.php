@@ -16,10 +16,14 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $id_encontro = (int) $ps->encontro["id_encontro"];
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $model = new Application_Model_CaravanaEncontro();
-        $this->view->participante = $model->lerParticipanteCaravana($sessao["idEncontro"], $sessao["idPessoa"]);
-        $this->view->caravanaResponsavel = $model->lerResponsavelCaravana($sessao["idEncontro"], $sessao["idPessoa"]);
+
+        $this->view->participante = $model->lerParticipanteCaravana($id_encontro, $sessao["idPessoa"]);
+        $this->view->caravanaResponsavel = $model->lerResponsavelCaravana($id_encontro, $sessao["idPessoa"]);
     }
 
     public function participantesAction() {
@@ -30,9 +34,11 @@ class CaravanaController extends Zend_Controller_Action {
                         'action' => 'index'), null, true);
         }
 
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
 
         $caravanaEncontro = new Application_Model_CaravanaEncontro();
         $rs = $caravanaEncontro->lerResponsavelCaravana($idEncontro, $idPessoa);
@@ -50,8 +56,8 @@ class CaravanaController extends Zend_Controller_Action {
                 } else {
                     $where = array(
                         $this->view->caravana['id_caravana'],
-                        $sessao["idEncontro"],
-                        $sessao["idEncontro"], // id_encontro usado em subquery
+                        $idEncontro,
+                        $idEncontro, // id_encontro usado em subquery
                     );
                     $where = array_merge($where, $array_id_pessoas);
                     try {
@@ -75,15 +81,17 @@ class CaravanaController extends Zend_Controller_Action {
             }
         }
 
-        $this->view->participantes = $caravanaEncontro->buscaParticipantes($this->view->caravana['id_caravana'], $sessao["idEncontro"]);
+        $this->view->participantes = $caravanaEncontro->buscaParticipantes($this->view->caravana['id_caravana'], $idEncontro);
     }
 
     public function ajaxBuscarParticipanteAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
 
         $model = new Application_Model_Pessoa();
         $termo = $this->_request->getParam("termo", "");
@@ -122,10 +130,12 @@ class CaravanaController extends Zend_Controller_Action {
 
         $pessoa = $this->_getParam('pessoa', 0);
         if ($pessoa > 0) {
-            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $cache = Zend_Registry::get('cache_common');
+            $ps = $cache->load('prefsis');
+            $idEncontro = (int) $ps->encontro["id_encontro"];
             $where = array(
-                $sessao["idEncontro"],
-                $pessoa
+                $idEncontro,
+                $pessoa,
             );
             $model = new Application_Model_CaravanaEncontro();
             try {
@@ -150,9 +160,12 @@ class CaravanaController extends Zend_Controller_Action {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $model = new Application_Model_Participante();
         try {
-            $model->sairDaCaravana(array($sessao["idEncontro"], $sessao["idPessoa"]));
+            $model->sairDaCaravana(array($idEncontro, $sessao["idPessoa"]));
             $this->_helper->flashMessenger->addMessage(
                     array('success' => _('Participant was removed from this caravan successfully.')));
         } catch (Exception $e) {
@@ -175,8 +188,10 @@ class CaravanaController extends Zend_Controller_Action {
 
         $this->_helper->viewRenderer->setRender('salvar');
         $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
 
         $caravana = new Application_Model_Caravana();
 
@@ -243,8 +258,10 @@ class CaravanaController extends Zend_Controller_Action {
 
         $this->_helper->viewRenderer->setRender('salvar');
         $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
 
         $form = new Application_Form_Caravana();
         $form->setAction($this->view->url(array('controller' => 'caravana', 'action' => 'editar')));

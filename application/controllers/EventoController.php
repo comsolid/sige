@@ -38,12 +38,16 @@ class EventoController extends Zend_Controller_Action {
         $this->autenticacao();
         $this->view->menu->setAtivo('submission');
         $sessao = Zend_Auth::getInstance()->getIdentity();
+		$cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
 
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
 
-        $evento = new Application_Model_Evento();
-        $this->view->eventos = $evento->listarEventosParticipante($idEncontro, $idPessoa);
+        $model_evento = new Application_Model_Evento();
+        $this->view->meusEventos = $model_evento->listarEventosParticipante($idEncontro, $idPessoa);
+        $model_artigo = new Application_Model_Artigo();
+        $this->view->meusArtigos = $model_artigo->listarArtigosParticipante($idEncontro, $idPessoa);
     }
 
     public function ajaxBuscarAction() {

@@ -1,12 +1,12 @@
-﻿START TRANSACTION;
+START TRANSACTION;
 
 --
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.3.4
--- Dumped by pg_dump version 9.3.4
--- Started on 2014-07-05 13:59:07 BRT
+-- Dumped from database version 9.3.6
+-- Dumped by pg_dump version 9.3.6
+-- Started on 2015-02-19 19:30:12 BRT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,7 +16,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 210 (class 3079 OID 11791)
+-- TOC entry 214 (class 3079 OID 11791)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -24,8 +24,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2238 (class 0 OID 0)
--- Dependencies: 210
+-- TOC entry 2269 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
@@ -35,92 +35,170 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 223 (class 1255 OID 16763)
+-- TOC entry 227 (class 1255 OID 39902)
 -- Name: funcgerarsenha(character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION funcgerarsenha(codemail character varying) RETURNS character varying
     LANGUAGE plpgsql
     AS $$
+
 /*
+
 Criador: Siqueira, Robson.
+
 Data: 05/08/2011.
+
 DESCRIÇÃO: 
+
   A partir de um email válido, gera uma senha de 10 caracteres com letras maiúsculas e números.
+
   Se o email estiver incorreto, gera uma exceção.
+
   A senha já é armazenada no BD com criptografia MD5.
+
 */
 
 DECLARE
+
   codPessoa INTEGER;
+
   codSenha VARCHAR(100);
+
 BEGIN
+
   SELECT id_pessoa INTO codPessoa
+
   FROM pessoa
+
   WHERE email = codEmail;
 
   IF NOT FOUND THEN
+
     RAISE EXCEPTION 'Email Inválido';
+
   END IF;
 
   codSenha = (((random() * (100000000000000)::double precision))::bigint)::character varying;
+
   SELECT UPPER(md5(codSenha)::varchar(10)) INTO codSenha;
+
   UPDATE pessoa 
+
   SET senha = md5(codSenha)
+
   WHERE id_pessoa = codPessoa;
-  
+
   RETURN codSenha;
+
 END;
+
 $$;
 
 
 --
--- TOC entry 224 (class 1255 OID 16764)
+-- TOC entry 228 (class 1255 OID 39903)
 -- Name: funcvalidaevento(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION funcvalidaevento() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+
 BEGIN
+
 IF NEW.validada = 'T' THEN
+
     NEW.data_validacao = now();
+
   END IF;
+
   RETURN NEW;
+
 END;
+
 $$;
 
 
 --
--- TOC entry 225 (class 1255 OID 16765)
+-- TOC entry 229 (class 1255 OID 39904)
 -- Name: funcvalidausuario(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION funcvalidausuario() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+
 BEGIN
+
 IF NEW.cadastro_validado = 'T' THEN
+
 --    SELECT now() INTO NEW.data_validacao_cadastro;
+
     NEW.data_validacao_cadastro = now();
+
   END IF;
+
   RETURN NEW;
+
 END;
+
 $$;
 
-
-SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- TOC entry 170 (class 1259 OID 16766)
--- Name: caravana; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 170 (class 1259 OID 39905)
+-- Name: artigo; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE artigo (
+    id_artigo integer NOT NULL,
+    nomearquivo_original character varying(255),
+    tamanho integer,
+    criado timestamp with time zone NOT NULL,
+    responsavel integer NOT NULL,
+    id_encontro integer NOT NULL,
+    dados bytea NOT NULL,
+    titulo character varying(255),
+    aceito boolean DEFAULT false NOT NULL,
+    deletado boolean DEFAULT false NOT NULL,
+    dt_delecao timestamp with time zone,
+    dt_aceitacao timestamp with time zone
+);
+
+
+--
+-- TOC entry 171 (class 1259 OID 39913)
+-- Name: artigo_id_artigo_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE artigo_id_artigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2270 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: artigo_id_artigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE artigo_id_artigo_seq OWNED BY artigo.id_artigo;
+
+
+--
+-- TOC entry 172 (class 1259 OID 39915)
+-- Name: caravana; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE caravana (
     id_caravana integer NOT NULL,
-    nome_caravana character varying(100) NOT NULL,
+    nome_caravana character varying(255) NOT NULL,
     apelido_caravana character varying(20) NOT NULL,
     id_municipio integer NOT NULL,
     id_instituicao integer,
@@ -129,8 +207,8 @@ CREATE TABLE caravana (
 
 
 --
--- TOC entry 171 (class 1259 OID 16769)
--- Name: caravana_encontro; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 173 (class 1259 OID 39918)
+-- Name: caravana_encontro; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE caravana_encontro (
@@ -142,17 +220,18 @@ CREATE TABLE caravana_encontro (
 
 
 --
--- TOC entry 2239 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2271 (class 0 OID 0)
+-- Dependencies: 173
 -- Name: COLUMN caravana_encontro.responsavel; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN caravana_encontro.responsavel IS 'Responsável pela caravana.
+
 Seu cadastro deve estar realizado previamente.';
 
 
 --
--- TOC entry 172 (class 1259 OID 16773)
+-- TOC entry 174 (class 1259 OID 39922)
 -- Name: caravana_id_caravana_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -165,8 +244,8 @@ CREATE SEQUENCE caravana_id_caravana_seq
 
 
 --
--- TOC entry 2240 (class 0 OID 0)
--- Dependencies: 172
+-- TOC entry 2272 (class 0 OID 0)
+-- Dependencies: 174
 -- Name: caravana_id_caravana_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -174,8 +253,8 @@ ALTER SEQUENCE caravana_id_caravana_seq OWNED BY caravana.id_caravana;
 
 
 --
--- TOC entry 173 (class 1259 OID 16775)
--- Name: dificuldade_evento; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 179 (class 1259 OID 39944)
+-- Name: dificuldade_evento; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE dificuldade_evento (
@@ -185,37 +264,55 @@ CREATE TABLE dificuldade_evento (
 
 
 --
--- TOC entry 2241 (class 0 OID 0)
--- Dependencies: 173
+-- TOC entry 2274 (class 0 OID 0)
+-- Dependencies: 179
 -- Name: TABLE dificuldade_evento; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE dificuldade_evento IS 'Mostra o nível de dificuldade do Evento.
+
 Básico
+
 Intermediário
+
 Avançado';
 
 
 --
--- TOC entry 174 (class 1259 OID 16778)
--- Name: encontro; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 180 (class 1259 OID 39947)
+-- Name: encontro; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE encontro (
     id_encontro integer NOT NULL,
-    nome_encontro character varying(100) NOT NULL,
-    apelido_encontro character varying(10) NOT NULL,
+    nome_encontro character varying(255) NOT NULL,
+    apelido_encontro character varying(50) NOT NULL,
     data_inicio date NOT NULL,
     data_fim date NOT NULL,
     ativo boolean DEFAULT false NOT NULL,
     periodo_submissao_inicio date NOT NULL,
-    periodo_submissao_fim date NOT NULL
+    periodo_submissao_fim date NOT NULL,
+    certificados_liberados boolean DEFAULT false NOT NULL,
+    certificados_template_participante_encontro text DEFAULT 'Certificamos que %s participou do(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
+    certificados_template_palestrante_evento text DEFAULT 'Certificamos que %s apresentou o(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
+    certificados_template_participante_evento text DEFAULT 'Certificamos que %s participou do(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
+    id_municipio integer DEFAULT 101 NOT NULL,
+    id_tipo_horario integer DEFAULT 1 NOT NULL
 );
 
 
 --
--- TOC entry 175 (class 1259 OID 16782)
--- Name: encontro_horario; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2275 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN encontro.id_municipio; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN encontro.id_municipio IS 'Padrão Maracanaú';
+
+
+--
+-- TOC entry 181 (class 1259 OID 39951)
+-- Name: encontro_horario; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE encontro_horario (
@@ -228,7 +325,7 @@ CREATE TABLE encontro_horario (
 
 
 --
--- TOC entry 176 (class 1259 OID 16786)
+-- TOC entry 182 (class 1259 OID 39955)
 -- Name: encontro_horario_id_encontro_horario_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -241,8 +338,8 @@ CREATE SEQUENCE encontro_horario_id_encontro_horario_seq
 
 
 --
--- TOC entry 2242 (class 0 OID 0)
--- Dependencies: 176
+-- TOC entry 2276 (class 0 OID 0)
+-- Dependencies: 182
 -- Name: encontro_horario_id_encontro_horario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -250,7 +347,7 @@ ALTER SEQUENCE encontro_horario_id_encontro_horario_seq OWNED BY encontro_horari
 
 
 --
--- TOC entry 177 (class 1259 OID 16788)
+-- TOC entry 183 (class 1259 OID 39957)
 -- Name: encontro_id_encontro_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -263,8 +360,8 @@ CREATE SEQUENCE encontro_id_encontro_seq
 
 
 --
--- TOC entry 2243 (class 0 OID 0)
--- Dependencies: 177
+-- TOC entry 2277 (class 0 OID 0)
+-- Dependencies: 183
 -- Name: encontro_id_encontro_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -272,8 +369,8 @@ ALTER SEQUENCE encontro_id_encontro_seq OWNED BY encontro.id_encontro;
 
 
 --
--- TOC entry 178 (class 1259 OID 16790)
--- Name: encontro_participante; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 175 (class 1259 OID 39924)
+-- Name: encontro_participante; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE encontro_participante (
@@ -292,8 +389,8 @@ CREATE TABLE encontro_participante (
 
 
 --
--- TOC entry 179 (class 1259 OID 16797)
--- Name: estado; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 184 (class 1259 OID 39959)
+-- Name: estado; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE estado (
@@ -304,7 +401,7 @@ CREATE TABLE estado (
 
 
 --
--- TOC entry 180 (class 1259 OID 16800)
+-- TOC entry 185 (class 1259 OID 39962)
 -- Name: estado_id_estado_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -317,8 +414,8 @@ CREATE SEQUENCE estado_id_estado_seq
 
 
 --
--- TOC entry 2244 (class 0 OID 0)
--- Dependencies: 180
+-- TOC entry 2278 (class 0 OID 0)
+-- Dependencies: 185
 -- Name: estado_id_estado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -326,13 +423,13 @@ ALTER SEQUENCE estado_id_estado_seq OWNED BY estado.id_estado;
 
 
 --
--- TOC entry 181 (class 1259 OID 16802)
--- Name: evento; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 186 (class 1259 OID 39964)
+-- Name: evento; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento (
     id_evento integer NOT NULL,
-    nome_evento character varying(100) NOT NULL,
+    nome_evento character varying(255) NOT NULL,
     id_tipo_evento integer NOT NULL,
     id_encontro integer NOT NULL,
     validada boolean DEFAULT false NOT NULL,
@@ -344,13 +441,14 @@ CREATE TABLE evento (
     perfil_minimo text DEFAULT 'Perfil Mínimo do Participante'::text NOT NULL,
     preferencia_horario text,
     apresentado boolean DEFAULT false NOT NULL,
-    tecnologias_envolvidas text
+    tecnologias_envolvidas text,
+    id_artigo integer
 );
 
 
 --
--- TOC entry 2245 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2279 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: TABLE evento; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -358,8 +456,8 @@ COMMENT ON TABLE evento IS 'Evento é qualquer tipo de atividade no Encontro: Pa
 
 
 --
--- TOC entry 2246 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2280 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: COLUMN evento.validada; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -367,8 +465,8 @@ COMMENT ON COLUMN evento.validada IS 'O administrador deve indicar qual o evento
 
 
 --
--- TOC entry 2247 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2281 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: COLUMN evento.apresentado; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -376,7 +474,7 @@ COMMENT ON COLUMN evento.apresentado IS 'indica que o palestrante realmente veio
 
 
 --
--- TOC entry 182 (class 1259 OID 16813)
+-- TOC entry 187 (class 1259 OID 39975)
 -- Name: evento_arquivo_id_evento_arquivo_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -389,8 +487,8 @@ CREATE SEQUENCE evento_arquivo_id_evento_arquivo_seq
 
 
 --
--- TOC entry 183 (class 1259 OID 16815)
--- Name: evento_arquivo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 188 (class 1259 OID 39977)
+-- Name: evento_arquivo; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento_arquivo (
@@ -403,8 +501,8 @@ CREATE TABLE evento_arquivo (
 
 
 --
--- TOC entry 184 (class 1259 OID 16823)
--- Name: evento_demanda; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 189 (class 1259 OID 39985)
+-- Name: evento_demanda; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento_demanda (
@@ -415,7 +513,7 @@ CREATE TABLE evento_demanda (
 
 
 --
--- TOC entry 185 (class 1259 OID 16827)
+-- TOC entry 190 (class 1259 OID 39989)
 -- Name: evento_id_evento_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -428,8 +526,8 @@ CREATE SEQUENCE evento_id_evento_seq
 
 
 --
--- TOC entry 2248 (class 0 OID 0)
--- Dependencies: 185
+-- TOC entry 2282 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: evento_id_evento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -437,8 +535,8 @@ ALTER SEQUENCE evento_id_evento_seq OWNED BY evento.id_evento;
 
 
 --
--- TOC entry 186 (class 1259 OID 16829)
--- Name: evento_palestrante; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 191 (class 1259 OID 39991)
+-- Name: evento_palestrante; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento_palestrante (
@@ -449,19 +547,19 @@ CREATE TABLE evento_palestrante (
 
 
 --
--- TOC entry 187 (class 1259 OID 16833)
--- Name: evento_participacao; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 192 (class 1259 OID 39995)
+-- Name: evento_participacao; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento_participacao (
-    evento integer NOT NULL,
+    id_evento_realizacao integer NOT NULL,
     id_pessoa integer NOT NULL
 );
 
 
 --
--- TOC entry 188 (class 1259 OID 16836)
--- Name: evento_realizacao; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 193 (class 1259 OID 39998)
+-- Name: evento_realizacao; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento_realizacao (
@@ -477,7 +575,7 @@ CREATE TABLE evento_realizacao (
 
 
 --
--- TOC entry 189 (class 1259 OID 16840)
+-- TOC entry 194 (class 1259 OID 40002)
 -- Name: evento_realizacao_evento_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -490,8 +588,8 @@ CREATE SEQUENCE evento_realizacao_evento_seq
 
 
 --
--- TOC entry 2249 (class 0 OID 0)
--- Dependencies: 189
+-- TOC entry 2283 (class 0 OID 0)
+-- Dependencies: 194
 -- Name: evento_realizacao_evento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -499,45 +597,8 @@ ALTER SEQUENCE evento_realizacao_evento_seq OWNED BY evento_realizacao.evento;
 
 
 --
--- TOC entry 190 (class 1259 OID 16842)
--- Name: evento_realizacao_multipla; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE evento_realizacao_multipla (
-    evento_realizacao_multipla integer NOT NULL,
-    evento integer NOT NULL,
-    data date NOT NULL,
-    hora_inicio time without time zone NOT NULL,
-    hora_fim time without time zone NOT NULL,
-    CONSTRAINT evento_realizacao_multipla_check CHECK ((hora_fim > hora_inicio))
-);
-
-
---
--- TOC entry 191 (class 1259 OID 16846)
--- Name: evento_realizacao_multipla_evento_realizacao_multipla_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE evento_realizacao_multipla_evento_realizacao_multipla_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- TOC entry 2250 (class 0 OID 0)
--- Dependencies: 191
--- Name: evento_realizacao_multipla_evento_realizacao_multipla_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE evento_realizacao_multipla_evento_realizacao_multipla_seq OWNED BY evento_realizacao_multipla.evento_realizacao_multipla;
-
-
---
--- TOC entry 192 (class 1259 OID 16848)
--- Name: evento_tags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 195 (class 1259 OID 40010)
+-- Name: evento_tags; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE evento_tags (
@@ -547,8 +608,8 @@ CREATE TABLE evento_tags (
 
 
 --
--- TOC entry 193 (class 1259 OID 16851)
--- Name: instituicao; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 196 (class 1259 OID 40013)
+-- Name: instituicao; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE instituicao (
@@ -559,8 +620,8 @@ CREATE TABLE instituicao (
 
 
 --
--- TOC entry 2251 (class 0 OID 0)
--- Dependencies: 193
+-- TOC entry 2284 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: TABLE instituicao; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -568,17 +629,18 @@ COMMENT ON TABLE instituicao IS 'Instituição de origem da pessoa. Escola, Comu
 
 
 --
--- TOC entry 2252 (class 0 OID 0)
--- Dependencies: 193
+-- TOC entry 2285 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: COLUMN instituicao.apelido_instituicao; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN instituicao.apelido_instituicao IS 'EEMF Adauto Bezerra.
+
 Essa informação pode estar no CRACHÁ.';
 
 
 --
--- TOC entry 194 (class 1259 OID 16854)
+-- TOC entry 197 (class 1259 OID 40016)
 -- Name: instituicao_id_instituicao_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -591,8 +653,8 @@ CREATE SEQUENCE instituicao_id_instituicao_seq
 
 
 --
--- TOC entry 2253 (class 0 OID 0)
--- Dependencies: 194
+-- TOC entry 2286 (class 0 OID 0)
+-- Dependencies: 197
 -- Name: instituicao_id_instituicao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -600,8 +662,8 @@ ALTER SEQUENCE instituicao_id_instituicao_seq OWNED BY instituicao.id_instituica
 
 
 --
--- TOC entry 195 (class 1259 OID 16856)
--- Name: mensagem_email; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 198 (class 1259 OID 40018)
+-- Name: mensagem_email; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE mensagem_email (
@@ -609,13 +671,15 @@ CREATE TABLE mensagem_email (
     id_tipo_mensagem_email integer NOT NULL,
     mensagem text NOT NULL,
     assunto character varying(200) NOT NULL,
-    link character varying(70)
+    link character varying(70),
+    assinatura_email character varying(255),
+    assinatura_siteoficial character varying(255)
 );
 
 
 --
--- TOC entry 196 (class 1259 OID 16862)
--- Name: municipio; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 176 (class 1259 OID 39931)
+-- Name: municipio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE municipio (
@@ -626,7 +690,7 @@ CREATE TABLE municipio (
 
 
 --
--- TOC entry 197 (class 1259 OID 16865)
+-- TOC entry 199 (class 1259 OID 40024)
 -- Name: municipio_id_municipio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -639,8 +703,8 @@ CREATE SEQUENCE municipio_id_municipio_seq
 
 
 --
--- TOC entry 2254 (class 0 OID 0)
--- Dependencies: 197
+-- TOC entry 2287 (class 0 OID 0)
+-- Dependencies: 199
 -- Name: municipio_id_municipio_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -648,13 +712,13 @@ ALTER SEQUENCE municipio_id_municipio_seq OWNED BY municipio.id_municipio;
 
 
 --
--- TOC entry 198 (class 1259 OID 16867)
--- Name: pessoa; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 200 (class 1259 OID 40026)
+-- Name: pessoa; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pessoa (
     id_pessoa integer NOT NULL,
-    nome character varying(100) NOT NULL,
+    nome character varying(255) NOT NULL,
     email character varying(100) NOT NULL,
     apelido character varying(20) NOT NULL,
     twitter character varying(32),
@@ -665,19 +729,18 @@ CREATE TABLE pessoa (
     data_cadastro timestamp without time zone DEFAULT now(),
     id_sexo integer DEFAULT 0 NOT NULL,
     nascimento date NOT NULL,
+    telefone character varying(16),
     administrador boolean DEFAULT false NOT NULL,
     facebook character varying(50),
     email_enviado boolean DEFAULT false NOT NULL,
     bio text,
-    slideshare character varying(32),
-    cpf bigint,
-    telefone bigint
+    slideshare character varying(32)
 );
 
 
 --
--- TOC entry 2255 (class 0 OID 0)
--- Dependencies: 198
+-- TOC entry 2288 (class 0 OID 0)
+-- Dependencies: 200
 -- Name: COLUMN pessoa.nome; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -685,8 +748,8 @@ COMMENT ON COLUMN pessoa.nome IS 'Nome completo e em letra Maiúscula';
 
 
 --
--- TOC entry 2256 (class 0 OID 0)
--- Dependencies: 198
+-- TOC entry 2289 (class 0 OID 0)
+-- Dependencies: 200
 -- Name: COLUMN pessoa.email; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -694,28 +757,30 @@ COMMENT ON COLUMN pessoa.email IS 'email em letra minúscula';
 
 
 --
--- TOC entry 2257 (class 0 OID 0)
--- Dependencies: 198
+-- TOC entry 2290 (class 0 OID 0)
+-- Dependencies: 200
 -- Name: COLUMN pessoa.endereco_internet; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN pessoa.endereco_internet IS 'Um endereço começando com http:// indicando onde estão as informações da pessoa.
+
 Pode ser um blog, página do facebook, site...';
 
 
 --
--- TOC entry 2258 (class 0 OID 0)
--- Dependencies: 198
+-- TOC entry 2291 (class 0 OID 0)
+-- Dependencies: 200
 -- Name: COLUMN pessoa.senha; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN pessoa.senha IS 'Senha do usuário usando criptografia md5 do comsolid.
+
 Valor padrão vai ser o próprio nome do usuário.';
 
 
 --
--- TOC entry 2259 (class 0 OID 0)
--- Dependencies: 198
+-- TOC entry 2292 (class 0 OID 0)
+-- Dependencies: 200
 -- Name: COLUMN pessoa.email_enviado; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -723,8 +788,8 @@ COMMENT ON COLUMN pessoa.email_enviado IS 'Indica se o sistema conseguiu conecta
 
 
 --
--- TOC entry 199 (class 1259 OID 16879)
--- Name: pessoa_arquivo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 201 (class 1259 OID 40038)
+-- Name: pessoa_arquivo; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pessoa_arquivo (
@@ -734,7 +799,7 @@ CREATE TABLE pessoa_arquivo (
 
 
 --
--- TOC entry 200 (class 1259 OID 16882)
+-- TOC entry 202 (class 1259 OID 40041)
 -- Name: pessoa_id_pessoa_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -747,8 +812,8 @@ CREATE SEQUENCE pessoa_id_pessoa_seq
 
 
 --
--- TOC entry 2260 (class 0 OID 0)
--- Dependencies: 200
+-- TOC entry 2293 (class 0 OID 0)
+-- Dependencies: 202
 -- Name: pessoa_id_pessoa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -756,8 +821,8 @@ ALTER SEQUENCE pessoa_id_pessoa_seq OWNED BY pessoa.id_pessoa;
 
 
 --
--- TOC entry 201 (class 1259 OID 16884)
--- Name: sala; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 203 (class 1259 OID 40043)
+-- Name: sala; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sala (
@@ -767,7 +832,7 @@ CREATE TABLE sala (
 
 
 --
--- TOC entry 202 (class 1259 OID 16887)
+-- TOC entry 204 (class 1259 OID 40046)
 -- Name: sala_id_sala_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -780,8 +845,8 @@ CREATE SEQUENCE sala_id_sala_seq
 
 
 --
--- TOC entry 2261 (class 0 OID 0)
--- Dependencies: 202
+-- TOC entry 2294 (class 0 OID 0)
+-- Dependencies: 204
 -- Name: sala_id_sala_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -789,8 +854,8 @@ ALTER SEQUENCE sala_id_sala_seq OWNED BY sala.id_sala;
 
 
 --
--- TOC entry 203 (class 1259 OID 16889)
--- Name: sexo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 205 (class 1259 OID 40048)
+-- Name: sexo; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sexo (
@@ -801,8 +866,8 @@ CREATE TABLE sexo (
 
 
 --
--- TOC entry 204 (class 1259 OID 16892)
--- Name: tags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 206 (class 1259 OID 40051)
+-- Name: tags; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tags (
@@ -812,7 +877,7 @@ CREATE TABLE tags (
 
 
 --
--- TOC entry 205 (class 1259 OID 16895)
+-- TOC entry 207 (class 1259 OID 40054)
 -- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -825,8 +890,8 @@ CREATE SEQUENCE tags_id_seq
 
 
 --
--- TOC entry 2262 (class 0 OID 0)
--- Dependencies: 205
+-- TOC entry 2295 (class 0 OID 0)
+-- Dependencies: 207
 -- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -834,8 +899,8 @@ ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
 
 
 --
--- TOC entry 206 (class 1259 OID 16897)
--- Name: tipo_evento; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 208 (class 1259 OID 40056)
+-- Name: tipo_evento; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tipo_evento (
@@ -845,8 +910,8 @@ CREATE TABLE tipo_evento (
 
 
 --
--- TOC entry 2263 (class 0 OID 0)
--- Dependencies: 206
+-- TOC entry 2296 (class 0 OID 0)
+-- Dependencies: 208
 -- Name: TABLE tipo_evento; Type: COMMENT; Schema: public; Owner: -
 --
 
@@ -854,7 +919,7 @@ COMMENT ON TABLE tipo_evento IS 'Tipos de Eventos: Palestra, Minicurso, Oficina.
 
 
 --
--- TOC entry 207 (class 1259 OID 16900)
+-- TOC entry 209 (class 1259 OID 40059)
 -- Name: tipo_evento_id_tipo_evento_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -867,8 +932,8 @@ CREATE SEQUENCE tipo_evento_id_tipo_evento_seq
 
 
 --
--- TOC entry 2264 (class 0 OID 0)
--- Dependencies: 207
+-- TOC entry 2297 (class 0 OID 0)
+-- Dependencies: 209
 -- Name: tipo_evento_id_tipo_evento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -876,8 +941,43 @@ ALTER SEQUENCE tipo_evento_id_tipo_evento_seq OWNED BY tipo_evento.id_tipo_event
 
 
 --
--- TOC entry 208 (class 1259 OID 16902)
--- Name: tipo_mensagem_email; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 213 (class 1259 OID 48073)
+-- Name: tipo_horario; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE tipo_horario (
+    id_tipo_horario integer NOT NULL,
+    intervalo_minutos integer NOT NULL,
+    horario_inicial time without time zone NOT NULL,
+    horario_final time without time zone NOT NULL
+);
+
+
+--
+-- TOC entry 212 (class 1259 OID 48071)
+-- Name: tipo_horario_id_tipo_horario_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE tipo_horario_id_tipo_horario_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2298 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: tipo_horario_id_tipo_horario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE tipo_horario_id_tipo_horario_seq OWNED BY tipo_horario.id_tipo_horario;
+
+
+--
+-- TOC entry 210 (class 1259 OID 40061)
+-- Name: tipo_mensagem_email; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tipo_mensagem_email (
@@ -887,8 +987,8 @@ CREATE TABLE tipo_mensagem_email (
 
 
 --
--- TOC entry 209 (class 1259 OID 16905)
--- Name: tipo_usuario; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 211 (class 1259 OID 40064)
+-- Name: tipo_usuario; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE tipo_usuario (
@@ -898,7 +998,15 @@ CREATE TABLE tipo_usuario (
 
 
 --
--- TOC entry 1996 (class 2604 OID 16908)
+-- TOC entry 2012 (class 2604 OID 40067)
+-- Name: id_artigo; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY artigo ALTER COLUMN id_artigo SET DEFAULT nextval('artigo_id_artigo_seq'::regclass);
+
+
+--
+-- TOC entry 2013 (class 2604 OID 40068)
 -- Name: id_caravana; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -906,7 +1014,7 @@ ALTER TABLE ONLY caravana ALTER COLUMN id_caravana SET DEFAULT nextval('caravana
 
 
 --
--- TOC entry 1999 (class 2604 OID 16909)
+-- TOC entry 2023 (class 2604 OID 40070)
 -- Name: id_encontro; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -914,7 +1022,7 @@ ALTER TABLE ONLY encontro ALTER COLUMN id_encontro SET DEFAULT nextval('encontro
 
 
 --
--- TOC entry 2000 (class 2604 OID 16910)
+-- TOC entry 2030 (class 2604 OID 40071)
 -- Name: id_encontro_horario; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -922,7 +1030,7 @@ ALTER TABLE ONLY encontro_horario ALTER COLUMN id_encontro_horario SET DEFAULT n
 
 
 --
--- TOC entry 2006 (class 2604 OID 16911)
+-- TOC entry 2032 (class 2604 OID 40072)
 -- Name: id_estado; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -930,7 +1038,7 @@ ALTER TABLE ONLY estado ALTER COLUMN id_estado SET DEFAULT nextval('estado_id_es
 
 
 --
--- TOC entry 2012 (class 2604 OID 16912)
+-- TOC entry 2038 (class 2604 OID 40073)
 -- Name: id_evento; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -938,7 +1046,7 @@ ALTER TABLE ONLY evento ALTER COLUMN id_evento SET DEFAULT nextval('evento_id_ev
 
 
 --
--- TOC entry 2017 (class 2604 OID 16913)
+-- TOC entry 2043 (class 2604 OID 40074)
 -- Name: evento; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -946,15 +1054,7 @@ ALTER TABLE ONLY evento_realizacao ALTER COLUMN evento SET DEFAULT nextval('even
 
 
 --
--- TOC entry 2019 (class 2604 OID 16914)
--- Name: evento_realizacao_multipla; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY evento_realizacao_multipla ALTER COLUMN evento_realizacao_multipla SET DEFAULT nextval('evento_realizacao_multipla_evento_realizacao_multipla_seq'::regclass);
-
-
---
--- TOC entry 2021 (class 2604 OID 16915)
+-- TOC entry 2045 (class 2604 OID 40076)
 -- Name: id_instituicao; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -962,7 +1062,7 @@ ALTER TABLE ONLY instituicao ALTER COLUMN id_instituicao SET DEFAULT nextval('in
 
 
 --
--- TOC entry 2022 (class 2604 OID 16916)
+-- TOC entry 2019 (class 2604 OID 40077)
 -- Name: id_municipio; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -970,7 +1070,7 @@ ALTER TABLE ONLY municipio ALTER COLUMN id_municipio SET DEFAULT nextval('munici
 
 
 --
--- TOC entry 2029 (class 2604 OID 16917)
+-- TOC entry 2052 (class 2604 OID 40078)
 -- Name: id_pessoa; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -978,7 +1078,7 @@ ALTER TABLE ONLY pessoa ALTER COLUMN id_pessoa SET DEFAULT nextval('pessoa_id_pe
 
 
 --
--- TOC entry 2030 (class 2604 OID 16918)
+-- TOC entry 2053 (class 2604 OID 40079)
 -- Name: id_sala; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -986,7 +1086,7 @@ ALTER TABLE ONLY sala ALTER COLUMN id_sala SET DEFAULT nextval('sala_id_sala_seq
 
 
 --
--- TOC entry 2031 (class 2604 OID 16919)
+-- TOC entry 2054 (class 2604 OID 40081)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -994,7 +1094,7 @@ ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclas
 
 
 --
--- TOC entry 2032 (class 2604 OID 16920)
+-- TOC entry 2055 (class 2604 OID 40082)
 -- Name: id_tipo_evento; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1002,8 +1102,25 @@ ALTER TABLE ONLY tipo_evento ALTER COLUMN id_tipo_evento SET DEFAULT nextval('ti
 
 
 --
--- TOC entry 2036 (class 2606 OID 16922)
--- Name: caravana_encontro_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2056 (class 2604 OID 48076)
+-- Name: id_tipo_horario; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tipo_horario ALTER COLUMN id_tipo_horario SET DEFAULT nextval('tipo_horario_id_tipo_horario_seq'::regclass);
+
+
+--
+-- TOC entry 2059 (class 2606 OID 40092)
+-- Name: artigo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY artigo
+    ADD CONSTRAINT artigo_pkey PRIMARY KEY (id_artigo);
+
+
+--
+-- TOC entry 2063 (class 2606 OID 40094)
+-- Name: caravana_encontro_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY caravana_encontro
@@ -1011,8 +1128,8 @@ ALTER TABLE ONLY caravana_encontro
 
 
 --
--- TOC entry 2034 (class 2606 OID 16924)
--- Name: caravana_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2061 (class 2606 OID 40096)
+-- Name: caravana_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY caravana
@@ -1020,8 +1137,8 @@ ALTER TABLE ONLY caravana
 
 
 --
--- TOC entry 2039 (class 2606 OID 16926)
--- Name: dificuldade_evento_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2072 (class 2606 OID 40100)
+-- Name: dificuldade_evento_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY dificuldade_evento
@@ -1029,8 +1146,8 @@ ALTER TABLE ONLY dificuldade_evento
 
 
 --
--- TOC entry 2043 (class 2606 OID 16928)
--- Name: encontro_horario_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2076 (class 2606 OID 40102)
+-- Name: encontro_horario_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY encontro_horario
@@ -1038,8 +1155,8 @@ ALTER TABLE ONLY encontro_horario
 
 
 --
--- TOC entry 2045 (class 2606 OID 16930)
--- Name: encontro_participante_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2066 (class 2606 OID 40104)
+-- Name: encontro_participante_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY encontro_participante
@@ -1047,8 +1164,8 @@ ALTER TABLE ONLY encontro_participante
 
 
 --
--- TOC entry 2041 (class 2606 OID 16932)
--- Name: encontro_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2074 (class 2606 OID 40106)
+-- Name: encontro_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY encontro
@@ -1056,8 +1173,8 @@ ALTER TABLE ONLY encontro
 
 
 --
--- TOC entry 2047 (class 2606 OID 16934)
--- Name: estado_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2078 (class 2606 OID 40108)
+-- Name: estado_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY estado
@@ -1065,8 +1182,8 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2051 (class 2606 OID 16936)
--- Name: evento_arquivo_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2082 (class 2606 OID 40110)
+-- Name: evento_arquivo_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_arquivo
@@ -1074,8 +1191,8 @@ ALTER TABLE ONLY evento_arquivo
 
 
 --
--- TOC entry 2054 (class 2606 OID 16938)
--- Name: evento_demanda_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2085 (class 2606 OID 40112)
+-- Name: evento_demanda_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_demanda
@@ -1083,8 +1200,8 @@ ALTER TABLE ONLY evento_demanda
 
 
 --
--- TOC entry 2056 (class 2606 OID 16940)
--- Name: evento_palestrante_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2087 (class 2606 OID 40114)
+-- Name: evento_palestrante_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_palestrante
@@ -1092,17 +1209,17 @@ ALTER TABLE ONLY evento_palestrante
 
 
 --
--- TOC entry 2058 (class 2606 OID 16942)
--- Name: evento_participacao_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2089 (class 2606 OID 40116)
+-- Name: evento_participacao_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_participacao
-    ADD CONSTRAINT evento_participacao_pk PRIMARY KEY (evento, id_pessoa);
+    ADD CONSTRAINT evento_participacao_pk PRIMARY KEY (id_evento_realizacao, id_pessoa);
 
 
 --
--- TOC entry 2049 (class 2606 OID 16944)
--- Name: evento_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2080 (class 2606 OID 40118)
+-- Name: evento_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento
@@ -1110,17 +1227,8 @@ ALTER TABLE ONLY evento
 
 
 --
--- TOC entry 2062 (class 2606 OID 16946)
--- Name: evento_realizacao_multipla_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY evento_realizacao_multipla
-    ADD CONSTRAINT evento_realizacao_multipla_pkey PRIMARY KEY (evento_realizacao_multipla);
-
-
---
--- TOC entry 2060 (class 2606 OID 16948)
--- Name: evento_realizacao_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2091 (class 2606 OID 40122)
+-- Name: evento_realizacao_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_realizacao
@@ -1128,8 +1236,8 @@ ALTER TABLE ONLY evento_realizacao
 
 
 --
--- TOC entry 2065 (class 2606 OID 16950)
--- Name: evento_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2093 (class 2606 OID 40124)
+-- Name: evento_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_tags
@@ -1137,8 +1245,8 @@ ALTER TABLE ONLY evento_tags
 
 
 --
--- TOC entry 2068 (class 2606 OID 16952)
--- Name: instituicao_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2096 (class 2606 OID 40126)
+-- Name: instituicao_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY instituicao
@@ -1146,8 +1254,8 @@ ALTER TABLE ONLY instituicao
 
 
 --
--- TOC entry 2070 (class 2606 OID 16954)
--- Name: mensagem_email_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2098 (class 2606 OID 40128)
+-- Name: mensagem_email_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY mensagem_email
@@ -1155,8 +1263,8 @@ ALTER TABLE ONLY mensagem_email
 
 
 --
--- TOC entry 2072 (class 2606 OID 16956)
--- Name: municipio_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2068 (class 2606 OID 40130)
+-- Name: municipio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY municipio
@@ -1164,8 +1272,8 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2077 (class 2606 OID 16958)
--- Name: pessoa_arquivo_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2105 (class 2606 OID 40132)
+-- Name: pessoa_arquivo_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pessoa_arquivo
@@ -1173,8 +1281,17 @@ ALTER TABLE ONLY pessoa_arquivo
 
 
 --
--- TOC entry 2075 (class 2606 OID 16960)
--- Name: pessoa_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2101 (class 2606 OID 80217)
+-- Name: pessoa_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pessoa
+    ADD CONSTRAINT pessoa_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 2103 (class 2606 OID 40134)
+-- Name: pessoa_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pessoa
@@ -1182,8 +1299,8 @@ ALTER TABLE ONLY pessoa
 
 
 --
--- TOC entry 2079 (class 2606 OID 16962)
--- Name: sala_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2107 (class 2606 OID 40136)
+-- Name: sala_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sala
@@ -1191,8 +1308,8 @@ ALTER TABLE ONLY sala
 
 
 --
--- TOC entry 2081 (class 2606 OID 16964)
--- Name: sexo_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2109 (class 2606 OID 40138)
+-- Name: sexo_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sexo
@@ -1200,8 +1317,8 @@ ALTER TABLE ONLY sexo
 
 
 --
--- TOC entry 2083 (class 2606 OID 16966)
--- Name: tags_descricao_uidx; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2111 (class 2606 OID 40140)
+-- Name: tags_descricao_uidx; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tags
@@ -1209,8 +1326,8 @@ ALTER TABLE ONLY tags
 
 
 --
--- TOC entry 2085 (class 2606 OID 16968)
--- Name: tags_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2113 (class 2606 OID 40142)
+-- Name: tags_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tags
@@ -1218,8 +1335,8 @@ ALTER TABLE ONLY tags
 
 
 --
--- TOC entry 2087 (class 2606 OID 16970)
--- Name: tipo_evento_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2115 (class 2606 OID 40144)
+-- Name: tipo_evento_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tipo_evento
@@ -1227,8 +1344,17 @@ ALTER TABLE ONLY tipo_evento
 
 
 --
--- TOC entry 2089 (class 2606 OID 16972)
--- Name: tipo_mensagem_email_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2121 (class 2606 OID 48083)
+-- Name: tipo_horario_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tipo_horario
+    ADD CONSTRAINT tipo_horario_pkey PRIMARY KEY (id_tipo_horario);
+
+
+--
+-- TOC entry 2117 (class 2606 OID 40146)
+-- Name: tipo_mensagem_email_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tipo_mensagem_email
@@ -1236,8 +1362,8 @@ ALTER TABLE ONLY tipo_mensagem_email
 
 
 --
--- TOC entry 2091 (class 2606 OID 16974)
--- Name: tipo_usuario_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2119 (class 2606 OID 40148)
+-- Name: tipo_usuario_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY tipo_usuario
@@ -1245,63 +1371,65 @@ ALTER TABLE ONLY tipo_usuario
 
 
 --
--- TOC entry 2037 (class 1259 OID 16975)
--- Name: caravana_encontro_responsavel_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2057 (class 1259 OID 80218)
+-- Name: artigo_id_artigo_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX artigo_id_artigo_key ON artigo USING btree (id_artigo);
+
+
+--
+-- TOC entry 2064 (class 1259 OID 40149)
+-- Name: caravana_encontro_responsavel_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX caravana_encontro_responsavel_idx ON caravana_encontro USING btree (id_encontro, responsavel);
 
 
 --
--- TOC entry 2073 (class 1259 OID 16976)
--- Name: email_uidx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2099 (class 1259 OID 40150)
+-- Name: email_uidx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX email_uidx ON pessoa USING btree (email);
 
 
 --
--- TOC entry 2052 (class 1259 OID 16977)
--- Name: evento_arquivomd5_uidx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2083 (class 1259 OID 40151)
+-- Name: evento_arquivomd5_uidx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX evento_arquivomd5_uidx ON evento_arquivo USING btree (nome_arquivo_md5);
 
 
 --
--- TOC entry 2063 (class 1259 OID 16978)
--- Name: evento_realizacaomultipla_uidx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX evento_realizacaomultipla_uidx ON evento_realizacao_multipla USING btree (evento, data, hora_inicio, hora_fim);
-
-
---
--- TOC entry 2066 (class 1259 OID 16979)
--- Name: instituicao_indx_unq; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 2094 (class 1259 OID 40153)
+-- Name: instituicao_indx_unq; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX instituicao_indx_unq ON instituicao USING btree (apelido_instituicao);
 
 
 --
--- TOC entry 2122 (class 2620 OID 16980)
--- Name: trgrvalidaevento; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 2122 (class 2606 OID 40156)
+-- Name: artigo_id_encontro_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-CREATE TRIGGER trgrvalidaevento BEFORE UPDATE ON evento FOR EACH ROW EXECUTE PROCEDURE funcvalidaevento();
-
-
---
--- TOC entry 2123 (class 2620 OID 16981)
--- Name: trgrvalidausuario; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER trgrvalidausuario BEFORE UPDATE ON pessoa FOR EACH ROW EXECUTE PROCEDURE funcvalidausuario();
+ALTER TABLE ONLY artigo
+    ADD CONSTRAINT artigo_id_encontro_fkey FOREIGN KEY (id_encontro) REFERENCES encontro(id_encontro);
 
 
 --
--- TOC entry 2095 (class 2606 OID 16982)
+-- TOC entry 2123 (class 2606 OID 40161)
+-- Name: artigo_id_pessoa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY artigo
+    ADD CONSTRAINT artigo_id_pessoa_fkey FOREIGN KEY (responsavel) REFERENCES pessoa(id_pessoa);
+
+
+--
+-- TOC entry 2127 (class 2606 OID 40166)
 -- Name: caravana_caravana_encontro_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1310,7 +1438,7 @@ ALTER TABLE ONLY caravana_encontro
 
 
 --
--- TOC entry 2092 (class 2606 OID 16987)
+-- TOC entry 2124 (class 2606 OID 40171)
 -- Name: caravana_criador_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1319,7 +1447,7 @@ ALTER TABLE ONLY caravana
 
 
 --
--- TOC entry 2098 (class 2606 OID 16992)
+-- TOC entry 2130 (class 2606 OID 40176)
 -- Name: caravana_encontro_encontro_participante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1328,7 +1456,7 @@ ALTER TABLE ONLY encontro_participante
 
 
 --
--- TOC entry 2104 (class 2606 OID 16997)
+-- TOC entry 2139 (class 2606 OID 40181)
 -- Name: dificuldade_evento_evento_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1337,7 +1465,7 @@ ALTER TABLE ONLY evento
 
 
 --
--- TOC entry 2096 (class 2606 OID 17002)
+-- TOC entry 2128 (class 2606 OID 40186)
 -- Name: encontro_caravana_encontro_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1346,7 +1474,7 @@ ALTER TABLE ONLY caravana_encontro
 
 
 --
--- TOC entry 2099 (class 2606 OID 17007)
+-- TOC entry 2131 (class 2606 OID 40191)
 -- Name: encontro_encontro_participante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1355,7 +1483,7 @@ ALTER TABLE ONLY encontro_participante
 
 
 --
--- TOC entry 2105 (class 2606 OID 17012)
+-- TOC entry 2140 (class 2606 OID 40196)
 -- Name: encontro_evento_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1364,7 +1492,25 @@ ALTER TABLE ONLY evento
 
 
 --
--- TOC entry 2120 (class 2606 OID 17017)
+-- TOC entry 2138 (class 2606 OID 80219)
+-- Name: encontro_id_municipio_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY encontro
+    ADD CONSTRAINT encontro_id_municipio_fkey FOREIGN KEY (id_municipio) REFERENCES municipio(id_municipio) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2137 (class 2606 OID 72016)
+-- Name: encontro_id_tipo_horario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY encontro
+    ADD CONSTRAINT encontro_id_tipo_horario_fkey FOREIGN KEY (id_tipo_horario) REFERENCES tipo_horario(id_tipo_horario);
+
+
+--
+-- TOC entry 2136 (class 2606 OID 40201)
 -- Name: estado_municipio_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1373,7 +1519,7 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2110 (class 2606 OID 17022)
+-- TOC entry 2146 (class 2606 OID 40206)
 -- Name: evento_evento_palestrante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1382,7 +1528,7 @@ ALTER TABLE ONLY evento_palestrante
 
 
 --
--- TOC entry 2114 (class 2606 OID 17027)
+-- TOC entry 2150 (class 2606 OID 40211)
 -- Name: evento_evento_realizacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1391,7 +1537,16 @@ ALTER TABLE ONLY evento_realizacao
 
 
 --
--- TOC entry 2108 (class 2606 OID 17032)
+-- TOC entry 2143 (class 2606 OID 80224)
+-- Name: evento_id_artigo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY evento
+    ADD CONSTRAINT evento_id_artigo_fkey FOREIGN KEY (id_artigo) REFERENCES artigo(id_artigo);
+
+
+--
+-- TOC entry 2144 (class 2606 OID 40216)
 -- Name: evento_realizacao_evento_demanda_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1400,25 +1555,16 @@ ALTER TABLE ONLY evento_demanda
 
 
 --
--- TOC entry 2112 (class 2606 OID 17037)
+-- TOC entry 2148 (class 2606 OID 40221)
 -- Name: evento_realizacao_evento_participacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY evento_participacao
-    ADD CONSTRAINT evento_realizacao_evento_participacao_fk FOREIGN KEY (evento) REFERENCES evento_realizacao(evento);
+    ADD CONSTRAINT evento_realizacao_evento_participacao_fk FOREIGN KEY (id_evento_realizacao) REFERENCES evento_realizacao(evento);
 
 
 --
--- TOC entry 2116 (class 2606 OID 17042)
--- Name: evento_realizacao_multipla_evento_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY evento_realizacao_multipla
-    ADD CONSTRAINT evento_realizacao_multipla_evento_fkey FOREIGN KEY (evento) REFERENCES evento_realizacao(evento);
-
-
---
--- TOC entry 2106 (class 2606 OID 17047)
+-- TOC entry 2141 (class 2606 OID 40231)
 -- Name: evento_responsavel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1427,7 +1573,7 @@ ALTER TABLE ONLY evento
 
 
 --
--- TOC entry 2117 (class 2606 OID 17052)
+-- TOC entry 2152 (class 2606 OID 40236)
 -- Name: evento_tags_id_evento_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1436,7 +1582,7 @@ ALTER TABLE ONLY evento_tags
 
 
 --
--- TOC entry 2118 (class 2606 OID 17057)
+-- TOC entry 2153 (class 2606 OID 40241)
 -- Name: evento_tags_id_tag_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1445,7 +1591,7 @@ ALTER TABLE ONLY evento_tags
 
 
 --
--- TOC entry 2093 (class 2606 OID 17062)
+-- TOC entry 2125 (class 2606 OID 40246)
 -- Name: instituicao_caravana_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1454,7 +1600,7 @@ ALTER TABLE ONLY caravana
 
 
 --
--- TOC entry 2100 (class 2606 OID 17067)
+-- TOC entry 2132 (class 2606 OID 40251)
 -- Name: instituicao_encontro_participante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1463,7 +1609,7 @@ ALTER TABLE ONLY encontro_participante
 
 
 --
--- TOC entry 2094 (class 2606 OID 17072)
+-- TOC entry 2126 (class 2606 OID 40256)
 -- Name: municipio_caravana_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1472,7 +1618,7 @@ ALTER TABLE ONLY caravana
 
 
 --
--- TOC entry 2101 (class 2606 OID 17077)
+-- TOC entry 2133 (class 2606 OID 40261)
 -- Name: municipio_encontro_participante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1481,7 +1627,7 @@ ALTER TABLE ONLY encontro_participante
 
 
 --
--- TOC entry 2097 (class 2606 OID 17082)
+-- TOC entry 2129 (class 2606 OID 40266)
 -- Name: pessoa_caravana_encontro_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1490,7 +1636,7 @@ ALTER TABLE ONLY caravana_encontro
 
 
 --
--- TOC entry 2102 (class 2606 OID 17087)
+-- TOC entry 2134 (class 2606 OID 40271)
 -- Name: pessoa_encontro_participante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1499,7 +1645,7 @@ ALTER TABLE ONLY encontro_participante
 
 
 --
--- TOC entry 2109 (class 2606 OID 17092)
+-- TOC entry 2145 (class 2606 OID 40276)
 -- Name: pessoa_evento_demanda_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1508,7 +1654,7 @@ ALTER TABLE ONLY evento_demanda
 
 
 --
--- TOC entry 2111 (class 2606 OID 17097)
+-- TOC entry 2147 (class 2606 OID 40281)
 -- Name: pessoa_evento_palestrante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1517,7 +1663,7 @@ ALTER TABLE ONLY evento_palestrante
 
 
 --
--- TOC entry 2113 (class 2606 OID 17102)
+-- TOC entry 2149 (class 2606 OID 40286)
 -- Name: pessoa_evento_participacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1526,7 +1672,7 @@ ALTER TABLE ONLY evento_participacao
 
 
 --
--- TOC entry 2115 (class 2606 OID 17107)
+-- TOC entry 2151 (class 2606 OID 40291)
 -- Name: sala_evento_realizacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1535,7 +1681,7 @@ ALTER TABLE ONLY evento_realizacao
 
 
 --
--- TOC entry 2121 (class 2606 OID 17112)
+-- TOC entry 2155 (class 2606 OID 40296)
 -- Name: sexo_pessoa_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1544,7 +1690,7 @@ ALTER TABLE ONLY pessoa
 
 
 --
--- TOC entry 2107 (class 2606 OID 17117)
+-- TOC entry 2142 (class 2606 OID 40301)
 -- Name: tipo_evento_evento_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1553,7 +1699,7 @@ ALTER TABLE ONLY evento
 
 
 --
--- TOC entry 2119 (class 2606 OID 17122)
+-- TOC entry 2154 (class 2606 OID 40306)
 -- Name: tipo_mensagem_email_mensagem_email_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1562,7 +1708,7 @@ ALTER TABLE ONLY mensagem_email
 
 
 --
--- TOC entry 2103 (class 2606 OID 17127)
+-- TOC entry 2135 (class 2606 OID 40311)
 -- Name: tipo_usuario_encontro_participante_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1570,19 +1716,7 @@ ALTER TABLE ONLY encontro_participante
     ADD CONSTRAINT tipo_usuario_encontro_participante_fk FOREIGN KEY (id_tipo_usuario) REFERENCES tipo_usuario(id_tipo_usuario);
 
 
---
--- TOC entry 2237 (class 0 OID 0)
--- Dependencies: 6
--- Name: public; Type: ACL; Schema: -; Owner: -
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
--- Completed on 2014-07-05 13:59:08 BRT
+-- Completed on 2015-02-19 19:30:12 BRT
 
 --
 -- PostgreSQL database dump complete

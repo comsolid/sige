@@ -284,4 +284,36 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $registry = Zend_Registry::getInstance();
         $registry->set('Zend_Translate', $translate);
     }
+
+	public function _initTimeZone() {
+        date_default_timezone_set('America/Fortaleza');
+    }
+
+    /**
+     * Initializes the cache.
+     * referência: http://wolfulus.wordpress.com/2011/12/26/zend-framework-xml-based-acl-part-3/
+     */
+    protected function _initCache() {
+        $cache_dir = APPLICATION_PATH . '/cache/common';
+        $frontendOptions = array('lifetime' => 7200, 'automatic_serialization' => true);
+        $backendOptions = array('cache_dir' => $cache_dir);
+        if (!file_exists($cache_dir)) {
+            if (!\mkdir($cache_dir, 0777, true)) {
+                echo "<h2>Crie a pasta $cache_dir com permissão de escrita para o servidor web.</h2>";
+                exit;
+            }
+        }
+        $appcache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+        Zend_Registry::set('cache_common', $appcache);
+    }
+
+    protected function _initPreferenciaSistema() {
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        if ($ps === false) {
+            $ps = new Sige_PreferenciaSistema();
+            $cache->save($ps, 'prefsis');
+        }
+        Zend_Controller_Front::getInstance()->registerPlugin($ps);
+    }
 }
