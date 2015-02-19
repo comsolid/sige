@@ -28,8 +28,8 @@
             <?php foreach ($this->diasEncontro as $value): ?>
             <label class="btn btn-default">
                 <input type="radio" name="data_evento" class="data_evento"
-                       id="radio_<?= $value['data'] ?>"
-                       value="<?= str_replace('/', '-', $value['data']) ?>" />
+                       id="radio_<?php echo $value['data'] ?>"
+                       value="<?php echo $value['data']; ?>" />
                 <?php echo $value['data']; ?>
             </label>
             <?php endforeach; ?>

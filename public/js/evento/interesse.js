@@ -1,21 +1,66 @@
-'use strict';
 
-var oTable;
 $(function() {
-	oTable = $('table').dataTable({
-		"ordering": false,
-		"filter": false,
-		"info": false,
-		"lengthChange": false,
-		"paginate": false,
-		"language": {
-			"url": "/lib/js/data-tables/Portuguese-Brasil.json"
+	var oTable = $('table').dataTable({
+		'ordering': false,
+		'filter': false,
+		'info': false,
+		'lengthChange': false,
+		'paginate': false,
+		'language': {
+			'url': '/lib/js/data-tables/Portuguese-Brasil.json'
 		}
 	});
 
-    $("#termo").select();
+	function getDataEvento() {
+		return $('input:radio.data_evento:checked').val();
+	}
+
+	function getTipoEvento() {
+		return $('input:radio.tipo_evento:checked').val();
+	}
+
+	function addEvento(id) {
+
+		if (id > 0) {
+	        var url = '/evento/ajax-interesse/id/' + id;
+			$.getJSON(url, function(json) {
+				if (json.ok) {
+	                alertify.success(_('Interesting event bookmarked.'));
+				} else if (json.erro !== null) {
+	                alertify.error(json.erro);
+				}
+			}).complete(function() {
+				getValores();
+			});
+		}
+	}
+
+	function getValores() {
+		$('#loading').show();
+		var termo = $('#termo').val();
+		var data_evento = getDataEvento();
+		var tipo_evento = getTipoEvento();
+	    var url = '/evento/ajax-buscar/';
+
+		var params = {
+			termo: termo,
+			id_tipo_evento: tipo_evento,
+			data: data_evento
+		};
+
+		$.getJSON(url, params, function(json){
+			oTable.fnClearTable();
+			if (json.size > 0) {
+				oTable.fnAddData(json.itens);
+			}
+		}).complete(function() {
+			$('#loading').hide();
+		});
+	}
+
+    $('#termo').select();
     getValores();
-    $("#termo").autocomplete({
+    $('#termo').autocomplete({
         source: function() {
             getValores();
         }
@@ -26,51 +71,7 @@ $(function() {
 		getValores();
 	});
 
-	$(document).delegate('a.marcar', 'click', function(event) {
+	$(document).delegate('a.marcar', 'click', function() {
 		addEvento($(this).attr('id'));
 	});
 });
-
-function getDataEvento() {
-	return $('input:radio.data_evento:checked').val();
-}
-
-function getTipoEvento() {
-	return $('input:radio.tipo_evento:checked').val();
-}
-
-function getValores() {
-	$("#loading").show();
-	var termo = $("#termo").val();
-	var data_evento = getDataEvento();
-	var tipo_evento = getTipoEvento();
-    var url = "/evento/ajax-buscar/termo/" + termo
-        + "/id_tipo_evento/" + tipo_evento + "/data/" + data_evento;
-
-	$.getJSON(url, function(json){
-		oTable.fnClearTable();
-		if (json.size > 0) {
-			oTable.fnAddData(json.itens);
-		}
-	}).complete(function() {
-		$("#loading").hide();
-	});
-}
-
-function addEvento(id) {
-
-	if (id > 0) {
-        var url = "/evento/ajax-interesse/id/" + id;
-		$.getJSON(url, function(json) {
-			if (json.ok) {
-				//mostrarMensagem("div#msg-success", _("Interesting event bookmarked."));
-                alertify.success(_("Interesting event bookmarked."));
-			} else if (json.erro != null) {
-				//mostrarMensagem("div#msg-error", json.erro);
-                alertify.error(json.erro);
-			}
-		}).complete(function() {
-			getValores();
-		});
-	}
-}
