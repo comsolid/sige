@@ -1,11 +1,11 @@
 
 $(function() {
 	var oTable = $('table').dataTable({
-		'ordering': false,
+		'ordering': true,
 		'filter': false,
-		'info': false,
+		'info': true,
 		'lengthChange': false,
-		'paginate': false,
+		'paginate': true,
 		'language': {
 			'url': '/lib/js/data-tables/Portuguese-Brasil.json'
 		}
