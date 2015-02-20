@@ -46,8 +46,8 @@ class EventoController extends Zend_Controller_Action {
 
         $model_evento = new Application_Model_Evento();
         $this->view->meusEventos = $model_evento->listarEventosParticipante($idEncontro, $idPessoa);
-        $model_artigo = new Application_Model_Artigo();
-        $this->view->meusArtigos = $model_artigo->listarArtigosParticipante($idEncontro, $idPessoa);
+        //$model_artigo = new Application_Model_Artigo();
+        //$this->view->meusArtigos = $model_artigo->listarArtigosParticipante($idEncontro, $idPessoa);
     }
 
     public function ajaxBuscarAction() {
@@ -173,6 +173,71 @@ class EventoController extends Zend_Controller_Action {
                             . $ex->getMessage()));
             }
         }
+    }
+
+    public function enviarArtigoAction() {
+        $this->autenticacao();
+        $this->view->menu->setAtivo('submission');
+
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $id_pessoa = intval($sessao["idPessoa"]);
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+        $admin = $sessao["administrador"]; // boolean
+
+        $encontro = new Application_Model_Encontro();
+        $rs = $encontro->isPeriodoSubmissao($id_encontro);
+        if ($rs['liberar_submissao'] == null and ! $admin) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('notice' => "O Período de inscrição "
+                        . "vai de {$rs['periodo_submissao_inicio']} até {$rs['periodo_submissao_fim']}."));
+            return $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'evento'), 'default', true);
+        }
+
+        $form = new Application_Form_SubmissaoArtigo();
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if (isset($formData['cancelar'])) {
+                return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
+            }
+            if ($form->isValid($formData)) {
+                $uploadedData = $form->getValues();
+                try {
+                    $uploadedData['id_encontro'] = $id_encontro;
+                    $uploadedData['responsavel'] = $id_pessoa;
+                    $uploadedData["id_tipo_evento"] = 4; // tipo artigo cientifico no db | TODO fazer define
+                    $titulo = $uploadedData['nome_evento'];
+
+                    // Salvando PDF na tabela artigo
+                    $artigos_ids = $this->_artigoSalvaPdf(
+                            $form->arquivo, $id_pessoa, $id_encontro, $titulo);
+
+                    // Enviando artigo por email
+                    $this->_artigoCriarEmail();
+                    // Salvando o evento
+                    $evento = new Application_Model_Evento();
+                    $uploadedData["id_artigo"] = array_pop($artigos_ids);
+                    unset($uploadedData["arquivo"]);
+                    $evento->insert($uploadedData);
+                    $this->_helper->flashMessenger->addMessage(
+                            array('success' => 'Artigo enviado. '
+                                . 'Aguarde contato por e-mail.'));
+                    $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'evento'
+                            ), null, true);
+                } catch (Exception $ex) {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('error' => 'Ocorreu um erro inesperado. '
+                                . 'Seu artigo <b>NÃO</b> foi submetido.<br/>'
+                                . 'Detalhes: ' . $ex->getMessage()));
+                }
+            } else {
+                $form->populate($formData);
+            }
+        }
+        $this->view->form = $form;
     }
 
     public function editarAction() {

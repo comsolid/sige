@@ -1,0 +1,68 @@
+<?php
+    $this->headScript()->appendFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/parsley.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/evento/submeter.js'));
+?>
+
+<h4>Submeter um Artigo Cientifico</h4><hr/>
+
+<p>
+    Sugerimos este
+    <a href="<?php echo $this->baseUrl("static/modelosparapublicaodeartigos.rar"); ?>">modelo para artigo</a>
+    da <a href="http://www.sbc.org.br" target="_blank">SBC</a> contendo entre 8 e 15 páginas.
+</p>
+
+<?php
+$form = $this->form;
+?>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo
+    $form->getAction()?>">
+
+    <div class="row">
+        <div class="col-md-6">
+            <?php echo $form->nome_evento->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->nome_evento->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->nome_evento->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <?php echo $form->resumo->renderLabel() ?>
+            <div class="form-group">
+                <?php echo $form->resumo->renderViewHelper() ?>
+                <div class="form-errors">
+                    <?php echo $form->resumo->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <?php echo $form->arquivo->render() ?>
+                <div class="form-errors">
+                    <?php echo $form->arquivo->renderErrors() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php echo $form->responsavel->renderViewHelper() ?>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="<?php echo $this->url(array(), 'submissao', true)?>" class="btn btn-default">
+                <?php echo $this->translate("Cancel"); ?>
+            </a>
+            <?php echo $form->submit->renderViewHelper() ?>
+        </div>
+    </div>
+
+</form>
