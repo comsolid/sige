@@ -93,23 +93,14 @@ ALTER TABLE mensagem_email
 	ADD COLUMN assinatura_siteoficial character varying(255);
 
 ALTER TABLE pessoa
-	DROP COLUMN cpf,
-	ALTER COLUMN nome TYPE character varying(255) /* TYPE change - table: pessoa original: character varying(100) new: character varying(255) */,
-	ALTER COLUMN telefone TYPE character varying(16) /* TYPE change - table: pessoa original: bigint new: character varying(16) */;
+	ALTER COLUMN nome TYPE character varying(255) /* TYPE change - table: pessoa original: character varying(100) new: character varying(255) */;
 
 COMMENT ON COLUMN pessoa.endereco_internet IS 'Um endereço começando com http:// indicando onde estão as informações da pessoa.
 
 Pode ser um blog, página do facebook, site...';
 
-COMMENT ON COLUMN pessoa.senha IS 'Senha do usuário usando criptografia md5 do comsolid.
-
-Valor padrão vai ser o próprio nome do usuário.';
-
 ALTER SEQUENCE artigo_id_artigo_seq
 	OWNED BY artigo.id_artigo;
-
-ALTER SEQUENCE dh_id_seq
-	OWNED BY dh.id;
 
 ALTER SEQUENCE tipo_horario_id_tipo_horario_seq
 	OWNED BY tipo_horario.id_tipo_horario;
@@ -124,7 +115,7 @@ Criador: Siqueira, Robson.
 
 Data: 05/08/2011.
 
-DESCRIÇÃO: 
+DESCRIÇÃO:
 
   A partir de um email válido, gera uma senha de 10 caracteres com letras maiúsculas e números.
 
@@ -158,7 +149,7 @@ BEGIN
 
   SELECT UPPER(md5(codSenha)::varchar(10)) INTO codSenha;
 
-  UPDATE pessoa 
+  UPDATE pessoa
 
   SET senha = md5(codSenha)
 
@@ -210,9 +201,6 @@ $$;
 
 ALTER TABLE artigo
 	ADD CONSTRAINT artigo_pkey PRIMARY KEY (id_artigo);
-
-ALTER TABLE dh
-	ADD CONSTRAINT dh_pkey PRIMARY KEY (id);
 
 ALTER TABLE evento_participacao
 	ADD CONSTRAINT evento_participacao_pk PRIMARY KEY (id_evento_realizacao, id_pessoa);

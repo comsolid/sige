@@ -1,0 +1,35 @@
+<style>
+    table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #bbb;
+        padding: 5px;
+    }
+</style>
+
+<div class="row-fluid" style="font-size: 10pt; text-align: justify; margin-top: 10px; margin-left: 10px;">
+    <table>
+        <thead>
+            <tr>
+                <th>Evento</th>
+                <th>Título</th>
+                %%col_status%%
+                <th>Nome</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 9pt;">
+            %%tabela_itens%%
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+
+    <p style="text-indent: 3em; font-size: 12pt; text-align: right; font-weight: bold;">
+        Total: %%contador%%
+    </p>
+
+</div>

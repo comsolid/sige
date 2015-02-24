@@ -69,9 +69,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <?php echo $this->translate("Submited"); ?>
-                        <span data-moment="<?= $linha["data_submissao"] ?>">
-                            <?= $linha["data_submissao"] ?>
-                        </span>
+                        <span data-moment="<?= $linha["data_submissao"] ?>" title="<?= $linha["data_submissao"] ?>"></span>
                     </div>
                     <div class="col-md-2">
                         <?php if ($linha["validada"]): ?>
@@ -90,28 +88,71 @@
                         <div class="btn-group pull-right">
                             <?php if (intval($linha["id_tipo_evento"]) == Application_Model_TipoEvento::ARTIGO): ?>
                                 <!-- links para artigo -->
+                                <a href="<?php
+                                    echo $this->url(array(
+                                        "controller" => "evento",
+                                        "action" => "download-artigo",
+                                        "artigo" => $linha["id_artigo"],
+                                            ), 'default', true); ?>"
+                                    class="btn btn-default"
+                                    data-toggle="tooltip" data-placement="top"
+                                    title="<?php echo $this->translate("Download PDF"); ?>">
+                                        <i class="fa fa-cloud-download"></i>
+                                </a>
+                                <a href="<?php
+                                    echo $this->url(array(
+                                        "controller" => "evento",
+                                        "action" => "deletar-artigo",
+                                        "evento" => $linha["id_evento"],
+                                        "artigo" => $linha["id_artigo"],
+                                            ), 'default', true); ?>"
+                                    class="btn btn-danger"
+                                    data-toggle="tooltip" data-placement="top"
+                                    title="<?php echo $this->translate("Delete"); ?>">
+                                    <i class="fa fa-times"></i>
+                                </a>
                             <?php else: ?>
+                                <!-- links para palestra/oficina/minicurso -->
                                 <a href="<?php echo $this->url(array('controller'=>'evento',
                                    'action'=>'editar',
                                     'id'=>$linha['id_evento']), 'default', true);?>" class="btn btn-default">
                                    <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
                                 </a>
-                                <a href="<?php echo $this->url(array('controller'=>'evento',
-                                       'action'=>'outros-palestrantes',
-                                       'id'=>$linha['id_evento']), 'default', true);?>"
-                                   class="btn btn-default"
-                                   data-toggle="tooltip" data-placement="top"
-                                   title="<?php echo $this->translate("Add other speakers"); ?>">
-                                   <i class="fa fa-group"></i>
-                                </a>
-                                <a href="<?php echo $this->url(array('controller'=>'evento',
-                                       'action' => 'tags',
-                                       'id' => $linha['id_evento']), 'default', true);?>"
-                                   class="btn btn-default"
-                                   data-toggle="tooltip" data-placement="top"
-                                   title="<?php echo $this->translate("Create/Edit tags"); ?>">
-                                   <i class="fa fa-tags"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-bars"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="<?php echo $this->url(array('controller'=>'evento',
+                                                   'action'=>'outros-palestrantes',
+                                                   'id'=>$linha['id_evento']), 'default', true);?>">
+                                               <i class="fa fa-group"></i>
+                                               <?php echo $this->translate("Add other speakers"); ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo $this->url(array('controller'=>'evento',
+                                                   'action' => 'tags',
+                                                   'id' => $linha['id_evento']), 'default', true);?>">
+                                               <i class="fa fa-tags"></i>
+                                               <?php echo $this->translate("Create/Edit tags"); ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php
+                                                echo $this->url(array(
+                                                    "controller" => "evento",
+                                                    "action" => "deletar-evento",
+                                                    "evento" => $linha["id_evento"],
+                                                        ), 'default', true); ?>">
+                                                <i class="fa fa-times"></i>
+                                                <?php echo $this->translate("Delete"); ?>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -131,15 +172,25 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4"><hr></div>
-        <div class="col-md-4">
+        <div class="col-md-3"><hr></div>
+        <div class="col-md-3">
             <a href="<?php echo $this->url(array(
                 'controller'=>'evento',
                 'action'=>'submeter'), 'default');?>"
                 class="btn btn-primary btn-lg btn-block">
-                <i class="fa fa-file"></i> <?php echo $this->translate("Submit Paper"); ?>
+                <i class="fa fa-microphone"></i> <?php echo $this->translate("Submit Lecture"); ?>
             </a>
         </div>
-        <div class="col-md-4"><hr></div>
+        <div class="col-md-3">
+            <a href="<?php echo $this->url(array(
+                    "controller" => "evento",
+                    "action" => "enviar-artigo",
+                ), 'default'); ?>"
+                class="btn btn-info btn-lg btn-block">
+                <i class="fa fa-file-pdf-o"></i>
+                <?php echo $this->translate("Submit Paper"); ?>
+            </a>
+        </div>
+        <div class="col-md-3"><hr></div>
     </div>
 <?php endif; ?>

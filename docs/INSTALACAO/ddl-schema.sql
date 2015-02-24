@@ -49,7 +49,7 @@ Criador: Siqueira, Robson.
 
 Data: 05/08/2011.
 
-DESCRIÇÃO: 
+DESCRIÇÃO:
 
   A partir de um email válido, gera uma senha de 10 caracteres com letras maiúsculas e números.
 
@@ -83,7 +83,7 @@ BEGIN
 
   SELECT UPPER(md5(codSenha)::varchar(10)) INTO codSenha;
 
-  UPDATE pessoa 
+  UPDATE pessoa
 
   SET senha = md5(codSenha)
 
@@ -729,12 +729,13 @@ CREATE TABLE pessoa (
     data_cadastro timestamp without time zone DEFAULT now(),
     id_sexo integer DEFAULT 0 NOT NULL,
     nascimento date NOT NULL,
-    telefone character varying(16),
     administrador boolean DEFAULT false NOT NULL,
     facebook character varying(50),
     email_enviado boolean DEFAULT false NOT NULL,
     bio text,
-    slideshare character varying(32)
+    slideshare character varying(32),
+    cpf bigint,
+    telefone bigint
 );
 
 

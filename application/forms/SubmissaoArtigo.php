@@ -53,7 +53,7 @@ class Application_Form_SubmissaoArtigo extends Zend_Form {
         $e->setLabel(_('Abstract:'))
                 ->setRequired(true)
                 ->setAttrib('rows', 10)
-                //->setAttrib("data-required", "true")
+                ->setAttrib("data-required", "true")
                 ->addFilter('StringTrim')
                 ->setAttrib('class', 'form-control')
                 ->addValidator('stringLength', false, array(20))
@@ -74,7 +74,6 @@ class Application_Form_SubmissaoArtigo extends Zend_Form {
         $e = new Zend_Form_Element_File('arquivo');
         $e->setLabel(_('PDF File:'))
                 ->setRequired(true)
-                //->setDestination(BASE_PATH . '/uploads/artigos')
                 // garante um unico arquivo
                 ->addValidator('Count', false, 1)
                 // limite de 5 MB

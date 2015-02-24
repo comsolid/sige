@@ -17,7 +17,7 @@ $form = $this->form;
 ?>
 
 <form method="<?php echo $form->getMethod() ?>" action="<?php echo
-    $form->getAction()?>">
+    $form->getAction()?>" enctype="multipart/form-data">
 
     <div class="row">
         <div class="col-md-6">

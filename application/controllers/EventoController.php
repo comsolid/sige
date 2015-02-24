@@ -246,7 +246,10 @@ class EventoController extends Zend_Controller_Action {
         $this->view->menu->setAtivo('submission');
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $id_encontro = $sessao["idEncontro"];
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+
         $admin = $sessao["administrador"]; // boolean
         $idPessoa = $sessao["idPessoa"];
         $idEvento = $this->_request->getParam('id', 0);
@@ -258,7 +261,9 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
-            $warning = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
+            $warning = sprintf(_("The submission period goes from %s to %s."),
+                $rs['periodo_submissao_inicio'],
+                $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
                     array('warning' => $warning));
             return $this->_helper->redirector->goToRoute(array(
@@ -334,7 +339,10 @@ class EventoController extends Zend_Controller_Action {
     public function interesseAction() {
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao["idEncontro"];
+
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $idPessoa = $sessao["idPessoa"];
 
         $eventos = new Application_Model_Evento();
@@ -535,7 +543,7 @@ class EventoController extends Zend_Controller_Action {
                 $this->_helper->flashMessenger->addMessage(
                         array('warning' => _('Event not found.')));
             } else {
-                $this->view->evento = $data[0];
+                $this->view->evento = $data;
 
                 // checa as permissão do usuário, para editar somente seus eventos
                 $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -597,6 +605,82 @@ class EventoController extends Zend_Controller_Action {
         header("Cache-Control: no-cache, must-revalidate");
         header("Content-type: text/json");
         echo json_encode($json);
+    }
+
+    public function deletarArtigoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $id_artigo = $this->_getParam('artigo', 0);
+        $id_evento = $this->_getParam('evento', 0);
+        $model_pessoa = new Application_Model_Pessoa();
+        $model_evento = new Application_Model_Evento();
+
+        try {
+            if ($id_artigo < 1 || $id_evento < 1) {
+                throw new Exception("Parâmetros inválidos. Tente novamente do início ou contate o administrador.");
+            }
+
+            $this->autenticacao();
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $id_pessoa_sessao = $sessao["idPessoa"];
+            $id_pessoa_db = $model_evento->getResponsavel($id_evento);
+            if ($id_pessoa_db != $id_pessoa_sessao && !$model_pessoa->isAdmin()) {
+                throw new Exception("Você não é administrador para executar esta ação.");
+            }
+            $model_evento->deletarEvento($id_evento);
+            $this->_helper->flashMessenger->addMessage(
+                    array('success' => 'Artigo removido com sucesso.'));
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        . $e->getMessage()));
+        }
+
+        $this->_helper->redirector->goToRoute(array(
+            'controller' => 'evento',
+            'action' => 'index',
+                ), 'default', true);
+    }
+
+    public function deletarEventoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $id_evento = $this->_getParam('evento', 0);
+        $model_pessoa = new Application_Model_Pessoa();
+        $model_evento = new Application_Model_Evento();
+
+        try {
+            if ($id_evento < 1) {
+                throw new Exception("Parâmetros inválidos. Tente novamente do início ou contate o administrador.");
+            }
+
+            $this->autenticacao();
+            $sessao = Zend_Auth::getInstance()->getIdentity();
+            $id_pessoa_sessao = $sessao["idPessoa"];
+            $id_pessoa_db = $model_evento->getResponsavel($id_evento);
+            if ($id_pessoa_db != $id_pessoa_sessao && !$model_pessoa->isAdmin()) {
+                throw new Exception("Você não é administrador para executar esta ação.");
+            }
+            $model_evento->deletarEvento($id_evento);
+            $this->_helper->flashMessenger->addMessage(
+                    array('success' => 'Evento removido com sucesso.'));
+        } catch (Zend_Db_Exception $ex) {
+            if ($ex->getCode() == 23503) {
+                $this->_helper->flashMessenger->addMessage(
+                        array('info' => _("This event could not be deleted.")));
+            } else {
+                $this->_helper->flashMessenger->addMessage(
+                        array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                            . $ex->getMessage()));
+            }
+        }
+
+        $this->_helper->redirector->goToRoute(array(
+            'controller' => 'evento',
+            'action' => 'index',
+            ), 'default', true);
     }
 
     public function deletarPalestranteAction() {
@@ -784,6 +868,90 @@ class EventoController extends Zend_Controller_Action {
         } else {
             $this->_helper->redirector->goToRoute(array(), 'submissao', true);
         }
+    }
+
+    public function downloadArtigoAction() {
+        $this->autenticacao();
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $idPessoa = $sessao["idPessoa"];
+        $admin = $sessao["administrador"];
+
+        $id_artigo = (int) $this->getRequest()->getParam("artigo", 0);
+        if ($id_artigo < 1) {
+            return $this->_redirecionar($admin);
+        }
+
+        $model_artigo = new Application_Model_Artigo();
+        $result = $model_artigo->getArtigo($id_artigo);
+
+        if ($result != NULL) {
+            // Verifica se tem permissao
+            if (!$admin && $result["responsavel"] != $idPessoa) {
+                $this->_helper->flashMessenger->addMessage(
+                        //array('error' => 'Este artigo não lhe pertence. Você não tem permissão para ler artigos alheios.'));
+                        array('error' => _("This paper doesn't belongs to you. You don't have permission to read someone else's papers.")));
+                return $this->_redirecionar();
+            }
+
+            $pdf = $result['dados'];
+            header('Content-type: application/pdf');
+            header('Content-Disposition: attachment; filename="' . $result['nomearquivo_original'] . '"');
+
+            try {
+                echo base64_decode($pdf);
+            } catch (Zend_Pdf_Exception $e) {
+                $this->_helper->flashMessenger->addMessage(
+                        //array('error' => 'O arquivo não é um documento pdf válido.<br/>Detalhes: '
+                        array('error' => _("The file is not a valid PDF document.<br/>Details: ")
+                            . $e->getMessage()));
+            }
+        } else {
+            $this->_helper->flashMessenger->addMessage(
+                    //array('error' => 'Não foi possível carregar o Artigo.'));
+                    array('error' => _("The Paper could not be loaded.")));
+            return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'evento',
+                        'controller' => 'index'), 'default', false);
+        }
+    }
+
+    private function _artigoSalvaPdf($p_arquivo, $responsavel, $id_encontro, $titulo) {
+        $files = $p_arquivo->getFileInfo();
+        $artigos = array();
+        foreach ($files as $fileInfo) {
+            try {
+                $source = $fileInfo['tmp_name'];
+                $nome = $fileInfo['name'];
+                $tamanho = $fileInfo['size'];
+
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime = finfo_file($finfo, $source);
+                if (strcmp($mime, 'application/pdf') == 0) {
+                    $data = file_get_contents($source);
+                    $escaped = bin2hex($data);
+
+                    $model = new Application_Model_Artigo();
+                    $id_artigo = $model->inserirDocumento($escaped, $nome, $tamanho, $responsavel, $id_encontro, $titulo);
+                    array_push($artigos, $id_artigo);
+                } else {
+                    //throw new Exception("Este arquivo PDF pode estar corrompido. "
+                    //    . "Por favor, verifique se o arquivo é realmente um PDF válido.");
+                    throw new Exception(_("This PDF file might be corrupted. Please check if this is a valid PDF file."));
+                }
+            } catch (Zend_Db_Exception $e) {
+                throw $e;
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
+        return $artigos;
+    }
+
+    private function _artigoCriarEmail() {
+        // TODO
     }
 
 }

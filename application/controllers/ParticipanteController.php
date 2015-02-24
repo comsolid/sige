@@ -20,8 +20,10 @@ class ParticipanteController extends Zend_Controller_Action {
     public function indexAction() {
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
 
         $eventoDemanda = new Application_Model_EventoDemanda();
         $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));
@@ -107,8 +109,10 @@ class ParticipanteController extends Zend_Controller_Action {
         $this->autenticacao();
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
         $form = new Application_Form_PessoaEdit();
         $this->view->form = $form;
 
@@ -261,32 +265,78 @@ class ParticipanteController extends Zend_Controller_Action {
 
     public function certificadosAction() {
         $this->autenticacao();
-
-        $sessao = Zend_Auth :: getInstance()->getIdentity();
-        $idPessoa = $sessao["idPessoa"];
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $id_pessoa = $sessao["idPessoa"];
+        $this->view->menu->setAtivo('certificados');
 
         $model = new Application_Model_Participante();
-        $this->view->certsParticipante = $model->listarCertificadosParticipante($idPessoa);
-        $this->view->certsPalestrante = $model->listarCertificadosPalestrante($idPessoa);
-        $this->view->certsPalestrante = array_merge($this->view->certsPalestrante, $model->listarCertificadosPalestrantesOutros($idPessoa));
+        $this->view->certsParticipanteEncontro = $model->listarCertificadosParticipanteEncontro($id_pessoa);
+        $this->view->certsParticipanteEvento = $model->listarCertificadosParticipanteEvento($id_pessoa);
+//        $this->view->certsPalestrante = array_merge($model->listarCertificadosPalestrante($id_pessoa), $model->listarCertificadosPalestrantesOutros($id_pessoa), $model->listarCertificadosPalestrantesArtigos($id_pessoa));
+        $this->view->certsPalestrante = array_merge($model->listarCertificadosPalestrante($id_pessoa), $model->listarCertificadosPalestrantesOutros($id_pessoa));
 
-        $this->view->id = $idPessoa;
+        $this->view->id = $id_pessoa;
         $pessoa = new Application_Model_Pessoa();
-        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+        $sql = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $id_pessoa);
         $this->view->user = $pessoa->fetchRow($sql);
     }
 
-    public function certificadoParticipanteAction() {
-        $this->autenticacao();
+    public function certificadoParticipanteEncontroAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $sessao = Zend_Auth :: getInstance()->getIdentity();
-        $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $this->_getParam('id_encontro', 0);
+        $this->autenticacao();
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $id_pessoa = $sessao["idPessoa"];
+        $id_encontro = $this->_getParam('id_encontro', 0);
 
         $model = new Application_Model_Participante();
-        $rs = $model->listarCertificadosParticipante($idPessoa, $idEncontro);
+        $rs = $model->listarCertificadosParticipanteEncontro($id_pessoa, $id_encontro);
+
+        if (is_null($rs)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Este certificado ainda não está disponível.'));
+            return $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'participante',
+                        'action' => 'certificados'), 'default', true);
+        }
+
+        try {
+            $certificado = new Sige_Pdf_Certificado();
+            $pdfData = $certificado->participanteEncontro(array(
+                'nome' => $rs['nome'],
+                'id_encontro' => $rs['id_encontro'], // serve para identificar o modelo
+                'encontro' => $rs['nome_encontro'],
+            ));
+            $filename = "certificado_participante_"
+                    . $this->_stringToFilename($rs["nome_encontro"])
+                    . ".pdf";
+            header("Content-Disposition: inline; filename={$filename}");
+            header("Content-type: application/x-pdf");
+            echo $pdfData;
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                        . $e->getMessage()));
+            return $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'participante',
+                        'action' => 'certificados'), 'default', true);
+        }
+    }
+
+    public function certificadoParticipanteEventoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->autenticacao();
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+//        $cache = Zend_Registry::get('cache_common');
+//        $ps = $cache->load('prefsis');
+        $id_pessoa = $sessao["idPessoa"];
+        $id_evento = $this->_getParam('id_evento', null);
+
+        $model = new Application_Model_Participante();
+        $rs = $model->listarCertificadosParticipanteEvento($id_pessoa, $id_evento);
 
         if (is_null($rs)) {
             $this->_helper->flashMessenger->addMessage(
@@ -298,12 +348,19 @@ class ParticipanteController extends Zend_Controller_Action {
 
         try {
             $certificado = new Sige_Pdf_Certificado();
-            $pdfData = $certificado->participante(array(
+            $pdfData = $certificado->participanteEvento(array(
                 'nome' => $rs['nome'],
                 'id_encontro' => $rs['id_encontro'], // serve para identificar o modelo
                 'encontro' => $rs['nome_encontro'],
+                'tipo_evento' => $rs['nome_tipo_evento'],
+                'nome_evento' => $rs['nome_evento'],
+                'carga_horaria' => $rs['carga_horaria'],
             ));
-            header("Content-Disposition: inline; filename=certificado-participante.pdf");
+            $filename = "certificado_participante_"
+                    . $this->_stringToFilename($rs["nome_encontro"]) . "_"
+                    . $this->_stringToFilename($rs["nome_evento"])
+                    . ".pdf";
+            header("Content-Disposition: inline; filename={$filename}");
             header("Content-type: application/x-pdf");
             echo $pdfData;
         } catch (Exception $e) {
@@ -317,19 +374,19 @@ class ParticipanteController extends Zend_Controller_Action {
     }
 
     public function certificadoPalestranteAction() {
-        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $sessao = Zend_Auth :: getInstance()->getIdentity();
-        $idPessoa = $sessao["idPessoa"];
-        $idEvento = $this->_getParam('id', 0);
+        $this->autenticacao();
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $id_pessoa = $sessao["idPessoa"];
+        $id_evento = $this->_getParam('id', 0);
 
         $model = new Application_Model_Participante();
-        $rs = $model->listarCertificadosPalestrante($idPessoa, $idEvento);
+        $rs = $model->listarCertificadosPalestrante($id_pessoa, $id_evento);
         // palestrante em evento_palestrante
         if (is_null($rs)) {
-            $rs = $model->listarCertificadosPalestrantesOutros($idPessoa, $idEvento);
+            $rs = $model->listarCertificadosPalestrantesOutros($id_pessoa, $id_evento);
         }
 
         if (is_null($rs)) {
@@ -343,15 +400,19 @@ class ParticipanteController extends Zend_Controller_Action {
         try {
             $certificado = new Sige_Pdf_Certificado();
             // Get PDF document as a string
-            $pdfData = $certificado->palestrante(array(
+            $pdfData = $certificado->palestranteEvento(array(
                 'nome' => $rs['nome'],
                 'id_encontro' => $rs['id_encontro'], // serve para identificar o modelo
                 'encontro' => $rs['nome_encontro'],
                 'tipo_evento' => $rs['nome_tipo_evento'],
-                'nome_evento' => $rs['nome_evento']
+                'nome_evento' => $rs['nome_evento'],
+                'carga_horaria' => $rs['carga_horaria'],
             ));
-
-            header("Content-Disposition: inline; filename=certificado-palestrante.pdf");
+            $filename = "certificado_palestrante_"
+                    . $this->_stringToFilename($rs["nome_encontro"]) . "_"
+                    . $this->_stringToFilename($rs["nome_evento"])
+                    . ".pdf";
+            header("Content-Disposition: inline; filename={$filename}");
             header("Content-type: application/x-pdf");
             echo $pdfData;
         } catch (Exception $e) {
@@ -363,4 +424,29 @@ class ParticipanteController extends Zend_Controller_Action {
                         'action' => 'certificados'), 'default', true);
         }
     }
+
+    private function _utf8_remove_acentos($str) {
+        $keys = array();
+        $values = array();
+        $from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
+        $to = "aaaaeeiooouucAAAAEEIOOOUUC";
+        preg_match_all('/./u', $from, $keys);
+        preg_match_all('/./u', $to, $values);
+        $mapping = array_combine($keys[0], $values[0]);
+        return strtr($str, $mapping);
+    }
+
+    private function _stringToFilename($str) {
+        $str = strtolower($this->_utf8_remove_acentos($str));
+        $str = preg_replace("/ /", "_", $str);
+        $str = preg_replace("/[^a-zA-Z0-9_\s]/", "", $str);
+        return $str;
+    }
+
+    private function fixObjectSession(&$object) {
+        if (!is_object($object) && gettype($object) == 'object')
+            return ($object = unserialize(serialize($object)));
+        return $object;
+    }
+
 }

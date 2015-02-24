@@ -23,14 +23,14 @@
     <li>
         <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'alterar-senha'), 'default', true);?>" class="no-bottom">
-            <i class='icon-lock'></i>
+            <i class="icon-lock"></i>
             <?php echo $this->translate("Alter Password"); ?>
         </a>
     </li>
     <li class="active">
         <a href="<?php echo $this->url(array('controller'=>'participante',
          'action'=>'certificados'), 'default', true);?>" class="no-bottom">
-            <i class='icon-credit-card'></i>
+            <i class="icon-credit-card"></i>
             <?php echo $this->translate("Certificates"); ?>
         </a>
     </li>
@@ -42,16 +42,16 @@
     <div class="col-md-6">
         <fieldset>
             <legend><?php echo $this->translate("Participant Certificates"); ?></legend>
-            <?php if (empty($this->certsParticipante)): ?>
+            <?php if (empty($this->certsParticipanteEncontro)): ?>
                 <div class="alert alert-info">
                     <?php echo $this->translate("You have no participant certificates yet."); ?>
                 </div>
             <?php else: ?>
             <div class="list-group">
-            <?php foreach($this->certsParticipante as $cert): ?>
+            <?php foreach($this->certsParticipanteEncontro as $cert): ?>
                 <a class="list-group-item"
                     href="<?=$this->url(array('controller' => 'participante',
-                        'action' => 'certificado-participante',
+                        'action' => 'certificado-participante-encontro',
                         'id_encontro' => $cert['id_encontro']), 'default', true) ?>">
                     <?=$cert['nome_encontro'] ?>
                 </a>
