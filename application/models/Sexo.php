@@ -10,4 +10,3 @@ class Application_Model_Sexo extends Zend_Db_Table_Abstract {
                'onDelete'=> self::CASCADE,  
                'onUpdate'=> self::RESTRICT));
 }
-?>

@@ -25,14 +25,21 @@ class Admin_CaravanaController extends Zend_Controller_Action {
     public function ajaxBuscarAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao["idEncontro"];
+
+//      $sessao = Zend_Auth :: getInstance()->getIdentity();
+//      $idEncontro = $sessao["idEncontro"]; // UNSAFE
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+
         $termo = $this->_request->getParam("termo", "");
         $model = new Admin_Model_Caravana();
+
         $rs = $model->buscar($idEncontro, $termo);
         $json = new stdClass;
         $json->size = count($rs);
         $json->itens = array();
+
         foreach ($rs as $value) {
             if ($value['validada']) {
                 $validada = '<span class="label label-success">' . _("Yes") . '</span>';
@@ -72,10 +79,16 @@ class Admin_CaravanaController extends Zend_Controller_Action {
     public function situacaoAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+
         $id = $this->_getParam('id', 0);
         $validar = $this->_getParam('validar', 'f');
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao["idEncontro"];
+
+//        $sessao = Zend_Auth::getInstance()->getIdentity();
+//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+
         $model = new Application_Model_Caravana();
         try {
             $select = "UPDATE caravana_encontro SET validada = ? WHERE id_caravana = ? AND id_encontro = ?";

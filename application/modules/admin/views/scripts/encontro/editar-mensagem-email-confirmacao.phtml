@@ -1,13 +1,14 @@
 
+<?php
+$form = $this->form;
+?>
+
 <div class="row">
     <div class="col-md-6">
         <div class="box box-solid">
             <div class="box-body">
-                <?php
-                $form = $this->form;
-                ?>
-                <form method="<?php echo $form->getMethod() ?>" action="<?php echo
-                $form->getAction()?>">
+
+                <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
                     <div class="row">
                         <div class="col-md-12">
                             <?php echo $form->mensagem->renderLabel() ?>
@@ -42,6 +43,30 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-8">
+                            <?php echo $form->assinatura_siteoficial->renderLabel() ?>
+                            <div class="form-group">
+                                <?php echo $form->assinatura_siteoficial->renderViewHelper() ?>
+                                <div class="form-errors">
+                                    <?php echo $form->assinatura_siteoficial->renderErrors() ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <?php echo $form->assinatura_email->renderLabel() ?>
+                            <div class="form-group">
+                                <?php echo $form->assinatura_email->renderViewHelper() ?>
+                                <div class="form-errors">
+                                    <?php echo $form->assinatura_email->renderErrors() ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <?php echo $form->id_tipo_mensagem_email->renderViewHelper() ?>
                     <?php echo $form->id_encontro->renderViewHelper() ?>
 
@@ -50,15 +75,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <a href="<?=$this->url(array('module' => 'admin',
-                            'controller' => 'encontro',
-                            'action' => 'index'), 'default', true) ?>"
-                            class="btn btn-default">
-                            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
-                        </a>
+                                'controller' => 'encontro',
+                                'action' => 'index'), 'default', true) ?>"
+                                class="btn btn-default">
+                                <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+                            </a>
 
-                        <?php echo $form->submit->renderViewHelper() ?>
+                            <?php echo $form->submit->renderViewHelper() ?>
+                        </div>
                     </div>
-                </div>
                 </form>
             </div>
         </div>
@@ -77,6 +102,7 @@
                     <li><code>{email}</code></li>
                     <li><code>{senha}</code></li>
                     <li><code>{href_link}</code></li>
+                    <li><code>{assinatura_email}</code></li>
                 </ul>
             </li>
             <li>

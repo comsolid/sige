@@ -10,12 +10,12 @@ class Application_Form_caravanaEditar extends Zend_Form {
       $nome_caravana = $this->createElement('text', 'nome_caravana', array('label' => 'Caravana: '));
       $nome_caravana->setRequired(true)
               ->addValidator('regex', false, array('/^[ a-zA-Z á é í ó ú à ì ò ù ã ẽ ĩ õ ũ â ê î ô û ä ë ï ö ü ç ]*$/'))
-              ->addValidator('stringLength', false, array(6, 100))
+              ->addValidator('stringLength', false, array(6, 255))
               ->addErrorMessage("Você digitou um nome muito pequeno ou contém caracteres inválidos");
 
       $apelido_caravana = $this->createElement('text', 'apelido_caravana', array('label' => 'Apelido: '));
       $apelido_caravana->setRequired(true)
-              ->addValidator('stringLength', false, array(6, 100))
+              ->addValidator('stringLength', false, array(6, 255))
               ->addErrorMessage("Apelido muito pequeno");
 
 

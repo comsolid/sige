@@ -15,7 +15,7 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
            'onUpdate' => self::RESTRICT));
 
    /**
-    *	Retorna nome do evento caso haja eventos no mesmo horário ou entre horários
+    * Retorna nome do evento caso haja eventos no mesmo horário ou entre horários
     * reservados, false caso contrário.
     * @param array $data [ 0: id_encontro, 1: id_sala, 2: data, 3: hora_inicio, 4: hora_fim ]
     * @return mixed Nome do evento caso exista, ou false caso contrário.
@@ -58,4 +58,59 @@ class Application_Model_EventoRealizacao extends Zend_Db_Table_Abstract {
                 ORDER BY data, hora_inicio";
         return $this->getAdapter()->fetchAll($sql, array($id_evento));
     }
+
+    /**
+     * Utilização
+     *    
+     * @param array $values
+     */
+    public function criar($values) {
+        $param = array(
+            $values['id_evento'],
+            $values['id_sala'],
+            $values['data'],
+            $values['hora_inicio'],
+            $values['hora_fim'],
+            $values['descricao'],
+        );
+        $sql = "
+            INSERT INTO {$this->_name} (
+                id_evento, id_sala, data, hora_inicio, hora_fim, descricao
+            ) VALUES (
+            ?, 
+            ?,
+            TO_DATE(?, 'DD/MM/YYYY'),
+            ?,
+            ?, 
+            ?
+            ) RETURNING evento; ";
+        $resultset = $this->getAdapter()->fetchRow($sql, $param);
+        return $resultset['evento'];
+    }
+
+    /**
+     * Utilização
+     *    
+     * @param array $values
+     */
+    public function atualizar($values, $evento) {
+        $param = array(
+            $values['id_sala'],
+            $values['data'],
+            $values['hora_inicio'],
+            $values['hora_fim'],
+            $values['descricao'],
+            $evento,
+        );
+        $sql = "
+            UPDATE {$this->_name} SET
+                id_sala=?, 
+                data=TO_DATE(?, 'DD/MM/YYYY'),
+                hora_inicio=?,
+                hora_fim=?,
+                descricao=?
+            WHERE evento = ? ";
+        return $this->getAdapter()->query($sql, $param);
+    }
+
 }

@@ -19,7 +19,9 @@ class Admin_Form_MensagemEmail extends Zend_Form {
             $this->_mensagem(),
             $this->_assunto(),
             $this->_link(),
-            $submit
+            $this->_assinatura_siteoficial(),
+            $this->_assinatura_email(),
+            $submit,
         ));
     }
 
@@ -94,6 +96,45 @@ class Admin_Form_MensagemEmail extends Zend_Form {
                 ->addFilter('StringTrim')
                 ->setAttrib('class', 'form-control')
                 ->setAttrib('placeholder', 'ex. http://www.esl.org/login');
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _assinatura_siteoficial() {
+        $e = new Zend_Form_Element_Text('assinatura_siteoficial');
+        $e->setLabel('Link para site oficial (assinatura):')
+                ->addValidator('StringLength', false, array(1, 70))
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'form-control')
+                ->setAttrib('placeholder', 'ex. http://www.esl.org/');
+
+        $e->setDecorators(array(
+            'ViewHelper',
+            'Description',
+            'Errors',
+            array('HtmlTag', ''),
+            array('Label', ''),
+        ));
+        return $e;
+    }
+
+    protected function _assinatura_email() {
+        $e = new Zend_Form_Element_Text('assinatura_email');
+        $e->setLabel('E-mail da assinatura:')
+                ->addValidator('StringLength', false, array(1, 70))
+                ->addValidator('EmailAddress', TRUE)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->setAttrib('class', 'form-control')
+                ->setAttrib('placeholder', 'ex. seuemail@host.com.br');
 
         $e->setDecorators(array(
             'ViewHelper',

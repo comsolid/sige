@@ -1,0 +1,72 @@
+
+<?php
+    $this->headScript()->appendFile($this->baseUrl('js/select2.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/presenca/index.js'));
+
+    $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
+?>
+
+<a href="<? echo $this->url(array('module' => 'admin',
+    'controller' => 'evento',
+    'action' => 'detalhes',
+    'id' => $this->id), 'default', true) ?>"
+    class="no-bottom">
+    <i class="icon-reply"></i> Voltar
+</a>
+
+<br><br>
+
+<fieldset>
+    <form method="post" action="<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'presenca',
+        'action' => 'salvar'
+    ), 'default', true); ?>">
+        <span>Adicionar participantes ao evento:
+            <strong>
+                <?=$this->evento['nome_tipo_evento'] ?>:
+                <?=$this->evento['nome_evento'] ?>
+            </strong>
+            por <?=$this->evento['nome'] ?>.
+        </span>
+        <br/><br/>
+        <input type="hidden" id="participantes" name="array_id_pessoas" style="width: 500px;"/>
+        <input type="hidden" name="id" value="<?php echo $this->id; ?>" />
+        <input type="hidden" name="id_evento_realizacao" value="<?php echo $this->id_evento_realizacao; ?>" />
+        <dl class="zend_form">
+            <input type="submit" name="submit" id="submit" value="confimar"/>
+        </dl>
+    </form>
+</fieldset>
+
+<table class="display" cellpadding="0" cellspacing="0" border="0">
+    <thead>
+        <th>Participantes</th>
+        <th>E-mail</th>
+        <th style="width: 70px;">&nbsp;</th>
+    </thead>
+    <tbody>
+        <?php foreach ($this->participantes as $participante): ?>
+        <tr>
+            <td><?= $participante['nome'] ?></td>
+            <td><?= $participante['email'] ?></td>
+            <td>
+                <a title="Remover participante"
+                    href="<?php echo $this->url(array('module' => 'admin',
+                        'controller' => 'presenca',
+                        'action' => 'deletar',
+                        'id_pessoa' => $participante['id_pessoa'],
+                        'id_evento' => $this->id,
+                        'id_evento_realizacao' => $this->id_evento_realizacao,
+                    ), 'default', true); ?>" class="no-bottom"
+                    onclick="return confirm('Tem certeza que deseja deletar o participante?')">
+                    <i class="icon-remove"></i> Deletar
+                </a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

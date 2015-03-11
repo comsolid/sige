@@ -44,4 +44,20 @@
             </div>
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate("System"); ?></h3>
+            </div>
+            <div class="list-group">
+                <a href="<?php echo $this->url(array(
+                        'module' => 'admin',
+                        'controller' => 'config',
+                        'action' => 'limpar-cache'
+                    ), 'default', true); ?>" class="list-group-item">
+                    <i class="fa fa-trash"></i> <?php echo $this->translate("Clean Cache"); ?>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

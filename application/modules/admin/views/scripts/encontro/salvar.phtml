@@ -1,10 +1,10 @@
 
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-i18n.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-override.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-locales.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/maskedinput/jquery.maskedinput.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/encontro/salvar.js'));
 ?>
 
@@ -74,6 +74,36 @@ $form->getAction()?>">
                             <?php echo $form->periodo_submissao_fim->renderViewHelper() ?>
                             <div class="form-errors">
                                 <?php echo $form->periodo_submissao_fim->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <?php echo $form->id_municipio->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->id_municipio->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->id_municipio->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $form->id_tipo_horario->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->id_tipo_horario->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->id_tipo_horario->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $form->certificados_liberados->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->certificados_liberados->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->certificados_liberados->renderErrors() ?>
                             </div>
                         </div>
                     </div>

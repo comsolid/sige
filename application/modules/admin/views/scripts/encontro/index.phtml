@@ -1,11 +1,6 @@
 <?php
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/tabela_sort.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
 
-    //$this->headScript()->appendFile($this->baseUrl('js/jquery.dataTables.js'));
     $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/admin/encontro/index.js'));
@@ -78,6 +73,7 @@
                                 class="btn btn-default">
                                 <i class="fa fa-edit"></i> <?php echo $this->translate("Edit"); ?>
                             </a>
+
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i> <span class="caret"></span>
@@ -103,8 +99,56 @@
                                             <?php echo $this->translate("E-mail recover password message"); ?>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-email-confirmacao',
+                                            'id' => $value['id_encontro'],
+                                            'id_tipo_mensagem' => $this->confirmacao_submissao), 'default', true); ?>">
+                                            <?php echo $this->translate("E-mail submission confirmation message"); ?>
+                                        </a>
+                                    </li>
                                 </ul>
-                            </div>
+                            </div><!-- end btn-group -->
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-credit-card"></i> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-certificado',
+                                            'id_encontro' => $value['id_encontro'],
+                                            'tipo_mensagem_certificado' => 'certificados_template_participante_encontro'), 'default', true); ?>">
+                                            <?php echo $this->translate("Participante de encontro"); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-certificado',
+                                            'id_encontro' => $value['id_encontro'],
+                                            'tipo_mensagem_certificado' => 'certificados_template_palestrante_evento'), 'default', true); ?>">
+                                            <?php echo $this->translate("Palestrante de evento"); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-certificado',
+                                            'id_encontro' => $value['id_encontro'],
+                                            'tipo_mensagem_certificado' => 'certificados_template_participante_evento'), 'default', true); ?>">
+                                            <?php echo $this->translate("Participante de evento"); ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!-- end btn-group -->
                         </div>
                     </div>
                 </div>

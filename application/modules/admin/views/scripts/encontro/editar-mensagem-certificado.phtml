@@ -1,0 +1,70 @@
+<?php
+//$this->headScript()->prependFile($this->baseUrl('js/jquery-1.8.3.min.js'));
+//$this->headScript()->prependFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'), 'text/javascript');
+$this->headScript()->prependFile($this->baseUrl('js/admin/encontro/salvar.js'), 'text/javascript');
+
+//$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
+//$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
+//$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
+//$this->headLink()->appendStylesheet($this->baseUrl('css/form-evento.css'));
+?>
+
+<?php
+$form = $this->form;
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-solid">
+            <div class="box-body">
+                <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $form->mensagem->renderLabel() ?>
+                            <div class="form-group">
+                                <?php echo $form->mensagem->renderViewHelper() ?>
+                                <div class="form-errors">
+                                    <?php echo $form->mensagem->renderErrors() ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php echo $form->tipo_mensagem_certificado->renderViewHelper() ?>
+                    <?php echo $form->id_encontro->renderViewHelper() ?>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?=$this->url(array('module' => 'admin',
+                                'controller' => 'encontro',
+                                'action' => 'index'), 'default', true) ?>"
+                                class="btn btn-default">
+                                <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+                            </a>
+
+                            <?php echo $form->submit->renderViewHelper() ?>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="alert alert-warning">
+            <strong>Atenção!</strong> Algumas características da mensagem:
+            <ul>
+                <li>
+                    A mensagem abaixo <b>NÃO</b> pode ser escrita em HTML e nem importar
+                    folhas de estilo (css) ou arquivos javascript (js).
+                </li>
+                <li>
+                    Use o código <code>%s</code> para indicar onde o sistema deve inserir
+                    o texto dinâmico.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,9 @@
 <?php
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/evento/index.js'));
 ?>
@@ -106,7 +111,7 @@
                                         "evento" => $linha["id_evento"],
                                         "artigo" => $linha["id_artigo"],
                                             ), 'default', true); ?>"
-                                    class="btn btn-danger"
+                                    class="btn btn-danger delete"
                                     data-toggle="tooltip" data-placement="top"
                                     title="<?php echo $this->translate("Delete"); ?>">
                                     <i class="fa fa-times"></i>
@@ -141,12 +146,11 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="<?php
-                                                echo $this->url(array(
-                                                    "controller" => "evento",
-                                                    "action" => "deletar-evento",
-                                                    "evento" => $linha["id_evento"],
-                                                        ), 'default', true); ?>">
+                                            <a href="<?php echo $this->url(array(
+                                                        "controller" => "evento",
+                                                        "action" => "deletar-evento",
+                                                        "evento" => $linha["id_evento"],
+                                                    ), 'default', true); ?>" class="delete">
                                                 <i class="fa fa-times"></i>
                                                 <?php echo $this->translate("Delete"); ?>
                                             </a>

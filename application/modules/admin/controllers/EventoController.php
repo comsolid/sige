@@ -33,15 +33,15 @@ class Admin_EventoController extends Zend_Controller_Action {
         $idEvento = $this->_request->getParam('id', 0);
         $evento = new Admin_Model_Evento();
         $data = $evento->buscaEventoPessoa($idEvento);
-        $this->view->evento = $data[0];
-        if ($data[0]['validada']) {
+        $this->view->evento = $data;
+        if ($data['validada']) {
             $this->view->url_situacao = "<a href=\"/admin/evento/invalidar/{$idEvento}\"
                  class=\"btn btn-warning\"><i class=\"fa fa-remove\"></i> " . _("Invalidate") . "</a>";
         } else {
             $this->view->url_situacao = "<a href=\"/admin/evento/validar/{$idEvento}\"
                  class=\"btn btn-success\"><i class=\"fa fa-check\"></i> " . _("Validate") . "</a>";
         }
-        if ($data[0]['apresentado']) {
+        if ($data['apresentado']) {
             $this->view->url_apresentado = "<a href='{$this->view->url(array(
                 'id' => $idEvento), 'evento_desfazer_apresentado', true) }'
                 class='btn btn-warning'>
@@ -68,8 +68,7 @@ class Admin_EventoController extends Zend_Controller_Action {
         try {
             $sql = "UPDATE evento SET validada = ? WHERE id_evento = ?";
             $evento->getAdapter()->fetchAll($sql, array($validar, $idEvento));
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
         }
         $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'evento', 'action' => 'detalhes', 'id' => $idEvento), 'default');
@@ -87,8 +86,7 @@ class Admin_EventoController extends Zend_Controller_Action {
         try {
             $sql = "UPDATE evento SET apresentado = ? WHERE id_evento = ?";
             $evento->getAdapter()->fetchAll($sql, array($apresentado, $idEvento));
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
         }
         $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'evento', 'action' => 'detalhes', 'id' => $idEvento), 'default');
@@ -97,8 +95,12 @@ class Admin_EventoController extends Zend_Controller_Action {
     public function ajaxBuscarAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao["idEncontro"];
+//        $sessao = Zend_Auth::getInstance()->getIdentity();
+//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+
         $eventos = new Application_Model_Evento();
         $data = array(
             intval($idEncontro),
@@ -127,6 +129,7 @@ class Admin_EventoController extends Zend_Controller_Action {
                 $url
             );
         }
+
         header("Pragma: no-cache");
         header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
@@ -149,8 +152,7 @@ class Admin_EventoController extends Zend_Controller_Action {
                 $msg = "Confirmação palestrante executada com sucesso.";
             }
             $this->_helper->flashMessenger->addMessage(array('success' => $msg));
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage()));
         }
         $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'evento', 'action' => 'detalhes', 'id' => $idEvento), 'default');
@@ -165,4 +167,139 @@ class Admin_EventoController extends Zend_Controller_Action {
         $model = new Admin_Model_Evento();
         $this->view->lista = $model->programacaoParcial($id_encontro, $show);
     }
+
+    public function downloadLoteArtigosAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $admin = $sessao["administrador"];
+
+        // Verifica se tem permissao
+        if (!$admin) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Você não tem permissão para executar esta ação.'));
+            return $this->_redirecionar();
+        }
+
+        $ano = (int) $this->getRequest()->getParam("ano", 0);
+        $encontro = (int) $this->getRequest()->getParam("encontro", 0);
+        $status = $this->getRequest()->getParam("status", "todos");
+
+        $model_encontro = new Application_Model_Encontro();
+        if ($ano < 1980 && $encontro > 0) {
+            // busca por encontro
+            $encontros = array($model_encontro->buscaEncontro($encontro));
+        } elseif ($ano > 1980 && $encontro < 1) {
+            // busca por ano
+            $encontros = $model_encontro->buscaEncontrosPorAno($ano);
+        } else {
+            // erro
+            $this->_helper->flashMessenger->addMessage(array(
+                'error' => "Parâmetro(s) inválido(s). Utilize <b>ano</b> ou <b>encontro</b>."));
+            return $this->_helper->redirector->goToRoute(array(), 'default', true);
+        }
+
+        if (empty($encontros)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('warning' => "Nenhum encontro cadastrado."));
+            return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'relatorios',
+                        'action' => 'index'), 'default', true);
+        }
+
+        // Compativel com PHP < 5.5
+        $id_encontros_array = array();
+        foreach ($encontros as $encontro) {
+            array_push($id_encontros_array, $encontro["id_encontro"]);
+        }
+        // PHP >= 5.5
+//        $id_encontros_array = array_column($encontros, "id_encontro");
+
+        $model_artigo = new Application_Model_Artigo();
+        $rel = $model_artigo->buscaArtigos($id_encontros_array, $status);
+        if (empty($rel)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array("alert" => "Não há registros a serem mostrados."));
+            return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'relatorios',
+                        'action' => 'index'), 'default', true);
+        }
+        $this->_exportLoteZip($rel);
+    }
+
+    /**
+     * Força o download de um arquivo zip contendo o(s) arquivo(s) gerado(s).
+     * @throws Exception
+     */
+    private function _exportLoteZip($dados_array) {
+        $timenow = time();
+        $str_date_filename = date("Y-m-d_His", $timenow);
+        $str_date_comment = date("d/m/Y H:i:s", $timenow);
+        $filepath = tempnam("tmp", "zip");
+        $dir = dirname($filepath);
+
+        if (!is_writable($dir)) {
+            throw new Exception("Não foi possível escrever em " . $dir);
+        }
+
+        try {
+            $zip = new ZipArchive();
+            $res = $zip->open($filepath, ZipArchive::CREATE);
+            if ($res !== TRUE) {
+                throw new Exception("Erro ao criar arquivo zip. Código " . $res);
+            }
+            $zip->setArchiveComment("Gerado pelo SiGE <https://github.com/comsolid/sige> em "
+                    . $str_date_comment);
+            foreach ($dados_array as $dados) {
+                $zipfilename = "artigo_"
+                        . preg_replace("/ /", "_", strtolower($this->_utf8_remove_acentos($dados["nome"])))
+                        . "_" . $dados["id_artigo"]
+                        . ".pdf";
+                $zip->addFromString($zipfilename, base64_decode($dados["dados"]));
+            }
+            if (!$zip->close()) {
+                throw new Exception("Não foi possível fechar o arquivo " . $filepath);
+            }
+
+            if (!is_readable($filepath)) {
+                throw new Exception("Não foi possível ler o arquivo " . $filepath);
+            }
+
+            $filesize = filesize($filepath);
+            if (!$filesize) {
+                throw new Exception("Não foi possível calcular o tamanho do arquivo " . $filepath);
+            }
+            $zipfilename = "artigos_sige_"
+                    . preg_replace("/ /", "_", strtolower($this->_utf8_remove_acentos($dados["apelido_encontro"])))
+                    . "_{$str_date_filename}.zip";
+            header("Content-Type: application/zip");
+            header("Content-Length: " . $filesize);
+            header("Content-Disposition: attachment; filename=\"{$zipfilename}\"");
+            readfile($filepath);
+
+            unlink($filepath);
+            clearstatcache();
+        } catch (Exception $exc) {
+            // código repetido devido ao php 5.4 ou < não suportar finally
+            unlink($filepath);
+            clearstatcache();
+
+            throw new Exception("Ocorreu o seguinte erro ao gerar o zip: " . $exc->getMessage());
+        }
+    }
+
+    private function _utf8_remove_acentos($str) {
+        $keys = array();
+        $values = array();
+        $from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
+        $to = "aaaaeeiooouucAAAAEEIOOOUUC";
+        preg_match_all('/./u', $from, $keys);
+        preg_match_all('/./u', $to, $values);
+        $mapping = array_combine($keys[0], $values[0]);
+        return strtr($str, $mapping);
+    }
+
 }

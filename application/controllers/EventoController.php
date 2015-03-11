@@ -336,6 +336,55 @@ class EventoController extends Zend_Controller_Action {
         $this->view->lista = $model->programacao($idEncontro);
     }
 
+    public function programacaoTvAction() {
+        $this->_helper->layout->setLayout('full-page');
+    }
+
+    public function ajaxProgramacaoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+//        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+
+        $evento_model = new Application_Model_Evento();
+        $json = new stdClass;
+        $json->results = $evento_model->programacaoTv($id_encontro);
+
+        header("Pragma: no-cache");
+        header("Cache: no-cache");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Content-type: text/json");
+        echo json_encode($json);
+    }
+
+    public function ajaxProgramacaoTimelineAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+
+        $evento_model = new Application_Model_Evento();
+        $json = new stdClass;
+        $json->results = $evento_model->programacaoTimeline($id_encontro);
+
+        header("Pragma: no-cache");
+        header("Cache: no-cache");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Content-type: text/json");
+        echo json_encode($json);
+    }
+
+    public function timelineAction() {
+        $this->_helper->layout->setLayout("timeline");
+    }
+
+    public function timelineStaticAction() {
+        $this->_helper->layout->setLayout("timeline");
+    }
+
     public function interesseAction() {
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -574,8 +623,11 @@ class EventoController extends Zend_Controller_Action {
         }
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $idPessoa = $sessao["idPessoa"];
-        $idEncontro = $sessao["idEncontro"];
+//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
 
         $model = new Application_Model_Pessoa();
         $termo = $this->_request->getParam("termo", "");

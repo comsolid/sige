@@ -33,7 +33,9 @@ class Admin_ConfigController extends Zend_Controller_Action {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao ["idEncontro"];
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $json = new stdClass;
 
         $model = new Application_Model_Pessoa();
@@ -74,8 +76,9 @@ class Admin_ConfigController extends Zend_Controller_Action {
     }
 
     public function editarPermissaoAction() {
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao ["idEncontro"];
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
 
         $model = new Application_Model_Pessoa();
         $form = new Admin_Form_Permissao();
@@ -129,6 +132,28 @@ class Admin_ConfigController extends Zend_Controller_Action {
                 $this->view->usuario = $data['nome'];
             }
         }
+    }
+
+    public function limparCacheAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        try {
+            $cache = Zend_Registry::get('cache_common');
+            $cache->clean(Zend_Cache::CLEANING_MODE_ALL); // limpa todos os caches
+//            $cache->remove('cache_common'); // limpa somente cache espeficico
+
+            $this->_helper->flashMessenger->addMessage(
+                    array('success' => 'Cache foi limpo com sucesso.'));
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                        . $e->getMessage()));
+        }
+        return $this->_helper->redirector->goToRoute(array(
+                    'module' => 'admin',
+                    'controller' => 'config',
+                    'action' => 'index'), 'default', true);
     }
 
 }

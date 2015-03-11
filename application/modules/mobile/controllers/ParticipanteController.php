@@ -13,10 +13,13 @@ class Mobile_ParticipanteController extends Zend_Controller_Action {
       }
    }
 
-   public function indexAction() {
-      $sessao = Zend_Auth::getInstance()->getIdentity();
-		$idPessoa = $sessao["idPessoa"];
-		$idEncontro = $sessao["idEncontro"];
+    public function indexAction() {
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+        $idPessoa = $sessao["idPessoa"];
+//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
 
       $eventoDemanda = new Application_Model_EventoDemanda();
       $eventoParticipante = $eventoDemanda->listar(array($idEncontro, $idPessoa));

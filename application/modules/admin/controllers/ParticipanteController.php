@@ -26,8 +26,11 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'registration');
         $this->view->title = _('Registration');
 
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao["idEncontro"];
+//        $sessao = Zend_Auth::getInstance()->getIdentity();
+//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $this->view->idEncontro = $idEncontro;
     }
 
@@ -53,6 +56,7 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
             }
             $json->aaData[] = array("{$value['nome']}", "{$value['apelido']}", "{$value['email']}", "{$value['nome_municipio']}", "{$value['apelido_instituicao']}", "{$value['nome_caravana']}", $isValidado, $acao);
         }
+
         header("Pragma: no-cache");
         header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");
@@ -69,10 +73,14 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
     public function presencaAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+
         $id = $this->_getParam('id', 0);
         $confirmar = $this->_getParam('confirmar', 'f');
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idEncontro = $sessao["idEncontro"];
+//        $sessao = Zend_Auth::getInstance()->getIdentity();
+//        $idEncontro = $sessao ["idEncontro"]; // UNSAFE
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
         $model = new Application_Model_Pessoa();
         $json = new stdClass;
         try {
@@ -92,6 +100,7 @@ class Admin_ParticipanteController extends Zend_Controller_Action {
             $json->ok = false;
             $json->erro = "Ocorreu um erro inesperado ao marcar interesse em <b>evento</b>.<br/>Detalhes" . $e->getMessage();
         }
+
         header("Pragma: no-cache");
         header("Cache: no-cache");
         header("Cache-Control: no-cache, must-revalidate");

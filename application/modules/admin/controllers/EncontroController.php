@@ -24,6 +24,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'emailmsg');
         $this->view->confirmacao = $config->email->confirmacao;
         $this->view->correcao = $config->email->correcao;
+        $this->view->confirmacao_submissao = $config->email->confirmacao_submissao;
     }
 
     public function criarAction() {
@@ -118,18 +119,90 @@ class Admin_EncontroController extends Zend_Controller_Action {
             } else {
                 $form->populate($formData);
             }
+        }
+
+        $id = (int)$this->_getParam('id', 0);
+        $id_tipo_mensagem = (int)$this->_getParam('id_tipo_mensagem', 0);
+        if ($id > 0 and $id_tipo_mensagem > 0) {
+            $row = $model->fetchRow("id_encontro = {$id} AND id_tipo_mensagem_email = {$id_tipo_mensagem}");
+            $form->populate($row->toArray());
+        }
+        if ($id_tipo_mensagem == Application_Model_EmailConfirmacao::MSG_CONFIRMACAO) {
+            $this->view->title = _("Edit e-mail confirmation message");
         } else {
-            $id = (int)$this->_getParam('id', 0);
-            $id_tipo_mensagem = (int)$this->_getParam('id_tipo_mensagem', 0);
-            if ($id > 0 and $id_tipo_mensagem > 0) {
-                $row = $model->fetchRow("id_encontro = {$id} AND id_tipo_mensagem_email = {$id_tipo_mensagem}");
-                $form->populate($row->toArray());
+            $this->view->title = _("Edit e-mail recover password message");
+        }
+    }
+
+    public function editarMensagemCertificadoAction() {
+        $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
+        switch ($tipo_mensagem) {
+            case "certificados_template_participante_encontro":
+                $this->view->title = _('Template Participante Encontro');
+                //$this->view->titulo = "Template Participante Encontro";
+                break;
+            case "certificados_template_palestrante_evento":
+                $this->view->title = _('Template Palestrante Evento');
+                //$this->view->titulo = "Template Palestrante Evento";
+                break;
+            case "certificados_template_participante_evento":
+                $this->view->title = _('Template Participante Evento');
+                //$this->view->titulo = "Template Participante Evento";
+                break;
+            default:
+                throw new Exception("Tipo de certificado desconhecido.");
+        }
+
+        $form = new Admin_Form_MensagemCertificado();
+        $model_encontro = new Admin_Model_Encontro();
+
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+
+            if (isset($formData['cancelar'])) {
+                return $this->_helper->redirector->goToRoute(array(
+                            'module' => 'admin',
+                            'controller' => 'encontro'
+                                ), 'default', true);
             }
-            if ($id_tipo_mensagem == Application_Model_EmailConfirmacao::MSG_CONFIRMACAO) {
-                $this->view->title = _("Edit e-mail confirmation message");
+
+            if ($form->isValid($formData)) {
+                $id_encontro = (int) $form->getValue('id_encontro');
+                $tipo_mensagem = $form->getValue('tipo_mensagem_certificado');
+
+                if ($id_encontro < 1) {
+                    throw new Exception("Encontro não detectado.");
+                }
+
+                $data = array(
+                    $tipo_mensagem => $form->getValue("mensagem"),
+                );
+
+                try {
+                    $model_encontro->update($data, "id_encontro = {$id_encontro}");
+                    $this->_helper->flashMessenger->addMessage(
+                            array('success' => 'Mensagem atualizada com sucesso.'));
+                    return $this->_helper->redirector->goToRoute(array(
+                                'module' => 'admin',
+                                'controller' => 'encontro',
+                                'action' => 'index'), 'default', true);
+                } catch (Exception $e) {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                                . $e->getMessage()));
+                }
             } else {
-                $this->view->title = _("Edit e-mail recover password message");
+                $form->populate($formData);
+            }
+        } else {
+            $id_encontro = (int) $this->_getParam('id_encontro');
+            $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
+            if ($id_encontro > 0 and ! empty($tipo_mensagem)) {
+                $row = $model_encontro->lerMensagemCertificado($id_encontro, $tipo_mensagem);
+                $row["tipo_mensagem_certificado"] = $tipo_mensagem;
+                $form->populate($row);
             }
         }
+        $this->view->form = $form;
     }
 }
