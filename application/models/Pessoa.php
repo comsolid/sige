@@ -207,6 +207,65 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
         }
     }
 
+	public function buscaParticipantes($id_encontro, $where = null, $col_order = "p.nome", $limit = null) {
+        $sql = "
+            SELECT
+                p.id_pessoa, UPPER(p.nome) as nome, p.cadastro_validado,
+                apelido, LOWER(email) as email, twitter, nome_municipio,
+                apelido_instituicao, nome_caravana, ep.confirmado
+            FROM encontro_participante ep
+            INNER JOIN pessoa p ON (ep.id_pessoa = p.id_pessoa)
+            LEFT OUTER JOIN instituicao i ON (ep.id_instituicao = i.id_instituicao)
+            INNER JOIN municipio m ON (ep.id_municipio = m.id_municipio)
+            LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana)
+            WHERE id_encontro = ?
+        ";
+
+        if (!empty($where)) {
+            $sql .= 'AND ' . $where;
+        }
+
+        if (!empty($col_order)) {
+            $sql .= ' ORDER BY ' . $this->getOrderAcentos($col_order);
+        }
+
+        if (!empty($limit)) {
+            $sql .= ' LIMIT ' . $limit;
+        }
+        return $this->getAdapter()->fetchAll($sql, array($id_encontro));
+    }
+
+	// order desconsiderando acentos diacrílicos
+    // http://valdeka.wordpress.com/2009/12/07/dicas-postgresql/
+    public function getOrderAcentos($coluna = "p.nome", $asc = true) {
+        $s = "lower(translate({$coluna}, 'ÁÀÂÃÄáàâãäÉÈÊËéèêëÍÌÎÏíìîïÓÒÕÔÖóòôõöÚÙÛÜúùûüÇç', 'AAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUUuuuuCc')) ";
+        $asc ? $s.= "ASC" : $s .= "DESC";
+        return $s;
+    }
+
+	/**
+     * Verifica se a pessoa existe.
+     */
+    public function existe($id_pessoa) {
+        $sql = "
+            SELECT EXIST(
+                SELECT *
+                FROM pessoa
+                WHERE id_pessoa = ?
+            )";
+        return $this->getAdapter()->fetchOne($sql, array($id_pessoa));
+    }
+
+    public function isAdmin($id_pessoa) {
+        $sql = "
+            SELECT EXIST(
+                SELECT *
+                FROM pessoa
+                WHERE id_pessoa = ? AND administrador = 't'
+            )";
+        return $this->getAdapter()->fetchOne($sql, array($id_pessoa));
+    }
+
 	/**
 	 * Cria nova pessoa
 	 * @param  {[array]} $data dados vindos do formulário

@@ -20,6 +20,10 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
 
     public function indexAction() {
         $this->view->title = _('Conference Reports');
+        $this->view->subtitle = _('Current Conference');
+
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+        $this->view->id_encontro = $config->encontro->codigo;
     }
 
     public function inscricoesPorDiaAction() {
@@ -214,7 +218,7 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
             array_push($id_encontros_array, $encontro["id_encontro"]);
         }
         // PHP >= 5.5
-//        $id_encontros_array = array_column($encontros, "id_encontro"); 
+//        $id_encontros_array = array_column($encontros, "id_encontro");
 
         $model_artigo = new Application_Model_Artigo();
         $rel = $model_artigo->buscaArtigos($id_encontros_array, $status);
@@ -264,7 +268,7 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
             array_push($id_encontros_array, $encontro["id_encontro"]);
         }
         // PHP >= 5.5
-//        $id_encontros_array = array_column($encontros, "id_encontro"); 
+//        $id_encontros_array = array_column($encontros, "id_encontro");
 
         $model_artigo = new Application_Model_Artigo();
         $rel = $model_artigo->buscaArtigos($id_encontros_array, $status);

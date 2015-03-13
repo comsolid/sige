@@ -75,7 +75,12 @@
                             </a>
 
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <button type="button"
+                                    class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                    data-placement="top"
+                                    title="<?php echo $this->translate("Edit"); ?>">
                                     <i class="fa fa-envelope-o"></i> <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -113,7 +118,12 @@
                             </div><!-- end btn-group -->
 
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <button type="button"
+                                    class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                    data-placement="top"
+                                    title="<?php echo $this->translate("Edit Certificate"); ?>">
                                     <i class="fa fa-credit-card"></i> <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -124,7 +134,7 @@
                                             'action' => 'editar-mensagem-certificado',
                                             'id_encontro' => $value['id_encontro'],
                                             'tipo_mensagem_certificado' => 'certificados_template_participante_encontro'), 'default', true); ?>">
-                                            <?php echo $this->translate("Participante de encontro"); ?>
+                                            <?php echo $this->translate("Conference participant"); ?>
                                         </a>
                                     </li>
                                     <li>
@@ -134,7 +144,7 @@
                                             'action' => 'editar-mensagem-certificado',
                                             'id_encontro' => $value['id_encontro'],
                                             'tipo_mensagem_certificado' => 'certificados_template_palestrante_evento'), 'default', true); ?>">
-                                            <?php echo $this->translate("Palestrante de evento"); ?>
+                                            <?php echo $this->translate("Speaker of event"); ?>
                                         </a>
                                     </li>
                                     <li>
@@ -144,7 +154,7 @@
                                             'action' => 'editar-mensagem-certificado',
                                             'id_encontro' => $value['id_encontro'],
                                             'tipo_mensagem_certificado' => 'certificados_template_participante_evento'), 'default', true); ?>">
-                                            <?php echo $this->translate("Participante de evento"); ?>
+                                            <?php echo $this->translate("Participant of event"); ?>
                                         </a>
                                     </li>
                                 </ul>

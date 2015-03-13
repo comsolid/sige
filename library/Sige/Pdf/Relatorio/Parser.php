@@ -1,12 +1,12 @@
 <?php
 
 //define("MPDF_PATH", APPLICATION_PATH . '/../library/MPDF57/mpdf.php');
-define("MPDF_PATH", APPLICATION_PATH . '/../library/mpdf60/mpdf.php');
+define("MPDF_PATH", APPLICATION_PATH . '/../vendor/mpdf/mpdf/mpdf.php');
 define("INSCRICAO_ENCONTRO", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/inscricao_encontro.html');
 define("ARTIGOS_LISTA", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/artigos_lista.html');
 
 /**
- * 
+ *
  */
 class Sige_Pdf_Relatorio_Parser {
 
@@ -20,7 +20,7 @@ class Sige_Pdf_Relatorio_Parser {
     protected $doc_subtitulo;
 
     /**
-     * 
+     *
      * @param type $tipo - qual dos modelos a carregar
      * @param type $dados_array - dados que serão preenchidos no relatório
      */
@@ -79,9 +79,9 @@ class Sige_Pdf_Relatorio_Parser {
                     ' . $this->doc_titulo . '
                 </div>
                 <div class="row" style="
-                    text-align: center; 
-                    margin-top: 2px; 
-                    font-size: 16px; 
+                    text-align: center;
+                    margin-top: 2px;
+                    font-size: 16px;
                     font-weight: bold; ">
                     ' . $this->doc_subtitulo . '
                 </div>

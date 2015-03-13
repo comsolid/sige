@@ -222,6 +222,8 @@ $ cp -R /caminho/para/ZendFramework1.12.9/library/Zend ${SiGE}/library
 
 Caso use FTP suba o diretório para o mesmo local.
 
+**TODO**: explicar instalação mpdf <http://mpdf1.com/manual/index.php?tid=509>
+
 ### Permitir escrita para HTMLPurifier e Captcha
 
 É necessário dar permissão total a dois diretórios, faça:

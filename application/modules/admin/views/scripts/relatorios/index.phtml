@@ -3,7 +3,7 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate("Current Conference"); ?></h3>
+                <h3 class="panel-title"><?php echo $this->translate("Graphs"); ?></h3>
             </div>
             <div class="list-group">
                 <a href="<?php echo $this->url(array(
@@ -50,6 +50,80 @@
                     <i class="fa fa-flag"></i>
                     <?php echo $this->translate("Registrations per district (All)"); ?>
                 </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate("Reports"); ?></h3>
+            </div>
+            <div class="list-group">
+
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'inscricoes-lista-pdf',
+                    "id_encontro" => $this->id_encontro,
+                    "status" => "todas"), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <?php echo $this->translate("Todas as inscrições (PDF)"); ?>
+                </a>
+
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'inscricoes-lista-xls',
+                    "id_encontro" => $this->id_encontro,
+                    "status" => "todas"), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-file-excel-o"></i>
+                    <?php echo $this->translate("Todas as inscrições (XLS)"); ?>
+                </a>
+
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'inscricoes-lista-pdf',
+                    "id_encontro" => $this->id_encontro,
+                    "status" => "nao-confirmadas"), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <?php echo $this->translate("Inscrições não confirmadas"); ?>
+                </a>
+
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'inscricoes-lista-pdf',
+                    "id_encontro" => $this->id_encontro,
+                    "status" => "confirmadas"), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <?php echo $this->translate("Inscrições confirmadas"); ?>
+                </a>
+
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'artigos-lista-pdf',
+                    'ano' => date('Y')), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <?php echo $this->translate("Lista de artigos submetidos (PDF)"); ?>
+                </a>
+
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'relatorios',
+                    'action' => 'artigos-lista-xls',
+                    'ano' => date('Y')), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-file-excel-o"></i>
+                    <?php echo $this->translate("Lista de artigos submetidos (XLS)"); ?>
+                </a>
+
             </div>
         </div>
     </div>
