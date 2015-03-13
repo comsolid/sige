@@ -80,7 +80,14 @@ class IndexController extends Zend_Controller_Action {
                     }
                     $auth = Zend_Auth::getInstance();
                     $storage = $auth->getStorage();
-                    $storage->write(array("idPessoa" => $idPessoa, "administrador" => $administrador, "apelido" => $apelido, "idEncontro" => $idEncontro, "twitter" => $twitter, "email" => $data['email']));
+                    $storage->write(array(
+                        "idPessoa" => $idPessoa,
+                        "administrador" => $administrador,
+                        "apelido" => $apelido,
+                        "idEncontro" => $idEncontro, // TODO: remove unsafe idEncontro, get from cache!
+                        "twitter" => $twitter,
+                        "email" => $data['email']
+                    ));
                     if ($isMobile) {
                         return $this->_helper->redirector->goToRoute(array(), 'mobile', true);
                     } else if ($irParaEditar) {

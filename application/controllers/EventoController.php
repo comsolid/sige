@@ -776,7 +776,7 @@ class EventoController extends Zend_Controller_Action {
                     array('warning' => _('Event not found.')));
             return $this->_helper->redirector->goToRoute(array(), 'submissao', true);
         } else {
-            $this->view->evento = $data[0];
+            $this->view->evento = $data;
         }
     }
 
