@@ -200,6 +200,20 @@
                                         title="<?php echo $this->translate("Edit"); ?>">
                                         <i class="fa fa-edit"></i>
                                     </a>
+
+                                    <a href="<?php echo $this->url(array(
+                                           'module' => 'admin',
+                                           'controller' => 'presenca',
+                                           'action' => 'index',
+                                           'id' => $this->evento['id_evento'],
+                                           'id_evento_realizacao' => $item['evento']
+                                       ), 'default', true); ?>"
+                                       class="btn btn-default"
+                                       data-toggle="tooltip"
+                                       title="Lista de Presença">
+                                       <i class="fa fa-tasks"></i>
+                                    </a>
+
                                     <a href="<?=$this->url(array('module' => 'admin',
                                             'controller' => 'horario',
                                             'action' => 'deletar',

@@ -15,7 +15,9 @@ class Admin_PresencaController extends Zend_Controller_Action {
             return $this->_helper->redirector->goToRoute(array('controller' => 'participante',
             'action' => 'index'), 'default', true);
         }
-        $this->view->menu = new Application_Form_Menu($this->view, 'admin', true);
+
+        $this->_helper->layout->setLayout('twbs3-admin/layout');
+        $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'events');
     }
 
     public function indexAction() {
@@ -64,7 +66,7 @@ class Admin_PresencaController extends Zend_Controller_Action {
                 WHERE p.email LIKE lower(?)
                 AND p.id_pessoa <> ?
                 AND ep.id_encontro = ?
-                AND ep.validado = true", array("{$termo}%", $idPessoa, $idEncontro));
+                AND ep.validado = true", array("%{$termo}%", $idPessoa, $idEncontro));
         $json->size = count($rs);
         $json->results = $rs;
 
@@ -81,20 +83,29 @@ class Admin_PresencaController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost()) {
             $submit = $this->getRequest()->getPost('submit');
-            if ($submit == "confimar") {
+            if (isset($submit)) {
                 $array_id_pessoas = explode(",", $this->getRequest()->getPost('array_id_pessoas'));
                 if (count($array_id_pessoas) == 1 && empty($array_id_pessoas[0])) {
                     $this->_helper->flashMessenger->addMessage(
-                    array('notice' => 'Nenhum participante foi selecionado.'));
+                    array('warning' => 'Nenhum participante foi selecionado.'));
                 } else {
                     $model = new Admin_Model_EventoParticipacao();
                     try {
                         $count = $model->adicionarEmMassa($id_evento_realizacao, $array_id_pessoas);
                         $this->_helper->flashMessenger->addMessage(
                             array('success' => $count . ' participantes adicionados com sucesso.'));
+                    } catch (Zend_Db_Exception $e) {
+                        if ($e->getCode() == 23505) {
+                            $this->_helper->flashMessenger->addMessage(
+                                    array('warning' => 'Um ou mais e-mails já existem.'));
+                        } else {
+                            $this->_helper->flashMessenger->addMessage(
+                                array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
+                            );
+                        }
                     } catch (Exception $e) {
                         $this->_helper->flashMessenger->addMessage(
-                            array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
+                            array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
                         );
                     }
                 }
