@@ -102,12 +102,13 @@ class Admin_EventoController extends Zend_Controller_Action {
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
 
-        $eventos = new Application_Model_Evento();
+        $eventos = new Admin_Model_Evento();
         $data = array(
             intval($idEncontro),
             $this->_request->getParam("termo"),
             intval($this->_request->getParam("tipo")),
-            intval($this->_request->getParam("situacao"))
+            intval($this->_request->getParam("situacao")),
+            $this->_request->getParam("searchBy"),
         );
         $rs = $eventos->buscaEventosAdmin($data);
         $json = new stdClass;
@@ -123,10 +124,10 @@ class Admin_EventoController extends Zend_Controller_Action {
             $url = '<a href="' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
                 . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
             $json->itens[] = array(
-                "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span> {$value['nome_evento']}",
+                "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span><br> {$value['nome_evento']}",
                 "{$validada}",
                 "{$date->toString("dd/MM/YYYY HH:mm") }",
-                "{$value['nome']}",
+                "{$value['nome']} <br><span class=\"label label-primary\">{$value['email']}</span>",
                 $url
             );
         }

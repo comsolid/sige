@@ -1,20 +1,32 @@
 $(function() {
     var oTable = $('table#eventos').dataTable({
-        'sPaginationType': 'full_numbers',
-        'aaSorting': [],
-        'bFilter': false
+        'ordering': true,
+		'filter': false,
+		'info': true,
+		'lengthChange': true,
+		'paginate': true,
+		'language': {
+			'url': '/lib/js/data-tables/Portuguese-Brasil.json'
+		}
     });
 
-    $('#termo').select();
+    $('#termo').focus();
 
     function buscar() {
         $('#loading').show();
         var termo = $('#termo').val();
         var tipo = $('input:radio.tipo_evento:checked').val();
         var situacao = $('input:radio.situacao:checked').val();
-        var url = '/admin/evento/ajax-buscar/termo/' + termo + '/tipo/' + tipo + '/situacao/' + situacao;
+        var searchBy = $('input:radio.search_by:checked').val();
+        var url = '/admin/evento/ajax-buscar';
+        var data =  {
+            termo: termo,
+            tipo: tipo,
+            situacao: situacao,
+            searchBy: searchBy
+        };
 
-        $.getJSON(url, function(json) {
+        $.getJSON(url, data, function(json) {
             oTable.fnClearTable();
             if (json.size > 0) {
                 oTable.fnAddData(json.itens);

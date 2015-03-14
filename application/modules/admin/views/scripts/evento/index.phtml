@@ -8,6 +8,31 @@
 ?>
 
 <div class="row">
+    <div class="col-md-3">
+        <p>
+            <i class="fa fa-search"></i>
+            <?php echo $this->translate("Search by"); ?>:
+        </p>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="search_by" value="titulo"
+                    id="search_by_titulo" checked="checked" class="search_by">
+                    <?php echo $this->translate("Title"); ?>
+            </label>
+
+            <label class="btn btn-default">
+                <input type="radio" name="search_by" value="nome"
+                    id="search_by_nome" class="search_by">
+                    <?php echo $this->translate("Name"); ?>
+            </label>
+
+            <label class="btn btn-default">
+                <input type="radio" name="search_by" value="email"
+                    id="search_by_email" class="search_by">
+                    <?php echo $this->translate("E-mail"); ?>
+            </label>
+        </div>
+    </div>
     <div class="col-md-4">
         <p>
             <i class="fa fa-star"></i>
@@ -61,7 +86,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <input type="text" id="termo" class="form-control input-lg"
-            placeholder="<?php echo $this->translate("Search event..."); ?>"/>
+            placeholder="<?php echo $this->translate("Search..."); ?>"/>
         </div>
     </div>
     <div class="col-md-2">

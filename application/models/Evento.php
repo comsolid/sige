@@ -90,6 +90,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
     }
 
     /**
+     * @deprecated usar Admin_Model_Evento#buscaEventosAdmin
      * Lista eventos mostrados no module admin.
      * @param array $data [ 0: id_encontro ]
      *    Opcionais [ 1: nome_evento, 2: id_tipo_evento, 3: validada ]
