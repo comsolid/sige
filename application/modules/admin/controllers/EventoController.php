@@ -34,6 +34,7 @@ class Admin_EventoController extends Zend_Controller_Action {
         $evento = new Admin_Model_Evento();
         $data = $evento->buscaEventoPessoa($idEvento);
         $this->view->evento = $data;
+        $this->view->id_evento = $idEvento;
         if ($data['validada']) {
             $this->view->url_situacao = "<a href=\"/admin/evento/invalidar/{$idEvento}\"
                  class=\"btn btn-warning\"><i class=\"fa fa-remove\"></i> " . _("Invalidate") . "</a>";

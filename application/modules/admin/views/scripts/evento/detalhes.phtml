@@ -14,7 +14,7 @@
 </style>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="btn-group">
             <a href="<?php echo $this->url(array('module' => 'admin',
                     'controller' => 'evento',
@@ -31,11 +31,61 @@
                 <?php echo $this->translate("Edit"); ?>
             </a>
         </div>
-        <div class="btn-group">
-            <?=$this->url_situacao ?>
 
-            <?=$this->url_apresentado ?>
-        </div>
+    </div>
+    <div class="col-md-2">
+        <?php if ($this->evento['validada']): ?>
+            <a href="<?php echo $this->url(array(
+                'id' => $this->id_evento
+            ), 'invalidar_evento', true) ?>"
+            id="btn-validated"
+            class="btn btn-block btn-success"
+            data-btn-action="btn-danger"
+            data-btn-default-action="btn-success"
+            data-btn-title="<?php echo $this->translate("Invalidate?"); ?>"
+            data-btn-default-title="<?php echo $this->translate("Validated"); ?>">
+                <?php echo $this->translate("Validated"); ?>
+            </a>
+        <?php else: ?>
+            <a href="<?php echo $this->url(array(
+                'id' => $this->id_evento
+            ), 'validar_evento', true) ?>"
+            id="btn-validated"
+            class="btn btn-block btn-default"
+            data-btn-action="btn-primary"
+            data-btn-default-action="btn-default"
+            data-btn-title="<?php echo $this->translate("Validate?"); ?>"
+            data-btn-default-title="<?php echo $this->translate("Invalidated"); ?>">
+                <?php echo $this->translate("Invalidated"); ?>
+            </a>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-2">
+        <?php if ($this->evento['apresentado']): ?>
+            <a href="<?php echo $this->url(array(
+                'id' => $this->id_evento
+            ), 'evento_desfazer_apresentado', true) ?>"
+            id="btn-presented"
+            class="btn btn-block btn-success"
+            data-btn-action="btn-danger"
+            data-btn-default-action="btn-success"
+            data-btn-title="<?php echo $this->translate("Undo presented?"); ?>"
+            data-btn-default-title="<?php echo $this->translate("Presented"); ?>">
+                <?php echo $this->translate("Presented"); ?>
+            </a>
+        <?php else: ?>
+            <a href="<?php echo $this->url(array(
+                'id' => $this->id_evento
+            ), 'evento_apresentado', true) ?>"
+            id="btn-presented"
+            class="btn btn-block btn-default"
+            data-btn-action="btn-primary"
+            data-btn-default-action="btn-default"
+            data-btn-title="<?php echo $this->translate("Set as presented?"); ?>"
+            data-btn-default-title="<?php echo $this->translate("Not presented"); ?>">
+                <?php echo $this->translate("Not presented"); ?>
+            </a>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -76,7 +126,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <?php echo $this->translate("Submited"); ?>
-                        <span data-moment="<?php echo $this->evento['data_submissao']; ?>">
+                        <span data-moment="<?php echo $this->evento['data_submissao']; ?>"
+                            title="<?php echo $this->evento['data_submissao']; ?>">
                             <?php echo $this->evento['data_submissao']; ?>
                         </span>
                     </div>
