@@ -52,21 +52,12 @@ class Admin_PresencaController extends Zend_Controller_Action {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 
-        $model = new Application_Model_Pessoa();
+        $model = new Admin_Model_Pessoa();
         $termo = $this->_request->getParam("termo", "");
+        $id_evento_realizacao = (int) $this->_request->getParam("id_evento_realizacao", 0);
 
         $json = new stdClass;
-        $json->results = array();
-
-        $rs = $model->getAdapter()->fetchAll(
-            "SELECT p.id_pessoa as id,
-                p.email as text
-                FROM pessoa p
-                INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
-                WHERE p.email LIKE lower(?)
-                AND p.id_pessoa <> ?
-                AND ep.id_encontro = ?
-                AND ep.validado = true", array("%{$termo}%", $idPessoa, $idEncontro));
+        $rs = $model->ajaxBuscarEmail($termo, $idPessoa, $idEncontro, $id_evento_realizacao);
         $json->size = count($rs);
         $json->results = $rs;
 

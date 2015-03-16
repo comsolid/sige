@@ -15,8 +15,12 @@ $(function () {
         placeholder: 'Digite o e-mail do participante...',
         minimumInputLength: 3,
         tags: function(options) {
-            var url = '/admin/presenca/ajax-buscar-participante/termo/' + options.term;
-            $.getJSON(url, null, function(json) {
+            var url = '/admin/presenca/ajax-buscar-participante/';
+            var data = {
+                termo: options.term,
+                id_evento_realizacao: $('#id_evento_realizacao').val()
+            };
+            $.getJSON(url, data, function(json) {
                 options.callback(json);
             });
         }
