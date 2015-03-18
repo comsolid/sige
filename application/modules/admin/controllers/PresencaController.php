@@ -50,14 +50,14 @@ class Admin_PresencaController extends Zend_Controller_Action {
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        $idPessoa = $sessao["idPessoa"];
+        //$idPessoa = $sessao["idPessoa"];
 
         $model = new Admin_Model_Pessoa();
         $termo = $this->_request->getParam("termo", "");
         $id_evento_realizacao = (int) $this->_request->getParam("id_evento_realizacao", 0);
 
         $json = new stdClass;
-        $rs = $model->ajaxBuscarEmail($termo, $idPessoa, $idEncontro, $id_evento_realizacao);
+        $rs = $model->ajaxBuscarEmail($termo, $idEncontro, $id_evento_realizacao);
         $json->size = count($rs);
         $json->results = $rs;
 

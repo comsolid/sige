@@ -19,21 +19,37 @@ class Sige_Pdf_Certificado {
     const DES_X = 220;
 
     public function palestranteEvento(
-    $array = array(
-        'nome' => '',
-        'id_encontro' => 0, // serve para identificar o modelo
-        'encontro' => '',
-        'tipo_evento' => '',
-        'nome_evento' => '',
-        'carga_horaria' => '',
-    )
+        $array = array(
+            'nome' => '',
+            'id_encontro' => 0, // serve para identificar o modelo
+            'encontro' => '',
+            'tipo_evento' => '',
+            'nome_evento' => '',
+            'carga_horaria' => '',
+        )
     ) {
         $model_encontro = new Application_Model_Encontro();
         $encontro_obj = $model_encontro->buscaComMunicipio($array["id_encontro"]);
-//        $array["carga_horaria"] = $this->cargaHorariaToString($array["carga_horaria"]);
         $array["carga_horaria"] = floor($array["carga_horaria"]) . " hora(s)";
         $paragrafo = "      ";
-        $texto = sprintf($paragrafo . $encontro_obj["certificados_template_palestrante_evento"], $this->fullUpper($array['nome']), $array['tipo_evento'], $array['nome_evento'], $array['encontro'], $array['carga_horaria']);
+
+        $texto  = $paragrafo;
+        $patterns = array(
+            '/{nome}/',
+            '/{encontro}/',
+            '/{tipo_evento}/',
+            '/{nome_evento}/',
+            '/{carga_horaria}/'
+        );
+        $replacements = array(
+            $this->fullUpper($array['nome']),
+            $array['encontro'],
+            $array['tipo_evento'],
+            $array['nome_evento'],
+            $array['carga_horaria'],
+        );
+        $texto .= preg_replace($patterns, $replacements, $encontro_obj["certificados_template_palestrante_evento"]);
+
         $linhas = explode("\n", wordwrap($texto, Sige_Pdf_Certificado::NUM_MAX_CARACTERES, "\n"));
         $linhas[] = ""; // saltar linha
         $date = new Zend_Date();
@@ -43,48 +59,73 @@ class Sige_Pdf_Certificado {
     }
 
     public function participanteEncontro(
-    $array = array(
-        'nome' => '',
-        'id_encontro' => 0, // serve para identificar o modelo
-        'encontro' => '',
-    )
+        $array = array(
+            'nome' => '',
+            'id_encontro' => 0, // serve para identificar o modelo
+            'encontro' => '',
+        )
     ) {
         $model_encontro = new Application_Model_Encontro();
         $encontro_obj = $model_encontro->buscaComMunicipio($array["id_encontro"]);
 
         $paragrafo = "      ";
-        $texto = sprintf($paragrafo . $encontro_obj["certificados_template_participante_encontro"], $this->fullUpper($array['nome']), $array['encontro']);
+        $texto  = $paragrafo;
+        $patterns = array(
+            "/{nome}/",
+            "/{encontro}/"
+        );
+        $replacements = array(
+            $this->fullUpper($array['nome']),
+            $array['encontro']
+        );
+        $texto .= preg_replace($patterns, $replacements, $encontro_obj["certificados_template_participante_encontro"]);
         $linhas = explode("\n", wordwrap($texto, Sige_Pdf_Certificado::NUM_MAX_CARACTERES, "\n"));
         $linhas[] = ""; // saltar linha
         $date = new Zend_Date();
         $linhas[] = $this->str_pad_left(sprintf($encontro_obj["nome_municipio"] . ", %s", $date->toString("dd 'de' MMMM 'de' y")), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
 
-        // Get PDF document as a string 
+        // Get PDF document as a string
         return $this->gerarCertificado($array['id_encontro'], $linhas);
     }
 
     public function participanteEvento(
-    $array = array(
-        'nome' => '',
-        'id_encontro' => 0, // serve para identificar o modelo
-        'encontro' => '',
-        'tipo_evento' => '',
-        'nome_evento' => '',
-        'carga_horaria' => '',
-    )
+        $array = array(
+            'nome' => '',
+            'id_encontro' => 0, // serve para identificar o modelo
+            'encontro' => '',
+            'tipo_evento' => '',
+            'nome_evento' => '',
+            'carga_horaria' => '',
+        )
     ) {
         $model_encontro = new Application_Model_Encontro();
         $encontro_obj = $model_encontro->buscaComMunicipio($array["id_encontro"]);
-//        $array["carga_horaria"] = $this->cargaHorariaToString($array["carga_horaria"]);
         $array["carga_horaria"] = floor($array["carga_horaria"]) . " hora(s)";
         $paragrafo = "      ";
-        $texto = sprintf($paragrafo . $encontro_obj["certificados_template_participante_evento"], $this->fullUpper($array['nome']), $array['encontro'], $array['tipo_evento'], $array['nome_evento'], $array["carga_horaria"]);
+
+        $texto  = $paragrafo;
+        $patterns = array(
+            '/{nome}/',
+            '/{encontro}/',
+            '/{tipo_evento}/',
+            '/{nome_evento}/',
+            '/{carga_horaria}/'
+        );
+        $replacements = array(
+            $this->fullUpper($array['nome']),
+            $array['encontro'],
+            $array['tipo_evento'],
+            $array['nome_evento'],
+            $array['carga_horaria'],
+        );
+        $texto .= preg_replace($patterns, $replacements, $encontro_obj["certificados_template_participante_evento"]);
+
         $linhas = explode("\n", wordwrap($texto, Sige_Pdf_Certificado::NUM_MAX_CARACTERES, "\n"));
         $linhas[] = ""; // saltar linha
         $date = new Zend_Date();
         $linhas[] = $this->str_pad_left(sprintf($encontro_obj["nome_municipio"] . ", %s", $date->toString("dd 'de' MMMM 'de' y")), Sige_Pdf_Certificado::NUM_MAX_CARACTERES);
 
-        // Get PDF document as a string 
+        // Get PDF document as a string
         return $this->gerarCertificado($array['id_encontro'], $linhas);
     }
 
@@ -115,7 +156,7 @@ class Sige_Pdf_Certificado {
         $pdf->pages[] = ($page1);
         // salve apenas em modo debug!
         // $pdf->save(APPLICATION_PATH . '/../tmp/certificado-participante.pdf');
-        // Get PDF document as a string 
+        // Get PDF document as a string
         return $pdf->render();
     }
 
@@ -141,7 +182,6 @@ class Sige_Pdf_Certificado {
     private function assinaturas(Zend_Pdf_Page $page, $idEncontro = 0) {
 
         if ($idEncontro > 0) {
-            //$file = APPLICATION_PATH . "/../public/img/certificados/{$idEncontro}/assinatura-%d.png";
             $dir = APPLICATION_PATH . "/../public/img/certificados/{$idEncontro}/";
             if (!is_dir($dir)) {
                 $dir = APPLICATION_PATH . "/../public/img/certificados/default/";
@@ -186,7 +226,6 @@ class Sige_Pdf_Certificado {
         }
         $str = str_pad($str, $len + $pads / 2, $pad, STR_PAD_LEFT);
         $str = str_pad($str, $tam, $pad);
-        //$str = str_pad($str, $tam, $pad, STR_PAD_BOTH);
         return $str;
     }
 

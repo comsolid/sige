@@ -1,12 +1,5 @@
 <?php
-//$this->headScript()->prependFile($this->baseUrl('js/jquery-1.8.3.min.js'));
-//$this->headScript()->prependFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'), 'text/javascript');
-$this->headScript()->prependFile($this->baseUrl('js/admin/encontro/salvar.js'), 'text/javascript');
-
-//$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery.ui.1.8.16.ie.css'));
-//$this->headLink()->appendStylesheet($this->baseUrl('css/jqueryui-bootstrap/jquery-ui-1.8.16.custom.css'));
-//$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-//$this->headLink()->appendStylesheet($this->baseUrl('css/form-evento.css'));
+    $this->headScript()->prependFile($this->baseUrl('js/admin/encontro/salvar.js'), 'text/javascript');
 ?>
 
 <?php
@@ -60,9 +53,18 @@ $form = $this->form;
                     A mensagem abaixo <b>NÃO</b> pode ser escrita em HTML e nem importar
                     folhas de estilo (css) ou arquivos javascript (js).
                 </li>
-                <li>
-                    Use o código <code>%s</code> para indicar onde o sistema deve inserir
-                    o texto dinâmico.
+                <li><?php echo $this->translate("The message must contain some attributes "
+                . "that will be replaced in the certificate. They are:"); ?>
+                    <ul>
+                        <!-- TODO: mostrar variáveis de acordo com o template! -->
+                        <?php foreach ($this->options as $option): ?>
+                            <li><code><?php echo $option ?></code></li>
+                        <?php endforeach; ?>
+                        <!-- <li><code>{tipo_evento}</code></li>
+                        <li><code>{nome_evento}</code></li>
+                        <li><code>{encontro}</code></li>
+                        <li><code>{carga_horaria}</code></li> -->
+                    </ul>
                 </li>
             </ul>
         </div>

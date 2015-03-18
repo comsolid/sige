@@ -47,7 +47,10 @@ class Admin_EncontroController extends Zend_Controller_Action {
                     $modelMensagem->criarMensagensPadrao($id, $values['apelido_encontro']);
                     $model->getAdapter()->commit();
                     $this->_helper->flashMessenger->addMessage(array('success' => 'Encontro criado com sucesso.'));
-                    return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro', 'action' => 'index'), 'default', true);
+                    return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'encontro',
+                        'action' => 'index'), 'default', true);
                 }
                 catch(Exception $e) {
                     $model->getAdapter()->rollBack();
@@ -68,7 +71,9 @@ class Admin_EncontroController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             if (isset($formData['cancelar'])) {
-                return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro'), 'default', true);
+                return $this->_helper->redirector->goToRoute(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro'), 'default', true);
             }
             if ($form->isValid($formData)) {
                 $id_encontro = $this->getRequest()->getParam('id', 0);
@@ -76,7 +81,10 @@ class Admin_EncontroController extends Zend_Controller_Action {
                 try {
                     $model->atualizar($values, $id_encontro);
                     $this->_helper->flashMessenger->addMessage(array('success' => 'Encontro atualizado com sucesso.'));
-                    return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro', 'action' => 'index'), 'default', true);
+                    return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'encontro',
+                        'action' => 'index'), 'default', true);
                 }
                 catch(Exception $e) {
                     $this->_helper->flashMessenger->addMessage(array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
@@ -138,19 +146,34 @@ class Admin_EncontroController extends Zend_Controller_Action {
         $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
         switch ($tipo_mensagem) {
             case "certificados_template_participante_encontro":
-                $this->view->title = _('Template Participante Encontro');
-                //$this->view->titulo = "Template Participante Encontro";
+                $this->view->title = _('Participant of Conference Template');
+                $this->view->options = array(
+                    '{nome}',
+                    '{encontro}'
+                );
                 break;
             case "certificados_template_palestrante_evento":
-                $this->view->title = _('Template Palestrante Evento');
-                //$this->view->titulo = "Template Palestrante Evento";
+                $this->view->title = _('Event Speaker Template');
+                $this->view->options = array(
+                    '{nome}',
+                    '{encontro}',
+                    '{tipo_evento}',
+                    '{nome_evento}',
+                    '{carga_horaria}'
+                );
                 break;
             case "certificados_template_participante_evento":
-                $this->view->title = _('Template Participante Evento');
-                //$this->view->titulo = "Template Participante Evento";
+                $this->view->title = _('Participant of Event Template');
+                $this->view->options = array(
+                    '{nome}',
+                    '{encontro}',
+                    '{tipo_evento}',
+                    '{nome_evento}',
+                    '{carga_horaria}'
+                );
                 break;
             default:
-                throw new Exception("Tipo de certificado desconhecido.");
+                throw new Exception(_('Certificate type unknow.'));
         }
 
         $form = new Admin_Form_MensagemCertificado();
@@ -171,7 +194,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
                 $tipo_mensagem = $form->getValue('tipo_mensagem_certificado');
 
                 if ($id_encontro < 1) {
-                    throw new Exception("Encontro não detectado.");
+                    throw new Exception("Encontro não encontrado.");
                 }
 
                 $data = array(
