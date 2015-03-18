@@ -1,0 +1,314 @@
+<!--
+   ticket.html
+   
+   Copyright 2015 root <root@comsolid5-midcircuit>
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>sem título</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 0.21" />
+	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<style>
+		* {
+		  -webkit-box-sizing: border-box;
+			 -moz-box-sizing: border-box;
+				  box-sizing: border-box;
+		}
+		*:before,
+		*:after {
+		  -webkit-box-sizing: border-box;
+			 -moz-box-sizing: border-box;
+				  box-sizing: border-box;
+		}
+		
+		body {
+			font-family: 'Abel', sans-serif;
+			line-height: 1.42857143;
+		}
+		
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		.h1,
+		.h2,
+		.h3,
+		.h4,
+		.h5,
+		.h6 {
+		  font-family: inherit;
+		  font-weight: 500;
+		  line-height: 1.1;
+		  color: inherit;
+		  margin-top: 2px;
+		}
+		
+		#container {
+			border: 2px solid #111111;
+			/*margin: 25px;
+			padding: 25px;*/
+			-webkit-border-radius: 6px;
+			-moz-border-radius: 6px;
+			border-radius: 6px;
+			padding-right: 15px;
+			padding-left: 15px;
+			margin-right: auto;
+			margin-left: auto;
+			width: 970px;
+			height: 400px;
+		}
+		
+		.row {
+			margin-right: -15px;
+			margin-left: -15px;
+		}
+		
+		.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+		  position: relative;
+		  min-height: 1px;
+		  padding-right: 15px;
+		  padding-left: 15px;
+		  float: left;
+		}
+		
+		  .col-md-12 {
+			width: 100%;
+		  }
+		  .col-md-11 {
+			width: 91.66666667%;
+		  }
+		  .col-md-10 {
+			width: 83.33333333%;
+		  }
+		  .col-md-9 {
+			width: 75%;
+		  }
+		  .col-md-8 {
+			width: 66.66666667%;
+		  }
+		  .col-md-7 {
+			width: 58.33333333%;
+		  }
+		  .col-md-6 {
+			width: 50%;
+		  }
+		  .col-md-5 {
+			width: 41.66666667%;
+		  }
+		  .col-md-4 {
+			width: 33.33333333%;
+		  }
+		  .col-md-3 {
+			width: 25%;
+		  }
+		  .col-md-2 {
+			width: 16.66666667%;
+		  }
+		  .col-md-1 {
+			width: 8.33333333%;
+		  }
+		  .col-md-pull-12 {
+			right: 100%;
+		  }
+		  .col-md-pull-11 {
+			right: 91.66666667%;
+		  }
+		  .col-md-pull-10 {
+			right: 83.33333333%;
+		  }
+		  .col-md-pull-9 {
+			right: 75%;
+		  }
+		  .col-md-pull-8 {
+			right: 66.66666667%;
+		  }
+		  .col-md-pull-7 {
+			right: 58.33333333%;
+		  }
+		  .col-md-pull-6 {
+			right: 50%;
+		  }
+		  .col-md-pull-5 {
+			right: 41.66666667%;
+		  }
+		  .col-md-pull-4 {
+			right: 33.33333333%;
+		  }
+		  .col-md-pull-3 {
+			right: 25%;
+		  }
+		  .col-md-pull-2 {
+			right: 16.66666667%;
+		  }
+		  .col-md-pull-1 {
+			right: 8.33333333%;
+		  }
+		  .col-md-pull-0 {
+			right: auto;
+		  }
+		  .col-md-push-12 {
+			left: 100%;
+		  }
+		  .col-md-push-11 {
+			left: 91.66666667%;
+		  }
+		  .col-md-push-10 {
+			left: 83.33333333%;
+		  }
+		  .col-md-push-9 {
+			left: 75%;
+		  }
+		  .col-md-push-8 {
+			left: 66.66666667%;
+		  }
+		  .col-md-push-7 {
+			left: 58.33333333%;
+		  }
+		  .col-md-push-6 {
+			left: 50%;
+		  }
+		  .col-md-push-5 {
+			left: 41.66666667%;
+		  }
+		  .col-md-push-4 {
+			left: 33.33333333%;
+		  }
+		  .col-md-push-3 {
+			left: 25%;
+		  }
+		  .col-md-push-2 {
+			left: 16.66666667%;
+		  }
+		  .col-md-push-1 {
+			left: 8.33333333%;
+		  }
+		  .col-md-push-0 {
+			left: auto;
+		  }
+		  .col-md-offset-12 {
+			margin-left: 100%;
+		  }
+		  .col-md-offset-11 {
+			margin-left: 91.66666667%;
+		  }
+		  .col-md-offset-10 {
+			margin-left: 83.33333333%;
+		  }
+		  .col-md-offset-9 {
+			margin-left: 75%;
+		  }
+		  .col-md-offset-8 {
+			margin-left: 66.66666667%;
+		  }
+		  .col-md-offset-7 {
+			margin-left: 58.33333333%;
+		  }
+		  .col-md-offset-6 {
+			margin-left: 50%;
+		  }
+		  .col-md-offset-5 {
+			margin-left: 41.66666667%;
+		  }
+		  .col-md-offset-4 {
+			margin-left: 33.33333333%;
+		  }
+		  .col-md-offset-3 {
+			margin-left: 25%;
+		  }
+		  .col-md-offset-2 {
+			margin-left: 16.66666667%;
+		  }
+		  .col-md-offset-1 {
+			margin-left: 8.33333333%;
+		  }
+		  .col-md-offset-0 {
+			margin-left: 0;
+		  }
+		  
+		  p {
+			  margin: 0 0 10px;
+		  }
+		  
+		  label {
+		  display: inline-block;
+		  max-width: 100%;
+		  margin-bottom: 5px;
+		  margin-top: 5px;
+		}
+		
+		.label {
+		  display: inline;
+		  padding: .2em .6em .3em;
+		  font-size: 75%;
+		  font-weight: bold;
+		  line-height: 1;
+		  color: #fff;
+		  text-align: center;
+		  white-space: nowrap;
+		  vertical-align: baseline;
+		  border-radius: .25em;
+		}
+		
+		.label-primary {
+		  background-color: #337ab7;
+		}
+		.label-primary[href]:hover,
+		.label-primary[href]:focus {
+		  background-color: #286090;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div class="row">
+			<div class="col-md-6">
+				<label>Nome:</label>
+				<h1>Átila Camurça Alves</h1>
+			</div>
+			<div class="col-md-6">
+				<label>Evento:</label>
+				<h2>II Encontro da Comunidade Maracanauense de Software Livre e Inclusão Digital</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label>Data e Hora:</label>
+				<h1>
+					<span class="label label-primary">31 Ago a 03 Set 2014</span>
+				</h1>
+				<h1>a partir das
+					<span class="label label-primary">08:00</span></h1>
+			</div>
+			<div class="col-md-6">
+				<label>Local:</label>
+				<h2>Instituto Federal do Ceará - Campus Maracanaú - Av. Parque Central - Distrito Industrial I Maracanaú - CE</h2>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
