@@ -97,17 +97,18 @@ $form = $this->form;
                 <li><?php echo $this->translate("The message can be written in HTML."); ?></li>
                 <li><?php echo $this->translate("The message must contain some attributes "
                 . "that will be replaced in the e-mail. They are:"); ?>
-                <ul>
-                    <li><code>{nome}</code></li>
-                    <li><code>{email}</code></li>
-                    <li><code>{senha}</code></li>
-                    <li><code>{href_link}</code></li>
-                    <li><code>{assinatura_email}</code></li>
-                </ul>
-            </li>
-            <li>
-                <?php echo $this->translate("Is not necessary write headers, write only the content of the"); ?>
-                <code>&lt;body&gt;</code>.</li>
+                    <ul>
+                        <li><code>{nome}</code></li>
+                        <li><code>{email}</code></li>
+                        <li><code>{senha}</code></li>
+                        <li><code>{href_link}</code></li>
+                        <li><code>{assinatura_email}</code></li>
+                    </ul>
+                </li>
+                <li>
+                    <?php echo $this->translate("Is not necessary write headers, write only the content of the"); ?>
+                    <code>&lt;body&gt;</code>.
+                </li>
                 <li>
                     <?php echo $this->translate("Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"); ?>
                     <code>style</code>.

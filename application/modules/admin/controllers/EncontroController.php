@@ -47,7 +47,10 @@ class Admin_EncontroController extends Zend_Controller_Action {
                     $modelMensagem->criarMensagensPadrao($id, $values['apelido_encontro']);
                     $model->getAdapter()->commit();
                     $this->_helper->flashMessenger->addMessage(array('success' => 'Encontro criado com sucesso.'));
-                    return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro', 'action' => 'index'), 'default', true);
+                    return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'encontro',
+                        'action' => 'index'), 'default', true);
                 }
                 catch(Exception $e) {
                     $model->getAdapter()->rollBack();
@@ -68,7 +71,9 @@ class Admin_EncontroController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             if (isset($formData['cancelar'])) {
-                return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro'), 'default', true);
+                return $this->_helper->redirector->goToRoute(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro'), 'default', true);
             }
             if ($form->isValid($formData)) {
                 $id_encontro = $this->getRequest()->getParam('id', 0);
@@ -76,7 +81,10 @@ class Admin_EncontroController extends Zend_Controller_Action {
                 try {
                     $model->atualizar($values, $id_encontro);
                     $this->_helper->flashMessenger->addMessage(array('success' => 'Encontro atualizado com sucesso.'));
-                    return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro', 'action' => 'index'), 'default', true);
+                    return $this->_helper->redirector->goToRoute(array(
+                        'module' => 'admin',
+                        'controller' => 'encontro',
+                        'action' => 'index'), 'default', true);
                 }
                 catch(Exception $e) {
                     $this->_helper->flashMessenger->addMessage(array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));

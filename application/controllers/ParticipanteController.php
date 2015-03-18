@@ -316,7 +316,7 @@ class ParticipanteController extends Zend_Controller_Action {
             echo $pdfData;
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
+                    array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
                         . $e->getMessage()));
             return $this->_helper->redirector->goToRoute(array(
                         'controller' => 'participante',
