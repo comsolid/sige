@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-        "zendframework/zendframework1": "1.x"
+        "zendframework/zendframework1": "1.x",
+        "dinesh/barcode-all": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
