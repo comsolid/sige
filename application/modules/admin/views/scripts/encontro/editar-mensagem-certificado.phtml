@@ -57,11 +57,13 @@ $form = $this->form;
                 . "that will be replaced in the certificate. They are:"); ?>
                     <ul>
                         <!-- TODO: mostrar variáveis de acordo com o template! -->
-                        <li><code>{nome}</code></li>
-                        <li><code>{tipo_evento}</code></li>
+                        <?php foreach ($this->options as $option): ?>
+                            <li><code><?php echo $option ?></code></li>
+                        <?php endforeach; ?>
+                        <!-- <li><code>{tipo_evento}</code></li>
                         <li><code>{nome_evento}</code></li>
                         <li><code>{encontro}</code></li>
-                        <li><code>{carga_horaria}</code></li>
+                        <li><code>{carga_horaria}</code></li> -->
                     </ul>
                 </li>
             </ul>

@@ -41,10 +41,10 @@
 <div class="row">
     <div class="col-md-6">
         <fieldset>
-            <legend><?php echo $this->translate("Participant Certificates"); ?></legend>
+            <legend><?php echo $this->translate("Participant in Conference Certificates"); ?></legend>
             <?php if (empty($this->certsParticipanteEncontro)): ?>
                 <div class="alert alert-info">
-                    <?php echo $this->translate("You have no participant certificates yet."); ?>
+                    <?php echo $this->translate("You have no participant in conference certificates yet."); ?>
                 </div>
             <?php else: ?>
             <div class="list-group">
@@ -74,6 +74,37 @@
                     href="<?=$this->url(array('controller' => 'participante',
                         'action' => 'certificado-palestrante',
                         'id' => $cert['id_evento']), 'default', true) ?>">
+                    <h4 class="list-group-item-heading">
+                        <span class="label label-primary"><?=$cert['nome_tipo_evento'] ?></span>
+                        <?=$cert['nome_evento'] ?>
+                    </h4>
+                    <p class="list-group-item-text">
+                        <?=$cert['nome_encontro'] ?>
+                    </p>
+                </a>
+            <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+        </fieldset>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <fieldset>
+            <legend><?php echo $this->translate("Participant in Event Certificates"); ?></legend>
+            <?php if (empty($this->certsParticipanteEvento)): ?>
+                <div class="alert alert-info">
+                    <?php echo $this->translate("You have no participant in event certificates yet."); ?>
+                </div>
+            <?php else: ?>
+            <div class="list-group">
+            <?php foreach($this->certsParticipanteEvento as $cert): ?>
+                <a class="list-group-item"
+                    href="<?=$this->url(array('controller' => 'participante',
+                        'action' => 'certificado-participante-evento',
+                        'id_encontro' => $cert['id_encontro'],
+                        'id_evento' => $cert['id_evento']), 'default', true) ?>">
                     <h4 class="list-group-item-heading">
                         <span class="label label-primary"><?=$cert['nome_tipo_evento'] ?></span>
                         <?=$cert['nome_evento'] ?>
