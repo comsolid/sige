@@ -41,12 +41,13 @@
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
         border-radius: 6px;
+        padding-top: 15px;
         padding-right: 15px;
         padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
         width: 970px;
-        height: 400px;
+        height: 300px;
     }
 
     .row {
@@ -154,40 +155,45 @@
 <div id="container">
     <div class="row">
         <div class="col-md-5">
-            <label>Nome:</label>
-            <h1>Átila Camurça Alves</h1>
+            <label>%%i18n_nome%%</label>
+            <h1>%%nome%%</h1>
         </div>
         <div class="col-md-5">
-            <label>Evento:</label>
-            <h2>II Encontro da Comunidade Maracanauense de Software Livre e Inclusão Digital</h2>
+            <label>%%i18n_encontro%%</label>
+            <h2>%%nome_encontro%%</h2>
         </div>
     </div>
     <div class="row">
         <div class="col-md-5">
-            <label>Data e Hora:</label>
+            <label>%%i18n_data_hora%%</label>
             <h1>
                 <div class="label label-primary">
-                    31 Ago a 03 Set 2014
+                    %%data_inicio%% a %%data_fim%%
                     <br>
-                    a partir das 08:00
+                    a partir das %%hora_inicio%%
                 </div>
             </h1>
         </div>
         <div class="col-md-5">
-            <label>Local:</label>
+            <label>%%i18n_local%%</label>
             <h2>Instituto Federal do Ceará - Campus Maracanaú - Av. Parque Central - Distrito Industrial I Maracanaú - CE</h2>
         </div>
     </div>
     <div class="row">
         <div class="col-md-5">
-            <label>Ingresso:</label>
+            <label>%%i18n_ingresso%%</label>
             <h2>1Kg de Alimento não perecível.</h2>
         </div>
         <div class="col-md-5">
-            <label>Inscrição:</label>
+            <label>%%i18n_inscricao%%</label>
             <div>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALYAAABECAYAAAAsqs8WAAAC3ElEQVR4nO2Y227DQAhE9/9/On1qHygD7M1J0BmpUrJezAw+ceKOF0INNd5tAKEbAmzUUoCNWgqwUUsBNmopwEYtFYI9xniNMf5e23W1ZmvUutrjnde+Vu8z7yqD97qSw557dg7qWDYnlcPLW/Wb1Xj77F7lPfOX+co8/PMUHgTsNAdgAzZgA7b0B9iADdiADdhRrapXNYAN2IAN2IAdzVTNSeXw8gK2YxiwARuwARuwhXfABmyZJ5oBYBtP4UHATnMANmADNmBLf4AN2IAN2IAd1ap6VQPYgA3YgA3Y0UzVnFQOLy9gO4YBG7ABG7ABW3gHbMCWeaIZALbxFB4E7DQHYAM2YAO29AfYgA3YgA3YUa2qVzWADdiADdiAHc1UzUnl8PICtmMYsAEbsAEbsIV3wAZsmSeaAWAbT+FBwE5zADZgAzZgS3+ADdiADdiAHdWqelUD2IAN2IAN2NFM1ZxUDi8vYDuGARuwARuwAVt4B2zAlnmiGQC28ZTuQOgLBdiopQAbtRRgo5a6Anb0QGT32LWZB4nMg3og3e2v+s3W2NrqvCrnjPY+lVM9HFcegHd1HGwFX/SUHO2vrisft/rbtcq+yOeuX3Xud+U82XdFR8Gu/Mtp9n12wWd9VWtnL1gG4kyPqE+1vrrnRs6Znh8PdhSwEn71E716cVcu+G7Gnf5VAE8c38lpf3pUela/hWd0FeyZ9U8Ce+VreDd/pf/seVb77OS09bMfnFNqf8c+Bdasr9P9nwLbHpvNuXK9vuqO/cRvbO995mt13fPl/d3qfxrsWzlPc7AqwBZrJwDbuSvvfiOs9llZn/H99WD/rqnfbCfWVd/smHc+dVfK7lS2V2Wv5y26K+7kf0fO6DpWfe7q6C/2k8Y+sd9p7fr/9vw3dXwyTw27y0VdzdEl/y1dmc7toXe7qLN5uuW/ISaEWgqwUUsBNmopwEYtBdiopQAbtRRgo5YCbNRSPxUddrhAw41+AAAAAElFTkSuQmCC" alt="barcode" />
+                <img src="data:image/png;base64,%%barcode%%" alt="barcode" />
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 30px;">
+            %%timestamp%%
         </div>
     </div>
 </div>

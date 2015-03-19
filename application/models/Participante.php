@@ -332,4 +332,19 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
         return $this->getAdapter()->fetchAll($sql, array($id_pessoa));
     }
 
+    public function dadosTicketInscricao($id_pessoa, $id_encontro) {
+        $sql = "SELECT '+e' || ep.id_encontro || 'p' || p.id_pessoa as inscricao,
+            UPPER(nome) as nome,
+            nome_encontro,
+            to_char(data_inicio, 'TMDD Mon') as data_inicio,
+            to_char(data_fim, 'TMDD Mon') as data_fim,
+            to_char(horario_inicial, 'HH24:MI') as hora_inicio,
+            current_timestamp as timestamp
+            FROM encontro_participante ep
+            INNER JOIN pessoa p ON ep.id_pessoa = p.id_pessoa
+            INNER JOIN encontro en ON ep.id_encontro = en.id_encontro
+            INNER JOIN tipo_horario th ON en.id_tipo_horario = th.id_tipo_horario
+            WHERE p.id_pessoa = ? AND en.id_encontro = ?";
+        return $this->getAdapter()->fetchRow($sql, array($id_pessoa, $id_encontro));
+    }
 }

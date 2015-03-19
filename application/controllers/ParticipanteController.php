@@ -434,10 +434,12 @@ class ParticipanteController extends Zend_Controller_Action {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
-        $idEncontro = (int) $ps->encontro["id_encontro"];
-        $idPessoa = $sessao["idPessoa"];
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+        $id_pessoa = $sessao["idPessoa"];
 
-        $pdf = new Sige_Pdf_Relatorio_TicketInscricao();
+        $model = new Application_Model_Participante();
+        $rs = $model->dadosTicketInscricao($id_pessoa, $id_encontro);
+        $pdf = new Sige_Pdf_Relatorio_TicketInscricao($rs);
         try {
             $pdf->gerarPdf();
         } catch (Exception $e) {

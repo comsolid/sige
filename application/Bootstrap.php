@@ -2,7 +2,7 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
-   public function _initRoutes() {
+    public function _initRoutes() {
 
       $frontController = Zend_Controller_Front::getInstance();
       $frontController->getRouter()->addDefaultRoutes();
@@ -257,7 +257,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
          )
       );
       $router->addRoute('mobile', $route);
-   }
+    }
 
    /**
     * Referência:
@@ -276,7 +276,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $translate = new Zend_Translate('gettext',
                 APPLICATION_PATH . "/langs/",
                 $locale,
-                array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+                array('scan' => Zend_Translate::LOCALE_DIRECTORY
+        ));
 
         $translate->addTranslation($translatorArray);
 
