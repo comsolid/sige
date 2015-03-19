@@ -425,6 +425,31 @@ class ParticipanteController extends Zend_Controller_Action {
         }
     }
 
+    public function ticketAction() {
+        $this->autenticacao();
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+        $idPessoa = $sessao["idPessoa"];
+
+        $pdf = new Sige_Pdf_Relatorio_TicketInscricao();
+        try {
+            $pdf->gerarPdf();
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        . $e->getMessage()));
+            return $this->_helper->redirector->goToRoute(array(
+                        'controller' => 'participante',
+                        'action' => 'ver'), 'default', true);
+        }
+    }
+
     private function _utf8_remove_acentos($str) {
         $keys = array();
         $values = array();

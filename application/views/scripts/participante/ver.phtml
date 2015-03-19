@@ -1,6 +1,4 @@
-<?php
-   //$this->headLink()->prependStylesheet($this->baseUrl('css/screen.css'));
-?>
+
 <?php if (! empty($this->user)): ?>
 <ul class="nav nav-pills">
     <?php if ($this->mostrarEditar): ?>
@@ -43,23 +41,13 @@
     <?php endif; ?>
 </ul>
 
-<!-- BEGIN : botão curtir do facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=336256479809348";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- END : botão curtir do facebook -->
-
 <hr>
 
 <div class="row">
     <div class="col-md-3">
         <div class="thumbnail">
             <?php
+            // hash for gravatar
             $hash = md5(strtolower(trim($this->user->email)));
             ?>
             <img src="http://www.gravatar.com/avatar/<?php echo $hash; ?>?s=172&d=retro"
@@ -85,40 +73,31 @@
             </div>
             <div class="panel-body">
                 <?php if(! empty($this->user->bio)): ?>
-                <?php echo $this->user->bio; ?>
+                    <?php echo $this->user->bio; ?>
                 <?php else: ?>
-                <span class="text-muted"><?php echo $this->translate("No description yet..."); ?></span>
+                    <span class="text-muted">
+                        <?php echo $this->translate("No description yet..."); ?>
+                    </span>
                 <?php endif; ?>
             </div>
         </div>
-   </div>
-   <div class="col-md-1">
-      <!-- twitter button -->
-      <?php $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging'); ?>
-      <a href="https://twitter.com/share" class="twitter-share-button"
-         data-url="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
-           'ver', true) ?>"
-           data-text="Página de <?=$this->user->nome ?>"
-           data-via="<?=$config->twitter->username ?>"
-           data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-   </div>
-   <div class="col-md-1">
-      <!-- facebook button -->
-      <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
-           'ver', true) ?>" data-send="false" data-layout="button_count"
-           data-width="450" data-show-faces="false"></div>
-   </div>
-   <div class="col-md-1">
-      <!-- Place this tag in your head or just before your close body tag. -->
-      <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-        {lang: 'pt-BR'}
-      </script>
-
-      <!-- Place this tag where you want the +1 button to render. -->
-      <div class="g-plusone" data-size="medium" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->id),
-           'ver', true) ?>"></div>
-   </div>
+    </div>
+    <div class="col-md-1">
+        <?php echo $this->partial('partials/participante/ver/twitter-button.phtml', array(
+           'id' => $this->id,
+           'user' => $this->user
+        )); ?>
+    </div>
+    <div class="col-md-1">
+        <?php echo $this->partial('partials/participante/ver/facebook-button.phtml', array(
+            'id' => $this->id,
+        )); ?>
+    </div>
+    <div class="col-md-1">
+        <?php echo $this->partial('partials/participante/ver/gplus-button.phtml', array(
+            'id' => $this->id,
+        )); ?>
+    </div>
 </div>
 
 <?php
@@ -134,7 +113,27 @@ if (! empty($tw_user)) {
         '<a href="https://twitter.com" class="btn btn-primary" target="_blank"><i class="fa fa-twitter"></i> Twitter</a>');
 }
 ?>
-<p><?=$twitter ?></p>
+<div class="row">
+    <div class="col-md-6">
+        <p><?=$twitter ?></p>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-cog"></i>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="<?php echo $this->url(array(
+                    'controller' => 'participante',
+                    'action' => 'ticket'
+                ), 'default', true) ?>">2° via do Ticket de Inscrição</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 
     <?php if (!is_null($this->slides)): ?>
     <hr/>
