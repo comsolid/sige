@@ -5,3 +5,4 @@
 /node_modules/
 /library/HTMLPurifier/DefinitionCache/Serializer/HTML/*
 /tests/log/
+/application/cache/common/*

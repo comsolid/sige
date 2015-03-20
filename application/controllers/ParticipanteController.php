@@ -80,8 +80,18 @@ class ParticipanteController extends Zend_Controller_Action {
             // codigo responsavel por enviar email para confirmacao
             try {
                 if (!empty($idPessoa) and $idPessoa > 0) {
+                    $rs = $participante->dadosTicketInscricao($idPessoa, $idEncontro);
+                    $pdf = new Sige_Pdf_Relatorio_TicketInscricao($rs);
+                    $binary = $pdf->obterPdf();
+
                     $mail = new Application_Model_EmailConfirmacao();
-                    $mail->send($idPessoa, $idEncontro);
+                    $mail->send(
+                        $idPessoa,
+                        $idEncontro,
+                        Application_Model_EmailConfirmacao::MSG_CONFIRMACAO,
+                        $binary
+                    );
+
                     $data = array(
                         'email_enviado' => 'true'
                     );

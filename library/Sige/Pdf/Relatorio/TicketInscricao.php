@@ -30,15 +30,19 @@ class Sige_Pdf_Relatorio_TicketInscricao {
     }
 
     public function gerarPdf() {
-        return $this->pdf();
-    }
-
-    private function pdf() {
         $this->dados['nome_relatorio'] = 'Ticket de Inscrição';
         $this->i18n();
         $this->gerarCodigoBarras();
         $this->pdf = new Sige_Pdf_Relatorio_Parser("TICKET_INSCRICAO", $this->dados);
         return $this->pdf->gerarPdf();
+    }
+
+    public function obterPdf() {
+        $this->dados['nome_relatorio'] = 'Ticket de Inscrição';
+        $this->i18n();
+        $this->gerarCodigoBarras();
+        $this->pdf = new Sige_Pdf_Relatorio_Parser("TICKET_INSCRICAO", $this->dados);
+        return $this->pdf->obterPdf();
     }
 
     private function gerarCodigoBarras() {

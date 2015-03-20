@@ -58,7 +58,6 @@ class Sige_Pdf_Relatorio_Parser {
             return false;
         }
         $handle = fopen($this->template_filepath, 'rb');
-//        return $this->template = $this->normalizeLineEndings(fread($handle, filesize($this->template_filepath)));
         return fread($handle, filesize($this->template_filepath));
     }
 
@@ -67,9 +66,12 @@ class Sige_Pdf_Relatorio_Parser {
         $this->_download($format[0], $format[1]);
     }
 
+    public function obterPdf() {
+        $format = $this->_build();
+        return $this->_getPDFBinaryString($format[0], $format[1]);
+    }
+
     private function _build() {
-//        $css = file_get_contents(APPLICATION_PATH .
-//                "/../public/bootstrap/css/bootstrap.min.css");
         $css = null;
         $cabecalho = '
             <div style="text-align: center">
@@ -118,8 +120,11 @@ mpdf-->
         return array($css, $html);
     }
 
-    protected function _download($css, $html) {
-        $filename_output = "relatorio_sige_" . strtolower($this->tipo) . "_" . date("Y-m-d-His") . ".pdf";
+    /**
+     * Retorna o PDF em forma de string binária
+     * O objetivo é permitir envio do PDF através de anexo de e-mail
+     */
+    protected function _getPDFBinaryString($css, $html) {
         // Foi difícil, mas achei a solução: http://stackoverflow.com/a/9178296/846419
         try {
             ob_start(); // This is very important to start output buffering and to catch out any possible notices
@@ -144,10 +149,22 @@ mpdf-->
             $pdf_binary = $mpdf->Output('', 'S'); // With the binary PDF data in $pdf we can do whatever we want - attach it to email, save to filesystem, push to browser's PDF plugin or offer it to user for download
 //        ob_get_contents(); // Here we catch out previous output from buffer (and can log it, email it, or throw it away as I do :-) )
             ob_end_clean(); // Finaly we clean output buffering and turn it off
-            // The next headers() section is copied out form mPDF Output() method that offers a PDF file to download
-            if (headers_sent())
+            return $pdf_binary;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    protected function _download($css, $html) {
+        $filename_output = "relatorio_sige_" . strtolower($this->tipo) . "_" . date("Y-m-d-His") . ".pdf";
+        try {
+            $pdf_binary = $this->_getPDFBinaryString($css, $html);
+
+            if (headers_sent()) {
                 throw new Exception('Some data has already been output to browser, '
-                . 'can\'t send PDF file.');
+                    . 'can\'t send PDF file.');
+            }
+
             header('Content-Description: File Transfer');
             header('Content-Transfer-Encoding: binary');
             header('Cache-Control: public, must-revalidate, max-age=0');
@@ -162,6 +179,7 @@ mpdf-->
                     empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
                 header('Content-Length: ' . strlen($pdf_binary));
             }
+
             header('Content-disposition: attachment; filename="' . $filename_output . '"');
             echo $pdf_binary; // With the headers set PDF file is ready for download after we call echo
             exit;
@@ -169,5 +187,4 @@ mpdf-->
             throw $exc;
         }
     }
-
 }
