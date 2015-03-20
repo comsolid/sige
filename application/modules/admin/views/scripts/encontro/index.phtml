@@ -114,6 +114,16 @@
                                             <?php echo $this->translate("E-mail submission confirmation message"); ?>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'encontro',
+                                            'action' => 'editar-mensagem-email-confirmacao',
+                                            'id' => $value['id_encontro'],
+                                            'id_tipo_mensagem' => $this->confirmacao_inscricao), 'default', true); ?>">
+                                            <?php echo $this->translate("E-mail registration confirmation message"); ?>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div><!-- end btn-group -->
 

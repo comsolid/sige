@@ -55,6 +55,7 @@ class Sige_Pdf_Relatorio_TicketInscricao {
         $this->dados['i18n_nome'] = _('Name:');
         $this->dados['i18n_encontro'] = _('Conference:');
         $this->dados['i18n_data_hora'] = _('Date and time:');
+        $this->dados['i18n_inicio'] = _('starting from');
         $this->dados['i18n_local'] = _('Place:');
         $this->dados['i18n_ingresso'] = _('Entrance:');
         $this->dados['i18n_inscricao'] = _('Registration:');

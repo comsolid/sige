@@ -22,9 +22,10 @@ class Admin_EncontroController extends Zend_Controller_Action {
         $model = new Admin_Model_Encontro();
         $this->view->lista = $model->listar();
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'emailmsg');
-        $this->view->confirmacao = $config->email->confirmacao;
-        $this->view->correcao = $config->email->correcao;
+        $this->view->confirmacao = $config->email->confirmacao_inscricao;
+        $this->view->correcao = $config->email->recuperacao_senha;
         $this->view->confirmacao_submissao = $config->email->confirmacao_submissao;
+        $this->view->confirmacao_inscricao = $config->email->confirmacao_inscricao;
     }
 
     public function criarAction() {

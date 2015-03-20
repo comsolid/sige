@@ -8,6 +8,8 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
     const MSG_CONFIRMACAO = 1;
     const MSG_RECUPERAR_SENHA = 2;
+    const MSG_CONFIRMACAO_SUBMISSAO = 3;
+    const MSG_CONFIRMACAO_INSCRICAO = 4;
 
     protected $_name = 'mensagem_email';
     protected $_primary = array('id_encontro', 'id_tipo_mensagem_email');
@@ -20,6 +22,7 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
     /**
      * Obtem dados da mensagem de confirmação para e-mail.
+     * @deprecated usar obterMensagem
      * @param int $idEncrontro
      * @return Zend_Db_Table_Row_Abstract
      */
@@ -29,11 +32,16 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
     /**
      * Obtem dados da mensagem de recuperação de senha para e-mail.
+     * @deprecated usar obterMensagem
      * @param int $idEncrontro
      * @return Zend_Db_Table_Row_Abstract
      */
     public function getMsgCorrecao($idEncrontro) {
         return $this->find($idEncrontro, $this->config->email->recuperacao_senha)->current();
+    }
+
+    private function obterMensagem($id_encontro, $id_tipo_mensagem_email) {
+        return $this->find($id_encrontro, $id_tipo_mensagem_email)->current();
     }
 
     /**
@@ -59,10 +67,13 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
         switch ($tipoMensagem) {
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO:
                 $emailText = $this->getMsgConfirmacao($idEncrontro);
-            break;
+                break;
             case Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA:
                 $emailText = $this->getMsgCorrecao($idEncrontro);
-            break;
+                break;
+            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_INSCRICAO:
+                $emailText = $this->obterMensagem($idEncrontro, $tipoMensagem);
+                break;
             default:
                 throw new Exception("Opção de envio de e-mail não definida.");
         }
@@ -76,8 +87,8 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
         } else {
             $link = $emailText->link;
         }
-
         $emailText->mensagem = str_replace('{href_link}', $link, $emailText->mensagem);
+
         $mail->setBodyHtml(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText->mensagem));
         $mail->addTo($linha->email, $linha->nome);
         $mail->setSubject(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText->assunto));

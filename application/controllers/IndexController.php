@@ -65,6 +65,8 @@ class IndexController extends Zend_Controller_Action {
                             $model->getAdapter()->insert("encontro_participante", $result);
                             $this->_helper->flashMessenger->addMessage(array('success' => _('Welcome back. Your registration was confirmed!<br/>Please update your profile data.')));
                             $irParaEditar = true;
+
+                            $this->_enviarEmailConfirmacaoInscricao($idEncontro, $idPessoa);
                         } catch(Exception $e) {
                             $irParaEditar = false;
                             $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
@@ -154,5 +156,20 @@ class IndexController extends Zend_Controller_Action {
             $sessao = Zend_Auth::getInstance()->getIdentity();
             $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
         }
+    }
+
+    private function _enviarEmailConfirmacaoInscricao($idPessoa, $idEncontro) {
+        $model = new Application_Model_Participante();
+        $rs = $model->dadosTicketInscricao($idPessoa, $idEncontro);
+        $pdf = new Sige_Pdf_Relatorio_TicketInscricao($rs);
+        $binary = $pdf->obterPdf();
+
+        $mail = new Application_Model_EmailConfirmacao();
+        $mail->send(
+            $idPessoa,
+            $idEncontro,
+            Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_INSCRICAO,
+            $binary
+        );
     }
 }
