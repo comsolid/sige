@@ -1,11 +1,12 @@
 <?php
 
-class Sige_Desktop_Menu {
+class Sige_Desktop_Menu extends Sige_Translate_Abstract {
 
     private $menu_items;
     private $menu_ativo;
 
     public function __construct($view, $ativo = "", $isAdmin = false) {
+        parent::__construct();
 
         $this->menu_ativo = $ativo;
         $this->menu_items = array(
@@ -13,22 +14,22 @@ class Sige_Desktop_Menu {
             'home' => array(
                 'url' => $view->url(array('controller' => 'participante'), 'default', true),
                 'icon' => 'fa-home',
-                'text' => _("Home"),
+                'text' => $this->t->_("Home"),
             ),
             'schedule' => array(
                 'url' => $view->url(array(), 'programacao', true),
                 'icon' => 'fa-calendar',
-                'text' => _("Schedule"),
+                'text' => $this->t->_("Schedule"),
             ),
             'caravan' => array(
                 'url' => $view->url(array('controller' => 'caravana'), 'default', true),
                 'icon' => 'fa-plane',
-                'text' => _("Caravan"),
+                'text' => $this->t->_("Caravan"),
             ),
             'submission' => array(
                 'url' => $view->url(array(), 'submissao', true),
                 'icon' => 'fa-file-text-o',
-                'text' => _("Paper Submission"),
+                'text' => $this->t->_("Paper Submission"),
             ),
         );
 
@@ -36,7 +37,7 @@ class Sige_Desktop_Menu {
             $this->menu_items['admin'] = array(
                 'url' => $view->url(array(), 'admin', true),
                 'icon' => 'fa-gavel',
-                'text' => _('Admin')
+                'text' => $this->t->_('Admin')
             );
         }
     }
