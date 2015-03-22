@@ -25,7 +25,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
         $this->view->confirmacao = $config->email->confirmacao_inscricao;
         $this->view->correcao = $config->email->recuperacao_senha;
         $this->view->confirmacao_submissao = $config->email->confirmacao_submissao;
-        $this->view->confirmacao_inscricao = $config->email->confirmacao_inscricao;
+        $this->view->confirmacao_reinscricao = $config->email->confirmacao_reinscricao;
     }
 
     public function criarAction() {
@@ -132,14 +132,31 @@ class Admin_EncontroController extends Zend_Controller_Action {
 
         $id = (int)$this->_getParam('id', 0);
         $id_tipo_mensagem = (int)$this->_getParam('id_tipo_mensagem', 0);
+
+        switch ($id_tipo_mensagem) {
+            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO:
+                $this->view->title = _("Edit e-mail confirmation message");
+                break;
+            case Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA:
+                $this->view->title = _("Edit e-mail recover password message");
+                break;
+            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_SUBMISSAO:
+                $this->view->title = _("Edit e-mail submission confirmation message");
+                break;
+            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_REINSCRICAO:
+                $this->view->title = _("Edit e-mail registration confirmation message");
+                break;
+            default:
+                $this->_helper->flashMessenger->addMessage(array('info' => _('E-mail message not find.')));
+                return $this->_helper->redirector->goToRoute(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro',
+                    'action' => 'index'), 'default', true);
+        }
+
         if ($id > 0 and $id_tipo_mensagem > 0) {
             $row = $model->fetchRow("id_encontro = {$id} AND id_tipo_mensagem_email = {$id_tipo_mensagem}");
             $form->populate($row->toArray());
-        }
-        if ($id_tipo_mensagem == Application_Model_EmailConfirmacao::MSG_CONFIRMACAO) {
-            $this->view->title = _("Edit e-mail confirmation message");
-        } else {
-            $this->view->title = _("Edit e-mail recover password message");
         }
     }
 

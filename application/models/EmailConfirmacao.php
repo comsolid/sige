@@ -9,7 +9,7 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
     const MSG_CONFIRMACAO = 1;
     const MSG_RECUPERAR_SENHA = 2;
     const MSG_CONFIRMACAO_SUBMISSAO = 3;
-    const MSG_CONFIRMACAO_INSCRICAO = 4;
+    const MSG_CONFIRMACAO_REINSCRICAO = 4;
 
     protected $_name = 'mensagem_email';
     protected $_primary = array('id_encontro', 'id_tipo_mensagem_email');
@@ -62,16 +62,17 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
         $pessoa = new Application_Model_Pessoa();
         $linha = $pessoa->find($idpessoa)->current();
         $pessoa->email = $linha->email;
-        $pessoa->gerarSenha();
 
         switch ($tipoMensagem) {
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO:
                 $emailText = $this->getMsgConfirmacao($idEncrontro);
+                $pessoa->gerarSenha();
                 break;
             case Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA:
                 $emailText = $this->getMsgCorrecao($idEncrontro);
+                $pessoa->gerarSenha();
                 break;
-            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_INSCRICAO:
+            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_REINSCRICAO:
                 $emailText = $this->obterMensagem($idEncrontro, $tipoMensagem);
                 break;
             default:
