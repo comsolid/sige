@@ -264,7 +264,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     * http://www.codeforest.net/multilanguage-support-in-zend-framework
     */
     protected function _initTranslate() {
-        $locale = "pt_BR";
+        $locale = new Zend_Locale();
+        if (!Zend_Locale::isLocale($locale, TRUE, FALSE)) {
+            if (!Zend_Locale::isLocale($locale, FALSE, FALSE)) {
+                throw new Zend_Locale_Exception("The locale '$locale' is no known locale");
+            }
+            $locale = new Zend_Locale($locale);
+        }
+        //$locale = "pt_BR";
 
         $translatorArray = new Zend_Translate(array(
             'adapter' => 'array',
@@ -281,9 +288,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         $translate->addTranslation($translatorArray);
 
-        Zend_Validate_Abstract::setDefaultTranslator($translate);
         $registry = Zend_Registry::getInstance();
         $registry->set('Zend_Translate', $translate);
+
+        Zend_Validate_Abstract::setDefaultTranslator($translate);
+        Zend_Form::setDefaultTranslator($translate);
     }
 
 	public function _initTimeZone() {

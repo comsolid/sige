@@ -168,7 +168,7 @@ class IndexController extends Zend_Controller_Action {
         $mail->send(
             $idPessoa,
             $idEncontro,
-            Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_INSCRICAO,
+            Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_REINSCRICAO,
             $binary
         );
     }

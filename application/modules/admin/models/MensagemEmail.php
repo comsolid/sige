@@ -56,7 +56,7 @@ class Admin_Model_MensagemEmail extends Application_Model_EmailConfirmacao {
      */
     private function _criarMensagemConfirmacaoInscricao($id_encontro, $apelido_encontro) {
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'emailmsg');
-        $this->_criarMensagemPadrao($id_encontro, $apelido_encontro, $config->email->confirmacao_inscricao);
+        $this->_criarMensagemPadrao($id_encontro, $apelido_encontro, $config->email->confirmacao_reinscricao);
     }
 
     private function _criarMensagemPadrao($id_encontro, $apelido_encontro, $id_tipo_mensagem) {
@@ -71,5 +71,4 @@ class Admin_Model_MensagemEmail extends Application_Model_EmailConfirmacao {
         );
         $this->insert($params);
     }
-
 }

@@ -1,27 +1,29 @@
 <?php
 
-class Sige_Desktop_AdminSidebarLeftMenu {
+class Sige_Desktop_AdminSidebarLeftMenu extends Sige_Translate_Abstract {
 
     private $menu_items;
     private $active_menu;
 
     public function __construct($view, $active = "") {
+        parent::__construct();
+
         $this->active_menu = $active;
         $this->menu_items = array(
             'home' => array(
                 'url' => $view->url(array('controller' => 'participante'), 'default', true),
                 'icon' => 'fa-home',
-                'text' => _('Home'),
+                'text' => $this->t->_('Home'),
             ),
             'dashboard' => array(
                 'url' => $view->url(array(), 'admin', true),
                 'icon' => 'fa-dashboard',
-                'text' => _('Dashboard'),
+                'text' => $this->t->_('Dashboard'),
             ),
             'registration' => array(
                 'url' => $view->url(array(), 'inscricoes', true),
                 'icon' => 'fa-pencil',
-                'text' => _('Registration'),
+                'text' => $this->t->_('Registration'),
             ),
             'events' => array(
                 'url' => $view->url(array(
@@ -29,7 +31,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                     'controller' => 'evento',
                     'action' => 'index'), 'default', true),
                 'icon' => 'fa-star',
-                'text' => _('Events'),
+                'text' => $this->t->_('Events'),
             ),
             'caravan' => array(
                 'url' => $view->url(array(
@@ -37,12 +39,12 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                     'controller' => 'caravana',
                     'action' => 'index'), 'default', true),
                 'icon' => 'fa-plane',
-                'text' => _('Caravan'),
+                'text' => $this->t->_('Caravan'),
             ),
             'reports' => array(
                 'treeview' => true,
                 'icon' => 'fa-bar-chart-o',
-                'text' => _('Reports'),
+                'text' => $this->t->_('Reports'),
                 'items' => array(
                     array(
                         'url' => $view->url(array(
@@ -50,7 +52,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'relatorios',
                             'action' => 'index'), 'default', true),
                         'icon' => 'fa-eye',
-                        'text' => _('View All'),
+                        'text' => $this->t->_('View All'),
                     ),
                     array(
                         'url' => $view->url(array(
@@ -58,7 +60,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'relatorios',
                             'action' => 'inscricoes-sexo'), 'default', true),
                         'icon' => 'fa-user',
-                        'text' => _('Registrations per gender'),
+                        'text' => $this->t->_('Registrations per gender'),
                     ),
                     array(
                         'url' => $view->url(array(
@@ -66,7 +68,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'relatorios',
                             'action' => 'inscricoes-municipio-15-mais'), 'default', true),
                         'icon' => 'fa-flag',
-                        'text' => _('Registrations per district (15+)'),
+                        'text' => $this->t->_('Registrations per district (15+)'),
                     ),
                     array(
                         'url' => $view->url(array(
@@ -74,14 +76,14 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'relatorios',
                             'action' => 'inscricoes-municipio'), 'default', true),
                         'icon' => 'fa-flag',
-                        'text' => _('Registrations per district (All)'),
+                        'text' => $this->t->_('Registrations per district (All)'),
                     ),
                 )
             ),
             'config' => array(
                 'treeview' => true,
                 'icon' => 'fa-cogs',
-                'text' => _('Configurations'),
+                'text' => $this->t->_('Configurations'),
                 'items' => array(
                     array(
                         'url' => $view->url(array(
@@ -89,7 +91,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'config',
                             'action' => 'index'), 'default', true),
                         'icon' => 'fa-eye',
-                        'text' => _('View All'),
+                        'text' => $this->t->_('View All'),
                     ),
                     array(
                         'url' => $view->url(array(
@@ -97,7 +99,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'encontro',
                             'action' => 'index'), 'default', true),
                         'icon' => 'fa-bullhorn',
-                        'text' => _('Manage Conferences'),
+                        'text' => $this->t->_('Manage Conferences'),
                     ),
                     array(
                         'url' => $view->url(array(
@@ -105,7 +107,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'encontro',
                             'action' => 'criar'), 'default', true),
                         'icon' => 'fa-plus',
-                        'text' => _('Create Conference'),
+                        'text' => $this->t->_('Create Conference'),
                     ),
                     array(
                         'url' => $view->url(array(
@@ -113,7 +115,7 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                             'controller' => 'config',
                             'action' => 'permissao-usuarios'), 'default', true),
                         'icon' => 'fa-lock',
-                        'text' => _('User permissions'),
+                        'text' => $this->t->_('User permissions'),
                     ),
                 )
             )

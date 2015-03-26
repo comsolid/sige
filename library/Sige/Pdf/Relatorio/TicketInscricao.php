@@ -8,7 +8,7 @@ use Dinesh\BarcodeAll\DNS1D;
  * para agilizar inscrição
  * @author atila
  */
-class Sige_Pdf_Relatorio_TicketInscricao {
+class Sige_Pdf_Relatorio_TicketInscricao extends Sige_Translate_Abstract {
 
     protected $pdf;
     protected $dados;
@@ -26,22 +26,20 @@ class Sige_Pdf_Relatorio_TicketInscricao {
      *   * id_encontro
      */
     function __construct($dados) {
-        $this->dados = $dados;
-    }
+        parent::__construct();
 
-    public function gerarPdf() {
-        $this->dados['nome_relatorio'] = 'Ticket de Inscrição';
+        $this->dados = $dados;
+        $this->dados['nome_relatorio'] = $this->t->_('Registration Ticket');
         $this->i18n();
         $this->gerarCodigoBarras();
         $this->pdf = new Sige_Pdf_Relatorio_Parser("TICKET_INSCRICAO", $this->dados);
+    }
+
+    public function gerarPdf() {
         return $this->pdf->gerarPdf();
     }
 
     public function obterPdf() {
-        $this->dados['nome_relatorio'] = 'Ticket de Inscrição';
-        $this->i18n();
-        $this->gerarCodigoBarras();
-        $this->pdf = new Sige_Pdf_Relatorio_Parser("TICKET_INSCRICAO", $this->dados);
         return $this->pdf->obterPdf();
     }
 
@@ -52,12 +50,12 @@ class Sige_Pdf_Relatorio_TicketInscricao {
     }
 
     private function i18n() {
-        $this->dados['i18n_nome'] = _('Name:');
-        $this->dados['i18n_encontro'] = _('Conference:');
-        $this->dados['i18n_data_hora'] = _('Date and time:');
-        $this->dados['i18n_inicio'] = _('starting from');
-        $this->dados['i18n_local'] = _('Place:');
-        $this->dados['i18n_ingresso'] = _('Entrance:');
-        $this->dados['i18n_inscricao'] = _('Registration:');
+        $this->dados['i18n_nome'] = $this->t->_('Name:');
+        $this->dados['i18n_encontro'] = $this->t->_('Conference:');
+        $this->dados['i18n_data_hora'] = $this->t->_('Date and time:');
+        $this->dados['i18n_inicio'] = $this->t->_('starting from');
+        $this->dados['i18n_local'] = $this->t->_('Place:');
+        $this->dados['i18n_ingresso'] = $this->t->_('Entrance:');
+        $this->dados['i18n_inscricao'] = $this->t->_('Registration:');
     }
 }
