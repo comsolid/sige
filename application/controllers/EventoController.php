@@ -527,7 +527,7 @@ class EventoController extends Zend_Controller_Action {
                 $this->_helper->flashMessenger->addMessage(
                         array('warning' => _('Event not found.')));
             } else {
-                $this->view->evento = $data[0];
+                $this->view->evento = $data;
                 $this->view->outros = $evento->buscarOutrosPalestrantes($idEvento);
 
                 $modelTags = new Application_Model_EventoTags();

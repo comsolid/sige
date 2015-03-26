@@ -147,7 +147,7 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
         $select = "
             SELECT
                 id_pessoa, id_evento, nome_tipo_evento, nome_evento, validada,
-                TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MI') as data_submissao,
+                TO_CHAR(data_submissao, 'DD/MM/YYYY HH24:MI') as data_submissao_f, data_submissao,
                 nome, resumo, tecnologias_envolvidas, perfil_minimo,
                 descricao_dificuldade_evento, email, preferencia_horario, bio,
                 apresentado, e.id_tipo_evento, id_artigo
