@@ -1,11 +1,7 @@
 
 <?php
-   //$this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
    $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-   //$this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
-   //$this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
 
-   //$this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
    $this->headScript()->appendFile($this->baseUrl('js/jquery.timeago.min.js'));
    $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
    $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
@@ -50,7 +46,7 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
               data-lang="pt" data-hashtags="<?=$config->twitter->hashtags ?>">Tweetar</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
-        <div class="col-md-1">   
+        <div class="col-md-1">
             <!-- facebook button -->
             <div class="fb-like" data-href="<?=$this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']),
                   'ver_evento', true) ?>" data-send="false" data-layout="button_count"
@@ -67,7 +63,7 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
                   'ver_evento', true) ?>"></div>
         </div>
     </div>
-   
+
     <hr/>
 
     <div class="row">
@@ -92,7 +88,7 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1" role="tabpanel">
-        
+
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
@@ -121,15 +117,15 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
                     </a>
                 </li>
             </ul>
-            
+
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="tab-1">
                     <p style="margin-top: 10px;"><?= $this->evento['resumo'] ?></p>
                 </div>
-                
+
                 <div role="tabpanel" class="tab-pane" id="tab-2">
-                    
+
                     <?php if (! empty($this->outros)): ?>
                     <div class="list-group" style="margin-top: 10px; width: 400px;">
                     <?php foreach ($this->outros as $outro): ?>
@@ -141,38 +137,50 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
                     <?php endforeach; ?>
                     </div>
                     <?php else: ?>
-                    <p style="margin-top: 10px;">Palestrante único</p>
+                    <p style="margin-top: 10px;"><?php echo $this->translate("Single speaker."); ?></p>
                     <?php endif; ?>
                 </div>
-                
+
                 <div role="tabpanel" class="tab-pane" id="tab-3">
                     <p style="margin-top: 10px;"><?= $this->evento['perfil_minimo'] ?></p>
                 </div>
-                
+
                 <div role="tabpanel" class="tab-pane" id="tab-4">
-                    <p style="margin-top: 10px;"><?= $this->evento['bio'] ?></p>
+                    <p style="margin-top: 10px;">
+                        <?php if (! empty($this->evento['bio'])): ?>
+                            <?php echo $this->evento['bio']; ?>
+                        <?php else: ?>
+                            <span class="text-muted"><?php echo $this->translate("Not defined."); ?></span>
+                        <?php endif; ?>
+                    </p>
                 </div>
-                
+
                 <div role="tabpanel" class="tab-pane" id="tab-5">
-                    <div class="panel panel-default" style="margin-top: 10px; width: 400px;">
-                        <ul class="list-group">
-                        <?php if (! empty($this->tags)):
-                            foreach ($this->tags as $tag): ?>
-                            <li class="list-group-item">
-                                <?=$tag['descricao'] ?>
-                            </li>
-                        <?php    endforeach;
-                        endif; ?>
-                        </ul>
-                    </div>
+                    <?php if (! empty($this->tags)): ?>
+                        <div class="panel panel-default" style="margin-top: 10px; width: 400px;">
+                            <ul class="list-group">
+                            <?php if (! empty($this->tags)):
+                                foreach ($this->tags as $tag): ?>
+                                <li class="list-group-item">
+                                    <?=$tag['descricao'] ?>
+                                </li>
+                            <?php    endforeach;
+                            endif; ?>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <p style="margin-top: 10px;" class="text-muted">
+                            <?php echo $this->translate("No tags defined."); ?>
+                        </p>
+                    <?php endif; ?>
                 </div>
-                
+
             </div><!-- end of Tab panes -->
         </div><!-- end of role=tabpanel -->
     </div><!-- end of .row -->
-   
+
     <hr/>
-   
+
     <div class="row">
         <div class="col-md-12">
             <div id="disqus_thread"></div>
@@ -195,4 +203,3 @@ $this->headMeta()->setName('twitter:url', "{$this->serverUrl()}{$this->url(array
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 <?php endif; ?>
-
