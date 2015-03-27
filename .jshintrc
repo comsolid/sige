@@ -26,6 +26,8 @@
     "sprintf": false,
     "alertify": false,
     "Morris": false,
-    "Jed": false
+    "Jed": false,
+    "FastClick": false,
+    "console": false
   }
 }
