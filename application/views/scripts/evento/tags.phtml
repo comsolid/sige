@@ -10,7 +10,12 @@
     $this->headScript()->appendFile($this->baseUrl('js/evento/tags.js'));
 ?>
 
-<h3><?= $this->evento['nome_tipo_evento'] ?>: <?= $this->evento['nome_evento'] ?></h3><hr>
+<h3>
+    <?php echo $this->evento['nome_tipo_evento'] ?>:
+    <?php echo $this->evento['nome_evento'] ?>
+</h3>
+
+<hr>
 
 <div class="row">
     <div class="col-md-6">
@@ -19,7 +24,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control input-lg" id="termo"
                         placeholder="<?php echo $this->translate("Search tag"); ?> ex. python, ruby, java..." />
-                    
+
                     <input type="hidden" id="id_evento" value="<?= $this->evento['id_evento'] ?>"/>
                 </div>
             </div>
@@ -36,20 +41,19 @@
             </div>
         </div>
     </div>
-                
+
     <div class="col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-tags"></i> Tags</h3>
             </div>
-            <?php if (count($this->tags) > 0): ?>
             <ul class="list-group">
                 <?php foreach ($this->tags as $tag): ?>
-                <li class="list-group-item" id="tag_<?= $tag['id'] ?>">
-                    <?= $tag['descricao'] ?>
+                <li class="list-group-item" id="tag_<?php echo $tag['id'] ?>">
+                    <?php echo $tag['descricao'] ?>
                     <a href="#" onclick="return false;"
                         class="close remover pull-right"
-                        data-id="<?= $tag['id'] ?>"
+                        data-id="<?php echo $tag['id'] ?>"
                         data-toggle="tooltip" data-placement="top"
                         title="<?php echo $this->translate("Remove"); ?>">
                        <span aria-hidden="true">&times;</span>
@@ -58,7 +62,7 @@
                 </li>
                 <?php endforeach; ?>
             </ul>
-            <?php else: ?>
+            <?php if (count($this->tags) == 0): ?>
             <div class="panel-body">
                 <?php echo $this->translate("No tags found."); ?>
             </div>
