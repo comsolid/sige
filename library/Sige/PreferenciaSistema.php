@@ -8,12 +8,12 @@
 class Sige_PreferenciaSistema extends Zend_Controller_Plugin_Abstract {
 
     public $encontro;
-    
+
     function __construct() {
         $this->getEncontro();
     }
 
-        public function getEncontro() {
+    public function getEncontro() {
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
         try {
             $db = new Zend_Db_Adapter_Pdo_Pgsql(array(

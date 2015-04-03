@@ -16,67 +16,80 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<p>
-			<i class="fa fa-search"></i>
-			<?php echo $this->translate("Search by"); ?>:
-		</p>
-		<div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-default active">
-				<input type="radio" id="b_nome" name="t_busca" value="nome" checked="checked"/>
-				<?php echo $this->translate("Name"); ?>
-			</label>
-			<label class="btn btn-default">
-				<input type="radio" id="b_email" name="t_busca" value="email"/>
-				<?php echo $this->translate("E-mail"); ?>
-			</label>
-			<label class="btn btn-default">
-				<input type="radio" id="b_municipio" name="t_busca" value="municipio"/>
-				<?php echo $this->translate("District"); ?>
-			</label>
-			<label class="btn btn-default">
-				<input type="radio" id="b_caravana" name="t_busca" value="caravana"/>
-				<?php echo $this->translate("Caravan"); ?>
-			</label>
-			<label class="btn btn-default">
-				<input type="radio" id="b_instituicao" name="t_busca" value="instituicao"/>
-				<?php echo $this->translate("Institution"); ?>
-			</label>
+		<div class="box box-solid">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<input type="text" id="termo" class="form-control input-lg"
+								autofocus="autofocus"
+								placeholder="<?php echo $this->translate("Search participant..."); ?>"/>
+							<span class="input-group-addon">
+								<i class="fa fa-2x fa-search" id="loading"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
-
-<hr>
-
-<div class="row">
 	<div class="col-md-6">
-		<div class="form-group">
-			<input type="text" id="termo" class="form-control input-lg"
-			placeholder="<?php echo $this->translate("Search participant..."); ?>"/>
+		<div class="box box-solid">
+			<div class="box-body">
+				<p>
+					<i class="fa fa-search"></i>
+					<?php echo $this->translate("Search by"); ?>:
+				</p>
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-default active">
+						<input type="radio" id="b_nome" name="t_busca" value="nome" checked="checked"/>
+						<?php echo $this->translate("Name"); ?>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" id="b_email" name="t_busca" value="email"/>
+						<?php echo $this->translate("E-mail"); ?>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" id="b_municipio" name="t_busca" value="municipio"/>
+						<?php echo $this->translate("District"); ?>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" id="b_caravana" name="t_busca" value="caravana"/>
+						<?php echo $this->translate("Caravan"); ?>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" id="b_instituicao" name="t_busca" value="instituicao"/>
+						<?php echo $this->translate("Institution"); ?>
+					</label>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div class="col-md-2">
-		<i class="fa fa-spinner fa-2x fa-spin" id="loading"></i>
+
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<table id="pessoas" class="table table-hover">
-			<thead>
-				<tr>
-					<th style="width: 250px;"><?php echo $this->translate("Name"); ?></th>
-					<th><?php echo $this->translate("Nickname"); ?></th>
-					<th><?php echo $this->translate("E-mail"); ?></th>
-					<th><?php echo $this->translate("District"); ?></th>
-					<th><?php echo $this->translate("Institution"); ?></th>
-					<th><?php echo $this->translate("Caravan"); ?></th>
-					<th><?php echo $this->translate("Status"); ?></th>
-					<th>&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody id="resultado">
-				<!-- dados são trazidos via ajax -->
-			</tbody>
-		</table>
+		<div class="box box-primary">
+			<div class="box-body no-padding">
+				<table id="pessoas" class="table table-hover">
+					<thead>
+						<tr>
+							<th style="width: 250px;"><?php echo $this->translate("Name"); ?></th>
+							<th><?php echo $this->translate("Nickname"); ?></th>
+							<th><?php echo $this->translate("E-mail"); ?></th>
+							<th><?php echo $this->translate("District"); ?></th>
+							<th><?php echo $this->translate("Institution"); ?></th>
+							<th><?php echo $this->translate("Caravan"); ?></th>
+							<th><?php echo $this->translate("Status"); ?></th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody id="resultado">
+						<!-- dados são trazidos via ajax -->
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>

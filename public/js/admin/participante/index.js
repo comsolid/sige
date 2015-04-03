@@ -13,8 +13,18 @@ $(document).ready(function () {
 	});
     $('#termo').select();
 
+	var loading = $('#loading');
+
+	function startLoading(){
+		loading.addClass('fa-spinner fa-spin').removeClass('fa-search');
+	}
+
+	function stopLoading() {
+		loading.removeClass('fa-spinner fa-spin').addClass('fa-search');
+	}
+
 	function buscar() {
-		$('#loading').show();
+		startLoading();
 		var idEncontro = $('#id_encontro').val();
 		var termo = $('#termo').val();
 		var tipo_busca = $('input:radio[name=t_busca]:checked').val();
@@ -23,6 +33,7 @@ $(document).ready(function () {
 			url: '/admin/participante/ajax-buscar/tipo/' + tipo_busca + '/idEncontro/' + idEncontro + '/termo/' + termo,
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8;',
 			type: 'POST',
+			delay: '3',
 			success: function (json) {
 				oTablePes.fnClearTable();
 				if (json.size > 0) {
@@ -30,7 +41,7 @@ $(document).ready(function () {
 				}
 			},
 			complete: function () {
-				$('#loading').hide();
+				stopLoading();
 			}
 		});
 	}
@@ -53,7 +64,7 @@ $(document).ready(function () {
 		$.getJSON(url, function (json) {
 			if (json.ok) {
 				alertify.success(json.msg);
-			} else if (json.erro != null) {
+			} else if (json.erro !== null) {
 				alertify.error(json.erro);
 			}
 		}).complete(function () {

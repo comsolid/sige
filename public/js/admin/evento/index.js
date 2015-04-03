@@ -12,8 +12,18 @@ $(function() {
 
     $('#termo').focus();
 
+    var loading = $('#loading');
+
+	function startLoading(){
+		loading.addClass('fa-spinner fa-spin').removeClass('fa-search');
+	}
+
+	function stopLoading() {
+		loading.removeClass('fa-spinner fa-spin').addClass('fa-search');
+	}
+
     function buscar() {
-        $('#loading').show();
+        startLoading();
         var termo = $('#termo').val();
         var tipo = $('input:radio.tipo_evento:checked').val();
         var situacao = $('input:radio.situacao:checked').val();
@@ -32,7 +42,7 @@ $(function() {
                 oTable.fnAddData(json.itens);
             }
         }).complete(function() {
-            $('#loading').hide();
+            stopLoading();
         });
     }
     // buscar ao iniciar página.

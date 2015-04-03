@@ -7,116 +7,127 @@
     $this->headScript()->appendFile($this->baseUrl('/js/admin/evento/index.js'));
 ?>
 
-<div class="row">
-    <div class="col-md-3">
-        <p>
-            <i class="fa fa-search"></i>
-            <?php echo $this->translate("Search by"); ?>:
-        </p>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default active">
-                <input type="radio" name="search_by" value="titulo"
-                    id="search_by_titulo" checked="checked" class="search_by">
-                    <?php echo $this->translate("Title"); ?>
-            </label>
+<div class="box">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-3">
+                <p>
+                    <i class="fa fa-search"></i>
+                    <?php echo $this->translate("Search by"); ?>:
+                </p>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="search_by" value="titulo"
+                            id="search_by_titulo" checked="checked" class="search_by">
+                            <?php echo $this->translate("Title"); ?>
+                    </label>
 
-            <label class="btn btn-default">
-                <input type="radio" name="search_by" value="nome"
-                    id="search_by_nome" class="search_by">
-                    <?php echo $this->translate("Name"); ?>
-            </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="search_by" value="nome"
+                            id="search_by_nome" class="search_by">
+                            <?php echo $this->translate("Name"); ?>
+                    </label>
 
-            <label class="btn btn-default">
-                <input type="radio" name="search_by" value="email"
-                    id="search_by_email" class="search_by">
-                    <?php echo $this->translate("E-mail"); ?>
-            </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="search_by" value="email"
+                            id="search_by_email" class="search_by">
+                            <?php echo $this->translate("E-mail"); ?>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <p>
+                    <i class="fa fa-star"></i>
+                    <?php echo $this->translate("Event"); ?>:
+                </p>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="tipo_evento" value="0"
+                            id="tipo_evento_0" checked="checked" class="tipo_evento"/>
+                        <?php echo $this->translate("All"); ?>
+                    </label>
+                    <?php foreach ($this->tipoEvento as $tipoEvento): ?>
+                    <label class="btn btn-default">
+                        <input type="radio" name="tipo_evento"
+                            value="<?= $tipoEvento->id_tipo_evento ?>"
+                            id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
+                            class="tipo_evento">
+                        <?= $tipoEvento->nome_tipo_evento ?>
+                    </label>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <p>
+                    <i class="fa fa-filter"></i>
+                    <?php echo $this->translate("Status"); ?>:
+                </p>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="atividades" value="0"
+                            id="sit_todos" checked="checked" class="situacao"/>
+                        <?php echo $this->translate("All"); ?>
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="atividades" value="1"
+                            id="sit_validadas" class="situacao"/>
+                        <?php echo $this->translate("Valid"); ?>
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="atividades" value="2"
+                            id="sit_nao_validadas" class="situacao"/>
+                        <?php echo $this->translate("Not valid"); ?>
+                    </label>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <p>
-            <i class="fa fa-star"></i>
-            <?php echo $this->translate("Event"); ?>:
-        </p>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default active">
-                <input type="radio" name="tipo_evento" value="0"
-                    id="tipo_evento_0" checked="checked" class="tipo_evento"/>
-                <?php echo $this->translate("All"); ?>
-            </label>
-            <?php foreach ($this->tipoEvento as $tipoEvento): ?>
-            <label class="btn btn-default">
-                <input type="radio" name="tipo_evento"
-                    value="<?= $tipoEvento->id_tipo_evento ?>"
-                    id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
-                    class="tipo_evento">
-                <?= $tipoEvento->nome_tipo_evento ?>
-            </label>
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <p>
-            <i class="fa fa-filter"></i>
-            <?php echo $this->translate("Status"); ?>:
-        </p>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default active">
-                <input type="radio" name="atividades" value="0"
-                    id="sit_todos" checked="checked" class="situacao"/>
-                <?php echo $this->translate("All"); ?>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="atividades" value="1"
-                    id="sit_validadas" class="situacao"/>
-                <?php echo $this->translate("Valid"); ?>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="atividades" value="2"
-                    id="sit_nao_validadas" class="situacao"/>
-                <?php echo $this->translate("Not valid"); ?>
-            </label>
-        </div>
-    </div>
-</div>
 
-<hr>
+        <hr>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <input type="text" id="termo" class="form-control input-lg"
-            placeholder="<?php echo $this->translate("Search..."); ?>"/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="termo" class="form-control input-lg"
+                    placeholder="<?php echo $this->translate("Search..."); ?>"/>
+                    <span class="input-group-addon">
+                        <i class="fa fa-2x fa-search" id="loading"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a href="<?php echo $this->url(array('module' => 'admin',
+                    'controller' => 'evento',
+                    'action' => 'programacao-parcial'), 'default', true) ?>"
+                    class="btn btn-info btn-lg pull-right">
+                    <i class="fa fa-calendar-o"></i>
+                    <?php echo $this->translate("Parcial Schedule"); ?>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <i class="fa fa-spinner fa-2x fa-spin" id="loading"></i>
-    </div>
-    <div class="col-md-4">
-        <a href="<?php echo $this->url(array('module' => 'admin',
-            'controller' => 'evento',
-            'action' => 'programacao-parcial'), 'default', true) ?>" class="btn btn-info btn-lg pull-right">
-            <i class="fa fa-calendar-o"></i>
-            <?php echo $this->translate("Parcial Schedule"); ?>
-        </a>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <table id="eventos" class="table table-hover">
-            <thead>
-                <tr>
-                    <!-- <th><?php echo $this->translate("Type"); ?></th> -->
-                    <th><?php echo $this->translate("Event"); ?></th>
-                    <th style="width: 50px;"><?php echo $this->translate("Valid"); ?></th>
-                    <th style="width: 100px;"><?php echo $this->translate("Submission"); ?></th>
-                    <th style="width: 250px;"><?php echo $this->translate("Responsable"); ?></th>
-                    <th style="width: 50px;">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="box box-primary">
+            <div class="box-header">
+
+            </div>
+            <div class="box-body">
+                <table id="eventos" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate("Event"); ?></th>
+                            <th style="width: 50px;"><?php echo $this->translate("Valid"); ?></th>
+                            <th style="width: 100px;"><?php echo $this->translate("Submission"); ?></th>
+                            <th style="width: 250px;"><?php echo $this->translate("Responsable"); ?></th>
+                            <th style="width: 50px;">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

@@ -13,83 +13,85 @@
 }
 </style>
 
-<div class="row">
-    <div class="col-md-8">
-        <div class="btn-group">
-            <a href="<?php echo $this->url(array('module' => 'admin',
-                    'controller' => 'evento',
-                    'action' => 'index'), 'default', true) ?>"
-                class="btn btn-default">
-                <i class="fa fa-chevron-left"></i>
-                <?php echo $this->translate("Back"); ?>
-            </a>
-            <a href="<?=$this->url(array('controller' => 'evento',
-                    'action' => 'editar',
-                    'id' => $this->evento['id_evento']), 'default', true) ?>"
-                class="btn btn-default">
-                <i class="fa fa-edit"></i>
-                <?php echo $this->translate("Edit"); ?>
-            </a>
-        </div>
+<div class="box box-solid">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="btn-group">
+                    <a href="<?php echo $this->url(array('module' => 'admin',
+                            'controller' => 'evento',
+                            'action' => 'index'), 'default', true) ?>"
+                        class="btn btn-default">
+                        <i class="fa fa-chevron-left"></i>
+                        <?php echo $this->translate("Back"); ?>
+                    </a>
+                    <a href="<?=$this->url(array('controller' => 'evento',
+                            'action' => 'editar',
+                            'id' => $this->evento['id_evento']), 'default', true) ?>"
+                        class="btn btn-default">
+                        <i class="fa fa-edit"></i>
+                        <?php echo $this->translate("Edit"); ?>
+                    </a>
+                </div>
 
-    </div>
-    <div class="col-md-2">
-        <?php if ($this->evento['validada']): ?>
-            <a href="<?php echo $this->url(array(
-                'id' => $this->id_evento
-            ), 'invalidar_evento', true) ?>"
-            id="btn-validated"
-            class="btn btn-block btn-success"
-            data-btn-action="btn-danger"
-            data-btn-default-action="btn-success"
-            data-btn-title="<?php echo $this->translate("Invalidate?"); ?>"
-            data-btn-default-title="<?php echo $this->translate("Validated"); ?>">
-                <?php echo $this->translate("Validated"); ?>
-            </a>
-        <?php else: ?>
-            <a href="<?php echo $this->url(array(
-                'id' => $this->id_evento
-            ), 'validar_evento', true) ?>"
-            id="btn-validated"
-            class="btn btn-block btn-default"
-            data-btn-action="btn-primary"
-            data-btn-default-action="btn-default"
-            data-btn-title="<?php echo $this->translate("Validate?"); ?>"
-            data-btn-default-title="<?php echo $this->translate("Invalidated"); ?>">
-                <?php echo $this->translate("Invalidated"); ?>
-            </a>
-        <?php endif; ?>
-    </div>
-    <div class="col-md-2">
-        <?php if ($this->evento['apresentado']): ?>
-            <a href="<?php echo $this->url(array(
-                'id' => $this->id_evento
-            ), 'evento_desfazer_apresentado', true) ?>"
-            id="btn-presented"
-            class="btn btn-block btn-success"
-            data-btn-action="btn-danger"
-            data-btn-default-action="btn-success"
-            data-btn-title="<?php echo $this->translate("Undo presented?"); ?>"
-            data-btn-default-title="<?php echo $this->translate("Presented"); ?>">
-                <?php echo $this->translate("Presented"); ?>
-            </a>
-        <?php else: ?>
-            <a href="<?php echo $this->url(array(
-                'id' => $this->id_evento
-            ), 'evento_apresentado', true) ?>"
-            id="btn-presented"
-            class="btn btn-block btn-default"
-            data-btn-action="btn-primary"
-            data-btn-default-action="btn-default"
-            data-btn-title="<?php echo $this->translate("Set as presented?"); ?>"
-            data-btn-default-title="<?php echo $this->translate("Not presented"); ?>">
-                <?php echo $this->translate("Not presented"); ?>
-            </a>
-        <?php endif; ?>
+            </div>
+            <div class="col-md-2">
+                <?php if ($this->evento['validada']): ?>
+                    <a href="<?php echo $this->url(array(
+                        'id' => $this->id_evento
+                    ), 'invalidar_evento', true) ?>"
+                    id="btn-validated"
+                    class="btn btn-block btn-success"
+                    data-btn-action="btn-danger"
+                    data-btn-default-action="btn-success"
+                    data-btn-title="<?php echo $this->translate("Invalidate?"); ?>"
+                    data-btn-default-title="<?php echo $this->translate("Validated"); ?>">
+                        <?php echo $this->translate("Validated"); ?>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo $this->url(array(
+                        'id' => $this->id_evento
+                    ), 'validar_evento', true) ?>"
+                    id="btn-validated"
+                    class="btn btn-block btn-default"
+                    data-btn-action="btn-primary"
+                    data-btn-default-action="btn-default"
+                    data-btn-title="<?php echo $this->translate("Validate?"); ?>"
+                    data-btn-default-title="<?php echo $this->translate("Invalidated"); ?>">
+                        <?php echo $this->translate("Invalidated"); ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-2">
+                <?php if ($this->evento['apresentado']): ?>
+                    <a href="<?php echo $this->url(array(
+                        'id' => $this->id_evento
+                    ), 'evento_desfazer_apresentado', true) ?>"
+                    id="btn-presented"
+                    class="btn btn-block btn-success"
+                    data-btn-action="btn-danger"
+                    data-btn-default-action="btn-success"
+                    data-btn-title="<?php echo $this->translate("Undo presented?"); ?>"
+                    data-btn-default-title="<?php echo $this->translate("Presented"); ?>">
+                        <?php echo $this->translate("Presented"); ?>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo $this->url(array(
+                        'id' => $this->id_evento
+                    ), 'evento_apresentado', true) ?>"
+                    id="btn-presented"
+                    class="btn btn-block btn-default"
+                    data-btn-action="btn-primary"
+                    data-btn-default-action="btn-default"
+                    data-btn-title="<?php echo $this->translate("Set as presented?"); ?>"
+                    data-btn-default-title="<?php echo $this->translate("Not presented"); ?>">
+                        <?php echo $this->translate("Not presented"); ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </div>
-
-<hr>
 
 <div class="row">
     <div class="col-md-6">
@@ -99,9 +101,6 @@
                     <span class="label label-primary"><?php echo $this->evento['nome_tipo_evento']; ?></span>
                     <?php echo $this->evento['nome_evento']; ?>
                 </h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -153,9 +152,6 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $this->translate("Details"); ?></h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
             </div>
             <div class="box-body no-padding">
                 <div class="nav-tabs-custom">
@@ -201,16 +197,18 @@
                         <i class="fa fa-plus"></i>
                         <?php echo $this->translate("New Schedule"); ?>
                     </a>
-                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
-            <div class="box-body no-padding">
-                <?php if (empty($this->horarios)): ?>
-                <div class="alert alert-info">
-                    <i class="fa fa-info"></i>
-                    <?php echo $this->translate("No schedule added yet."); ?>
+            <?php if (empty($this->horarios)): ?>
+            <div class="box-body">
+                <div class="callout callout-info">
+                    <p>
+                        <?php echo $this->translate("No schedule added yet."); ?>
+                    </p>
                 </div>
-                <?php else: ?>
+            </div>
+            <?php else: ?>
+            <div class="box-body no-padding">
                 <table id="horarios" class="table table-hover">
                     <thead>
                         <tr>
@@ -281,8 +279,8 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php endif; ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -293,14 +291,10 @@
                     <i class="icon-group"></i>
                     <?php echo $this->translate("Other Speakers"); ?>
                 </h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
             </div>
             <div class="box-body">
                 <?php if (empty($this->outrosPalestrantes)): ?>
-                <div class="alert alert-info">
-                    <i class="fa fa-info"></i>
+                <div class="callout callout-info">
                     <?php echo $this->translate("No others speakers."); ?>
                 </div>
                 <?php else: ?>
