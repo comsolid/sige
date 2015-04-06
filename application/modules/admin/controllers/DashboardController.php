@@ -21,6 +21,12 @@ class Admin_DashboardController extends Zend_Controller_Action {
 
     public function indexAction() {
         $this->view->title = _('Dashboard');
+
+        $model = new Admin_Model_EncontroParticipante();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+        $this->view->latest_members = $model->listarUltimosMembros($idEncontro);
     }
 
     public function ajaxUserRegistrationAction() {

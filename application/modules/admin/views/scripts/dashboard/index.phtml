@@ -5,6 +5,7 @@
     $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/jquery/jquery.ajaxQueue.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/dashboard/index.js'));
 ?>
 
@@ -46,6 +47,37 @@
                 <?php echo $this->translate("More info"); ?>
                 <i class="fa fa-arrow-circle-right"></i>
             </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?php echo $this->translate("Latest Members"); ?></h3>
+            </div>
+            <div class="box-body no-padding">
+                <ul class="users-list clearfix">
+                    <?php foreach($this->latest_members as $item): ?>
+                    <li>
+                        <?php
+                        $hash = md5(strtolower(trim($item['email'])));
+                        $url = "/u/";
+                        $url .= (empty($item['twitter']) ? $item['id_pessoa'] : $item['twitter']);
+                        ?>
+                        <img src="http://www.gravatar.com/avatar/<?php echo $hash; ?>?s=128&d=retro"
+                            class="img-circle" alt="User Image" />
+                        <a href="<?php echo $url ?>"
+                            target="_blank"
+                            class="users-list-name"><?php echo $item['nome']; ?></a>
+                        <span class="users-list-date"
+                            data-moment="<?php echo $item['data_validacao']; ?>"
+                            title="<?php echo $item['data_validacao']; ?>"></span>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

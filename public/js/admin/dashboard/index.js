@@ -1,5 +1,11 @@
 
 $(function () {
+    $('span[data-moment]').each(function(idx, item) {
+		var $item = $(item);
+		var date = $item.attr('data-moment');
+		$item.html(moment(date, 'DD/MM/YYYY HH:mm').fromNow());
+	});
+
     var LOADING_TEXT = '<i class="fa fa-refresh fa-spin"></i>';
 
     var ajax_user_registration = {

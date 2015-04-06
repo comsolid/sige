@@ -71,6 +71,18 @@ class Admin_Model_EncontroParticipante extends Zend_Db_Table_Abstract {
             WHERE id_encontro = ?";
         return $this->getAdapter()->fetchCol($sql, array($id));
     }
+
+    public function listarUltimosMembros($id_encontro) {
+        $sql = "SELECT p.id_pessoa, p.nome, p.email, p.twitter,
+            to_char(ep.data_validacao, 'DD/MM/YYYY HH24:MI:SS') as data_validacao
+            FROM pessoa p
+            INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
+            WHERE validado = 't'
+            AND ep.id_encontro = ?
+            ORDER BY ep.data_validacao DESC
+            LIMIT 8";
+        return $this->getAdapter()->fetchAll($sql, array($id_encontro));
+    }
 }
 
 ?>
