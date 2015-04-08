@@ -1,5 +1,15 @@
 
 $(document).ready(function() {
+    var loading = $('#loading');
+
+	function startLoading(){
+		loading.addClass('fa-spinner fa-spin').removeClass('fa-search');
+	}
+
+	function stopLoading() {
+		loading.removeClass('fa-spinner fa-spin').addClass('fa-search');
+	}
+
     var oTable = $('table').dataTable({
         'ordering': false,
         'filter': false,
@@ -12,7 +22,7 @@ $(document).ready(function() {
     });
 
     function getValores() {
-        $('#loading').show();
+        startLoading();
         var termo = $('#termo').val();
         var url = '/admin/caravana/ajax-buscar/termo/' + termo;
         $.getJSON(url, null, function(json) {
@@ -21,7 +31,7 @@ $(document).ready(function() {
                 oTable.fnAddData(json.itens);
             }
         }).complete(function() {
-            $('#loading').hide();
+            stopLoading();
         });
     }
     getValores();

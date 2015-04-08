@@ -1,9 +1,7 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/screen.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/iphone-style-checkbox.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/bootstrap-switch/bootstrap-switch.min.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('js/iphone-style-checkboxes.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/bootstrap-switch/bootstrap-switch.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/config/editar-permissao.js'));
 ?>
 
@@ -11,5 +9,55 @@
 <hr/>
 
 <?php
-   echo $this->form;
+$form = $this->form;
 ?>
+
+<form method="<?php echo $form->getMethod() ?>"
+    action="<?php echo $form->getAction()?>">
+
+<div class="row">
+    <div class="col-md-5 col-md-offset-3">
+        <div class="box box-solid">
+            <div class="box-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $form->admin->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->admin->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->admin->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $form->id_tipo_usuario->renderLabel() ?>
+                        <div class="form-group">
+                            <?php echo $form->id_tipo_usuario->renderViewHelper() ?>
+                            <div class="form-errors">
+                                <?php echo $form->id_tipo_usuario->renderErrors() ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="<?=$this->url(array('module' => 'admin',
+                            'controller' => 'config',
+                            'action' => 'permissao-usuarios'), 'default', true) ?>"
+                            class="btn btn-default">
+                            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+                        </a>
+
+                        <?php echo $form->submit->renderViewHelper() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>

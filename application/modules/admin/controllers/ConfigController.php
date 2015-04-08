@@ -56,8 +56,9 @@ class Admin_ConfigController extends Zend_Controller_Action {
             } else {
                 $admin = "<i class='icon-lock'></i> Usuário";
             }
-            $acao = "<a href='/admin/config/editar-permissao/id/{$value['id_pessoa']}'><i class='icon-edit'></i> "
-                    . _("Edit permission") . "</a>";
+            $acao = "<a href=\"/admin/config/editar-permissao/id/{$value['id_pessoa']}\"
+                class=\"btn btn-default\"><i class=\"fa fa-edit\"></i> "
+                . _("Edit permission") . "</a>";
 
             $json->aaData[] = array(
                 "{$value ['nome']}",

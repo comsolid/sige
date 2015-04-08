@@ -9,37 +9,28 @@
 	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
 	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
 	$this->headScript()->appendFile($this->baseUrl('js/admin/participante/index.js'));
-	//echo $this->partial('menu.phtml');
 ?>
 
 <input type="hidden"  name="id_encontro" id="id_encontro" value="<?=$this->idEncontro?>" />
 
-<div class="row">
-	<div class="col-md-6">
-		<div class="box box-solid">
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="input-group">
-							<input type="text" id="termo" class="form-control input-lg"
-								autofocus="autofocus"
-								placeholder="<?php echo $this->translate("Search participant..."); ?>"/>
-							<span class="input-group-addon">
-								<i class="fa fa-2x fa-search" id="loading"></i>
-							</span>
-						</div>
-					</div>
+<div class="box box-solid">
+	<div class="box-body">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group">
+					<input type="text" id="termo" class="form-control input-lg"
+						autofocus="autofocus"
+						placeholder="<?php echo $this->translate("Search participant..."); ?>"/>
+					<span class="input-group-addon">
+						<i class="fa fa-2x fa-search" id="loading"></i>
+					</span>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="box box-solid">
-			<div class="box-body">
-				<p>
+			<div class="col-md-6">
+				<span style="margin-right: 10px;">
 					<i class="fa fa-search"></i>
 					<?php echo $this->translate("Search by"); ?>:
-				</p>
+				</span>
 				<div class="btn-group" data-toggle="buttons">
 					<label class="btn btn-default active">
 						<input type="radio" id="b_nome" name="t_busca" value="nome" checked="checked"/>
@@ -64,7 +55,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 
