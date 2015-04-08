@@ -29,6 +29,8 @@ var locale_data = {
         'Seconds': [null, 'Segundos'],
         'OK': [null, 'Confirmar'],
         'Cancel': [null, 'Cancelar'],
-        'Are you sure?': [null, 'Você tem certeza?']
+        'Are you sure?': [null, 'Você tem certeza?'],
+        'Loging in...': [null, 'Entrando...'],
+        'Sending...': [null, 'Enviando...']
     }
 };
