@@ -61,6 +61,9 @@ class IndexController extends Zend_Controller_Action {
                     // se ultimo encontro do participante for diferente do atual
                     if ($model->verificaEncontro($idEncontro, $idPessoa) == false) {
                         $result['id_encontro'] = intval($idEncontro);
+                        // forçar participante validado : issue #32
+                        $result['validado'] = 't'; // true
+                        $result['data_validacao'] = new Zend_Db_Expr('now()');
                         try {
                             $model->getAdapter()->insert("encontro_participante", $result);
                             $this->_helper->flashMessenger->addMessage(array('success' => _('Welcome back. Your registration was confirmed!<br/>Please update your profile data.')));

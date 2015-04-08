@@ -1,3 +1,8 @@
+<?php
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/parsley.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/pt-br.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/index/login.js'));
+?>
 
 <style>
     body {
@@ -14,14 +19,14 @@
     .vertical-offset-100 {
         padding-top: 100px;
     }
-    
+
     .img-responsive {
         display: block;
         max-width: 100%;
         height: auto;
         margin: auto;
     }
-    
+
     .panel {
         margin-bottom: 20px;
         background-color: rgba(255, 255, 255, 0.75);
@@ -29,6 +34,12 @@
         border-radius: 4px;
         -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
         box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
+
+    ul.parsley-errors-list {
+       list-style: none;
+       color: #a94442;
+       margin-top: 5px;
     }
 </style>
 
@@ -43,15 +54,18 @@ $form = $this->form;
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row-fluid user-row">
-                        <img src="<?php echo $this->baseUrl('img/banner-login.png'); ?>" class="img-responsive" alt="Conxole Admin"/>
+                        <img src="<?php echo $this->baseUrl('img/banner-login.png'); ?>"
+                            class="img-responsive" alt="banner"/>
                     </div>
                 </div>
-                
+
                 <div class="panel-body">
                     <?php echo $this->flashMessages(); ?>
-                
+
                     <form method="<?php echo $form->getMethod() ?>"
                         action="<?php echo $form->getAction()?>"
+                        data-parsley-validate
+                        id="<?php echo $form->getName()?>"
                         class="form-signin">
                         <fieldset>
                             <?php echo $form->email->renderViewHelper() ?>
@@ -76,7 +90,7 @@ $form = $this->form;
                         </fieldset>
                     </form>
                 </div>
-                
+
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-md-6">
@@ -84,7 +98,7 @@ $form = $this->form;
                                 class="btn btn-link">
                                 <i class="fa fa-key"></i>
                                 <?php echo $this->translate("Forgot My Password"); ?>
-                            </a> 
+                            </a>
                         </div>
                         <div class="col-md-6">
                             <a href="<?php echo $this->url(array(), 'participar', true);?>"
@@ -100,6 +114,5 @@ $form = $this->form;
     </div>
 </div>
 
-	
+
 	<br>
-	

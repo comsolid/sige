@@ -116,9 +116,9 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 	}
 
 	public function verificaEncontro($idEncontro, $idPessoa){
-		$select = "SELECT id_pessoa from encontro_participante where id_encontro = ? AND id_pessoa= ?";
-		$resp = $this->getAdapter()->fetchAll($select,array($idEncontro,$idPessoa));
-		if (sizeof($resp) == 0) {
+		$select = "SELECT id_pessoa from encontro_participante where id_encontro = ? AND id_pessoa = ?";
+		$resp = $this->getAdapter()->fetchRow($select, array($idEncontro, $idPessoa));
+		if ($resp == null) {
 			return false;
 		}
 		return true;
