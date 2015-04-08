@@ -1,4 +1,3 @@
-
 $(function() {
     $('#nome_encontro').select();
 

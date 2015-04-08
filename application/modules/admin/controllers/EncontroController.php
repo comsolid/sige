@@ -36,7 +36,9 @@ class Admin_EncontroController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             if (isset($formData['cancelar'])) {
-                return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'encontro'), 'default', true);
+                return $this->_helper->redirector->goToRoute(array(
+                    'module' => 'admin',
+                    'controller' => 'encontro'), 'default', true);
             }
             if ($form->isValid($formData)) {
                 $values = $form->getValues();
@@ -223,10 +225,6 @@ class Admin_EncontroController extends Zend_Controller_Action {
                     $model_encontro->update($data, "id_encontro = {$id_encontro}");
                     $this->_helper->flashMessenger->addMessage(
                             array('success' => 'Mensagem atualizada com sucesso.'));
-                    return $this->_helper->redirector->goToRoute(array(
-                                'module' => 'admin',
-                                'controller' => 'encontro',
-                                'action' => 'index'), 'default', true);
                 } catch (Exception $e) {
                     $this->_helper->flashMessenger->addMessage(
                             array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: '
@@ -235,14 +233,24 @@ class Admin_EncontroController extends Zend_Controller_Action {
             } else {
                 $form->populate($formData);
             }
-        } else {
-            $id_encontro = (int) $this->_getParam('id_encontro');
-            $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
-            if ($id_encontro > 0 and ! empty($tipo_mensagem)) {
-                $row = $model_encontro->lerMensagemCertificado($id_encontro, $tipo_mensagem);
-                $row["tipo_mensagem_certificado"] = $tipo_mensagem;
-                $form->populate($row);
+        }
+
+        $id_encontro = (int) $this->_getParam('id_encontro');
+        $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
+        if ($id_encontro > 0 and ! empty($tipo_mensagem)) {
+            $row = $model_encontro->lerMensagemCertificado($id_encontro, $tipo_mensagem);
+            if ($row == null) {
+                $this->_helper->flashMessenger->addMessage(
+                        array('warning' => _('Conference not found.')));
+                return $this->_helper->redirector->goToRoute(array(
+                            'module' => 'admin',
+                            'controller' => 'encontro',
+                            'action' => 'index'), 'default', true);
             }
+            $row["tipo_mensagem_certificado"] = $tipo_mensagem;
+            $form->populate($row);
+
+            $this->view->pdf = $model_encontro->gerarCertificadoPreview($id_encontro, $tipo_mensagem);
         }
         $this->view->form = $form;
     }

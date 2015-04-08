@@ -50,7 +50,7 @@ class Admin_Form_MensagemCertificado extends Zend_Form {
         $e = new Zend_Form_Element_Textarea('mensagem');
         $e->setLabel('Mensagem:')
                 ->setRequired(true)
-                ->setAttrib('rows', 10)
+                ->setAttrib('rows', 5)
                 ->addFilter('StringTrim')
                 ->setAttrib('class', 'form-control');
 

@@ -28,6 +28,7 @@
     "Morris": false,
     "Jed": false,
     "FastClick": false,
-    "console": false
+    "console": false,
+    "PDFJS": false
   }
 }

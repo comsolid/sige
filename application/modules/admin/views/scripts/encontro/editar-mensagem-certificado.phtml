@@ -1,6 +1,16 @@
 <?php
-    $this->headScript()->prependFile($this->baseUrl('js/admin/encontro/salvar.js'), 'text/javascript');
+    $this->headScript()->prependFile($this->baseUrl('lib/js/pdf.js/pdf.js'));
+    $this->headScript()->prependFile($this->baseUrl('js/admin/encontro/editar-mensagem-certificado.js'));
 ?>
+
+<style media="screen">
+    #the-canvas {
+        border: 1px solid #aaaaaa;
+        width: 1088px;
+        margin: 0px auto;
+        display: block;
+    }
+</style>
 
 <?php
 $form = $this->form;
@@ -54,19 +64,29 @@ $form = $this->form;
                     folhas de estilo (css) ou arquivos javascript (js).
                 </li>
                 <li><?php echo $this->translate("The message must contain some attributes "
-                . "that will be replaced in the certificate. They are:"); ?>
+                            . "that will be replaced in the certificate. They are:"); ?>
                     <ul>
-                        <!-- TODO: mostrar variáveis de acordo com o template! -->
                         <?php foreach ($this->options as $option): ?>
                             <li><code><?php echo $option ?></code></li>
                         <?php endforeach; ?>
-                        <!-- <li><code>{tipo_evento}</code></li>
-                        <li><code>{nome_evento}</code></li>
-                        <li><code>{encontro}</code></li>
-                        <li><code>{carga_horaria}</code></li> -->
                     </ul>
                 </li>
             </ul>
+        </div>
+    </div>
+</div>
+
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title"><?php echo $this->translate("Certificate Preview"); ?></h3>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="hidden" id="pdf-data" value="<?php echo base64_encode($this->pdf); ?>"/>
+
+                <canvas id="the-canvas"></canvas>
+            </div>
         </div>
     </div>
 </div>

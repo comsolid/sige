@@ -85,11 +85,47 @@ class Admin_Model_Encontro extends Application_Model_Encontro {
 
     public function lerMensagemCertificado($id_encontro, $tipo_mensagem) {
         $sql = "
-            SELECT id_encontro, $tipo_mensagem as mensagem
+            SELECT id_encontro, ${tipo_mensagem} as mensagem
             FROM encontro
             WHERE id_encontro = ?
         ";
         return $this->getAdapter()->fetchRow($sql, array($id_encontro));
     }
 
+    public function gerarCertificadoPreview($id_encontro, $tipo_mensagem) {
+
+        $certificado = new Sige_Pdf_Certificado();
+        switch ($tipo_mensagem) {
+            case "certificados_template_participante_encontro":
+                $pdf = $certificado->participanteEncontro(array(
+                    'nome' => 'JOHN JOAOZINHO',
+                    'id_encontro' => $id_encontro,
+                    'encontro' => 'I ENCONTRO DE SOFTWARE LIVRE',
+                ));
+                break;
+            case "certificados_template_palestrante_evento":
+                $pdf = $certificado->palestranteEvento(array(
+                    'nome' => 'JOHN JOAOZINHO',
+                    'id_encontro' => $id_encontro,
+                    'encontro' => 'I ENCONTRO DE SOFTWARE LIVRE',
+                    'tipo_evento' => 'PALESTRA',
+                    'nome_evento' => 'SOFTWARE LIVRE NAS ESCOLAS',
+                    'carga_horaria' => '1',
+                ));
+                break;
+            case "certificados_template_participante_evento":
+                $pdf = $certificado->participanteEvento(array(
+                    'nome' => 'JOHN JOAOZINHO',
+                    'id_encontro' => $id_encontro,
+                    'encontro' => 'I ENCONTRO DE SOFTWARE LIVRE',
+                    'tipo_evento' => 'PALESTRA',
+                    'nome_evento' => 'SOFTWARE LIVRE NAS ESCOLAS',
+                    'carga_horaria' => '1',
+                ));
+                break;
+            default:
+                throw new Exception(_('Certificate type unknow.'));
+        }
+        return $pdf;
+    }
 }
