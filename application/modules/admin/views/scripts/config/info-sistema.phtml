@@ -1,0 +1,88 @@
+<?php
+use Uptime\System;
+
+$system = new System();
+$uptime = $system->getUptime();
+$boottime = $system->getBoottime();
+?>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("Host Info"); ?></h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <td><strong><?php echo $this->translate("OS Version"); ?></strong></td>
+                            <td><?php echo php_uname(); ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Date/Time"); ?></strong></td>
+                            <td><?php echo date('d/m/Y H:i:s'); ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Uptime"); ?></strong></td>
+                            <td>
+                                <?php echo sprintf($this->translate("%d days, %d hours, %d minutes, %d seconds"),
+                                $uptime->d, $uptime->h, $uptime->m, $uptime->s); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Boot time"); ?></strong></td>
+                            <td>
+                                <?php echo $boottime->format('d/m/Y H:i:s'); ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("PostgreSQL Info"); ?></h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Version"); ?></strong></td>
+                            <td><?php echo $this->postgres['version']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Date/Time"); ?></strong></td>
+                            <td><?php echo $this->postgres['datetime']; ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("PHP Info"); ?></h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Version"); ?></strong></td>
+                            <td><?php echo phpversion(); ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo $this->translate("Loaded Extensions"); ?></strong></td>
+                            <td><?php echo join(', ', get_loaded_extensions()); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,11 +6,16 @@
         {
             "name": "Átila Camurça",
             "email": "camurca.home@gmail.com"
+        },
+        {
+            "name": "Samir Costa",
+            "email": "samirfor@gmail.com"
         }
     ],
     "require": {
         "zendframework/zendframework1": "1.x",
-        "dinesh/barcode-all": "dev-master"
+        "dinesh/barcode-all": "dev-master",
+        "uptime/uptime": "~0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",

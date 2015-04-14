@@ -157,4 +157,10 @@ class Admin_ConfigController extends Zend_Controller_Action {
                     'action' => 'index'), 'default', true);
     }
 
+    public function infoSistemaAction() {
+        $this->view->title = _('System Info');
+
+        $sistema = new Admin_Model_Sistema();
+        $this->view->postgres = $sistema->infoPostgres();
+    }
 }

@@ -51,6 +51,13 @@
             </div>
             <div class="list-group">
                 <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'config',
+                    'action' => 'info-sistema'
+                ), 'default', true); ?>" class="list-group-item">
+                    <i class="fa fa-cog"></i> <?php echo $this->translate("System Info"); ?>
+                </a>
+                <a href="<?php echo $this->url(array(
                         'module' => 'admin',
                         'controller' => 'config',
                         'action' => 'limpar-cache'

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62ca471ddfcca318411495fe2e6b60a1",
+    "hash": "cce138915862ef48b4a16588cdff410b",
     "packages": [
         {
             "name": "dinesh/barcode-all",
@@ -44,6 +44,54 @@
             ],
             "description": "Barcode generator like Qr Code , PDF417,C39, C39+,C39E,C39E+,C93,S25,S25+,I25,I25+,C128,C128A,C128B,C128C,2-Digits UPC-Based Extention,5-Digits UPC-Based Extention,EAN 8,EAN 13,UPC-A,UPC-E,MSI (Variation of Plessey code)",
             "time": "2014-06-06 07:00:00"
+        },
+        {
+            "name": "uptime/uptime",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marcioAlmada/uptime.git",
+                "reference": "11c12b600ccdc92162f28a4199ae66493431c8d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marcioAlmada/uptime/zipball/11c12b600ccdc92162f28a4199ae66493431c8d6",
+                "reference": "11c12b600ccdc92162f28a4199ae66493431c8d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Uptime\\": "src/"
+                },
+                "files": [
+                    "__functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márcio Almada",
+                    "email": "marcio3w@gmail.com",
+                    "homepage": "https://github.com/marcioAlmada"
+                }
+            ],
+            "description": "Missing php uptime package inspired by python module uptime",
+            "keywords": [
+                "boottime",
+                "system",
+                "uptime"
+            ],
+            "time": "2014-08-11 22:56:29"
         },
         {
             "name": "zendframework/zendframework1",

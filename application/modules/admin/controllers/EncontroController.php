@@ -157,6 +157,7 @@ class Admin_EncontroController extends Zend_Controller_Action {
         }
 
         if ($id > 0 and $id_tipo_mensagem > 0) {
+            // TODO: usar bindings
             $row = $model->fetchRow("id_encontro = {$id} AND id_tipo_mensagem_email = {$id_tipo_mensagem}");
             $form->populate($row->toArray());
         }
