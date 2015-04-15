@@ -1,3 +1,4 @@
+﻿START TRANSACTION;
 
 DROP TRIGGER trgrvalidaevento ON evento;
 
@@ -11,7 +12,7 @@ ALTER TABLE evento_participacao
 
 DROP TABLE evento_realizacao_multipla;
 
-DROP SEQUENCE evento_realizacao_multipla_evento_realizacao_multipla_seq;
+DROP SEQUENCE IF EXISTS evento_realizacao_multipla_evento_realizacao_multipla_seq;
 
 CREATE SEQUENCE artigo_id_artigo_seq
 	START WITH 1
@@ -49,6 +50,8 @@ CREATE TABLE tipo_horario (
 	horario_final time without time zone NOT NULL
 );
 
+INSERT INTO tipo_horario (intervalo_minutos, horario_inicial, horario_final) VALUES (60, '08:00', '17:00');
+
 ALTER TABLE caravana
 	ALTER COLUMN nome_caravana TYPE character varying(255) /* TYPE change - table: caravana original: character varying(100) new: character varying(255) */;
 
@@ -69,7 +72,7 @@ ALTER TABLE encontro
 	ADD COLUMN certificados_template_participante_encontro text DEFAULT 'Certificamos que %s participou do(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
 	ADD COLUMN certificados_template_palestrante_evento text DEFAULT 'Certificamos que %s apresentou o(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
 	ADD COLUMN certificados_template_participante_evento text DEFAULT 'Certificamos que %s participou do(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
-	ADD COLUMN id_municipio integer DEFAULT 101 NOT NULL,
+	ADD COLUMN id_municipio integer DEFAULT 1 NOT NULL,
 	ADD COLUMN id_tipo_horario integer DEFAULT 1 NOT NULL,
 	ALTER COLUMN nome_encontro TYPE character varying(255) /* TYPE change - table: encontro original: character varying(100) new: character varying(255) */,
 	ALTER COLUMN apelido_encontro TYPE character varying(50) /* TYPE change - table: encontro original: character varying(10) new: character varying(50) */;
@@ -230,3 +233,5 @@ ALTER TABLE pessoa
 	ADD CONSTRAINT pessoa_email_key UNIQUE (email);
 
 CREATE UNIQUE INDEX artigo_id_artigo_key ON artigo USING btree (id_artigo);
+
+ROLLBACK;
