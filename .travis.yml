@@ -11,6 +11,12 @@ addons:
 
 before_script:
   - psql -c 'create database sige_test;' -U postgres
+  - pg_restore --username "postgres" --dbname "sige_test" --no-password  --no-owner --no-privileges --no-tablespaces --verbose "db.backup/sige_test.backup"
+  - mkdir public/captcha
+  - chmod 777 public/captcha
+  - mkdir library/HTMLPurifier/DefinitionCache/Serializer
+  - chmod 777 library/HTMLPurifier/DefinitionCache/Serializer
+  - chmod 777 application/cache/common
 
 install:
   - php composer.phar install

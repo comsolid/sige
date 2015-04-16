@@ -23,3 +23,5 @@ require_once realpath(APPLICATION_PATH . '/../vendor/autoload.php');
 //require_once 'ControllerTestCase.php';
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
+
+putenv('APPLICATION_ENV=testing');

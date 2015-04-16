@@ -2,22 +2,25 @@
     <testsuite name="Application Tests">
         <directory>./application</directory>
     </testsuite>
-    
+
     <filter>
         <whitelist>
-            <directory suffix=".php">../application/</directory>
+            <directory suffix=".php">./application/</directory>
             <exclude>
-                <directory suffix=".phtml">../application/</directory>
-                <file>../application/Bootstrap.php</file>
-                <file>../application/controllers/ErrorController.php</file>
+                <directory suffix=".phtml">./application/</directory>
+                <file>./application/Bootstrap.php</file>
+                <file>./application/controllers/ErrorController.php</file>
             </exclude>
         </whitelist>
     </filter>
-    
+
     <logging>
-        <log type="coverage-html" target="./log/report" charset="UTF-8"
-                yui="true" hightlight="true" lowupperbound="50" highlowerbound="80">
-            <log type="testdox" target="./log/testdox.html"></log>
-        </log>
+        <log type="coverage-html" target="_reports/coverage" title="Module Application" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="_reports/logs/clover.xml"/>
+        <log type="junit" target="_reports/logs/junit.xml" logIncompleteSkipped="false"/>
+        <log type="testdox-text" target="_reports/testdox/executed.txt"/>
     </logging>
+    <php>
+        <env name="PROJECT_ROOT" value="."/>
+    </php>
 </phpunit>
