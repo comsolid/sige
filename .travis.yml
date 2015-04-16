@@ -16,6 +16,7 @@ before_script:
   - chmod 777 public/captcha
   - mkdir library/HTMLPurifier/DefinitionCache/Serializer
   - chmod 777 library/HTMLPurifier/DefinitionCache/Serializer
+  - mkdir -p application/cache/common
   - chmod 777 application/cache/common
 
 install:
