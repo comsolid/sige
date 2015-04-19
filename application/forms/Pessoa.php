@@ -16,8 +16,11 @@ class Application_Form_Pessoa extends Zend_Form {
 				->addElement($this->_instituicao())
 				->addElement($this->_nascimento())
                 ->addElement($this->_cpf())
-                ->addElement($this->_telefone())
-                ->addElement($this->_captcha());
+                ->addElement($this->_telefone());
+
+		if (!\Zend_Session::$_unitTestEnabled) {
+			$this->addElement($this->_captcha());
+		}
 
 		$submit = $this->createElement('submit', 'submit', array('label' => _('Confirm')));
         $submit->setAttrib('class', 'btn btn-lg btn-primary btn-block');

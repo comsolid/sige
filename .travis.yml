@@ -20,4 +20,4 @@ before_script:
 install:
   - php composer.phar install
 
-script: phpunit --configuration tests/phpunit.xml
+script: phpunit --stderr --configuration tests/phpunit.xml

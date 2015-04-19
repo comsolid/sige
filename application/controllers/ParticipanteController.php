@@ -12,7 +12,10 @@ class ParticipanteController extends Zend_Controller_Action {
         if (!Zend_Auth::getInstance()->hasIdentity()) {
             $session = new Zend_Session_Namespace();
             $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
+            $servParam = $this->getRequest()->getServer();
+            if (isset($servParam['REQUEST_URI'])) {
+                $session->url = $servParam['REQUEST_URI'];
+            }
             return $this->_helper->redirector->goToRoute(array(), 'login', true);
         }
     }
@@ -194,12 +197,6 @@ class ParticipanteController extends Zend_Controller_Action {
         $this->view->form = $form;
 
         $data = $this->getRequest()->getPost();
-        if (isset($data['cancelar'])) {
-            return $this->_helper->redirector->goToRoute(array(
-                        'controller' => 'participante',
-                        'action' => 'ver'
-                            ), 'default', true);
-        }
 
         if ($this->getRequest()->isPost() && $form->isValid($data)) {
             $data = $form->getValues();

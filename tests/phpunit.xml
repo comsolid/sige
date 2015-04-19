@@ -5,11 +5,11 @@
 
     <filter>
         <whitelist>
-            <directory suffix=".php">./application/</directory>
+            <directory suffix=".php">../application/</directory>
             <exclude>
-                <directory suffix=".phtml">./application/</directory>
-                <file>./application/Bootstrap.php</file>
-                <file>./application/controllers/ErrorController.php</file>
+                <directory suffix=".phtml">../application/</directory>
+                <file>../application/Bootstrap.php</file>
+                <file>../application/controllers/ErrorController.php</file>
             </exclude>
         </whitelist>
     </filter>

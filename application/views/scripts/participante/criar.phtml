@@ -155,7 +155,10 @@ $form = $this->form;
         </div>
     </div>
 
-    <?php $captcha = $form->captcha->getCaptcha()->generate(); ?>
+    <?php
+        if (isset($form->captcha)):
+        $captcha = $form->captcha->getCaptcha()->generate();
+    ?>
     <div class="row">
         <div class="col-md-12">
             <?php echo $form->captcha->renderLabel(); ?>
@@ -181,4 +184,5 @@ $form = $this->form;
             <?php echo $form->submit->renderViewHelper(); ?>
         </div>
     </div>
+    <?php endif; ?>
 </form>
