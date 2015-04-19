@@ -97,22 +97,22 @@ class Default_EventoControllerTest extends Default_AbstractControllerTest {
         $this->assertAction($urlParams['action']);
     }
 
-    public function testAjaxBuscarAction() {
-        $this->mockLogin();
-        $params = array('action' => 'ajax-buscar', 'controller' => 'Evento', 'module' => 'default');
-        $urlParams = $this->urlizeOptions($params);
-        $url = $this->url($urlParams);
-        $this->request->setMethod('GET');
-        $this->request->setQuery(array(
-            'data' => '10/12/2014',
-            'id_tipo_evento' => 1,
-            'termo' => 'hack'
-        ));
-        $this->dispatch($url);
-
-        // assertions
-        $this->assertModule($urlParams['module']);
-        $this->assertController($urlParams['controller']);
-        $this->assertAction($urlParams['action']);
-    }
+    // public function testAjaxBuscarAction() {
+    //     $this->mockLogin();
+    //     $params = array('action' => 'ajax-buscar', 'controller' => 'Evento', 'module' => 'default');
+    //     $urlParams = $this->urlizeOptions($params);
+    //     $url = $this->url($urlParams);
+    //     $this->request->setMethod('GET');
+    //     $this->request->setQuery(array(
+    //         'data' => '10/12/2014',
+    //         'id_tipo_evento' => 1,
+    //         'termo' => 'hack'
+    //     ));
+    //     $this->dispatch($url);
+    //
+    //     // assertions
+    //     $this->assertModule($urlParams['module']);
+    //     $this->assertController($urlParams['controller']);
+    //     $this->assertAction($urlParams['action']);
+    // }
 }
