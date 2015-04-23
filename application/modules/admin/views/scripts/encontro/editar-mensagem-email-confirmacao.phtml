@@ -1,25 +1,68 @@
-
 <?php
-$form = $this->form;
+    $this->headScript()->appendFile($this->baseUrl('lib/js/ace-editor/ace.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/ace-editor/mode-html.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/encontro/editar-mensagem-email.js'));
+
+    $form = $this->form;
 ?>
+
+<style media="screen">
+#editor {
+    position: relative;
+    width: 100%;
+    height: 325px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+</style>
+
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+
+<div class="box box-solid">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-8">
+                <?php echo $form->mensagem->renderLabel() ?>
+
+                <div id="editor"></div>
+                <?php echo $form->mensagem->renderViewHelper() ?>
+            </div>
+            <div class="col-md-4">
+                <div class="alert alert-warning" style="margin-top: 10px;">
+                    <strong><?php echo $this->translate("Attention!"); ?></strong>
+                    <?php echo $this->translate("Some features of the message"); ?>:
+                    <ul>
+                        <li><?php echo $this->translate("The message can be written in HTML."); ?></li>
+                        <li><?php echo $this->translate("The message must contain some attributes "
+                        . "that will be replaced in the e-mail. They are:"); ?>
+                            <ul>
+                                <li><code>{nome}</code></li>
+                                <li><code>{email}</code></li>
+                                <li><code>{senha}</code></li>
+                                <li><code>{href_link}</code></li>
+                                <li><code>{assinatura_email}</code></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <?php echo $this->translate("Is not necessary write headers, write only the content of the"); ?>
+                            <code>&lt;body&gt;</code>.
+                        </li>
+                        <li>
+                            <?php echo $this->translate("Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"); ?>
+                            <code>style</code>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-6">
         <div class="box box-solid">
             <div class="box-body">
 
-                <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?php echo $form->mensagem->renderLabel() ?>
-                            <div class="form-group">
-                                <?php echo $form->mensagem->renderViewHelper() ?>
-                                <div class="form-errors">
-                                    <?php echo $form->mensagem->renderErrors() ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-8">
                             <?php echo $form->assunto->renderLabel() ?>
@@ -84,36 +127,13 @@ $form = $this->form;
                             <?php echo $form->submit->renderViewHelper() ?>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>
 
     <div class="col-md-6">
-        <div class="alert alert-warning" style="margin-top: 10px;">
-            <strong><?php echo $this->translate("Attention!"); ?></strong>
-            <?php echo $this->translate("Some features of the message"); ?>:
-            <ul>
-                <li><?php echo $this->translate("The message can be written in HTML."); ?></li>
-                <li><?php echo $this->translate("The message must contain some attributes "
-                . "that will be replaced in the e-mail. They are:"); ?>
-                    <ul>
-                        <li><code>{nome}</code></li>
-                        <li><code>{email}</code></li>
-                        <li><code>{senha}</code></li>
-                        <li><code>{href_link}</code></li>
-                        <li><code>{assinatura_email}</code></li>
-                    </ul>
-                </li>
-                <li>
-                    <?php echo $this->translate("Is not necessary write headers, write only the content of the"); ?>
-                    <code>&lt;body&gt;</code>.
-                </li>
-                <li>
-                    <?php echo $this->translate("Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"); ?>
-                    <code>style</code>.
-                </li>
-            </ul>
-        </div>
+
     </div>
 </div>
+
+</form>

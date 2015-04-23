@@ -52,11 +52,9 @@ class Admin_Form_MensagemEmail extends Zend_Form {
     }
 
     protected function _mensagem() {
-        $e = new Zend_Form_Element_Textarea('mensagem');
+        $e = new Zend_Form_Element_Hidden('mensagem');
         $e->setLabel(_('Message') . ":")
                 ->setRequired(true)
-                ->setAttrib('rows', 10)
-                ->setAttrib('class', 'form-control')
                 ->addFilter('StringTrim');
 
         $e->setDecorators(array(
