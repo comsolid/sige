@@ -38,7 +38,7 @@ class EventoController extends Zend_Controller_Action {
         $this->autenticacao();
         $this->view->menu->setAtivo('submission');
         $sessao = Zend_Auth::getInstance()->getIdentity();
-		$cache = Zend_Registry::get('cache_common');
+        $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
 
@@ -261,9 +261,7 @@ class EventoController extends Zend_Controller_Action {
         $encontro = new Application_Model_Encontro();
         $rs = $encontro->isPeriodoSubmissao($id_encontro);
         if ($rs['liberar_submissao'] == null and ! $admin) {
-            $warning = sprintf(_("The submission period goes from %s to %s."),
-                $rs['periodo_submissao_inicio'],
-                $rs['periodo_submissao_fim']);
+            $warning = sprintf(_("The submission period goes from %s to %s."), $rs['periodo_submissao_inicio'], $rs['periodo_submissao_fim']);
             $this->_helper->flashMessenger->addMessage(
                     array('warning' => $warning));
             return $this->_helper->redirector->goToRoute(array(
@@ -625,31 +623,26 @@ class EventoController extends Zend_Controller_Action {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
-        $idEncontro = (int) $ps->encontro["id_encontro"];
-        $idPessoa = $sessao["idPessoa"];
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+        $id_pessoa = $sessao["idPessoa"];
 //        $idEncontro = $sessao["idEncontro"]; // UNSAFE
 
-        $model = new Application_Model_Pessoa();
         $termo = $this->_request->getParam("termo", "");
 
         $json = new stdClass;
-        $json->results = array();
-
-        $rs = $model->getAdapter()->fetchAll(
-                "SELECT p.id_pessoa,
-               p.email
-         FROM pessoa p
-         INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
-         WHERE p.email LIKE lower(?)
-         AND p.id_pessoa <> ?
-         AND ep.id_encontro = ?
-         AND ep.validado = true ", array("{$termo}%", $idPessoa, $idEncontro));
-        $json->size = count($rs);
-        foreach ($rs as $value) {
-            $obj = new stdClass;
-            $obj->id = "{$value['id_pessoa']}";
-            $obj->text = "{$value['email']}";
-            array_push($json->results, $obj);
+        try {
+            $json->results = array();
+            $model_participante = new Application_Model_Participante();
+            $rs = $model_participante->buscarParticipantePorEmail($termo, $id_pessoa, $id_encontro);
+            $json->size = count($rs);
+            foreach ($rs as $value) {
+                $obj = new stdClass;
+                $obj->id = "{$value['id_pessoa']}";
+                $obj->text = "{$value['email']}";
+                array_push($json->results, $obj);
+            }
+        } catch (Zend_Db_Exception $e) {
+            $json->error = _('Error on fetching results.');
         }
 
         header("Pragma: no-cache");
@@ -732,7 +725,7 @@ class EventoController extends Zend_Controller_Action {
         $this->_helper->redirector->goToRoute(array(
             'controller' => 'evento',
             'action' => 'index',
-            ), 'default', true);
+                ), 'default', true);
     }
 
     public function deletarPalestranteAction() {

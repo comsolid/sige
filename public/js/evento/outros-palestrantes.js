@@ -14,6 +14,9 @@ $(function() {
     $("#sel").select2({
         placeholder: _("Enter speaker e-mail..."),
         minimumInputLength: 3,
+        createSearchChoice: function () {
+            return null; // não permite novas tags
+        },
         tags: function(options) {
             // https://groups.google.com/forum/#!msg/select2/bOF3CPXsqjI/YmR3yHN2yc4J
             var url = "/evento/ajax-buscar-participante/termo/" + options.term;

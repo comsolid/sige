@@ -1,4 +1,5 @@
 <?php
+
 class Admin_EventoController extends Zend_Controller_Action {
 
     public function init() {
@@ -12,8 +13,8 @@ class Admin_EventoController extends Zend_Controller_Action {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         if (!$sessao["administrador"]) {
             return $this->_helper->redirector->goToRoute(array(
-                'controller' => 'participante',
-                'action' => 'index'), 'default', true);
+                        'controller' => 'participante',
+                        'action' => 'index'), 'default', true);
         }
 
         $this->_helper->layout->setLayout('twbs3-admin/layout');
@@ -44,12 +45,12 @@ class Admin_EventoController extends Zend_Controller_Action {
         }
         if ($data['apresentado']) {
             $this->view->url_apresentado = "<a href='{$this->view->url(array(
-                'id' => $idEvento), 'evento_desfazer_apresentado', true) }'
+                        'id' => $idEvento), 'evento_desfazer_apresentado', true) }'
                 class='btn btn-warning'>
                   <i class='fa fa-eye-slash'></i> " . _("Undo presented") . "</a>";
         } else {
             $this->view->url_apresentado = "<a href='{$this->view->url(array(
-                'id' => $idEvento), 'evento_apresentado', true) }'
+                        'id' => $idEvento), 'evento_apresentado', true) }'
                 class='btn btn-success'>
                   <i class='fa fa-eye'></i> " . _("Presented") . "</a>";
         }
@@ -122,7 +123,7 @@ class Admin_EventoController extends Zend_Controller_Action {
             }
             $date = new Zend_Date($value['data_submissao']);
             $url = '<a href="' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
-                . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
+                    . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
             $json->itens[] = array(
                 "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span><br> {$value['nome_evento']}",
                 "{$validada}",

@@ -13,7 +13,7 @@ class Admin_PresencaController extends Zend_Controller_Action {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         if (!$sessao["administrador"]) {
             return $this->_helper->redirector->goToRoute(array('controller' => 'participante',
-            'action' => 'index'), 'default', true);
+                        'action' => 'index'), 'default', true);
         }
 
         $this->_helper->layout->setLayout('twbs3-admin/layout');
@@ -32,10 +32,10 @@ class Admin_PresencaController extends Zend_Controller_Action {
             $this->_helper->flashMessenger->addMessage(array('error' =>
                 'Evento não encontrado.'));
             return $this->_helper->redirector->goToRoute(array(
-                'module' => 'admin',
-                'controller' => 'evento',
-                'action' => 'index',
-            ), 'default');
+                        'module' => 'admin',
+                        'controller' => 'evento',
+                        'action' => 'index',
+                            ), 'default');
         }
         $this->view->evento = $evento_result;
 
@@ -50,16 +50,20 @@ class Admin_PresencaController extends Zend_Controller_Action {
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
         $sessao = Zend_Auth::getInstance()->getIdentity();
-        //$idPessoa = $sessao["idPessoa"];
+        $id_pessoa = $sessao["idPessoa"];
 
         $model = new Admin_Model_Pessoa();
         $termo = $this->_request->getParam("termo", "");
         $id_evento_realizacao = (int) $this->_request->getParam("id_evento_realizacao", 0);
 
         $json = new stdClass;
-        $rs = $model->ajaxBuscarEmail($termo, $idEncontro, $id_evento_realizacao);
-        $json->size = count($rs);
-        $json->results = $rs;
+        try {
+            $rs = $model->ajaxBuscarEmail($termo, $id_pessoa, $idEncontro, $id_evento_realizacao);
+            $json->size = count($rs);
+            $json->results = $rs;
+        } catch (Zend_Db_Exception $e) {
+            $json->error = _('Error on fetching results.');
+        }
 
         header("Pragma: no-cache");
         header("Cache: no-cache");
@@ -78,25 +82,25 @@ class Admin_PresencaController extends Zend_Controller_Action {
                 $array_id_pessoas = explode(",", $this->getRequest()->getPost('array_id_pessoas'));
                 if (count($array_id_pessoas) == 1 && empty($array_id_pessoas[0])) {
                     $this->_helper->flashMessenger->addMessage(
-                    array('warning' => 'Nenhum participante foi selecionado.'));
+                            array('warning' => 'Nenhum participante foi selecionado.'));
                 } else {
                     $model = new Admin_Model_EventoParticipacao();
                     try {
                         $count = $model->adicionarEmMassa($id_evento_realizacao, $array_id_pessoas);
                         $this->_helper->flashMessenger->addMessage(
-                            array('success' => $count . ' participantes adicionados com sucesso.'));
+                                array('success' => $count . ' participantes adicionados com sucesso.'));
                     } catch (Zend_Db_Exception $e) {
                         if ($e->getCode() == 23505) {
                             $this->_helper->flashMessenger->addMessage(
                                     array('warning' => 'Um ou mais e-mails já existem.'));
                         } else {
                             $this->_helper->flashMessenger->addMessage(
-                                array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
+                                    array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
                             );
                         }
                     } catch (Exception $e) {
                         $this->_helper->flashMessenger->addMessage(
-                            array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
+                                array('danger' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
                         );
                     }
                 }
@@ -109,7 +113,7 @@ class Admin_PresencaController extends Zend_Controller_Action {
             'action' => 'index',
             'id' => $id_evento,
             'id_evento_realizacao' => $id_evento_realizacao
-        ), 'default', true);
+                ), 'default', true);
     }
 
     public function deletarAction() {
@@ -124,10 +128,10 @@ class Admin_PresencaController extends Zend_Controller_Action {
                 'id_evento_realizacao = ?' => $id_evento_realizacao,
             ));
             $this->_helper->flashMessenger->addMessage(
-                array('success' => 'Participante deletado com sucesso.'));
+                    array('success' => 'Participante deletado com sucesso.'));
         } catch (Exception $e) {
             $this->_helper->flashMessenger->addMessage(
-                array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
+                    array('error' => 'Ocorreu um erro inesperado.<br/>Detalhes: ' . $e->getMessage())
             );
         }
 
@@ -137,6 +141,7 @@ class Admin_PresencaController extends Zend_Controller_Action {
             'action' => 'index',
             'id' => $id_evento,
             'id_evento_realizacao' => $id_evento_realizacao
-        ), 'default', true);
+                ), 'default', true);
     }
+
 }

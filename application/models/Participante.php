@@ -19,7 +19,6 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             'columns' => 'id_encontro',
             'onDelete' => self::RESTRICT,
             'onUpdate' => self::RESTRICT));
-
     protected $_dependentTables = array(
         'pessoa',
         'encontro',
@@ -148,7 +147,10 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
         ";
         if (!is_null($id_evento)) {
             $sql = preg_replace("/%%ID_EVENTO%%/", "AND e.id_evento = ?", $sql);
-            $rs = $this->getAdapter()->fetchAll($sql, array($id_pessoa, $id_evento));
+            $rs = $this->getAdapter()->fetchAll($sql, array(
+                $id_pessoa,
+                $id_evento,
+            ));
             if (count($rs) > 0) {
                 return $rs[0];
             } else {
@@ -214,14 +216,17 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
     }
 
     public function ler($id_pessoa, $id_encontro) {
-       $sql = "SELECT p.id_pessoa, nome, email, apelido, twitter, endereco_internet,
+        $sql = "SELECT p.id_pessoa, nome, email, apelido, twitter, endereco_internet,
                id_sexo, to_char(nascimento, 'DD/MM/YYYY') as nascimento,
                facebook, bio, slideshare, to_char(cpf, '00000000000') as cpf,
                telefone, id_instituicao, id_municipio
                FROM pessoa p
                INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
                WHERE p.id_pessoa = ? AND id_encontro = ?";
-        return $this->getAdapter()->fetchRow($sql, array($id_pessoa, $id_encontro));
+        return $this->getAdapter()->fetchRow($sql, array(
+                    $id_pessoa,
+                    $id_encontro,
+        ));
     }
 
     /**
@@ -321,7 +326,10 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
          ";
         if (!is_null($id_evento)) {
             $sql = preg_replace("/%%ID_EVENTO%%/", "AND e.id_evento = ?", $sql);
-            $rs = $this->getAdapter()->fetchAll($sql, array($id_pessoa, $id_evento));
+            $rs = $this->getAdapter()->fetchAll($sql, array(
+                $id_pessoa,
+                $id_evento,
+            ));
             if (count($rs) > 0) {
                 return $rs[0];
             } else {
@@ -329,7 +337,9 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             }
         }
         $sql = preg_replace("/%%ID_EVENTO%%/", "", $sql);
-        return $this->getAdapter()->fetchAll($sql, array($id_pessoa));
+        return $this->getAdapter()->fetchAll($sql, array(
+                    $id_pessoa,
+        ));
     }
 
     public function dadosTicketInscricao($id_pessoa, $id_encontro) {
@@ -345,6 +355,38 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             INNER JOIN encontro en ON ep.id_encontro = en.id_encontro
             INNER JOIN tipo_horario th ON en.id_tipo_horario = th.id_tipo_horario
             WHERE p.id_pessoa = ? AND en.id_encontro = ?";
-        return $this->getAdapter()->fetchRow($sql, array($id_pessoa, $id_encontro));
+        return $this->getAdapter()->fetchRow($sql, array(
+                    $id_pessoa,
+                    $id_encontro,
+        ));
     }
+
+    /**
+     * Retorna uma lista de participantes que os e-mails combinam com o trecho 
+     * em passado em $termo.
+     * 
+     * @param string $termo - representa um trecho do campo e-mail
+     * @param int $id_pessoa
+     * @param int $id_encontro
+     * @return assoc array
+     */
+    public function buscarParticipantePorEmail($termo, $id_pessoa, $id_encontro) {
+        $sql = "
+            SELECT
+                p.id_pessoa, p.email
+            FROM pessoa p
+            INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
+            WHERE 
+                p.email LIKE lower(?)   -- busca pelo trecho
+                AND p.id_pessoa <> ?    -- retirar o próprio
+                AND ep.id_encontro = ?  -- somente deste encotro
+                AND ep.validado = true  -- somente os participantes validados
+        ";
+        return $this->getAdapter()->fetchAll($sql, array(
+                    "{$termo}%",
+                    $id_pessoa,
+                    $id_encontro,
+        ));
+    }
+
 }
