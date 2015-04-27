@@ -29,6 +29,8 @@
     "Jed": false,
     "FastClick": false,
     "console": false,
-    "PDFJS": false
+    "PDFJS": false,
+    "ace": false,
+    "require": false
   }
 }

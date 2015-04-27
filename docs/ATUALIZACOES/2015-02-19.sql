@@ -1,16 +1,16 @@
 ﻿START TRANSACTION;
 
-DROP TRIGGER trgrvalidaevento ON evento;
+DROP TRIGGER IF EXISTS trgrvalidaevento ON evento;
 
-DROP TRIGGER trgrvalidausuario ON pessoa;
+DROP TRIGGER IF EXISTS trgrvalidausuario ON pessoa;
 
 ALTER TABLE evento_participacao
 	DROP CONSTRAINT evento_participacao_pk;
 
 ALTER TABLE evento_participacao
-	DROP CONSTRAINT evento_realizacao_evento_participacao_fk;
+	DROP CONSTRAINT IF EXISTS evento_realizacao_evento_participacao_fk;
 
-DROP TABLE evento_realizacao_multipla;
+DROP TABLE IF EXISTS evento_realizacao_multipla;
 
 DROP SEQUENCE IF EXISTS evento_realizacao_multipla_evento_realizacao_multipla_seq;
 
@@ -39,8 +39,8 @@ CREATE TABLE artigo (
 	titulo character varying(255),
 	aceito boolean DEFAULT false NOT NULL,
 	deletado boolean DEFAULT false NOT NULL,
-	dt_delecao timestamp with time zone,
-	dt_aceitacao timestamp with time zone
+	dt_delecao timestamp without time zone,
+	dt_aceitacao timestamp without time zone
 );
 
 CREATE TABLE tipo_horario (
@@ -56,22 +56,18 @@ ALTER TABLE caravana
 	ALTER COLUMN nome_caravana TYPE character varying(255) /* TYPE change - table: caravana original: character varying(100) new: character varying(255) */;
 
 COMMENT ON COLUMN caravana_encontro.responsavel IS 'Responsável pela caravana.
-
 Seu cadastro deve estar realizado previamente.';
 
 COMMENT ON TABLE dificuldade_evento IS 'Mostra o nível de dificuldade do Evento.
-
 Básico
-
 Intermediário
-
 Avançado';
 
 ALTER TABLE encontro
 	ADD COLUMN certificados_liberados boolean DEFAULT false NOT NULL,
-	ADD COLUMN certificados_template_participante_encontro text DEFAULT 'Certificamos que %s participou do(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
-	ADD COLUMN certificados_template_palestrante_evento text DEFAULT 'Certificamos que %s apresentou o(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
-	ADD COLUMN certificados_template_participante_evento text DEFAULT 'Certificamos que %s participou do(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
+	ADD COLUMN certificados_template_participante_encontro text DEFAULT 'Certificamos que {nome} participou do(a) {encontro} no período de 10 a 12 de Outubro de 1999.'::text,
+	ADD COLUMN certificados_template_palestrante_evento text DEFAULT 'Certificamos que {nome} apresentou o(a) {tipo_evento}: {nome_evento} no(a) {encontro} no período de 10 a 12 de Outubro de 1999, com carga horária de {carga_horaria}.'::text,
+	ADD COLUMN certificados_template_participante_evento text DEFAULT 'Certificamos que {nome} participou do(a) {tipo_evento}: {nome_evento} no(a) {encontro} no período de 10 a 12 de Outubro de 1999, com carga horária de {carga_horaria}.'::text,
 	ADD COLUMN id_municipio integer DEFAULT 1 NOT NULL,
 	ADD COLUMN id_tipo_horario integer DEFAULT 1 NOT NULL,
 	ALTER COLUMN nome_encontro TYPE character varying(255) /* TYPE change - table: encontro original: character varying(100) new: character varying(255) */,
@@ -88,7 +84,6 @@ ALTER TABLE evento_participacao
 	ADD COLUMN id_evento_realizacao integer NOT NULL;
 
 COMMENT ON COLUMN instituicao.apelido_instituicao IS 'EEMF Adauto Bezerra.
-
 Essa informação pode estar no CRACHÁ.';
 
 ALTER TABLE mensagem_email
@@ -99,7 +94,6 @@ ALTER TABLE pessoa
 	ALTER COLUMN nome TYPE character varying(255) /* TYPE change - table: pessoa original: character varying(100) new: character varying(255) */;
 
 COMMENT ON COLUMN pessoa.endereco_internet IS 'Um endereço começando com http:// indicando onde estão as informações da pessoa.
-
 Pode ser um blog, página do facebook, site...';
 
 ALTER SEQUENCE artigo_id_artigo_seq
@@ -111,95 +105,54 @@ ALTER SEQUENCE tipo_horario_id_tipo_horario_seq
 CREATE OR REPLACE FUNCTION funcgerarsenha(codemail character varying) RETURNS character varying
     LANGUAGE plpgsql
     AS $$
-
 /*
-
 Criador: Siqueira, Robson.
-
 Data: 05/08/2011.
-
 DESCRIÇÃO:
-
   A partir de um email válido, gera uma senha de 10 caracteres com letras maiúsculas e números.
-
   Se o email estiver incorreto, gera uma exceção.
-
   A senha já é armazenada no BD com criptografia MD5.
-
 */
-
 DECLARE
-
   codPessoa INTEGER;
-
   codSenha VARCHAR(100);
-
 BEGIN
+	SELECT id_pessoa INTO codPessoa
+	FROM pessoa
+	WHERE email = codEmail;
+	IF NOT FOUND THEN
+		RAISE EXCEPTION 'Email Inválido';
+	END IF;
 
-  SELECT id_pessoa INTO codPessoa
-
-  FROM pessoa
-
-  WHERE email = codEmail;
-
-  IF NOT FOUND THEN
-
-    RAISE EXCEPTION 'Email Inválido';
-
-  END IF;
-
-  codSenha = (((random() * (100000000000000)::double precision))::bigint)::character varying;
-
-  SELECT UPPER(md5(codSenha)::varchar(10)) INTO codSenha;
-
-  UPDATE pessoa
-
-  SET senha = md5(codSenha)
-
-  WHERE id_pessoa = codPessoa;
-
-  RETURN codSenha;
-
+	codSenha = (((random() * (100000000000000)::double precision))::bigint)::character varying;
+	SELECT UPPER(md5(codSenha)::varchar(10)) INTO codSenha;
+	UPDATE pessoa
+	SET senha = md5(codSenha)
+	WHERE id_pessoa = codPessoa;
+	RETURN codSenha;
 END;
-
 $$;
 
 CREATE OR REPLACE FUNCTION funcvalidaevento() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-
 BEGIN
-
-IF NEW.validada = 'T' THEN
-
-    NEW.data_validacao = now();
-
-  END IF;
-
-  RETURN NEW;
-
+	IF NEW.validada = 'T' THEN
+	    NEW.data_validacao = now();
+	END IF;
+	RETURN NEW;
 END;
-
 $$;
 
 CREATE OR REPLACE FUNCTION funcvalidausuario() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-
 BEGIN
-
-IF NEW.cadastro_validado = 'T' THEN
-
---    SELECT now() INTO NEW.data_validacao_cadastro;
-
-    NEW.data_validacao_cadastro = now();
-
-  END IF;
-
-  RETURN NEW;
-
+	IF NEW.cadastro_validado = 'T' THEN
+		NEW.data_validacao_cadastro = now();
+	END IF;
+	RETURN NEW;
 END;
-
 $$;
 
 ALTER TABLE artigo
