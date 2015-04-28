@@ -17,6 +17,11 @@ class Admin_DashboardController extends Zend_Controller_Action {
 
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'dashboard');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-user-registration', 'json')
+            ->addActionContext('ajax-total-events', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
@@ -30,42 +35,22 @@ class Admin_DashboardController extends Zend_Controller_Action {
     }
 
     public function ajaxUserRegistrationAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $json = new stdClass;
         if ($this->getRequest()->isPost()) {
             $model = new Admin_Model_EncontroParticipante();
-            $json->num_participants = $model->getTotalUserRegistration();
-            $json->ok = true;
+            $this->view->num_participants = $model->getTotalUserRegistration();
+            $this->view->ok = true;
         } else {
-            $json->error = _('Request could not be completed.');
+            $this->view->error = _('Request could not be completed.');
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function ajaxTotalEventsAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $json = new stdClass;
         if ($this->getRequest()->isPost()) {
             $model = new Admin_Model_Evento();
-            $json->num_events = $model->getTotalEvents();
-            $json->ok = true;
+            $this->view->num_events = $model->getTotalEvents();
+            $this->view->ok = true;
         } else {
-            $json->error = _('Request could not be completed.');
+            $this->view->error = _('Request could not be completed.');
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 }

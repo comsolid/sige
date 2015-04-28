@@ -13,6 +13,10 @@ class CaravanaController extends Zend_Controller_Action {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'caravan', $sessao['administrador']);
         $this->_helper->layout->setLayout('twbs3/layout');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-buscar-participante', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
@@ -85,43 +89,18 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function ajaxBuscarParticipanteAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $idPessoa = $sessao["idPessoa"];
 
-        $model = new Application_Model_Pessoa();
+        $model = new Application_Model_Caravana();
         $termo = $this->_request->getParam("termo", "");
 
-        $json = new stdClass;
-        $json->results = array();
-
-        $rs = $model->getAdapter()->fetchAll(
-                "SELECT p.id_pessoa,
-               p.email
-         FROM pessoa p
-         INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
-         WHERE p.email LIKE lower(?)
-         AND p.id_pessoa <> ?
-         AND ep.id_encontro = ?
-         AND ep.id_caravana IS NULL
-         AND ep.validado = true ", array("{$termo}%", $idPessoa, $idEncontro));
-        $json->size = count($rs);
-        foreach ($rs as $value) {
-            $obj = new stdClass;
-            $obj->id = "{$value['id_pessoa']}";
-            $obj->text = "{$value['email']}";
-            array_push($json->results, $obj);
-        }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
+        $rs = $model->ajaxBuscarParticipante($termo, $idPessoa, $idEncontro);
+        $this->view->size = count($rs);
+        $this->view->results = $rs;
     }
 
     public function deletarParticipanteAction() {
@@ -218,7 +197,10 @@ class CaravanaController extends Zend_Controller_Action {
                 $m_encontro = new Application_Model_Encontro();
                 $data['criador'] = $idPessoa;
 
-                $data2['id_encontro'] = $m_encontro->getEncontroAtual();
+                $cache = Zend_Registry::get('cache_common');
+                $ps = $cache->load('prefsis');
+                $idEncontro = (int) $ps->encontro["id_encontro"];
+                $data2['id_encontro'] = $idEncontro;
                 $data2['responsavel'] = $idPessoa;
                 $data2['id_caravana'] = $caravana->insert($data);
 

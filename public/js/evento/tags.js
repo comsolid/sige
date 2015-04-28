@@ -34,7 +34,8 @@ $(function() {
             loading.show();
             var params = {
                 id_evento: $('#id_evento').val(),
-                id: id
+                id: id,
+                format: 'json'
             };
             var url = '/evento/ajax-salvar-tag';
             $.getJSON(url, params, function(json) {
@@ -59,7 +60,8 @@ $(function() {
         if (descricao !== '') {
             loading.show();
             var params = {
-                descricao:  descricao
+                descricao:  descricao,
+                format: 'json'
             };
             var url = '/evento/ajax-criar-tag';
             $.getJSON(url, params, function(json) {
@@ -82,7 +84,8 @@ $(function() {
             var url = '/evento/ajax-deletar-tag';
             var params = {
                 id: id,
-                id_evento: $('#id_evento').val()
+                id_evento: $('#id_evento').val(),
+                format: 'json'
             };
             $.getJSON(url, params, function(json) {
                 if (json.ok) {
@@ -135,8 +138,11 @@ $(function() {
         source: function( request, response ) {
 
             $.ajax({
-                url: '/evento/ajax-buscar-tags/termo/' + request.term,
-                contentType: 'application/x-www-form-urlencoded; charset=utf-8;',
+                url: '/evento/ajax-buscar-tags/',
+                data: {
+                    termo: request.term,
+                    format: 'json'
+                },
                 success: function( result ) {
                     $('#criar-tag').hide();
                     if (result.itens.length > 0) {

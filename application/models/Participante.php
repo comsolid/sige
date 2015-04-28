@@ -362,9 +362,9 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
     }
 
     /**
-     * Retorna uma lista de participantes que os e-mails combinam com o trecho 
+     * Retorna uma lista de participantes que os e-mails combinam com o trecho
      * em passado em $termo.
-     * 
+     *
      * @param string $termo - representa um trecho do campo e-mail
      * @param int $id_pessoa
      * @param int $id_encontro
@@ -373,20 +373,19 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
     public function buscarParticipantePorEmail($termo, $id_pessoa, $id_encontro) {
         $sql = "
             SELECT
-                p.id_pessoa, p.email
+                p.id_pessoa as id, p.email as text
             FROM pessoa p
             INNER JOIN encontro_participante ep ON p.id_pessoa = ep.id_pessoa
-            WHERE 
+            WHERE
                 p.email LIKE lower(?)   -- busca pelo trecho
                 AND p.id_pessoa <> ?    -- retirar o próprio
                 AND ep.id_encontro = ?  -- somente deste encotro
                 AND ep.validado = true  -- somente os participantes validados
         ";
         return $this->getAdapter()->fetchAll($sql, array(
-                    "{$termo}%",
+                    "%{$termo}%",
                     $id_pessoa,
                     $id_encontro,
         ));
     }
-
 }

@@ -1,26 +1,30 @@
 
 $(function() {
     $('table').dataTable({
-        "ordering": false,
-        "filter": false,
-        "info": false,
-        "lengthChange": false,
-        "paginate": false,
-        "language": {
-            "url": "/lib/js/data-tables/Portuguese-Brasil.json"
+        'ordering': false,
+        'filter': false,
+        'info': false,
+        'lengthChange': false,
+        'paginate': false,
+        'language': {
+            'url': '/lib/js/data-tables/Portuguese-Brasil.json'
         }
     });
 
-    $("#sel").select2({
-        placeholder: _("Enter speaker e-mail..."),
+    $('#sel').select2({
+        placeholder: _('Enter speaker e-mail...'),
         minimumInputLength: 3,
         createSearchChoice: function () {
-            return null; // não permite novas tags
+            return null; // não permite e-mails não encontrados na busca
         },
         tags: function(options) {
             // https://groups.google.com/forum/#!msg/select2/bOF3CPXsqjI/YmR3yHN2yc4J
-            var url = "/evento/ajax-buscar-participante/termo/" + options.term;
-            $.getJSON(url, null, function(json) {
+            var url = '/evento/ajax-buscar-participante/';
+            var params = {
+                termo: options.term,
+                format: 'json'
+            };
+            $.getJSON(url, params, function(json) {
                 options.callback(json);
             });
         }

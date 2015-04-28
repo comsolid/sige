@@ -22,8 +22,12 @@ $(function() {
 	function addEvento(id) {
 
 		if (id > 0) {
-	        var url = '/evento/ajax-interesse/id/' + id;
-			$.getJSON(url, function(json) {
+			var params = {
+				id: id,
+				format: 'json'
+			};
+	        var url = '/evento/ajax-interesse/';
+			$.getJSON(url, params, function(json) {
 				if (json.ok) {
 	                alertify.success(_('Interesting event bookmarked.'));
 				} else if (json.erro !== null) {
@@ -45,7 +49,8 @@ $(function() {
 		var params = {
 			termo: termo,
 			id_tipo_evento: tipo_evento,
-			data: data_evento
+			data: data_evento,
+			format: 'json'
 		};
 
 		$.getJSON(url, params, function(json){

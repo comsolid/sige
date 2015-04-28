@@ -11,6 +11,10 @@ $(function () {
     var ajax_user_registration = {
         url: '/admin/dashboard/ajax-user-registration',
         type: 'POST',
+        dataType: 'JSON',
+        data: {
+            format: 'json'
+        },
         beforeSend: function () {
             $('#user-registration h3').html(LOADING_TEXT);
         },
@@ -24,12 +28,17 @@ $(function () {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertify.error(textStatus + ':' + errorThrown);
+            $('#user-registration h3').html('-');
         }
     };
 
     var ajax_total_events = {
         url: '/admin/dashboard/ajax-total-events',
         type: 'POST',
+        dataType: 'JSON',
+        data: {
+            format: 'json'
+        },
         beforeSend: function () {
             $('#total-events h3').html(LOADING_TEXT);
         },
@@ -43,12 +52,13 @@ $(function () {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertify.error(textStatus + ':' + errorThrown);
+            $('#total-events h3').html('-');
         }
     };
 
-    function _request() {
+    (function _request() {
         $.ajaxQueue(ajax_user_registration);
         $.ajaxQueue(ajax_total_events);
-    }
-    _request();
+    })();
+    // _request();
 });
