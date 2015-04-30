@@ -21,21 +21,21 @@ class EventoController extends Zend_Controller_Action {
             ->initContext();
     }
 
+    // TODO: colocar método de autenticação em uma super classe, e todos os controllers herdarem da mesma.
     private function autenticacao($isAjax = false) {
         if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
             if ($isAjax) {
-                $json = new stdClass;
-                $json->erro = _("Permission denied.");
-                header("Pragma: no-cache");
-                header("Cache: no-cache");
-                header("Cache-Control: no-cache, must-revalidate");
-                header("Content-type: text/json");
-                echo json_encode($json);
+                // if is ajax request, let js handle redirect properly ;)
+                $session = new Zend_Session_Namespace();
+                if (isset($session->url)) {
+                    unset($session->url);
+                }
                 return false;
             } else {
+                $session = new Zend_Session_Namespace();
+                $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
+                $session->url = $_SERVER['REQUEST_URI'];
+
                 return $this->_helper->redirector->goToRoute(array(), 'login', true);
             }
         }
@@ -65,6 +65,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxBuscarAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -105,6 +107,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxInteresseAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -390,6 +394,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxDesfazerInteresseAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -520,6 +526,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxBuscarParticipanteAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -663,6 +671,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxBuscarTagsAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -673,6 +683,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxSalvarTagAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -701,6 +713,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxCriarTagAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -723,6 +737,8 @@ class EventoController extends Zend_Controller_Action {
 
     public function ajaxDeletarTagAction() {
         if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
             return;
         }
 
