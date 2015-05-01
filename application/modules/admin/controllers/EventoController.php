@@ -1,33 +1,34 @@
 <?php
 
-class Admin_EventoController extends Zend_Controller_Action {
+class Admin_EventoController extends Sige_Controller_Action {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
         if (!$sessao["administrador"]) {
-            return $this->_helper->redirector->goToRoute(array(
-                        'controller' => 'participante',
-                        'action' => 'index'), 'default', true);
+            if(! $this->getRequest()->isXmlHttpRequest()) {
+                return $this->_helper->redirector->goToRoute(array(
+                            'controller' => 'participante',
+                            'action' => 'index'), 'default', true);
+            }
         }
 
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'events');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-buscar', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
+        $this->autenticacao();
         $this->view->title = _('Events');
         $tipoEventos = new Application_Model_TipoEvento();
         $this->view->tipoEvento = $tipoEventos->fetchAll();
     }
 
     public function detalhesAction() {
+        $this->autenticacao();
         $this->view->title = _('Events');
         $this->view->subtitle = _('Details');
 
@@ -64,6 +65,7 @@ class Admin_EventoController extends Zend_Controller_Action {
      *    /admin/evento/invalidar/:id
      */
     public function situacaoAction() {
+        $this->autenticacao();
         $idEvento = $this->_getParam('id', 0);
         $validar = $this->_getParam('validar', 'f');
         $evento = new Application_Model_Evento();
@@ -82,6 +84,7 @@ class Admin_EventoController extends Zend_Controller_Action {
      *    /admin/evento/desfazer-apresentado/:id
      */
     public function situacaoPosEventoAction() {
+        $this->autenticacao();
         $idEvento = $this->_getParam('id', 0);
         $apresentado = $this->_getParam('apresentado', 'f');
         $evento = new Application_Model_Evento();
@@ -95,26 +98,28 @@ class Admin_EventoController extends Zend_Controller_Action {
     }
 
     public function ajaxBuscarAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-//        $sessao = Zend_Auth::getInstance()->getIdentity();
-//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
+        if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
+            return;
+        }
+
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
 
         $eventos = new Admin_Model_Evento();
         $data = array(
-            intval($idEncontro),
+            $idEncontro,
             $this->_request->getParam("termo"),
             intval($this->_request->getParam("tipo")),
             intval($this->_request->getParam("situacao")),
             $this->_request->getParam("searchBy"),
         );
         $rs = $eventos->buscaEventosAdmin($data);
-        $json = new stdClass;
-        $json->size = count($rs);
-        $json->itens = array();
+
+        $this->view->size = count($rs);
+        $this->view->itens = array();
         foreach ($rs as $value) {
             if ($value['validada']) {
                 $validada = '<span class="label label-success">' . _("Yes") . '</span>';
@@ -124,7 +129,7 @@ class Admin_EventoController extends Zend_Controller_Action {
             $date = new Zend_Date($value['data_submissao']);
             $url = '<a href="' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
                     . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
-            $json->itens[] = array(
+            $this->view->itens[] = array(
                 "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span><br> {$value['nome_evento']}",
                 "{$validada}",
                 "{$date->toString("dd/MM/YYYY HH:mm") }",
@@ -132,22 +137,17 @@ class Admin_EventoController extends Zend_Controller_Action {
                 $url
             );
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function outrosPalestrantesAction() {
+        $this->autenticacao();
         $idPessoa = $this->_getParam('pessoa', 0);
         $idEvento = $this->_getParam('evento', 0);
         $confirmado = $this->_getParam('confirmar', 'f');
         $model = new Admin_Model_Evento();
         try {
-            $sql = "UPDATE evento_palestrante SET confirmado = ? WHERE id_evento = ?
-            AND id_pessoa = ?";
+            $sql = "UPDATE evento_palestrante SET confirmado = ?
+                WHERE id_evento = ? AND id_pessoa = ?";
             $model->getAdapter()->fetchAll($sql, array($confirmado, $idEvento, $idPessoa));
             if ($confirmado == "f") {
                 $msg = "Desfazer confirmação palestrante executada com sucesso.";
@@ -162,6 +162,7 @@ class Admin_EventoController extends Zend_Controller_Action {
     }
 
     public function programacaoParcialAction() {
+        $this->autenticacao();
         $this->view->title = _('Parcial Schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $id_encontro = $config->encontro->codigo;
@@ -172,6 +173,7 @@ class Admin_EventoController extends Zend_Controller_Action {
     }
 
     public function downloadLoteArtigosAction() {
+        $this->autenticacao();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -218,7 +220,7 @@ class Admin_EventoController extends Zend_Controller_Action {
             array_push($id_encontros_array, $encontro["id_encontro"]);
         }
         // PHP >= 5.5
-//        $id_encontros_array = array_column($encontros, "id_encontro");
+        // $id_encontros_array = array_column($encontros, "id_encontro");
 
         $model_artigo = new Application_Model_Artigo();
         $rel = $model_artigo->buscaArtigos($id_encontros_array, $status);
@@ -293,16 +295,4 @@ class Admin_EventoController extends Zend_Controller_Action {
             throw new Exception("Ocorreu o seguinte erro ao gerar o zip: " . $exc->getMessage());
         }
     }
-
-    private function _utf8_remove_acentos($str) {
-        $keys = array();
-        $values = array();
-        $from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
-        $to = "aaaaeeiooouucAAAAEEIOOOUUC";
-        preg_match_all('/./u', $from, $keys);
-        preg_match_all('/./u', $to, $values);
-        $mapping = array_combine($keys[0], $values[0]);
-        return strtr($str, $mapping);
-    }
-
 }

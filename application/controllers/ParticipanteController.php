@@ -1,23 +1,11 @@
 <?php
 
-class ParticipanteController extends Zend_Controller_Action {
+class ParticipanteController extends Sige_Controller_Action {
 
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
         $this->_helper->layout->setLayout('twbs3/layout');
-    }
-
-    private function autenticacao() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $servParam = $this->getRequest()->getServer();
-            if (isset($servParam['REQUEST_URI'])) {
-                $session->url = $servParam['REQUEST_URI'];
-            }
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
     }
 
     public function indexAction() {
@@ -70,7 +58,7 @@ class ParticipanteController extends Zend_Controller_Action {
             } catch (Zend_Db_Exception $ex) {
                 $adapter->rollBack();
                 $sentinela = 1;
-                // 23505 = foreign key exception
+
                 if ($ex->getCode() == 23505) {
                     $this->_helper->flashMessenger->addMessage(
                             array('warning' => _('E-mail already registered.')));
@@ -337,8 +325,6 @@ class ParticipanteController extends Zend_Controller_Action {
 
         $this->autenticacao();
         $sessao = Zend_Auth::getInstance()->getIdentity();
-//        $cache = Zend_Registry::get('cache_common');
-//        $ps = $cache->load('prefsis');
         $id_pessoa = $sessao["idPessoa"];
         $id_evento = $this->_getParam('id_evento', null);
 
@@ -458,29 +444,4 @@ class ParticipanteController extends Zend_Controller_Action {
                         'action' => 'ver'), 'default', true);
         }
     }
-
-    private function _utf8_remove_acentos($str) {
-        $keys = array();
-        $values = array();
-        $from = "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ";
-        $to = "aaaaeeiooouucAAAAEEIOOOUUC";
-        preg_match_all('/./u', $from, $keys);
-        preg_match_all('/./u', $to, $values);
-        $mapping = array_combine($keys[0], $values[0]);
-        return strtr($str, $mapping);
-    }
-
-    private function _stringToFilename($str) {
-        $str = strtolower($this->_utf8_remove_acentos($str));
-        $str = preg_replace("/ /", "_", $str);
-        $str = preg_replace("/[^a-zA-Z0-9_\s]/", "", $str);
-        return $str;
-    }
-
-    private function fixObjectSession(&$object) {
-        if (!is_object($object) && gettype($object) == 'object')
-            return ($object = unserialize(serialize($object)));
-        return $object;
-    }
-
 }

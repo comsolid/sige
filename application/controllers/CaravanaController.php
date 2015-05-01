@@ -1,15 +1,8 @@
 <?php
 
-class CaravanaController extends Zend_Controller_Action {
+class CaravanaController extends Sige_Controller_Action {
 
     public function init() {
-        if (!Zend_Auth :: getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $this->view->menu = new Sige_Desktop_Menu($this->view, 'caravan', $sessao['administrador']);
         $this->_helper->layout->setLayout('twbs3/layout');
@@ -20,6 +13,7 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+        $this->autenticacao();
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $id_encontro = (int) $ps->encontro["id_encontro"];
@@ -31,6 +25,7 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function participantesAction() {
+        $this->autenticacao();
         $cancelar = $this->getRequest()->getPost('cancelar');
         if (isset($cancelar)) {
             return $this->_helper->redirector->goToRoute(array(
@@ -85,10 +80,17 @@ class CaravanaController extends Zend_Controller_Action {
             }
         }
 
-        $this->view->participantes = $caravanaEncontro->buscaParticipantes($this->view->caravana['id_caravana'], $idEncontro);
+        $this->view->participantes = $caravanaEncontro->buscaParticipantes(
+            $this->view->caravana['id_caravana'], $idEncontro);
     }
 
     public function ajaxBuscarParticipanteAction() {
+        if (!$this->autenticacao(true)) {
+            $this->view->error = _("Permission denied.");
+            $this->_response->setHttpResponseCode(403);
+            return;
+        }
+
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
@@ -104,6 +106,7 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function deletarParticipanteAction() {
+        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -135,6 +138,7 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function sairAction() {
+        $this->autenticacao();
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -157,6 +161,7 @@ class CaravanaController extends Zend_Controller_Action {
     }
 
     public function criarAction() {
+        $this->autenticacao();
         $data = $this->getRequest()->getPost();
         if (isset($data['cancelar'])) {
             return $this->_helper->redirector->goToRoute(array(
@@ -231,6 +236,7 @@ class CaravanaController extends Zend_Controller_Action {
      * @return type
      */
     public function editarAction() {
+        $this->autenticacao();
         $data = $this->getRequest()->getPost();
         if (isset($data['cancelar'])) {
             return $this->_helper->redirector->goToRoute(array(

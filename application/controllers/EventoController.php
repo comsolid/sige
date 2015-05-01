@@ -1,6 +1,6 @@
 <?php
 
-class EventoController extends Zend_Controller_Action {
+class EventoController extends Sige_Controller_Action {
 
     public function init() {
         $sessao = Zend_Auth::getInstance()->getIdentity();
@@ -21,33 +21,11 @@ class EventoController extends Zend_Controller_Action {
             ->initContext();
     }
 
-    // TODO: colocar método de autenticação em uma super classe, e todos os controllers herdarem da mesma.
-    private function autenticacao($isAjax = false) {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            if ($isAjax) {
-                // if is ajax request, let js handle redirect properly ;)
-                $session = new Zend_Session_Namespace();
-                if (isset($session->url)) {
-                    unset($session->url);
-                }
-                return false;
-            } else {
-                $session = new Zend_Session_Namespace();
-                $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-                $session->url = $_SERVER['REQUEST_URI'];
-
-                return $this->_helper->redirector->goToRoute(array(), 'login', true);
-            }
-        }
-        return true;
-    }
-
     /**
      * Mapeada como
      *    /submissao
      */
     public function indexAction() {
-
         $this->autenticacao();
         $this->view->menu->setAtivo('submission');
         $sessao = Zend_Auth::getInstance()->getIdentity();

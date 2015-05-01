@@ -28,12 +28,13 @@ $(function() {
         var tipo = $('input:radio.tipo_evento:checked').val();
         var situacao = $('input:radio.situacao:checked').val();
         var searchBy = $('input:radio.search_by:checked').val();
-        var url = '/admin/evento/ajax-buscar';
+        var url = '/admin/evento/ajax-buscar/';
         var data =  {
             termo: termo,
             tipo: tipo,
             situacao: situacao,
-            searchBy: searchBy
+            searchBy: searchBy,
+            format: 'json'
         };
 
         $.getJSON(url, data, function(json) {
