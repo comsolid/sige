@@ -1,30 +1,19 @@
 <?php
-class Admin_HorarioController extends Zend_Controller_Action {
+class Admin_HorarioController extends Sige_Controller_AdminAction {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao["administrador"]) {
-            return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'events');
     }
 
     public function criarAction() {
+        $this->autenticacao();
+
         $this->view->title = _('New schedule');
         $this->_helper->viewRenderer->setRender('salvar');
 
         $idEvento = $this->_request->getParam('id');
         $form = new Admin_Form_Horarios();
-        //$form->cria();
         $this->view->form = $form;
         $model = new Application_Model_EventoRealizacao();
         $select = "SELECT TO_CHAR(data, 'DD/MM/YYYY') as data,
@@ -40,8 +29,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
             $data['id_evento'] = $idEvento;
 
             try {
-//                $sessao = Zend_Auth::getInstance()->getIdentity();
-//                $idEncontro = $sessao["idEncontro"]; // UNSAFE
                 $cache = Zend_Registry::get('cache_common');
                 $ps = $cache->load('prefsis');
                 $idEncontro = (int) $ps->encontro["id_encontro"];
@@ -68,6 +55,8 @@ class Admin_HorarioController extends Zend_Controller_Action {
     }
 
     public function editarAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Edit schedule');
         $this->_helper->viewRenderer->setRender('salvar');
 
@@ -84,8 +73,6 @@ class Admin_HorarioController extends Zend_Controller_Action {
                 $data = $form->getValues();
 
                 try {
-//                  $sessao = Zend_Auth::getInstance()->getIdentity();
-//                  $idEncontro = $sessao["idEncontro"]; // UNSAFE
                     $cache = Zend_Registry::get('cache_common');
                     $ps = $cache->load('prefsis');
                     $idEncontro = (int) $ps->encontro["id_encontro"];
@@ -123,14 +110,16 @@ class Admin_HorarioController extends Zend_Controller_Action {
             }
         }
         $select = "SELECT TO_CHAR(data, 'DD/MM/YYYY') as data,
-         TO_CHAR(hora_inicio, 'HH24:MI') as hora_inicio,
-         TO_CHAR(hora_fim, 'HH24:MI') as hora_fim, descricao FROM evento_realizacao
-         WHERE id_evento = ? ORDER BY data ASC, hora_inicio ASC";
+             TO_CHAR(hora_inicio, 'HH24:MI') as hora_inicio,
+             TO_CHAR(hora_fim, 'HH24:MI') as hora_fim, descricao FROM evento_realizacao
+             WHERE id_evento = ? ORDER BY data ASC, hora_inicio ASC";
         $this->view->idEvento = $evento;
         $this->view->horariosEventos = $model->getAdapter()->fetchAll($select, $evento);
     }
 
     public function deletarAction() {
+        $this->autenticacao();
+
         $model = new Admin_Model_EventoRealizacao();
         $evento = $this->_request->getParam('evento', 0);
 

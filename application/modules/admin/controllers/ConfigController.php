@@ -1,82 +1,69 @@
 <?php
 
-class Admin_ConfigController extends Zend_Controller_Action {
+class Admin_ConfigController extends Sige_Controller_AdminAction {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            $this->_helper->redirector->goToRoute(array(), 'login', true);
-            return;
-        }
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao ["administrador"]) {
-            $this->_helper->redirector->goToRoute(array(
-                'controller' => 'participante',
-                'action' => 'index'), 'default', true);
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'config');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-buscar-usuarios', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
+        $this->autenticacao();
     }
 
     public function permissaoUsuariosAction() {
+        $this->autenticacao();
     }
 
     public function ajaxBuscarUsuariosAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
 
         $sessao = Zend_Auth::getInstance()->getIdentity();
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
-        $json = new stdClass;
 
         $model = new Application_Model_Pessoa();
         try {
             $data = $model->buscarPermissaoUsuarios(
                     $idEncontro, $this->_request->getParam("termo", ""), $this->_request->getParam("buscar_por", "nome"), $this->_request->getParam("tipo_usuario", 0)
             );
-        } catch (Exception $e) {
-            $json->erro = $e->getMessage();
-        }
 
-        $json->size = count($data);
-        $json->aaData = array();
+            $this->view->size = count($data);
+            $this->view->aaData = array();
 
-        foreach ($data as $value) {
-            if ($value['administrador']) {
-                $admin = "<i class='icon-unlock'></i> Admin";
-            } else {
-                $admin = "<i class='icon-lock'></i> Usuário";
+            foreach ($data as $value) {
+                if ($value['administrador']) {
+                    $admin = "<i class='icon-unlock'></i> Admin";
+                } else {
+                    $admin = "<i class='icon-lock'></i> Usuário";
+                }
+                $acao = "<a href=\"/admin/config/editar-permissao/id/{$value['id_pessoa']}\"
+                    class=\"btn btn-default\"><i class=\"fa fa-edit\"></i> "
+                    . _("Edit permission") . "</a>";
+
+                $this->view->aaData[] = array(
+                    "{$value ['nome']}",
+                    "{$value ['apelido']}",
+                    "{$value ['email']}",
+                    "{$admin}<br/>{$value['descricao_tipo_usuario']}",
+                    $acao
+                );
             }
-            $acao = "<a href=\"/admin/config/editar-permissao/id/{$value['id_pessoa']}\"
-                class=\"btn btn-default\"><i class=\"fa fa-edit\"></i> "
-                . _("Edit permission") . "</a>";
-
-            $json->aaData[] = array(
-                "{$value ['nome']}",
-                "{$value ['apelido']}",
-                "{$value ['email']}",
-                "{$admin}<br/>{$value['descricao_tipo_usuario']}",
-                $acao
-            );
+        } catch (Exception $e) {
+            $this->view->erro = $e->getMessage();
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function editarPermissaoAction() {
+        $this->autenticacao();
+
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
@@ -136,6 +123,8 @@ class Admin_ConfigController extends Zend_Controller_Action {
     }
 
     public function limparCacheAction() {
+        $this->autenticacao();
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -158,6 +147,8 @@ class Admin_ConfigController extends Zend_Controller_Action {
     }
 
     public function infoSistemaAction() {
+        $this->autenticacao();
+
         $this->view->title = _('System Info');
 
         $sistema = new Admin_Model_Sistema();

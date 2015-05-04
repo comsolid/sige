@@ -1,26 +1,19 @@
 <?php
 
-class Admin_PresencaController extends Zend_Controller_Action {
+class Admin_PresencaController extends Sige_Controller_AdminAction {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao["administrador"]) {
-            return $this->_helper->redirector->goToRoute(array('controller' => 'participante',
-                        'action' => 'index'), 'default', true);
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'events');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-buscar-participante', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
+        $this->autenticacao();
+
         $id_evento = (int) $this->_request->getParam('id', 0);
         $id_evento_realizacao = (int) $this->_request->getParam('id_evento_realizacao', 0);
         $this->view->id = $id_evento;
@@ -44,8 +37,10 @@ class Admin_PresencaController extends Zend_Controller_Action {
     }
 
     public function ajaxBuscarParticipanteAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
+
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
@@ -56,23 +51,18 @@ class Admin_PresencaController extends Zend_Controller_Action {
         $termo = $this->_request->getParam("termo", "");
         $id_evento_realizacao = (int) $this->_request->getParam("id_evento_realizacao", 0);
 
-        $json = new stdClass;
         try {
             $rs = $model->ajaxBuscarEmail($termo, $id_pessoa, $idEncontro, $id_evento_realizacao);
-            $json->size = count($rs);
-            $json->results = $rs;
+            $this->view->size = count($rs);
+            $this->view->results = $rs;
         } catch (Zend_Db_Exception $e) {
-            $json->error = _('Error on fetching results.');
+            $this->view->error = _('Error on fetching results.');
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function salvarAction() {
+        $this->autenticacao();
+
         $id_evento = (int) $this->_request->getParam('id', 0);
         $id_evento_realizacao = (int) $this->_request->getParam('id_evento_realizacao', 0);
 
@@ -117,6 +107,8 @@ class Admin_PresencaController extends Zend_Controller_Action {
     }
 
     public function deletarAction() {
+        $this->autenticacao();
+
         $id_evento = (int) $this->_request->getParam('id_evento', 0);
         $id_evento_realizacao = (int) $this->_request->getParam('id_evento_realizacao', 0);
         $id_pessoa = (int) $this->_request->getParam('id_pessoa', 0);
@@ -141,7 +133,7 @@ class Admin_PresencaController extends Zend_Controller_Action {
             'action' => 'index',
             'id' => $id_evento,
             'id_evento_realizacao' => $id_evento_realizacao
-                ), 'default', true);
+        ), 'default', true);
     }
 
 }

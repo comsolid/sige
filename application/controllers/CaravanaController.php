@@ -86,8 +86,6 @@ class CaravanaController extends Sige_Controller_Action {
 
     public function ajaxBuscarParticipanteAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 

@@ -43,8 +43,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxBuscarAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -85,8 +83,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxInteresseAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -372,8 +368,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxDesfazerInteresseAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -504,8 +498,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxBuscarParticipanteAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -649,8 +641,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxBuscarTagsAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -661,8 +651,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxSalvarTagAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -691,8 +679,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxCriarTagAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -715,8 +701,6 @@ class EventoController extends Sige_Controller_Action {
 
     public function ajaxDeletarTagAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 

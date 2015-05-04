@@ -1,20 +1,8 @@
 <?php
 
-class Admin_DashboardController extends Zend_Controller_Action {
+class Admin_DashboardController extends Sige_Controller_AdminAction {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao["administrador"]) {
-            return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'dashboard');
 
@@ -25,6 +13,8 @@ class Admin_DashboardController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Dashboard');
 
         $model = new Admin_Model_EncontroParticipante();
@@ -35,6 +25,10 @@ class Admin_DashboardController extends Zend_Controller_Action {
     }
 
     public function ajaxUserRegistrationAction() {
+        if (!$this->autenticacao(true)) {
+            return;
+        }
+
         if ($this->getRequest()->isPost()) {
             $model = new Admin_Model_EncontroParticipante();
             $this->view->num_participants = $model->getTotalUserRegistration();
@@ -45,6 +39,10 @@ class Admin_DashboardController extends Zend_Controller_Action {
     }
 
     public function ajaxTotalEventsAction() {
+        if (!$this->autenticacao(true)) {
+            return;
+        }
+
         if ($this->getRequest()->isPost()) {
             $model = new Admin_Model_Evento();
             $this->view->num_events = $model->getTotalEvents();

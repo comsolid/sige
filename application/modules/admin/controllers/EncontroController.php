@@ -2,23 +2,13 @@
 class Admin_EncontroController extends Zend_Controller_Action {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao["administrador"]) {
-            return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view);
     }
 
     public function indexAction() {
+        $this->autenticacao();
+
         $model = new Admin_Model_Encontro();
         $this->view->lista = $model->listar();
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'emailmsg');
@@ -29,6 +19,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
     }
 
     public function criarAction() {
+        $this->autenticacao();
+
         $this->view->title = _('New Conference');
         $this->_helper->viewRenderer->setRender('salvar');
         $form = new Admin_Form_Encontro();
@@ -66,6 +58,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
     }
 
     public function editarAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Edit Conference');
         $this->_helper->viewRenderer->setRender('salvar');
         $form = new Admin_Form_Encontro();
@@ -105,6 +99,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
     }
 
     public function editarMensagemEmailConfirmacaoAction() {
+        $this->autenticacao();
+
         $form = new Admin_Form_MensagemEmail();
         $this->view->form = $form;
         $model = new Admin_Model_MensagemEmail();
@@ -164,6 +160,8 @@ class Admin_EncontroController extends Zend_Controller_Action {
     }
 
     public function editarMensagemCertificadoAction() {
+        $this->autenticacao();
+
         $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
         switch ($tipo_mensagem) {
             case "certificados_template_participante_encontro":

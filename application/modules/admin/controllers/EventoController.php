@@ -1,17 +1,8 @@
 <?php
 
-class Admin_EventoController extends Sige_Controller_Action {
+class Admin_EventoController extends Sige_Controller_AdminAction {
 
     public function init() {
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao["administrador"]) {
-            if(! $this->getRequest()->isXmlHttpRequest()) {
-                return $this->_helper->redirector->goToRoute(array(
-                            'controller' => 'participante',
-                            'action' => 'index'), 'default', true);
-            }
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'events');
 
@@ -22,6 +13,7 @@ class Admin_EventoController extends Sige_Controller_Action {
 
     public function indexAction() {
         $this->autenticacao();
+
         $this->view->title = _('Events');
         $tipoEventos = new Application_Model_TipoEvento();
         $this->view->tipoEvento = $tipoEventos->fetchAll();
@@ -29,6 +21,7 @@ class Admin_EventoController extends Sige_Controller_Action {
 
     public function detalhesAction() {
         $this->autenticacao();
+
         $this->view->title = _('Events');
         $this->view->subtitle = _('Details');
 
@@ -66,6 +59,7 @@ class Admin_EventoController extends Sige_Controller_Action {
      */
     public function situacaoAction() {
         $this->autenticacao();
+
         $idEvento = $this->_getParam('id', 0);
         $validar = $this->_getParam('validar', 'f');
         $evento = new Application_Model_Evento();
@@ -85,6 +79,7 @@ class Admin_EventoController extends Sige_Controller_Action {
      */
     public function situacaoPosEventoAction() {
         $this->autenticacao();
+
         $idEvento = $this->_getParam('id', 0);
         $apresentado = $this->_getParam('apresentado', 'f');
         $evento = new Application_Model_Evento();
@@ -99,8 +94,6 @@ class Admin_EventoController extends Sige_Controller_Action {
 
     public function ajaxBuscarAction() {
         if (!$this->autenticacao(true)) {
-            $this->view->error = _("Permission denied.");
-            $this->_response->setHttpResponseCode(403);
             return;
         }
 
@@ -141,6 +134,7 @@ class Admin_EventoController extends Sige_Controller_Action {
 
     public function outrosPalestrantesAction() {
         $this->autenticacao();
+
         $idPessoa = $this->_getParam('pessoa', 0);
         $idEvento = $this->_getParam('evento', 0);
         $confirmado = $this->_getParam('confirmar', 'f');
@@ -163,6 +157,7 @@ class Admin_EventoController extends Sige_Controller_Action {
 
     public function programacaoParcialAction() {
         $this->autenticacao();
+
         $this->view->title = _('Parcial Schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $id_encontro = $config->encontro->codigo;
@@ -174,6 +169,7 @@ class Admin_EventoController extends Sige_Controller_Action {
 
     public function downloadLoteArtigosAction() {
         $this->autenticacao();
+        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 

@@ -200,6 +200,10 @@ class Default_ParticipanteControllerTest extends Default_AbstractControllerTest 
         $urlParams = $this->urlizeOptions($params);
         $url = $this->url($urlParams);
         $this->dispatch($url);
+
+        // $h = $this->response->getBody();
+        // fwrite(STDERR, print_r($h, TRUE));
+
         // assertions
         $this->assertRedirectTo('/login');
     }

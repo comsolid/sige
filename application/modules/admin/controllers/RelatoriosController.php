@@ -1,24 +1,21 @@
 <?php
-class Admin_RelatoriosController extends Zend_Controller_Action {
+class Admin_RelatoriosController extends Sige_Controller_AdminAction {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        if (!$sessao["administrador"]) {
-            return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
-        }
-
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'reports');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-inscricoes-por-dia', 'json')
+            ->addActionContext('ajax-inscricoes-horario', 'json')
+            ->addActionContext('ajax-inscricoes-sexo', 'json')
+            ->addActionContext('ajax-inscricoes-municipio-15-mais', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Conference Reports');
         $this->view->subtitle = _('Current Conference');
 
@@ -27,13 +24,16 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
     }
 
     public function inscricoesPorDiaAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Registrations per day');
         $this->view->subtitle = _('Reports');
     }
 
     public function ajaxInscricoesPorDiaAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
 
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
@@ -41,37 +41,33 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
         $model = new Admin_Model_EncontroParticipante();
         try {
             $rs = $model->relatorioIncricoesPorDia($idEncontro);
-            $json = new stdClass;
-            $json->size = count($rs);
-            $json->array = array();
-            $json->ok = true;
+            $this->view->size = count($rs);
+            $this->view->array = array();
+            $this->view->ok = true;
             foreach ($rs as $value) {
                 $obj = new stdClass;
                 $obj->data = "{$value['data']}";
                 $obj->num = "{$value['num']}";
-                array_push($json->array, $obj);
+                array_push($this->view->array, $obj);
             }
         }
         catch(Exception $e) {
-            $json->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
-            $json->ok = false;
+            $this->view->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
+            $this->view->ok = false;
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function inscricoesHorarioAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Registrations per hour of day');
         $this->view->subtitle = _('Reports');
     }
 
     public function ajaxInscricoesHorarioAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
 
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
@@ -79,36 +75,32 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
         $model = new Admin_Model_EncontroParticipante();
         try {
             $rs = $model->relatorioInscricoesHorario($idEncontro);
-            $json = new stdClass;
-            $json->size = count($rs);
-            $json->array = array();
-            $json->ok = true;
+            $this->view->size = count($rs);
+            $this->view->array = array();
+            $this->view->ok = true;
             foreach ($rs as $value) {
                 $obj = new stdClass;
                 $obj->horario = "{$value['horario']}";
                 $obj->num = "{$value['num']}";
-                array_push($json->array, $obj);
+                array_push($this->view->array, $obj);
             }
         } catch (Exception $e) {
-            $json->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
-            $json->ok = false;
+            $this->view->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
+            $this->view->ok = false;
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function inscricoesSexoAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Registrations per gender');
         $this->view->subtitle = _('Reports');
     }
 
     public function ajaxInscricoesSexoAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
 
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
@@ -116,29 +108,24 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
         $model = new Admin_Model_EncontroParticipante();
         try {
             $rs = $model->relatorioInscricoesSexo($idEncontro);
-            $json = new stdClass;
-            $json->size = count($rs);
-            $json->array = array();
-            $json->ok = true;
+            $this->view->size = count($rs);
+            $this->view->array = array();
+            $this->view->ok = true;
             foreach ($rs as $value) {
                 $obj = new stdClass;
                 $obj->value = (int) $value['num'];
                 $obj->label = "{$value['sexo']}";
-                array_push($json->array, $obj);
+                array_push($this->view->array, $obj);
             }
         } catch (Exception $e) {
-            $json->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
-            $json->ok = false;
+            $this->view->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
+            $this->view->ok = false;
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function inscricoesMunicipioAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Registrations per district (All)');
         $this->view->subtitle = _('Reports');
 
@@ -150,13 +137,16 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
     }
 
     public function inscricoesMunicipio15MaisAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Registrations per district (15+)');
         $this->view->subtitle = _('Reports');
     }
 
     public function ajaxInscricoesMunicipio15MaisAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
 
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
@@ -165,31 +155,26 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
         try {
             $limit = 15;
             $rs = $model->relatorioInscricoesMunicipio($idEncontro, $limit);
-            $json = new stdClass;
-            $json->size = count($rs);
-            $json->array = array();
-            $json->ok = true;
+            $this->view->size = count($rs);
+            $this->view->array = array();
+            $this->view->ok = true;
             foreach ($rs as $value) {
                 $obj = new stdClass;
                 $obj->municipio = "{$value['municipio']}";
                 $obj->num = "{$value['num']}";
                 $obj->confirmados = "{$value['confirmados']}";
-                array_push($json->array, $obj);
+                array_push($this->view->array, $obj);
             }
         }
         catch(Exception $e) {
-            $json->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
-            $json->ok = false;
+            $this->view->error = "Ocorreu um erro inesperado.<br/>Detalhes: " . $e->getMessage();
+            $this->view->ok = false;
         }
-
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     public function artigosListaPdfAction() {
+        $this->autenticacao();
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -243,6 +228,8 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
     }
 
     public function artigosListaXlsAction() {
+        $this->autenticacao();
+
         $ano = (int) $this->getRequest()->getParam("ano", 0);
         $status = $this->getRequest()->getParam("status");
         if ($ano < 1980) {
@@ -281,17 +268,19 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
                         'action' => 'index'), 'default', true);
         }
 
-        $xls = new Sige_Xls_Exportar($rel, array(
-            'apelido_encontro',
-            'titulo',
-            'nome',
-            'email',
-                ), array(
-            'Evento',
-            'Título',
-            'Nome',
-            'E-mail',
-        ));
+        $xls = new Sige_Xls_Exportar($rel,
+            array(
+                'apelido_encontro',
+                'titulo',
+                'nome',
+                'email',
+            ), array(
+                'Evento',
+                'Título',
+                'Nome',
+                'E-mail',
+            )
+        );
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -299,6 +288,8 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
     }
 
     public function inscricoesListaXlsAction() {
+        $this->autenticacao();
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -353,7 +344,7 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
             'email',
             'nome_municipio',
             'confirmado',
-                ), array(
+        ), array(
             'Nome',
             'E-mail',
             'Município',
@@ -367,6 +358,8 @@ class Admin_RelatoriosController extends Zend_Controller_Action {
     }
 
     public function inscricoesListaPdfAction() {
+        $this->autenticacao();
+
         $id_encontro = (int) $this->getRequest()->getParam("id_encontro", 0);
         $status = $this->getRequest()->getParam("status");
         if ($id_encontro < 1) {

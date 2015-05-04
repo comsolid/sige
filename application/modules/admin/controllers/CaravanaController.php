@@ -1,14 +1,7 @@
 <?php
-class Admin_CaravanaController extends Zend_Controller_Action {
+class Admin_CaravanaController extends Sige_Controller_AdminAction {
 
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $session = new Zend_Session_Namespace();
-            $session->setExpirationSeconds(60 * 60 * 1); // 1 minuto
-            $session->url = $_SERVER['REQUEST_URI'];
-            return $this->_helper->redirector->goToRoute(array(), 'login', true);
-        }
-
         $sessao = Zend_Auth::getInstance()->getIdentity();
         if (!$sessao["administrador"]) {
             return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
@@ -16,18 +9,23 @@ class Admin_CaravanaController extends Zend_Controller_Action {
 
         $this->_helper->layout->setLayout('twbs3-admin/layout');
         $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'caravan');
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('ajax-buscar', 'json')
+            ->initContext();
     }
 
     public function indexAction() {
+        $this->autenticacao();
+
         $this->view->title = _('Caravans');
     }
 
     public function ajaxBuscarAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        if (!$this->autenticacao(true)) {
+            return;
+        }
 
-//      $sessao = Zend_Auth :: getInstance()->getIdentity();
-//      $idEncontro = $sessao["idEncontro"]; // UNSAFE
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
@@ -36,9 +34,8 @@ class Admin_CaravanaController extends Zend_Controller_Action {
         $model = new Admin_Model_Caravana();
 
         $rs = $model->buscar($idEncontro, $termo);
-        $json = new stdClass;
-        $json->size = count($rs);
-        $json->itens = array();
+        $this->view->size = count($rs);
+        $this->view->itens = array();
 
         foreach ($rs as $value) {
             if ($value['validada']) {
@@ -52,7 +49,7 @@ class Admin_CaravanaController extends Zend_Controller_Action {
                     'id' => $value["id_caravana"]),
                     'validar_caravana', true) . '" class="btn btn-success"><i class="fa fa-check"></i> ' . _("Validate") . '</a>';
             }
-            $json->itens[] = array(
+            $this->view->itens[] = array(
                 "{$value['nome_caravana']}",
                 "{$value['apelido_caravana']}",
                 "{$value['nome']}",
@@ -64,11 +61,6 @@ class Admin_CaravanaController extends Zend_Controller_Action {
                 $url
             );
         }
-        header("Pragma: no-cache");
-        header("Cache: no-cache");
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Content-type: text/json");
-        echo json_encode($json);
     }
 
     /**
@@ -77,6 +69,8 @@ class Admin_CaravanaController extends Zend_Controller_Action {
      * 	/c/invalidar/:id
      */
     public function situacaoAction() {
+        $this->autenticacao();
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
