@@ -60,21 +60,21 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <span class="label label-primary"><?= $linha["nome_tipo_evento"] ?></span>
-                    <?= $linha["nome_evento"] ?>
+                    <span class="label label-primary"><?php echo $linha["nome_tipo_evento"] ?></span>
+                    <?php echo $linha["nome_evento"] ?>
                 </h3>
             </div>
             <div class="panel-body">
                 <div class="row abstract">
                     <div class="col-md-12">
-                        <?= $linha["resumo"] ?>
+                        <?php echo $linha["resumo"] ?>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-5">
                         <?php echo $this->translate("Submited"); ?>
-                        <span data-moment="<?= $linha["data_submissao"] ?>" title="<?= $linha["data_submissao"] ?>"></span>
+                        <span data-moment="<?php echo $linha["data_submissao"] ?>" title="<?php echo $linha["data_submissao"] ?>"></span>
                     </div>
                     <div class="col-md-2">
                         <?php if ($linha["validada"]): ?>

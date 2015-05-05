@@ -5,13 +5,13 @@
 
 	$this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
 	$this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
-	$this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+	$this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.9.2.custom.min.js'));
 	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
 	$this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
 	$this->headScript()->appendFile($this->baseUrl('js/admin/participante/index.js'));
 ?>
 
-<input type="hidden"  name="id_encontro" id="id_encontro" value="<?=$this->idEncontro?>" />
+<input type="hidden"  name="id_encontro" id="id_encontro" value="<?php echo $this->idEncontro?>" />
 
 <div class="box box-solid">
 	<div class="box-body">

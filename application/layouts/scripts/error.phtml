@@ -9,7 +9,7 @@
       $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome.min.css'));
       $this->headLink()->prependStylesheet($this->baseUrl('css/font-awesome-ie7.min.css'));
       ?>
-      <?= $this->headLink() ?>
+      <?php echo $this->headLink() ?>
    </head>
    <body>
       <div id="principal">
@@ -17,7 +17,7 @@
             <div id="conteudo">
                <?php echo $this->layout()->content ?>
             </div>
-            
+
             <div id="rodape">
                <?php echo $this->render('rodape.phtml') ?>
             </div>

@@ -5,18 +5,18 @@
 <fieldset>
    <div class="container">
       <div class="span-4">
-         Data: <?= $this->horario['data'] ?>
+         Data: <?php echo $this->horario['data'] ?>
       </div>
       <div class="span-4">
-         Horário: <?= $this->horario['hora_inicio'] ?> - <?= $this->horario['hora_fim'] ?>
+         Horário: <?php echo $this->horario['hora_inicio'] ?> - <?php echo $this->horario['hora_fim'] ?>
       </div>
       <div class="span-4">
-         Sala: <?= $this->horario['nome_sala'] ?>
+         Sala: <?php echo $this->horario['nome_sala'] ?>
       </div>
    </div>
    <div class="container">
       <div class="span-14">
-         Você irá deletar horário de: <strong><?= $this->horario['nome_evento'] ?>
+         Você irá deletar horário de: <strong><?php echo $this->horario['nome_evento'] ?>
          <?php if (! empty($this->horario['descricao'])) : ?>
          (<?=$this->horario['descricao'] ?>)
          <?php endif; ?></strong>
@@ -26,8 +26,8 @@
    <br/>
    <div class="container">
       <div class="span-10">
-         <form action="<?= $this->url(array('action' => 'deletar')) ?>" method="post">
-            <input type="hidden" name="id" value="<?= $this->horario['evento'] ?>" />
+         <form action="<?php echo $this->url(array('action' => 'deletar')) ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $this->horario['evento'] ?>" />
             <dl class="zend_form">
                <input type="submit" name="cancelar" id="cancelar" value="cancelar" class="submitCancelar">
                <input type="submit" name="del" id="del" value="confimar"/>

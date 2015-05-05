@@ -50,10 +50,10 @@
             <div class="list-group">
             <?php foreach($this->certsParticipanteEncontro as $cert): ?>
                 <a class="list-group-item"
-                    href="<?=$this->url(array('controller' => 'participante',
+                    href="<?php echo $this->url(array('controller' => 'participante',
                         'action' => 'certificado-participante-encontro',
                         'id_encontro' => $cert['id_encontro']), 'default', true) ?>">
-                    <?=$cert['nome_encontro'] ?>
+                    <?php echo $cert['nome_encontro'] ?>
                 </a>
             <?php endforeach; ?>
             </div>
@@ -71,15 +71,15 @@
             <div class="list-group">
             <?php foreach($this->certsPalestrante as $cert): ?>
                 <a class="list-group-item"
-                    href="<?=$this->url(array('controller' => 'participante',
+                    href="<?php echo $this->url(array('controller' => 'participante',
                         'action' => 'certificado-palestrante',
                         'id' => $cert['id_evento']), 'default', true) ?>">
                     <h4 class="list-group-item-heading">
-                        <span class="label label-primary"><?=$cert['nome_tipo_evento'] ?></span>
-                        <?=$cert['nome_evento'] ?>
+                        <span class="label label-primary"><?php echo $cert['nome_tipo_evento'] ?></span>
+                        <?php echo $cert['nome_evento'] ?>
                     </h4>
                     <p class="list-group-item-text">
-                        <?=$cert['nome_encontro'] ?>
+                        <?php echo $cert['nome_encontro'] ?>
                     </p>
                 </a>
             <?php endforeach; ?>
@@ -101,16 +101,16 @@
             <div class="list-group">
             <?php foreach($this->certsParticipanteEvento as $cert): ?>
                 <a class="list-group-item"
-                    href="<?=$this->url(array('controller' => 'participante',
+                    href="<?php echo $this->url(array('controller' => 'participante',
                         'action' => 'certificado-participante-evento',
                         'id_encontro' => $cert['id_encontro'],
                         'id_evento' => $cert['id_evento']), 'default', true) ?>">
                     <h4 class="list-group-item-heading">
-                        <span class="label label-primary"><?=$cert['nome_tipo_evento'] ?></span>
-                        <?=$cert['nome_evento'] ?>
+                        <span class="label label-primary"><?php echo $cert['nome_tipo_evento'] ?></span>
+                        <?php echo $cert['nome_evento'] ?>
                     </h4>
                     <p class="list-group-item-text">
-                        <?=$cert['nome_encontro'] ?>
+                        <?php echo $cert['nome_encontro'] ?>
                     </p>
                 </a>
             <?php endforeach; ?>

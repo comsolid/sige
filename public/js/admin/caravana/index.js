@@ -24,8 +24,12 @@ $(document).ready(function() {
     function getValores() {
         startLoading();
         var termo = $('#termo').val();
-        var url = '/admin/caravana/ajax-buscar/termo/' + termo;
-        $.getJSON(url, null, function(json) {
+        var url = '/admin/caravana/ajax-buscar/';
+        var params = {
+            termo: termo,
+            format: 'json'
+        };
+        $.getJSON(url, params, function(json) {
             oTable.fnClearTable();
             if (json.size > 0) {
                 oTable.fnAddData(json.itens);

@@ -30,10 +30,14 @@ $(document).ready(function () {
 		var tipo_busca = $('input:radio[name=t_busca]:checked').val();
 
 		$.ajax({
-			url: '/admin/participante/ajax-buscar/tipo/' + tipo_busca + '/idEncontro/' + idEncontro + '/termo/' + termo,
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8;',
+			url: '/admin/participante/ajax-buscar/',
 			type: 'POST',
-			delay: '3',
+			data: {
+				tipo: tipo_busca,
+				idEncontro: idEncontro,
+				termo: termo,
+				format: 'json'
+			},
 			success: function (json) {
 				oTablePes.fnClearTable();
 				if (json.size > 0) {
@@ -61,7 +65,10 @@ $(document).ready(function () {
 	});
 
 	function presenca(url) {
-		$.getJSON(url, function (json) {
+		var params = {
+			format: 'json'
+		};
+		$.getJSON(url, params, function (json) {
 			if (json.ok) {
 				alertify.success(json.msg);
 			} else if (json.erro !== null) {

@@ -14,6 +14,8 @@ class Admin_PresencaController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
+        $this->view->title = _('Presence List');
+
         $id_evento = (int) $this->_request->getParam('id', 0);
         $id_evento_realizacao = (int) $this->_request->getParam('id_evento_realizacao', 0);
         $this->view->id = $id_evento;

@@ -71,7 +71,7 @@ $form->getAction()?>">
 
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?=$this->url(array('module' => 'admin',
+                        <a href="<?php echo $this->url(array('module' => 'admin',
                             'controller' => 'evento',
                             'action' => 'detalhes',
                             'id' => $this->idEvento), 'default', true) ?>"

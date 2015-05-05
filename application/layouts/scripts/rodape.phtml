@@ -1,15 +1,15 @@
 <div>
-    <img class="fl_left"  src="<?= $this->baseUrl('imagens/layout/icn_sige.png') ?>"></img>
+    <img class="fl_left"  src="<?php echo $this->baseUrl('imagens/layout/icn_sige.png') ?>"></img>
 
-    <p  class="fl_left cl_right" align="center"> 
+    <p  class="fl_left cl_right" align="center">
         <?php echo $this->translate("SiGE by"); ?>
-        <a href="http://comsolid.org" target="_blank" style="color: white">COMSOLiD</a> - <?= date('Y') ?> |
-        <a href="<?= $this->url(array(), 'sobre', true) ?>" style="color: white">
+        <a href="http://comsolid.org" target="_blank" style="color: white">COMSOLiD</a> - <?php echo date('Y') ?> |
+        <a href="<?php echo $this->url(array(), 'sobre', true) ?>" style="color: white">
             <?php echo $this->translate("About"); ?>
         </a>
     </p>
     <a href="http://comsolid.org/" target="_blank">
-        <img class="fl_right cl_right" src="<?= $this->baseUrl('imagens/layout/icn_comsolid.png') ?>"
+        <img class="fl_right cl_right" src="<?php echo $this->baseUrl('imagens/layout/icn_comsolid.png') ?>"
              alt="COMSOLiD" border="0"/>
     </a>
 </div>

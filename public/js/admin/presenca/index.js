@@ -21,7 +21,8 @@ $(function () {
             var url = '/admin/presenca/ajax-buscar-participante/';
             var data = {
                 termo: options.term,
-                id_evento_realizacao: $('#id_evento_realizacao').val()
+                id_evento_realizacao: $('#id_evento_realizacao').val(),
+                format: 'json'
             };
             $.getJSON(url, data, function (json) {
                 if (json.error) {

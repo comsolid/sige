@@ -17,14 +17,14 @@
     .vertical-offset-100 {
         padding-top: 100px;
     }
-    
+
     .img-responsive {
         display: block;
         max-width: 100%;
         height: auto;
         margin: auto;
     }
-    
+
     .panel {
         margin-bottom: 20px;
         background-color: rgba(255, 255, 255, 0.75);
@@ -33,7 +33,7 @@
         -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
         box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     }
-    
+
     .img-captcha {
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
@@ -57,10 +57,10 @@ $form = $this->form;
                         <img src="<?php echo $this->baseUrl('img/banner-login.png'); ?>" class="img-responsive" alt="Conxole Admin"/>
                     </div>
                 </div>
-                
+
                 <div class="panel-body">
                     <?php echo $this->flashMessages(); ?>
-                
+
                     <form method="<?php echo $form->getMethod() ?>"
                         action="<?php echo $form->getAction()?>"
                         class="form-signin">
@@ -71,7 +71,7 @@ $form = $this->form;
                                 <p class="text-danger"><?php echo $item; ?></p>
                             <?php endforeach; ?>
                             <?php endif; ?>
-                            
+
                             <?php $captcha = $form->captcha->getCaptcha()->generate(); ?>
                             <div class="row">
                                 <div class="col-md-12">
@@ -83,7 +83,7 @@ $form = $this->form;
                                 <div class="col-md-4">
                                     <input type="hidden" name="captcha[id]" value="<?php echo $captcha; ?>"
                                         id="captcha-id">
-                                
+
                                     <input type="text" name="captcha[input]" id="captcha-input"
                                     class="form-control input-lg">
                                 </div>
@@ -101,15 +101,15 @@ $form = $this->form;
                         </fieldset>
                     </form>
                 </div>
-                
+
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="<?=$this->url(array(), 'login', true) ?>"
+                            <a href="<?php echo $this->url(array(), 'login', true) ?>"
                                 class="btn btn-link">
                                 <i class="fa fa-sign-in"></i>
                                 <?php echo $this->translate("Login"); ?>
-                            </a> 
+                            </a>
                         </div>
                     </div>
                 </div>

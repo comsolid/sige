@@ -33,12 +33,12 @@ $this->headScript()
 
 <div data-role="collapsible-set">
    <div data-role="collapsible">
-      <h3><?= $this->evento['nome_tipo_evento'] ?>: <?= $this->evento['nome_evento'] ?></h3>
+      <h3><?php echo $this->evento['nome_tipo_evento'] ?>: <?php echo $this->evento['nome_evento'] ?></h3>
       <p>
-         por <?= $this->evento['nome'] ?>
+         por <?php echo $this->evento['nome'] ?>
       </p>
       <p>
-         Nível: <?= $this->evento['descricao_dificuldade_evento'] ?>
+         Nível: <?php echo $this->evento['descricao_dificuldade_evento'] ?>
       </p>
    </div>
 </div>
@@ -59,7 +59,7 @@ $this->headScript()
          <h3>Resumo</h3>
       </div>
       <div class="ui-body ui-body-a">
-         <p><?= $this->evento['resumo'] ?></p>
+         <p><?php echo $this->evento['resumo'] ?></p>
       </div>
    </div>
 </div>
@@ -72,8 +72,8 @@ $this->headScript()
             $url = "/mobile/u/";
             $url .= (empty($outro['twitter']) ? $outro['id_pessoa'] : $outro['twitter']);
             ?>
-            <li><a href="<?= $url ?>" title="<?= $outro['apelido'] ?>"
-                   data-ajax="false"><?= $outro['nome'] ?></a></li>
+            <li><a href="<?php echo $url ?>" title="<?php echo $outro['apelido'] ?>"
+                   data-ajax="false"><?php echo $outro['nome'] ?></a></li>
       <?php endforeach;
          else: ?>
       <li>Palestrante único.</li>
@@ -87,7 +87,7 @@ $this->headScript()
          <h3>Perfil</h3>
       </div>
       <div class="ui-body ui-body-a">
-         <p><?= $this->evento['perfil_minimo'] ?></p>
+         <p><?php echo $this->evento['perfil_minimo'] ?></p>
       </div>
    </div>
 </div>
@@ -98,7 +98,7 @@ $this->headScript()
          <h3>Bio</h3>
       </div>
       <div class="ui-body ui-body-a">
-         <p><?= $this->evento['bio'] ?></p>
+         <p><?php echo $this->evento['bio'] ?></p>
       </div>
    </div>
 </div>
@@ -111,7 +111,7 @@ $this->headScript()
             <li><?=$tag['descricao'] ?></li>
       <?php endforeach;
       else: ?>
-            <li>Nenhuma tag adicionada.</li> 
+            <li>Nenhuma tag adicionada.</li>
       <?php endif; ?>
    </ul>
 </div>
@@ -120,8 +120,8 @@ $this->headScript()
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'comsolid';
-    var disqus_title = '<?= $this->evento['nome_evento'] ?>';
-    var disqus_url = '<?= $this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']), 'ver_evento', true) ?>';
+    var disqus_title = '<?php echo $this->evento['nome_evento'] ?>';
+    var disqus_url = '<?php echo $this->serverUrl() . $this->url(array('id' => $this->evento['id_evento']), 'ver_evento', true) ?>';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -150,7 +150,7 @@ $this->headScript()
          <i class="icon-google-plus-sign icon-large"></i><br/>Google+
       </a>
    </div>
-   
+
    <a href="#panel-share" data-rel="close" data-role="button">
       <i class="icon-remove"></i> Fechar
    </a>

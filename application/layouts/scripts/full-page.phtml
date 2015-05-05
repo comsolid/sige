@@ -30,8 +30,8 @@ $apelido_encontro = $ps->encontro["apelido_encontro"];
     $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
     ?>
 
-    <?= $this->headLink() ?>
-    <?= $this->headStyle() ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500">
     <style>
     body {
@@ -54,6 +54,6 @@ $apelido_encontro = $ps->encontro["apelido_encontro"];
 
     <?php echo $this->layout()->content; ?>
 
-    <?= $this->headScript() ?>
+    <?php echo $this->headScript() ?>
 </body>
 </html>

@@ -25,7 +25,7 @@
                         <i class="fa fa-chevron-left"></i>
                         <?php echo $this->translate("Back"); ?>
                     </a>
-                    <a href="<?=$this->url(array('controller' => 'evento',
+                    <a href="<?php echo $this->url(array('controller' => 'evento',
                             'action' => 'editar',
                             'id' => $this->evento['id_evento']), 'default', true) ?>"
                         class="btn btn-default">
@@ -113,7 +113,7 @@
                     <div class="col-md-6">
                         <label><?php echo $this->translate("Send e-mail"); ?>:</label>
                         <div>
-                            <a href="mailto:<?=$this->evento['email'] ?>"
+                            <a href="mailto:<?php echo $this->evento['email'] ?>"
                                 target="_blank" class="btn btn-default">
                                 <i class="fa fa-envelope"></i> <?php echo $this->evento['email']; ?>
                             </a>
@@ -125,9 +125,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <?php echo $this->translate("Submited"); ?>
-                        <span data-moment="<?php echo $this->evento['data_submissao']; ?>"
-                            title="<?php echo $this->evento['data_submissao']; ?>">
-                            <?php echo $this->evento['data_submissao']; ?>
+                        <span data-moment="<?php echo $this->evento['data_submissao_f']; ?>"
+                            title="<?php echo $this->evento['data_submissao_f']; ?>">
+                            <?php echo $this->evento['data_submissao_f']; ?>
                         </span>
                     </div>
                     <div class="col-md-6">
@@ -168,13 +168,13 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-1">
-                            <?= $this->evento['resumo']; ?>
+                            <?php echo $this->evento['resumo']; ?>
                         </div>
                         <div id="tab-2" class="tab-pane">
-                            <?= $this->evento['preferencia_horario']; ?>
+                            <?php echo $this->evento['preferencia_horario']; ?>
                         </div>
                         <div id="tab-3" class="tab-pane">
-                            <?= $this->evento['tecnologias_envolvidas']; ?>
+                            <?php echo $this->evento['tecnologias_envolvidas']; ?>
                         </div>
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                                         <i class="fa fa-envelope"></i>
                                     </a>
 
-                                    <a href="<?=$this->url(array('module' => 'admin',
+                                    <a href="<?php echo $this->url(array('module' => 'admin',
                                             'controller' => 'horario',
                                             'action' => 'editar',
                                             'id' => $item['evento'],
@@ -263,7 +263,7 @@
                                        <i class="fa fa-tasks"></i>
                                     </a>
 
-                                    <a href="<?=$this->url(array('module' => 'admin',
+                                    <a href="<?php echo $this->url(array('module' => 'admin',
                                             'controller' => 'horario',
                                             'action' => 'deletar',
                                             'id' => $item['evento'],
@@ -309,7 +309,7 @@
                     <tbody>
                         <?php foreach ($this->outrosPalestrantes as $p): ?>
                         <tr>
-                            <td><?=$p['nome'] ?></td>
+                            <td><?php echo $p['nome'] ?></td>
                             <td>
                                 <?php if($p['confirmado']): ?>
                                     <span class="label label-success">

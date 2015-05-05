@@ -4,7 +4,7 @@
       <title>SiGE</title>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
+
       <?php
          $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.mobile-1.4.0.min.css'))
                           ->appendStylesheet($this->baseUrl('css/font-awesome.min.css'))
@@ -12,8 +12,8 @@
                           ->appendStylesheet($this->baseUrl('css/mobile/mobile.css'))
                           ->appendStylesheet($this->baseUrl('css/flash-messages.css'));
       ?>
-      
-      <?= $this->headLink() ?>
+
+      <?php echo $this->headLink() ?>
    </head>
    <body>
       <div data-role="page" class="sige-page">
@@ -35,13 +35,13 @@
          </div>
          <!-- content -->
          <div data-role="content" style="min-width: 200px;">
-            <div><?= $this->flashMessages(); ?></div>
+            <div><?php echo $this->flashMessages(); ?></div>
             <?php echo $this->layout()->content ?>
          </div>
-         
+
          <!-- footer -->
          <div data-role="footer">
-            <h1>COMSOLiD <?=date('Y') ?></h1>
+            <h1>COMSOLiD <?php echo date('Y') ?></h1>
          </div>
 
       </div><!-- page -->
@@ -50,6 +50,6 @@
                  ->prependFile($this->baseUrl('js/jquery.mobile-1.4.0.min.js'))
                  ->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
       ?>
-      <?= $this->headScript() ?>
+      <?php echo $this->headScript() ?>
    </body>
 </html>

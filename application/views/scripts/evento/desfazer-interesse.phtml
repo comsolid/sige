@@ -8,25 +8,25 @@
          Data:
       </div>
       <div class="span-4">
-         <?= $this->evento['data'] ?>
+         <?php echo $this->evento['data'] ?>
       </div>
       <div class="span-2">
          Horário:
       </div>
       <div class="span-4">
-         <?= $this->evento['hora_inicio'] ?> - <?= $this->evento['hora_fim'] ?>
+         <?php echo $this->evento['hora_inicio'] ?> - <?php echo $this->evento['hora_fim'] ?>
       </div>
    </div>
    <div class="container">
       <div class="span-10">
-         Você irá desmarcar interesse em: <?= $this->evento['nome_evento'] ?>. Tem certeza?
+         Você irá desmarcar interesse em: <?php echo $this->evento['nome_evento'] ?>. Tem certeza?
       </div>
    </div>
    <br/>
    <div class="container">
       <div class="span-10">
-         <form action="<?=$this->url(array('action' => 'desfazer-interesse')) ?>" method="post">
-            <input type="hidden" name="id" value="<?=$this->evento['evento'] ?>" />
+         <form action="<?php echo $this->url(array('action' => 'desfazer-interesse')) ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $this->evento['evento'] ?>" />
             <dl class="zend_form">
                <input type="submit" name="cancelar" id="cancelar" value="cancelar" class="submitCancelar">
                <input type="submit" name="del" id="del" value="confimar"/>

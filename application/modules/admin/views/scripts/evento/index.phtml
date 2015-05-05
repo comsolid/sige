@@ -1,7 +1,7 @@
 <?php
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/data-tables/dataTables.bootstrap.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.8.16.custom.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/jquery-ui-1.9.2.custom.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/jquery.dataTables.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/data-tables/dataTables.bootstrap.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/admin/evento/index.js'));
@@ -49,10 +49,10 @@
                     <?php foreach ($this->tipoEvento as $tipoEvento): ?>
                     <label class="btn btn-default">
                         <input type="radio" name="tipo_evento"
-                            value="<?= $tipoEvento->id_tipo_evento ?>"
-                            id="tipo_evento<?= $tipoEvento->id_tipo_evento ?>"
+                            value="<?php echo $tipoEvento->id_tipo_evento ?>"
+                            id="tipo_evento<?php echo $tipoEvento->id_tipo_evento ?>"
                             class="tipo_evento">
-                        <?= $tipoEvento->nome_tipo_evento ?>
+                        <?php echo $tipoEvento->nome_tipo_evento ?>
                     </label>
                     <?php endforeach; ?>
                 </div>

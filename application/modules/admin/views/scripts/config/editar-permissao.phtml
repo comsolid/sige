@@ -5,7 +5,7 @@
     $this->headScript()->appendFile($this->baseUrl('js/admin/config/editar-permissao.js'));
 ?>
 
-<h3><?php echo $this->translate("Edit permission of"); ?> <strong><?=$this->usuario ?></strong></h3>
+<h3><?php echo $this->translate("Edit permission of"); ?> <strong><?php echo $this->usuario ?></strong></h3>
 <hr/>
 
 <?php
@@ -45,7 +45,7 @@ $form = $this->form;
             <div class="box-footer">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?=$this->url(array('module' => 'admin',
+                        <a href="<?php echo $this->url(array('module' => 'admin',
                             'controller' => 'config',
                             'action' => 'permissao-usuarios'), 'default', true) ?>"
                             class="btn btn-default">

@@ -13,7 +13,7 @@
       <?php foreach($this->diasEncontro as $value):
             $date = new Zend_Date($value['data']);
       ?>
-      <li><a href="#" data-id="<?=$date->toString('dd-MMM') ?>"><?=$date->toString('dd MMM') ?></a></li>
+      <li><a href="#" data-id="<?php echo $date->toString('dd-MMM') ?>"><?php echo $date->toString('dd MMM') ?></a></li>
       <?php endforeach; ?>
    </ul>
 </div>
@@ -36,23 +36,23 @@ if (! empty($this->lista)):
    <?php
          }
    ?>
-   <div id="<?=$date->toString('dd-MMM') ?>" data-role="collapsible-set" class="dia" style="display: none;"
+   <div id="<?php echo $date->toString('dd-MMM') ?>" data-role="collapsible-set" class="dia" style="display: none;"
         data-filter="true" data-input="#buscarEvento">
    <?php
          $count++;
       } // end if test data !=
 ?>
-      <div data-role="collapsible" data-filtertext="<?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>">
+      <div data-role="collapsible" data-filtertext="<?php echo $item['nome_tipo_evento'] ?>: <?php echo $item['nome_evento'] ?>">
          <h4>
-            <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
+            <?php echo $item['nome_tipo_evento'] ?>: <?php echo $item['nome_evento'] ?>
             <?php if (! empty($item['descricao'])) : ?>
-            (<?=$item['descricao'] ?>)
+            (<?php echo $item['descricao'] ?>)
             <?php endif; ?>
-            <span style="color: gray; float: right"><?=$item['hora_inicio'] ?></span>
+            <span style="color: gray; float: right"><?php echo $item['hora_inicio'] ?></span>
          </h4>
          <div class="ui-grid-a ui-responsive">
             <div class="ui-block-a" style="padding-top: 20px;">
-               <div class="ui-body">Local: <?=$item['nome_sala'] ?></div>
+               <div class="ui-body">Local: <?php echo $item['nome_sala'] ?></div>
             </div>
             <div class="ui-block-b">
                <div class="ui-body">
@@ -63,20 +63,20 @@ if (! empty($this->lista)):
                      $id = $item['id_pessoa'];
                   }
                   ?>
-                  por <a href="<?=$this->url(array('id' => $id),
+                  por <a href="<?php echo $this->url(array('id' => $id),
                         'mobile_ver', true) ?>" target="blank" data-ajax="false"
-                        class="ui-btn ui-mini ui-btn-inline ui-corner-all"><?=$item['nome'] ?></a>
+                        class="ui-btn ui-mini ui-btn-inline ui-corner-all"><?php echo $item['nome'] ?></a>
                    <?php if ($item['outros'] == 1): ?>
                       e outro.
                    <?php elseif ($item['outros'] > 1): ?>
-                      e <?=$item['outros'] ?> outros.
+                      e <?php echo $item['outros'] ?> outros.
                    <?php endif; ?>
                </div>
             </div>
          </div><!-- /grid-a -->
-         <?=$item['resumo'] ?>
-         <a href="<?=$this->url(array('id' => $item['id_evento']),
-              'mobile_ver_evento', true) ?>#disqus_thread" 
+         <?php echo $item['resumo'] ?>
+         <a href="<?php echo $this->url(array('id' => $item['id_evento']),
+              'mobile_ver_evento', true) ?>#disqus_thread"
               class="ui-btn ui-shadow ui-corner-all ui-mini"
               data-ajax="false">
             <i class="icon-comments-alt"></i> Comentários

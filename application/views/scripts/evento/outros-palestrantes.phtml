@@ -16,12 +16,12 @@
 
 <h4>
     <?php echo $this->translate("Add other speakers:"); ?>
-    <strong><?=$this->evento['nome_evento'] ?></strong>
+    <strong><?php echo $this->evento['nome_evento'] ?></strong>
 </h4>
 
 <hr>
 
-<form action="<?=$this->url(array('action' => 'outros-palestrantes')) ?>" method="post">
+<form action="<?php echo $this->url(array('action' => 'outros-palestrantes')) ?>" method="post">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -46,7 +46,7 @@
             <tbody>
             <?php foreach ($this->palestrantes as $palestrante): ?>
                 <tr>
-                    <td><?= $palestrante['nome'] ?></td>
+                    <td><?php echo $palestrante['nome'] ?></td>
                     <td>
                         <div class="btn-group pull-right">
                             <a title="<?php echo $this->translate("Remove the speaker from this event"); ?>"
@@ -58,7 +58,7 @@
                                 data-toggle="tooltip" data-placement="top">
                               <i class="fa fa-times"></i> <?php echo $this->translate("Delete"); ?>
                             </a>
-                            <a href="mailto:<?=$palestrante['email'] ?>" target="_blank"
+                            <a href="mailto:<?php echo $palestrante['email'] ?>" target="_blank"
                                 class="btn btn-default"
                                 title="<?php echo $this->translate("Send e-mail"); ?>"
                                 data-toggle="tooltip" data-placement="top">

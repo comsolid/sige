@@ -2,7 +2,7 @@
 <html>
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <?=$this->headMeta(); ?>
+      <?php echo $this->headMeta(); ?>
       <title>COMSOLiD - SiGE</title>
       <?php
          $this->headLink()->appendStylesheet($this->baseUrl('css/sigecss.css'));
@@ -19,8 +19,8 @@
         $this->headScript()->prependFile($this->baseUrl('js/jquery-1.10.2.min.js'));
       ?>
 
-      <?= $this->headLink() ?>
-      <?= $this->headStyle() ?>
+      <?php echo $this->headLink() ?>
+      <?php echo $this->headStyle() ?>
       <link rel="shortcut icon" href="<?php echo $this->baseUrl('imagens/layout/favicon_sige.png'); ?>" type="image/x-icon" />
       <style>
       a {cursor: pointer;}
@@ -45,7 +45,7 @@
                <span><?php echo $this->translate("Welcome:"); ?></span>
                <a href="<?php echo $this->url(array('controller' => 'participante',
                    'action' => 'ver'), 'default', true); ?>" class="no-bottom">
-                  <span class="apelido"><i class="icon-user"></i> <?= $this->usuaLogado['apelido'] ?></span>
+                  <span class="apelido"><i class="icon-user"></i> <?php echo $this->usuaLogado['apelido'] ?></span>
                </a>&nbsp;
                <a href="<?php echo $this->url(array(), 'logout', true); ?>" class="no-bottom">
 						<i class="icon-signout"></i> <?php echo $this->translate("Logout"); ?></a>
@@ -58,7 +58,7 @@
                <?php echo (is_object($this->menu)) ? $this->menu->getView() : ""; ?>
 
                <?php if (!empty($this->deprecated)): ?>
-                  <p style="color: red;"><?= $this->deprecated ?></p>
+                  <p style="color: red;"><?php echo $this->deprecated ?></p>
                <?php endif; ?>
                <?php echo $this->flashMessages(); ?>
                <?php echo $this->layout()->content ?>
@@ -70,6 +70,6 @@
          </div>
 
       </div>
-      <?= $this->headScript() ?>
+      <?php echo $this->headScript() ?>
    </body>
 </html>

@@ -1,9 +1,9 @@
 
 <?php if (!empty($this->user)): ?>
-   <p>Meu nome é <?= $this->user->nome ?>.</p>
+   <p>Meu nome é <?php echo $this->user->nome ?>.</p>
    <div data-role="collapsible">
       <h4>Sobre mim:</h4>
-      <p><?= $this->user->bio ?></p>
+      <p><?php echo $this->user->bio ?></p>
       <?php
       $tw_user = str_replace("@", "", $this->user->twitter);
       if (!empty($tw_user)) {
@@ -15,7 +15,7 @@
             rel='external' target='_blank'><i class='icon-twitter'></i> Twitter</a>";
       }
       ?>
-      <?= $twitter ?>
+      <?php echo $twitter ?>
    </div>
    <?php
    if (! empty($this->user->slideshare)):
@@ -34,7 +34,7 @@
                 <?php echo $item->title; ?></a>
       </li>
       <?php endforeach; ?>
-      
+
    </ul>
    <a href="<?php echo "{$channel->link}{$this->user->slideshare}" ?>"
       rel="external" target="_blank" data-role="button">
@@ -54,7 +54,7 @@
             <img src="<? echo $this->baseUrl('img/slideshare.png'); ?>"/> Slideshare</a>
          para que suas apresentações apareçam aqui.
    <?php endif; ?>
-   
+
 <?php else: // end: not empty user ?>
    <p>Participante não encontrado.</p>
 <?php endif; ?>

@@ -49,7 +49,7 @@ if (! empty($this->lista)):
          $date = new Zend_Date($item['data'], 'dd/MM/y');
       ?>
       <div class="prog-date">
-         <p><?=$date->toString('dd') ?> <span><?=$date->toString('MMM') ?></span></p>
+         <p><?php echo $date->toString('dd') ?> <span><?php echo $date->toString('MMM') ?></span></p>
       </div>
       <?php
          $data_atual = $item['data'];
@@ -63,20 +63,20 @@ if (! empty($this->lista)):
         data-hora="<?php echo $item['hora_inicio'] ?>">
       <div class="acc-evento">
          <div class="header3">
-            <?=$item['nome_tipo_evento'] ?>: <?=$item['nome_evento'] ?>
+            <?php echo $item['nome_tipo_evento'] ?>: <?php echo $item['nome_evento'] ?>
             <?php if (! empty($item['descricao'])) : ?>
-            (<?=$item['descricao'] ?>)
+            (<?php echo $item['descricao'] ?>)
             <?php endif; ?>
          </div>
          <div>
             <div>
                 <?php echo $this->translate("Place"); ?>:
-                <?=$item['nome_sala'] ?>
+                <?php echo $item['nome_sala'] ?>
                 -
                 <?php echo $this->translate("from"); ?>
-                <?=$item['hora_inicio'] ?>
+                <?php echo $item['hora_inicio'] ?>
                 <?php echo $this->translate("to"); ?>
-                <?=$item['hora_fim'] ?></div>
+                <?php echo $item['hora_fim'] ?></div>
                 <hr/>
                 <?php
                 if (! empty($item['twitter'])) {
@@ -87,20 +87,20 @@ if (! empty($this->lista)):
                 ?>
             <div>
                <?php echo $this->translate("by"); ?>
-               <a href="<?=$this->url(array('id' => $id),
-                    'ver', true) ?>" target="blank"><?=$item['nome'] ?></a>
+               <a href="<?php echo $this->url(array('id' => $id),
+                    'ver', true) ?>" target="blank"><?php echo $item['nome'] ?></a>
                <?php if ($item['outros'] == 1): ?>
                   <?php echo $this->translate("and other."); ?>
                <?php elseif ($item['outros'] > 1): ?>
                   <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
                <?php endif; ?>
             </div>
-            <p><?=$item['resumo'] ?></p>
+            <p><?php echo $item['resumo'] ?></p>
          </div>
       </div>
    </div>
    <div class="col-md-1">
-      <a href="<?=$this->url(array('id' => $item['id_evento']), 'ver_evento', true) ?>#disqus_thread"
+      <a href="<?php echo $this->url(array('id' => $item['id_evento']), 'ver_evento', true) ?>#disqus_thread"
               class="btn btn-default" rel="tooltip"
               title="<?php echo $this->translate("View and post comments"); ?>">
               <i class="fa fa-comments-o"></i>

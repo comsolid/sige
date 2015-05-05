@@ -19,7 +19,7 @@
 </h3>
 <hr>
 
-<form action="<?= $this->url(array('action' => 'participantes')) ?>" method="post">
+<form action="<?php echo $this->url(array('action' => 'participantes')) ?>" method="post">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -42,10 +42,10 @@
                 <th><?php echo $this->translate("Participants"); ?></th>
                 <th style="width: 70px;">&nbsp;</th>
             </thead>
-            <tbody> 
+            <tbody>
             <?php foreach ($this->participantes as $participante): ?>
                 <tr>
-                    <td><?= $participante['nome'] ?></td>
+                    <td><?php echo $participante['nome'] ?></td>
                     <td>
                         <a href="<?php echo $this->url(array(
                             'controller' => 'caravana',

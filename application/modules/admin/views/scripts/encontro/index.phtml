@@ -8,10 +8,10 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h3><?php echo $this->translate("Conferences"); ?></h3>
+        &nbsp;
     </div>
     <div class="col-md-4">
-        <a href="<?=$this->url(array(
+        <a href="<?php echo $this->url(array(
             'module' => 'admin',
             'controller' => 'encontro',
             'action' => 'criar'), 'default', true); ?>"
@@ -30,9 +30,9 @@
             <div class="box-header">
                 <h3 class="box-title">
                     <span class="label label-primary" style="margin-right: 6px;">
-                        #<?= $value['id_encontro'] ?>
+                        #<?php echo $value['id_encontro'] ?>
                     </span>
-                    <?= $value['apelido_encontro'] ?>
+                    <?php echo $value['apelido_encontro'] ?>
                 </h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -41,22 +41,22 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <?= $value['nome_encontro'] ?>
+                        <?php echo $value['nome_encontro'] ?>
                     </div>
                     <div class="col-md-6">
                         <?php echo $this->translate("from"); ?>
-                        <?= $value['data_inicio'] ?>
+                        <?php echo $value['data_inicio'] ?>
                         <?php echo $this->translate("to"); ?>
-                        <?= $value['data_fim'] ?>
+                        <?php echo $value['data_fim'] ?>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 6px;">
                     <div class="col-md-6">
                         <label><?php echo $this->translate("Submission Period"); ?></label>
                         <div>
-                            <?= $value['periodo_submissao_inicio'] ?>
+                            <?php echo $value['periodo_submissao_inicio'] ?>
                             <?php echo $this->translate("to"); ?>
-                            <?= $value['periodo_submissao_fim'] ?>
+                            <?php echo $value['periodo_submissao_fim'] ?>
                         </div>
                     </div>
                 </div>

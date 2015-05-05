@@ -15,82 +15,90 @@
     $this->headScript()->appendFile($this->baseUrl('js/admin/presenca/index.js'));
 ?>
 
-<div class="row">
-    <div class="col-md-1">
-        <a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'evento',
-            'action' => 'detalhes',
-            'id' => $this->id
-        ), 'default', true) ?>" class="btn btn-default">
-            <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
-        </a>
-    </div>
-    <div class="col-md-6">
-        <h4>
-            Adicionar participantes ao evento:
-            <strong>
-                <?=$this->evento['nome_tipo_evento'] ?>:
-                <?=$this->evento['nome_evento'] ?>
-            </strong>
-            por <?=$this->evento['nome'] ?>.
-        </h4>
+<div class="box box-solid">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-1">
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'evento',
+                    'action' => 'detalhes',
+                    'id' => $this->id
+                ), 'default', true) ?>" class="btn btn-default">
+                    <i class="fa fa-chevron-left"></i> <?php echo $this->translate("Back"); ?>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <h4>
+                    Adicionar participantes ao evento:
+                    <strong>
+                        <?php echo $this->evento['nome_tipo_evento'] ?>:
+                        <?php echo $this->evento['nome_evento'] ?>
+                    </strong>
+                    por <?php echo $this->evento['nome'] ?>.
+                </h4>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-3">
+                <form method="post" action="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'presenca',
+                    'action' => 'salvar'
+                ), 'default', true); ?>">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="hidden" id="participantes" name="array_id_pessoas" class="form-control"/>
+
+                            <input type="hidden" name="id" value="<?php echo $this->id; ?>" />
+                            <input type="hidden" id="id_evento_realizacao"
+                                name="id_evento_realizacao" value="<?php echo $this->id_evento_realizacao; ?>" />
+                        </div>
+                        <div class="col-md-1">
+                            <input type="submit" name="submit" id="submit" value="Confimar" class="btn btn-primary"/>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
-<hr>
-
-<form method="post" action="<?php echo $this->url(array(
-    'module' => 'admin',
-    'controller' => 'presenca',
-    'action' => 'salvar'
-), 'default', true); ?>">
-
-    <div class="row">
-        <div class="col-md-4">
-            <input type="hidden" id="participantes" name="array_id_pessoas" class="form-control"/>
-
-            <input type="hidden" name="id" value="<?php echo $this->id; ?>" />
-            <input type="hidden" id="id_evento_realizacao"
-                name="id_evento_realizacao" value="<?php echo $this->id_evento_realizacao; ?>" />
+<div class="box box-solid">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <th>Participantes</th>
+                        <th>E-mail</th>
+                        <th style="width: 70px;">&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->participantes as $participante): ?>
+                        <tr>
+                            <td><?php echo $participante['nome'] ?></td>
+                            <td><?php echo $participante['email'] ?></td>
+                            <td>
+                                <a title="Remover participante"
+                                    href="<?php echo $this->url(array('module' => 'admin',
+                                        'controller' => 'presenca',
+                                        'action' => 'deletar',
+                                        'id_pessoa' => $participante['id_pessoa'],
+                                        'id_evento' => $this->id,
+                                        'id_evento_realizacao' => $this->id_evento_realizacao,
+                                    ), 'default', true); ?>" class="btn btn-danger delete">
+                                    <i class="fa fa-remove"></i> Deletar
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-md-1">
-            <input type="submit" name="submit" id="submit" value="Confimar" class="btn btn-primary"/>
-        </div>
-    </div>
-
-</form>
-
-<hr>
-
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-hover table-striped">
-            <thead>
-                <th>Participantes</th>
-                <th>E-mail</th>
-                <th style="width: 70px;">&nbsp;</th>
-            </thead>
-            <tbody>
-                <?php foreach ($this->participantes as $participante): ?>
-                <tr>
-                    <td><?= $participante['nome'] ?></td>
-                    <td><?= $participante['email'] ?></td>
-                    <td>
-                        <a title="Remover participante"
-                            href="<?php echo $this->url(array('module' => 'admin',
-                                'controller' => 'presenca',
-                                'action' => 'deletar',
-                                'id_pessoa' => $participante['id_pessoa'],
-                                'id_evento' => $this->id,
-                                'id_evento_realizacao' => $this->id_evento_realizacao,
-                            ), 'default', true); ?>" class="btn btn-danger delete">
-                            <i class="fa fa-remove"></i> Deletar
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
     </div>
 </div>

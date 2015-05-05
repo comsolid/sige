@@ -8,12 +8,13 @@ class Default_CaravanaControllerTest extends Default_AbstractControllerTest {
         $urlParams = $this->urlizeOptions($params);
         $url = $this->url($urlParams);
         $this->dispatch($url);
+
         // assertions
         $this->assertModule($urlParams['module']);
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
-    
+
     public function testAccessParticipantesAction() {
         $this->mockLogin();
         $params = array('action' => 'participantes', 'controller' => 'Caravana', 'module' => 'default');
@@ -25,7 +26,7 @@ class Default_CaravanaControllerTest extends Default_AbstractControllerTest {
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
-    
+
     public function testAccessCriarAction() {
         $this->mockLogin();
         $params = array('action' => 'criar', 'controller' => 'Caravana', 'module' => 'default');
@@ -37,7 +38,7 @@ class Default_CaravanaControllerTest extends Default_AbstractControllerTest {
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
-    
+
     public function testAccessEditarAction() {
         $this->mockLogin();
         $params = array('action' => 'editar', 'controller' => 'Caravana', 'module' => 'default');

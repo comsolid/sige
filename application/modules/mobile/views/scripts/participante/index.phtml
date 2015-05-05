@@ -34,14 +34,14 @@
          <div class="ui-body ui-body-a">
             <?php $date = new Zend_Date($item["data"]); ?>
             <p style="font-size: 12pt;">
-               <?= $date->toString("dd 'de' MMM") ?> -
+               <?php echo $date->toString("dd 'de' MMM") ?> -
                <?php echo $item["hora_inicio"]; ?> as <?php echo $item["hora_fim"]; ?>
             </p>
-            <p style="font-size: 11pt;">Local: <?= $item['nome_sala'] ?></p>
+            <p style="font-size: 11pt;">Local: <?php echo $item['nome_sala'] ?></p>
             <?php if (!$item['validada']): ?>
                <p><i class="icon-warning-sign"></i> Este evento foi invalidado e pode não ser ministrado.</p>
             <?php endif; ?>
-            <a href="<?= $this->url(array('id' => $item['id_evento']),
+            <a href="<?php echo $this->url(array('id' => $item['id_evento']),
                     'mobile_ver_evento', true); ?>#disqus_thread"
                data-ajax="false"
                class="ui-btn ui-shadow ui-corner-all ui-mini">

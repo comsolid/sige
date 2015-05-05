@@ -1,13 +1,15 @@
 <?php
-class Admin_EncontroController extends Zend_Controller_Action {
+class Admin_EncontroController extends Sige_Controller_AdminAction {
 
     public function init() {
         $this->_helper->layout->setLayout('twbs3-admin/layout');
-        $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view);
+        $this->view->menu = new Sige_Desktop_AdminSidebarLeftMenu($this->view, 'config');
     }
 
     public function indexAction() {
         $this->autenticacao();
+
+        $this->view->title = _('Conferences');
 
         $model = new Admin_Model_Encontro();
         $this->view->lista = $model->listar();

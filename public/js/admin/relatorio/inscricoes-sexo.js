@@ -2,7 +2,10 @@ $(function () {
 
     function gerarRelatorio() {
         var url = '/admin/relatorios/ajax-inscricoes-sexo';
-        $.getJSON(url, function (json) {
+        var params = {
+            format: 'json'
+        };
+        $.getJSON(url, params, function (json) {
             if (json.ok) {
                 Morris.Donut({
                     element: 'donut-chart',

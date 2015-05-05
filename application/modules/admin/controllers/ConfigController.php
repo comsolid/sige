@@ -13,10 +13,14 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
 
     public function indexAction() {
         $this->autenticacao();
+
+        $this->view->title = _('Configurations');
     }
 
     public function permissaoUsuariosAction() {
         $this->autenticacao();
+
+        $this->view->title = _('User Permission');
     }
 
     public function ajaxBuscarUsuariosAction() {
@@ -63,6 +67,8 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
 
     public function editarPermissaoAction() {
         $this->autenticacao();
+
+        $this->view->title = _('Edit Permission');
 
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');

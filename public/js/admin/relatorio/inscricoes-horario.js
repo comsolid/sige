@@ -3,7 +3,10 @@ $(function() {
 
     function gerarRelatorio() {
         var url = '/admin/relatorios/ajax-inscricoes-horario';
-        $.getJSON(url, function(json) {
+        var params = {
+            format: 'json'
+        };
+        $.getJSON(url, params, function(json) {
             if (json.ok) {
                 Morris.Bar({
                     element: 'bar-chart',

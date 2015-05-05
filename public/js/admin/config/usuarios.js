@@ -25,7 +25,8 @@ $(function() {
         var tipo_busca = $('input:radio[name=t_busca]:checked').val();
         var params = {
             buscar_por: tipo_busca,
-            termo: termo
+            termo: termo,
+            format: 'json'
         };
         var url = '/admin/config/ajax-buscar-usuarios/';
 
