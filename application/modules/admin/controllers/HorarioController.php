@@ -9,7 +9,7 @@ class Admin_HorarioController extends Sige_Controller_AdminAction {
     public function criarAction() {
         $this->autenticacao();
 
-        $this->view->title = _('New schedule');
+        $this->view->title = $this->t->_('New schedule');
         $this->_helper->viewRenderer->setRender('salvar');
 
         $idEvento = $this->_request->getParam('id');
@@ -57,7 +57,7 @@ class Admin_HorarioController extends Sige_Controller_AdminAction {
     public function editarAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Edit schedule');
+        $this->view->title = $this->t->_('Edit schedule');
         $this->_helper->viewRenderer->setRender('salvar');
 
         $form = new Admin_Form_Horarios();

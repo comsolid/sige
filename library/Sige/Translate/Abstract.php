@@ -1,6 +1,8 @@
 <?php
 
-abstract class Sige_Translate_Abstract {
+trait Sige_Translate_Abstract {
+
+    protected $t;
 
     public function __construct() {
         if(!Zend_Registry::isRegistered('Zend_Translate')){

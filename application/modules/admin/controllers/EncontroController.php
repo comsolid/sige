@@ -9,7 +9,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Conferences');
+        $this->view->title = $this->t->_('Conferences');
 
         $model = new Admin_Model_Encontro();
         $this->view->lista = $model->listar();
@@ -23,7 +23,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
     public function criarAction() {
         $this->autenticacao();
 
-        $this->view->title = _('New Conference');
+        $this->view->title = $this->t->_('New Conference');
         $this->_helper->viewRenderer->setRender('salvar');
         $form = new Admin_Form_Encontro();
         $this->view->form = $form;
@@ -51,7 +51,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
                 }
                 catch(Exception $e) {
                     $model->getAdapter()->rollBack();
-                    $this->_helper->flashMessenger->addMessage(array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
+                    $this->_helper->flashMessenger->addMessage(array('danger' => $this->t->_('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
                 }
             } else {
                 $form->populate($formData);
@@ -62,7 +62,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
     public function editarAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Edit Conference');
+        $this->view->title = $this->t->_('Edit Conference');
         $this->_helper->viewRenderer->setRender('salvar');
         $form = new Admin_Form_Encontro();
         $this->view->form = $form;
@@ -86,7 +86,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
                         'action' => 'index'), 'default', true);
                 }
                 catch(Exception $e) {
-                    $this->_helper->flashMessenger->addMessage(array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
+                    $this->_helper->flashMessenger->addMessage(array('danger' => $this->t->_('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
                 }
             } else {
                 $form->populate($formData);
@@ -116,14 +116,14 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
                 try {
                     $model->update($data, "id_encontro = {$idEncontro}
                      AND id_tipo_mensagem_email = {$idTipoMensagem}");
-                    $this->_helper->flashMessenger->addMessage(array('success' => _('Message successfully updated.')));
+                    $this->_helper->flashMessenger->addMessage(array('success' => $this->t->_('Message successfully updated.')));
                     return $this->_helper->redirector->goToRoute(array(
                         'module' => 'admin',
                         'controller' => 'encontro',
                         'action' => 'index'), 'default', true);
                 }
                 catch(Exception $e) {
-                    $this->_helper->flashMessenger->addMessage(array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
+                    $this->_helper->flashMessenger->addMessage(array('danger' => $this->t->_('An unexpected error ocurred.<br/> Details:&nbsp;') . $e->getMessage()));
                 }
             } else {
                 $form->populate($formData);
@@ -135,19 +135,19 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
 
         switch ($id_tipo_mensagem) {
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO:
-                $this->view->title = _("Edit e-mail confirmation message");
+                $this->view->title = $this->t->_("Edit e-mail confirmation message");
                 break;
             case Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA:
-                $this->view->title = _("Edit e-mail recover password message");
+                $this->view->title = $this->t->_("Edit e-mail recover password message");
                 break;
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_SUBMISSAO:
-                $this->view->title = _("Edit e-mail submission confirmation message");
+                $this->view->title = $this->t->_("Edit e-mail submission confirmation message");
                 break;
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_REINSCRICAO:
-                $this->view->title = _("Edit e-mail registration confirmation message");
+                $this->view->title = $this->t->_("Edit e-mail registration confirmation message");
                 break;
             default:
-                $this->_helper->flashMessenger->addMessage(array('info' => _('E-mail message not find.')));
+                $this->_helper->flashMessenger->addMessage(array('info' => $this->t->_('E-mail message not find.')));
                 return $this->_helper->redirector->goToRoute(array(
                     'module' => 'admin',
                     'controller' => 'encontro',
@@ -167,14 +167,14 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
         $tipo_mensagem = $this->_getParam('tipo_mensagem_certificado');
         switch ($tipo_mensagem) {
             case "certificados_template_participante_encontro":
-                $this->view->title = _('Participant of Conference Template');
+                $this->view->title = $this->t->_('Participant of Conference Template');
                 $this->view->options = array(
                     '{nome}',
                     '{encontro}'
                 );
                 break;
             case "certificados_template_palestrante_evento":
-                $this->view->title = _('Event Speaker Template');
+                $this->view->title = $this->t->_('Event Speaker Template');
                 $this->view->options = array(
                     '{nome}',
                     '{encontro}',
@@ -184,7 +184,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
                 );
                 break;
             case "certificados_template_participante_evento":
-                $this->view->title = _('Participant of Event Template');
+                $this->view->title = $this->t->_('Participant of Event Template');
                 $this->view->options = array(
                     '{nome}',
                     '{encontro}',
@@ -194,7 +194,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
                 );
                 break;
             default:
-                throw new Exception(_('Certificate type unknow.'));
+                throw new Exception($this->t->_('Certificate type unknow.'));
         }
 
         $form = new Admin_Form_MensagemCertificado();
@@ -207,7 +207,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
                 return $this->_helper->redirector->goToRoute(array(
                             'module' => 'admin',
                             'controller' => 'encontro'
-                                ), 'default', true);
+                        ), 'default', true);
             }
 
             if ($form->isValid($formData)) {
@@ -242,7 +242,7 @@ class Admin_EncontroController extends Sige_Controller_AdminAction {
             $row = $model_encontro->lerMensagemCertificado($id_encontro, $tipo_mensagem);
             if ($row == null) {
                 $this->_helper->flashMessenger->addMessage(
-                        array('warning' => _('Conference not found.')));
+                        array('warning' => $this->t->_('Conference not found.')));
                 return $this->_helper->redirector->goToRoute(array(
                             'module' => 'admin',
                             'controller' => 'encontro',

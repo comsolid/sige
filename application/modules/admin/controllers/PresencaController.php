@@ -14,7 +14,7 @@ class Admin_PresencaController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Presence List');
+        $this->view->title = $this->t->_('Presence List');
 
         $id_evento = (int) $this->_request->getParam('id', 0);
         $id_evento_realizacao = (int) $this->_request->getParam('id_evento_realizacao', 0);
@@ -58,7 +58,7 @@ class Admin_PresencaController extends Sige_Controller_AdminAction {
             $this->view->size = count($rs);
             $this->view->results = $rs;
         } catch (Zend_Db_Exception $e) {
-            $this->view->error = _('Error on fetching results.');
+            $this->view->error = $this->t->_('Error on fetching results.');
         }
     }
 

@@ -1,12 +1,16 @@
 <?php
 
-class Sige_Desktop_AdminSidebarLeftMenu extends Sige_Translate_Abstract {
+class Sige_Desktop_AdminSidebarLeftMenu {
+
+    use Sige_Translate_Abstract {
+        Sige_Translate_Abstract::__construct as private __mConstruct;
+    }
 
     private $menu_items;
     private $active_menu;
 
     public function __construct($view, $active = "") {
-        parent::__construct();
+        $this->__mConstruct();
 
         $this->active_menu = $active;
         $this->menu_items = array(

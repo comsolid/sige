@@ -16,8 +16,8 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Conference Reports');
-        $this->view->subtitle = _('Current Conference');
+        $this->view->title = $this->t->_('Conference Reports');
+        $this->view->subtitle = $this->t->_('Current Conference');
 
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $this->view->id_encontro = $config->encontro->codigo;
@@ -26,8 +26,8 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
     public function inscricoesPorDiaAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Registrations per day');
-        $this->view->subtitle = _('Reports');
+        $this->view->title = $this->t->_('Registrations per day');
+        $this->view->subtitle = $this->t->_('Reports');
     }
 
     public function ajaxInscricoesPorDiaAction() {
@@ -60,8 +60,8 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
     public function inscricoesHorarioAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Registrations per hour of day');
-        $this->view->subtitle = _('Reports');
+        $this->view->title = $this->t->_('Registrations per hour of day');
+        $this->view->subtitle = $this->t->_('Reports');
     }
 
     public function ajaxInscricoesHorarioAction() {
@@ -93,8 +93,8 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
     public function inscricoesSexoAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Registrations per gender');
-        $this->view->subtitle = _('Reports');
+        $this->view->title = $this->t->_('Registrations per gender');
+        $this->view->subtitle = $this->t->_('Reports');
     }
 
     public function ajaxInscricoesSexoAction() {
@@ -126,8 +126,8 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
     public function inscricoesMunicipioAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Registrations per district (All)');
-        $this->view->subtitle = _('Reports');
+        $this->view->title = $this->t->_('Registrations per district (All)');
+        $this->view->subtitle = $this->t->_('Reports');
 
         $model = new Admin_Model_EncontroParticipante();
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
@@ -139,8 +139,8 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
     public function inscricoesMunicipio15MaisAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Registrations per district (15+)');
-        $this->view->subtitle = _('Reports');
+        $this->view->title = $this->t->_('Registrations per district (15+)');
+        $this->view->subtitle = $this->t->_('Reports');
     }
 
     public function ajaxInscricoesMunicipio15MaisAction() {
@@ -416,5 +416,4 @@ class Admin_RelatoriosController extends Sige_Controller_AdminAction {
             throw new Exception("Erro ao gerar PDF: " . $e->getMessage());
         }
     }
-
 }

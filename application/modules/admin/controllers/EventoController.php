@@ -14,7 +14,7 @@ class Admin_EventoController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Events');
+        $this->view->title = $this->t->_('Events');
         $tipoEventos = new Application_Model_TipoEvento();
         $this->view->tipoEvento = $tipoEventos->fetchAll();
     }
@@ -22,8 +22,8 @@ class Admin_EventoController extends Sige_Controller_AdminAction {
     public function detalhesAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Events');
-        $this->view->subtitle = _('Details');
+        $this->view->title = $this->t->_('Events');
+        $this->view->subtitle = $this->t->_('Details');
 
         $idEvento = $this->_request->getParam('id', 0);
         $evento = new Admin_Model_Evento();
@@ -32,21 +32,21 @@ class Admin_EventoController extends Sige_Controller_AdminAction {
         $this->view->id_evento = $idEvento;
         if ($data['validada']) {
             $this->view->url_situacao = "<a href=\"/admin/evento/invalidar/{$idEvento}\"
-                 class=\"btn btn-warning\"><i class=\"fa fa-remove\"></i> " . _("Invalidate") . "</a>";
+                 class=\"btn btn-warning\"><i class=\"fa fa-remove\"></i> " . $this->t->_("Invalidate") . "</a>";
         } else {
             $this->view->url_situacao = "<a href=\"/admin/evento/validar/{$idEvento}\"
-                 class=\"btn btn-success\"><i class=\"fa fa-check\"></i> " . _("Validate") . "</a>";
+                 class=\"btn btn-success\"><i class=\"fa fa-check\"></i> " . $this->t->_("Validate") . "</a>";
         }
         if ($data['apresentado']) {
             $this->view->url_apresentado = "<a href='{$this->view->url(array(
                         'id' => $idEvento), 'evento_desfazer_apresentado', true) }'
                 class='btn btn-warning'>
-                  <i class='fa fa-eye-slash'></i> " . _("Undo presented") . "</a>";
+                  <i class='fa fa-eye-slash'></i> " . $this->t->_("Undo presented") . "</a>";
         } else {
             $this->view->url_apresentado = "<a href='{$this->view->url(array(
                         'id' => $idEvento), 'evento_apresentado', true) }'
                 class='btn btn-success'>
-                  <i class='fa fa-eye'></i> " . _("Presented") . "</a>";
+                  <i class='fa fa-eye'></i> " . $this->t->_("Presented") . "</a>";
         }
         $this->view->horarios = $evento->listarHorarios($idEvento);
         $this->view->outrosPalestrantes = $evento->listarOutrosPalestrantes($idEvento);
@@ -115,13 +115,13 @@ class Admin_EventoController extends Sige_Controller_AdminAction {
         $this->view->itens = array();
         foreach ($rs as $value) {
             if ($value['validada']) {
-                $validada = '<span class="label label-success">' . _("Yes") . '</span>';
+                $validada = '<span class="label label-success">' . $this->t->_("Yes") . '</span>';
             } else {
-                $validada = '<span class="label label-danger">' . _("No") . '</span>';
+                $validada = '<span class="label label-danger">' . $this->t->_("No") . '</span>';
             }
             $date = new Zend_Date($value['data_submissao']);
             $url = '<a href="' . $this->view->baseUrl('/admin/evento/detalhes/id/' . $value["id_evento"])
-                    . '" class="btn btn-default">' . _("Details") . ' <i class="fa fa-chevron-right"></i></a>';
+                    . '" class="btn btn-default">' . $this->t->_("Details") . ' <i class="fa fa-chevron-right"></i></a>';
             $this->view->itens[] = array(
                 "<span class=\"label label-primary\">{$value['nome_tipo_evento']}</span><br> {$value['nome_evento']}",
                 "{$validada}",
@@ -158,7 +158,7 @@ class Admin_EventoController extends Sige_Controller_AdminAction {
     public function programacaoParcialAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Parcial Schedule');
+        $this->view->title = $this->t->_('Parcial Schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $id_encontro = $config->encontro->codigo;
         $show = $this->_getParam('show', 'all');
@@ -169,19 +169,9 @@ class Admin_EventoController extends Sige_Controller_AdminAction {
 
     public function downloadLoteArtigosAction() {
         $this->autenticacao();
-        
+
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $admin = $sessao["administrador"];
-
-        // Verifica se tem permissao
-        if (!$admin) {
-            $this->_helper->flashMessenger->addMessage(
-                    array('error' => 'Você não tem permissão para executar esta ação.'));
-            return $this->_redirecionar();
-        }
 
         $ano = (int) $this->getRequest()->getParam("ano", 0);
         $encontro = (int) $this->getRequest()->getParam("encontro", 0);

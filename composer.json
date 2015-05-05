@@ -13,6 +13,7 @@
         }
     ],
     "require": {
+        "php": ">=5.4",
         "zendframework/zendframework1": "1.x",
         "dinesh/barcode-all": "dev-master",
         "uptime/uptime": "~0.1"

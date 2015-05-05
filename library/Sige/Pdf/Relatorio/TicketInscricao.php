@@ -8,7 +8,11 @@ use Dinesh\BarcodeAll\DNS1D;
  * para agilizar inscrição
  * @author atila
  */
-class Sige_Pdf_Relatorio_TicketInscricao extends Sige_Translate_Abstract {
+class Sige_Pdf_Relatorio_TicketInscricao {
+
+    use Sige_Translate_Abstract {
+        Sige_Translate_Abstract::__construct as private __mConstruct;
+    }
 
     protected $pdf;
     protected $dados;
@@ -26,7 +30,7 @@ class Sige_Pdf_Relatorio_TicketInscricao extends Sige_Translate_Abstract {
      *   * id_encontro
      */
     function __construct($dados) {
-        parent::__construct();
+        $this->__mConstruct();
 
         $this->dados = $dados;
         $this->dados['nome_relatorio'] = $this->t->_('Registration Ticket');

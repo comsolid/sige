@@ -18,7 +18,7 @@ class Admin_ParticipanteController extends Sige_Controller_AdminAction {
      */
     public function indexAction() {
         $this->autenticacao();
-        $this->view->title = _('Registration');
+        $this->view->title = $this->t->_('Registration');
 
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
@@ -39,13 +39,13 @@ class Admin_ParticipanteController extends Sige_Controller_AdminAction {
         $this->view->aaData = array();
         foreach ($data as $value) {
             if ($value['confirmado']) {
-                $isValidado = '<span class="label label-success">' . _("Confirmed!") . '</span>';
+                $isValidado = '<span class="label label-success">' . $this->t->_("Confirmed!") . '</span>';
                 $acao = "<a href=\"#\" class=\"situacao\"
-               data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">Desfazer</a>";
+               data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">" . $this->t->_("Undo") . "</a>";
             } else {
-                $isValidado = '<span class="label label-danger">' . _("Not confirmed!") . '</span>';
+                $isValidado = '<span class="label label-danger">' . $this->t->_("Not confirmed!") . '</span>';
                 $acao = "<a href=\"#\" class=\"situacao\"
-               data-url=\"/u/confirmar/{$value["id_pessoa"]}\">Confirmar</a>";
+               data-url=\"/u/confirmar/{$value["id_pessoa"]}\">" . $this->t->_("Confirm") . "</a>";
             }
             $this->view->aaData[] = array("{$value['nome']}", "{$value['apelido']}", "{$value['email']}", "{$value['nome_municipio']}", "{$value['apelido_instituicao']}", "{$value['nome_caravana']}", $isValidado, $acao);
         }
@@ -71,10 +71,10 @@ class Admin_ParticipanteController extends Sige_Controller_AdminAction {
         try {
             if ($confirmar == 't') {
                 $data = 'now()';
-                $this->view->msg = _("Participant confirmed.");
+                $this->view->msg = $this->t->_("Participant confirmed.");
             } else {
                 $data = 'null';
-                $this->view->msg = _("Participant confirmation undone.");
+                $this->view->msg = $this->t->_("Participant confirmation undone.");
             }
             $select = "UPDATE encontro_participante SET confirmado = ?,
                 data_confirmacao = {$data} where id_pessoa = ? AND id_encontro = ?";

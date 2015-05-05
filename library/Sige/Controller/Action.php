@@ -2,6 +2,16 @@
 
 abstract class Sige_Controller_Action extends Zend_Controller_Action {
 
+    use Sige_Translate_Abstract {
+        Sige_Translate_Abstract::__construct as private __mConstruct;
+    }
+
+    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $invokeArgs = array()) {
+        $this->__mConstruct();
+
+        parent::__construct($request, $response, $invokeArgs);
+    }
+
     protected function autenticacao($isAjax = false) {
         if (! Zend_Auth::getInstance()->hasIdentity()) {
             if ($isAjax) {

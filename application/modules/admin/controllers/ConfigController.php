@@ -14,13 +14,13 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Configurations');
+        $this->view->title = $this->t->_('Configurations');
     }
 
     public function permissaoUsuariosAction() {
         $this->autenticacao();
 
-        $this->view->title = _('User Permission');
+        $this->view->title = $this->t->_('User permissions');
     }
 
     public function ajaxBuscarUsuariosAction() {
@@ -36,7 +36,10 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
         $model = new Application_Model_Pessoa();
         try {
             $data = $model->buscarPermissaoUsuarios(
-                    $idEncontro, $this->_request->getParam("termo", ""), $this->_request->getParam("buscar_por", "nome"), $this->_request->getParam("tipo_usuario", 0)
+                    $idEncontro,
+                    $this->_request->getParam("termo", ""),
+                    $this->_request->getParam("buscar_por", ""),
+                    $this->_request->getParam("tipo_usuario", 0)
             );
 
             $this->view->size = count($data);
@@ -44,13 +47,13 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
 
             foreach ($data as $value) {
                 if ($value['administrador']) {
-                    $admin = "<i class='icon-unlock'></i> Admin";
+                    $admin = "<i class='fa fa-unlock'></i> Admin";
                 } else {
-                    $admin = "<i class='icon-lock'></i> Usuário";
+                    $admin = "<i class='fa fa-lock'></i> Usuário";
                 }
                 $acao = "<a href=\"/admin/config/editar-permissao/id/{$value['id_pessoa']}\"
                     class=\"btn btn-default\"><i class=\"fa fa-edit\"></i> "
-                    . _("Edit permission") . "</a>";
+                    . $this->t->_("Edit permission") . "</a>";
 
                 $this->view->aaData[] = array(
                     "{$value ['nome']}",
@@ -68,7 +71,7 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
     public function editarPermissaoAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Edit Permission');
+        $this->view->title = $this->t->_('Edit Permission');
 
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
@@ -137,7 +140,7 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
         try {
             $cache = Zend_Registry::get('cache_common');
             $cache->clean(Zend_Cache::CLEANING_MODE_ALL); // limpa todos os caches
-//            $cache->remove('cache_common'); // limpa somente cache espeficico
+            // $cache->remove('cache_common'); // limpa somente cache espeficico
 
             $this->_helper->flashMessenger->addMessage(
                     array('success' => 'Cache foi limpo com sucesso.'));
@@ -155,7 +158,7 @@ class Admin_ConfigController extends Sige_Controller_AdminAction {
     public function infoSistemaAction() {
         $this->autenticacao();
 
-        $this->view->title = _('System Info');
+        $this->view->title = $this->t->_('System Info');
 
         $sistema = new Admin_Model_Sistema();
         $this->view->postgres = $sistema->infoPostgres();

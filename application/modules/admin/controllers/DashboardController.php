@@ -15,7 +15,7 @@ class Admin_DashboardController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Dashboard');
+        $this->view->title = $this->t->_('Dashboard');
 
         $model = new Admin_Model_EncontroParticipante();
         $cache = Zend_Registry::get('cache_common');
@@ -34,7 +34,7 @@ class Admin_DashboardController extends Sige_Controller_AdminAction {
             $this->view->num_participants = $model->getTotalUserRegistration();
             $this->view->ok = true;
         } else {
-            $this->view->error = _('Request could not be completed.');
+            $this->view->error = $this->t->_('Request could not be completed.');
         }
     }
 
@@ -48,7 +48,7 @@ class Admin_DashboardController extends Sige_Controller_AdminAction {
             $this->view->num_events = $model->getTotalEvents();
             $this->view->ok = true;
         } else {
-            $this->view->error = _('Request could not be completed.');
+            $this->view->error = $this->t->_('Request could not be completed.');
         }
     }
 }

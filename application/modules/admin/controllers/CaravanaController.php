@@ -18,7 +18,7 @@ class Admin_CaravanaController extends Sige_Controller_AdminAction {
     public function indexAction() {
         $this->autenticacao();
 
-        $this->view->title = _('Caravans');
+        $this->view->title = $this->t->_('Caravans');
     }
 
     public function ajaxBuscarAction() {
@@ -39,15 +39,15 @@ class Admin_CaravanaController extends Sige_Controller_AdminAction {
 
         foreach ($rs as $value) {
             if ($value['validada']) {
-                $validada = '<span class="label label-success">' . _("Yes") . '</span>';
+                $validada = '<span class="label label-success">' . $this->t->_("Yes") . '</span>';
                 $url = '<a href="' . $this->view->url(array(
                     'id' => $value["id_caravana"]),
-                    'invalidar_caravana', true) . '" class="btn btn-danger"><i class="fa fa-times"></i> ' . _("Invalidate") . '</a>';
+                    'invalidar_caravana', true) . '" class="btn btn-danger"><i class="fa fa-times"></i> ' . $this->t->_("Invalidate") . '</a>';
             } else {
-                $validada = '<span class="label label-danger">' . _("No") . '</span>';
+                $validada = '<span class="label label-danger">' . $this->t->_("No") . '</span>';
                 $url = '<a href="' . $this->view->url(array(
                     'id' => $value["id_caravana"]),
-                    'validar_caravana', true) . '" class="btn btn-success"><i class="fa fa-check"></i> ' . _("Validate") . '</a>';
+                    'validar_caravana', true) . '" class="btn btn-success"><i class="fa fa-check"></i> ' . $this->t->_("Validate") . '</a>';
             }
             $this->view->itens[] = array(
                 "{$value['nome_caravana']}",
@@ -77,8 +77,6 @@ class Admin_CaravanaController extends Sige_Controller_AdminAction {
         $id = $this->_getParam('id', 0);
         $validar = $this->_getParam('validar', 'f');
 
-//        $sessao = Zend_Auth::getInstance()->getIdentity();
-//        $idEncontro = $sessao["idEncontro"]; // UNSAFE
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $idEncontro = (int) $ps->encontro["id_encontro"];
