@@ -1,9 +1,11 @@
 <?php
-use Uptime\System;
 
-$system = new System();
-$uptime = $system->getUptime();
-$boottime = $system->getBoottime();
+if (PHP_MAJOR_VERSION >= 5 and PHP_MINOR_VERSION >= 4) {
+    $system = new Uptime\System();
+    $uptime = $system->getUptime();
+    $boottime = $system->getBoottime();
+}
+
 ?>
 
 <div class="row">
@@ -26,14 +28,22 @@ $boottime = $system->getBoottime();
                         <tr>
                             <td><strong><?php echo $this->translate("Uptime"); ?></strong></td>
                             <td>
-                                <?php echo sprintf($this->translate("%d days, %d hours, %d minutes, %d seconds"),
-                                $uptime->d, $uptime->h, $uptime->m, $uptime->s); ?>
+                                <?php if (isset($uptime)): ?>
+                                    <?php echo sprintf($this->translate("%d days, %d hours, %d minutes, %d seconds"),
+                                    $uptime->d, $uptime->h, $uptime->m, $uptime->s); ?>
+                                <?php else: ?>
+                                    <?php echo $this->translate("Uptime library requires php 5.4+"); ?>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
                             <td><strong><?php echo $this->translate("Boot time"); ?></strong></td>
                             <td>
-                                <?php echo $boottime->format('d/m/Y H:i:s'); ?>
+                                <?php if (isset($boottime)): ?>
+                                    <?php echo $boottime->format('d/m/Y H:i:s'); ?>
+                                <?php else: ?>
+                                    <?php echo $this->translate("Uptime library requires php 5.4+"); ?>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     </tbody>
