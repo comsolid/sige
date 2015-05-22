@@ -6,6 +6,11 @@ if (PHP_MAJOR_VERSION >= 5 and PHP_MINOR_VERSION >= 4) {
     $boottime = $system->getBoottime();
 }
 
+$cache = Zend_Registry::get('cache_common');
+$ps = $cache->load('prefsis');
+
+$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+
 ?>
 
 <div class="row">
@@ -89,6 +94,51 @@ if (PHP_MAJOR_VERSION >= 5 and PHP_MINOR_VERSION >= 4) {
                         <tr>
                             <td><strong><?php echo $this->translate("Loaded Extensions"); ?></strong></td>
                             <td><?php echo join(', ', get_loaded_extensions()); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box box-solid box-warning">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("Cache Info"); ?></h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <td><strong><?php echo "id_encontro"; ?></strong></td>
+                            <td><?php echo $ps->encontro["id_encontro"]; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo "apelido_encontro"; ?></strong></td>
+                            <td><?php echo $ps->encontro["apelido_encontro"]; ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="box box-solid box-warning">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("SiGE Info"); ?></h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <td><strong><?php echo "encontro.codigo"; ?></strong></td>
+                            <td><?php echo $config->encontro->codigo; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo "APPLICATION_ENV"; ?></strong></td>
+                            <td><?php echo APPLICATION_ENV; ?></td>
                         </tr>
                     </tbody>
                 </table>
