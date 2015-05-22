@@ -167,7 +167,7 @@ class IndexController extends Zend_Controller_Action {
         $hashedToken = $this->getRequest()->getParam('hashedToken');
         if (empty($hashedToken)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('warning' => 'Código de verificação não informado.'));
+                    array('warning' => _('Verification token not informed.')));
             return $this->_helper->redirector->goToRoute(
                             array(), 'login', true);
         }
@@ -175,7 +175,7 @@ class IndexController extends Zend_Controller_Action {
         $id = $this->getRequest()->getParam('id');
         if (empty($id)) {
             $this->_helper->flashMessenger->addMessage(
-                    array('warning' => 'Usuário não informado.'));
+                    array('warning' => _('User not informed.')));
             return $this->_helper->redirector->goToRoute(
                             array(), 'login', true);
         }
@@ -198,12 +198,12 @@ class IndexController extends Zend_Controller_Action {
                     $pessoa->resetarToken($id);
 
                     $this->_helper->flashMessenger->addMessage(
-                            array('success' => 'Senha atualizada com sucesso!'));
+                            array('success' => _('Password successfully updated!')));
                     return $this->_helper->redirector->goToRoute(
                                     array(), 'login', true);
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('danger' => 'Nova senha está diferente da repetição!'));
+                            array('warning' => _('The passwords must match!')));
                 }
             } catch (Exception $e) {
                 $this->_helper->flashMessenger->addMessage(

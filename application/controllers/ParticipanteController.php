@@ -93,7 +93,7 @@ class ParticipanteController extends Sige_Controller_Action {
                 $adapter->rollBack();
                 $sentinela = 1;
                 $this->_helper->flashMessenger->addMessage(
-                        array('danger' => 'Ocorreu um erro inesperado ao enviar e-mail.<br/>Detalhes: '
+                        array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
                             . $ex->getMessage()));
             }
 
@@ -196,23 +196,20 @@ class ParticipanteController extends Sige_Controller_Action {
                 if ($resultadoConsulta['valido']) {
 
                     if ($data['senhaNova'] == $data['senhaNovaRepeticao']) {
-                        $where = $pessoa->getAdapter()->quoteInto('id_pessoa = ?', $resultadoConsulta['id_pessoa']);
-
-                        $novaSennha = array(
-                            'senha' => md5($data['senhaNova'])
-                        );
-                        $pessoa->update($novaSennha, $where);
+                        $pessoa->setNovaSenha($resultadoConsulta['id_pessoa'], $data['senhaNova']);
+                        $this->_helper->flashMessenger->addMessage(
+                                array('success' => _('Password successfully updated!')));
 
                         return $this->_helper->redirector->goToRoute(array(
                                     'controller' => 'participante'
                                         ), 'default', true);
                     } else {
                         $this->_helper->flashMessenger->addMessage(
-                                array('danger' => 'Nova senha não confere!'));
+                                array('warning' => _('The passwords must match!')));
                     }
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('danger' => 'Senha antiga incorreta!'));
+                            array('danger' => _('Old password incorrect.')));
                 }
             }
         }
