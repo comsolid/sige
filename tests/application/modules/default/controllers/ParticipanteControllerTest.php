@@ -101,7 +101,7 @@ class Default_ParticipanteControllerTest extends Default_AbstractControllerTest 
         $this->assertModule($urlParams['module']);
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
-        $this->assertQueryCount('div.alert-danger', 1);
+        $this->assertQueryCount('div.alert-warning', 1);
     }
 
     public function testAlterarSenhaSucesso() {
