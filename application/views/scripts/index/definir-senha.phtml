@@ -1,7 +1,7 @@
 <?php
     $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/parsley.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/pt-br.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/index/login.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/index/definir-senha.js'));
 ?>
 
 <style>
@@ -62,23 +62,26 @@ $form = $this->form;
                 <div class="panel-body">
                     <?php echo $this->flashMessages(); ?>
 
+                    <h3 class="text-center"><?php echo $this->translate("Set new password"); ?></h3>
+
                     <form method="<?php echo $form->getMethod() ?>"
                         action="<?php echo $form->getAction()?>"
                         data-parsley-validate
                         id="<?php echo $form->getName()?>"
                         class="form-signin">
                         <fieldset>
-                            <?php echo $form->email->renderViewHelper() ?>
-                            <?php if ($form->email->hasErrors()): ?>
-                            <?php foreach($form->email->getMessages() as $item): ?>
+                            <?php echo $form->nova_senha->renderViewHelper() ?>
+                            <?php if ($form->nova_senha->hasErrors()): ?>
+                            <?php foreach($form->nova_senha->getMessages() as $item): ?>
                                 <p class="text-danger"><?php echo $item; ?></p>
                             <?php endforeach; ?>
                             <?php endif; ?>
+
                             <div class="row">
                                 <div class="col-md-8">
-                                    <?php echo $form->senha->renderViewHelper() ?>
-                                    <?php if ($form->senha->hasErrors()): ?>
-                                    <?php foreach($form->senha->getMessages() as $item): ?>
+                                    <?php echo $form->repetir_nova_senha->renderViewHelper() ?>
+                                    <?php if ($form->repetir_nova_senha->hasErrors()): ?>
+                                    <?php foreach($form->repetir_nova_senha->getMessages() as $item): ?>
                                         <p class="text-danger"><?php echo $item; ?></p>
                                     <?php endforeach; ?>
                                     <?php endif; ?>
@@ -89,25 +92,6 @@ $form = $this->form;
                             </div>
                         </fieldset>
                     </form>
-                </div>
-
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="<?php echo $this->url(array(), 'recuperar-senha', true);?>"
-                                class="btn btn-link">
-                                <i class="fa fa-key"></i>
-                                <?php echo $this->translate("Forgot My Password"); ?>
-                            </a>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="<?php echo $this->url(array(), 'participar', true);?>"
-                                class="btn btn-link pull-right">
-                                <i class="fa fa-hand-o-right"></i>
-                                <?php echo $this->translate("Participate Now"); ?>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

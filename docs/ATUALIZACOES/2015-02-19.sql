@@ -96,6 +96,9 @@ ALTER TABLE pessoa
 COMMENT ON COLUMN pessoa.endereco_internet IS 'Um endereço começando com http:// indicando onde estão as informações da pessoa.
 Pode ser um blog, página do facebook, site...';
 
+ALTER TABLE pessoa ADD COLUMN token character varying(32);
+ALTER TABLE pessoa ADD COLUMN token_validade timestamp without time zone;
+
 ALTER SEQUENCE artigo_id_artigo_seq
 	OWNED BY artigo.id_artigo;
 

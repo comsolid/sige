@@ -31,6 +31,7 @@ var locale_data = {
         'Cancel': [null, 'Cancelar'],
         'Are you sure?': [null, 'Você tem certeza?'],
         'Loging in...': [null, 'Entrando...'],
-        'Sending...': [null, 'Enviando...']
+        'Sending...': [null, 'Enviando...'],
+        'Loading...': [null, 'Carregando...']
     }
 };

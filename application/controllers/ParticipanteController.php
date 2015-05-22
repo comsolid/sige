@@ -36,7 +36,7 @@ class ParticipanteController extends Sige_Controller_Action {
             $pessoa = new Application_Model_Pessoa();
             $participante = new Application_Model_Participante();
 
-            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
             $idEncontro = $config->encontro->codigo;
 
             $data2 = array(

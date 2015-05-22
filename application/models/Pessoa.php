@@ -1,40 +1,122 @@
 <?php
 
+define("TOKEN_BYTE_SIZE", 24);
+define("TOKEN_VALIDADE", "24 hours");
+
 class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'pessoa';
 	protected $_primary = 'id_pessoa';
 
 	protected $_referenceMap = array(
-               array(  'refTableClass' => 'Application_Model_Participante',
-               'refColumns' => 'id_pessoa',
-               'columns' => 'id_pessoa',
-               'onDelete'=> self::CASCADE,
-               'onUpdate'=> self::RESTRICT),
+        array(
+			'refTableClass' => 'Application_Model_Participante',
+            'refColumns' => 'id_pessoa',
+            'columns' => 'id_pessoa',
+            'onDelete'=> self::CASCADE,
+            'onUpdate'=> self::RESTRICT
+		),
+        array(
+			'refTableClass' => 'Application_Model_Evento',
+            'refColumns' => 'responsavel',
+            'columns' => 'id_pessoa',
+            'onDelete'=> self::CASCADE,
+            'onUpdate'=> self::RESTRICT
+		),
+        array(
+			'refTableClass' => 'Application_Model_EventoDemanda',
+            'refColumns' => 'id_pessoa',
+            'columns' => 'id_pessoa',
+            'onDelete'=> self::CASCADE,
+            'onUpdate'=> self::RESTRICT
+		),
+    );
 
-               array(  'refTableClass' => 'Application_Model_Evento',
-               'refColumns' => 'responsavel',
-               'columns' => 'id_pessoa',
-               'onDelete'=> self::CASCADE,
-               'onUpdate'=> self::RESTRICT),
-
-               array(  'refTableClass' => 'Application_Model_EventoDemanda',
-               'refColumns' => 'id_pessoa',
-               'columns' => 'id_pessoa',
-               'onDelete'=> self::CASCADE,
-               'onUpdate'=> self::RESTRICT),
-
-              );
-
-	public function gerarSenha() {
+	/**
+	 * @deprecated
+	 * @param [type] $email [description]
+	 */
+	public function gerarSenha($email) {
 	   try {
-			$qryIsValid = $this->getAdapter()->quoteInto("SELECT funcGerarSenha(?) AS c ", $this->email);
-			$senha=$this->getAdapter()->query($qryIsValid)->fetch();
-			$this->senha= $senha['c'];
+			$qryIsValid = $this->getAdapter()->quoteInto("SELECT funcGerarSenha(?) AS c ", $email);
+			$senha = $this->getAdapter()->query($qryIsValid)->fetch();
 			return $senha['c'];
 		}catch (Exception $ex) {
 		}
 	}
+
+	/**
+	 * Verifica validade do token existente. Retorna o token caso esteja válido,
+	 * gera um novo caso contrário.
+	 * @param [type] $id_pessoa [description]
+	 */
+	public function gerarToken($id_pessoa) {
+        $result = $this->obterTokenDoBanco($id_pessoa);
+        if ($result['token_valido']) {
+			$result['hashedToken'] = $this->gerarHash($result['token']);
+        } else {
+            $result = array();
+			$result['token'] = $this->gerarNovoToken();
+			$result['hashedToken'] = $this->gerarHash($result['token']);
+        }
+
+		$this->gravarTokenNoBanco($result['token'], $id_pessoa);
+		return $result;
+    }
+
+	private function gravarTokenNoBanco($token, $id_pessoa) {
+		$sql = "
+            UPDATE {$this->_name}
+                SET token = ?,
+                token_validade = NOW() + '" . TOKEN_VALIDADE . "'
+            WHERE id_pessoa = ?
+        ";
+        return $this->getAdapter()->query($sql, array($token, $id_pessoa));
+    }
+
+	private function gerarHash($str) {
+        return hash('sha256', $str);
+    }
+
+	private function obterTokenDoBanco($id_pessoa) {
+		$sql = "
+			SELECT token, current_timestamp < token_validade as token_valido
+			FROM {$this->_name}
+			WHERE id_pessoa = ?
+		";
+        return $this->getAdapter()->fetchRow($sql, array($id_pessoa));
+    }
+
+	private function gerarNovoToken() {
+        return base64_encode(mcrypt_create_iv(TOKEN_BYTE_SIZE));
+    }
+
+	public function verificarToken($id_pessoa, $hashedToken) {
+        $result = $this->obterTokenDoBanco($id_pessoa);
+        $hashVerificacao = $this->gerarHash($result['token']);
+        if ($hashedToken !== $hashVerificacao) {
+            throw new Exception(_("Verification Token to Recover Password invalid or doesn't exists."));
+        }
+
+        if (!$result['token_valido']) {
+            throw new Exception(_("Verification Token to Recover Password expired. Try again accessing Forgot My Password."));
+        }
+        return TRUE;
+    }
+
+	public function resetarToken($id_pessoa) {
+        $where = $this->getAdapter()->quoteInto('id_pessoa = ?', $id_pessoa);
+        $this->update(array(
+            'token' => null,
+            'token_validade' => null
+        ), $where);
+    }
+
+	public function setNovaSenha($id_pessoa, $senha) {
+        $db = $this->getAdapter();
+        $where = $db->quoteInto('id_pessoa = ?', $id_pessoa);
+        $this->update(array('senha' => md5($senha)), $where);
+    }
 
 	/**
 	 * Utilização
@@ -42,12 +124,11 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 	 * 	/participante/alterar-senha
 	 */
 	public function avaliaLogin($login, $senha) {
-      $sql = "select id_pessoa, administrador, apelido, (senha = md5(?)) as valido,
-         twitter, cadastro_validado
-         from pessoa where email = ? ";
-      $where = array($senha, $login);
+    	$sql = "SELECT id_pessoa, administrador, apelido, (senha = md5(?)) as valido,
+        	twitter, cadastro_validado
+        	FROM pessoa WHERE email = ?";
+    	$where = array($senha, $login);
 		$result = $this->getAdapter()->fetchRow($sql, $where);
-
 		return $result;
 	}
 
@@ -294,7 +375,7 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 	/**
 	 * Atualiza dados da pessoa
 	 * @param  {[array]} $data dados vindos do formulário
-	 * @param  {[integer]} $id_pesoa
+	 * @param  {[integer]} $id_pessoa
 	 */
 	public function atualizar($data, $id_pessoa) {
 		$sql = "UPDATE pessoa

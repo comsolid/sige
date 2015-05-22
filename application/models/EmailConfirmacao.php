@@ -23,25 +23,25 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
     /**
      * Obtem dados da mensagem de confirmação para e-mail.
      * @deprecated usar obterMensagem
-     * @param int $idEncrontro
+     * @param int $idEncontro
      * @return Zend_Db_Table_Row_Abstract
      */
-    public function getMsgConfirmacao($idEncrontro) {
-        return $this->find($idEncrontro, $this->config->email->confirmacao_inscricao)->current();
+    public function getMsgConfirmacao($idEncontro) {
+        return $this->find($idEncontro, $this->config->email->confirmacao_inscricao)->current();
     }
 
     /**
      * Obtem dados da mensagem de recuperação de senha para e-mail.
      * @deprecated usar obterMensagem
-     * @param int $idEncrontro
+     * @param int $idEncontro
      * @return Zend_Db_Table_Row_Abstract
      */
-    public function getMsgCorrecao($idEncrontro) {
-        return $this->find($idEncrontro, $this->config->email->recuperacao_senha)->current();
+    public function getMsgCorrecao($idEncontro) {
+        return $this->find($idEncontro, $this->config->email->recuperacao_senha)->current();
     }
 
     private function obterMensagem($id_encontro, $id_tipo_mensagem_email) {
-        return $this->find($id_encrontro, $id_tipo_mensagem_email)->current();
+        return $this->find($id_encontro, $id_tipo_mensagem_email)->current();
     }
 
     /**
@@ -53,41 +53,33 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
      * @throws Exception
      */
     public function send(
-			$idpessoa,
-			$idEncrontro,
+			$id_pessoa,
+			$id_encontro,
 			$tipoMensagem = Application_Model_EmailConfirmacao::MSG_CONFIRMACAO,
 			$pdf = null
 	) {
         $mail = new Zend_Mail();
         $pessoa = new Application_Model_Pessoa();
-        $linha = $pessoa->find($idpessoa)->current();
-        $pessoa->email = $linha->email;
+        $linha = $pessoa->find($id_pessoa)->current();
 
+        $emailText = $this->obterMensagem($id_encontro, $tipoMensagem);
         switch ($tipoMensagem) {
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO:
-                $emailText = $this->getMsgConfirmacao($idEncrontro);
-                $pessoa->gerarSenha();
-                break;
             case Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA:
-                $emailText = $this->getMsgCorrecao($idEncrontro);
-                $pessoa->gerarSenha();
+                $result = $pessoa->gerarToken($id_pessoa);
+                $link = "http://" . $_SERVER["SERVER_NAME"] . "/index/definir-senha/hashedToken/"
+                    . $result['hashedToken'] . "/id/" . $id_pessoa;
+
                 break;
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_REINSCRICAO:
-                $emailText = $this->obterMensagem($idEncrontro, $tipoMensagem);
+                $link = "";
                 break;
             default:
-                throw new Exception("Opção de envio de e-mail não definida.");
+                throw new Exception(_("Send e-mail option not defined."));
         }
 
         $emailText->mensagem = str_replace('{nome}', $linha->nome, $emailText->mensagem);
         $emailText->mensagem = str_replace('{email}', $linha->email, $emailText->mensagem);
-        $emailText->mensagem = str_replace('{senha}', $pessoa->senha, $emailText->mensagem);
-
-        if (empty($emailText->link)) {
-            $link = "#";
-        } else {
-            $link = $emailText->link;
-        }
         $emailText->mensagem = str_replace('{href_link}', $link, $emailText->mensagem);
 
         $mail->setBodyHtml(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText->mensagem));
@@ -115,14 +107,13 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
     public function sendCorrecao($idpessoa, $idEncrontro) {
         $mail = new Zend_Mail();
         $pessoa = new Application_Model_Pessoa();
-        $linha = $pessoa->find($idpessoa);
-        $linha = $linha->current();
-        $pessoa->email = $linha->email;
-        $pessoa->gerarSenha();
+        $linha = $pessoa->find($idpessoa)->current();
+        // $pessoa->email = $linha->email;
+        $senha = $pessoa->gerarSenha($linha->email);
         $emailText = $this->getMsgCorrecao($idEncrontro);
         $emailText->mensagem = str_replace('{nome}', $linha->nome, $emailText->mensagem);
         $emailText->mensagem = str_replace('{email}', $linha->email, $emailText->mensagem);
-        $emailText->mensagem = str_replace('{senha}', $pessoa->senha, $emailText->mensagem);
+        $emailText->mensagem = str_replace('{senha}', $senha, $emailText->mensagem);
         $emailText->mensagem = str_replace('{href_link}', $emailText->link, $emailText->mensagem);
         $mail->setBodyHtml(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText->mensagem));
         $mail->addTo($linha->email, $linha->nome);

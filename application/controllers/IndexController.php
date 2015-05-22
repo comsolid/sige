@@ -54,7 +54,7 @@ class IndexController extends Zend_Controller_Action {
                         $where = $model->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
                         $model->update(array('cadastro_validado' => true), $where);
                     }
-                    $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+                    $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
                     $idEncontro = $config->encontro->codigo;
                     $result = $model->buscarUltimoEncontro($idPessoa);
                     $irParaEditar = false;
@@ -138,13 +138,13 @@ class IndexController extends Zend_Controller_Action {
             unset($data['captcha']);
             $pessoa = new Application_Model_Pessoa();
             $select = $pessoa->select()->from('pessoa', array("id_pessoa"))->where("email = ?", $data['email']);
-            // TODO: usar fetchRow!
-            $resultado = $pessoa->fetchAll($select);
-            if (sizeof($resultado) > 0) {
-                $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
+
+            $resultado = $pessoa->fetchRow($select);
+            if (!empty($resultado)) {
+                $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
                 $idEncontro = $config->encontro->codigo;
                 $mail = new Application_Model_EmailConfirmacao();
-                $mail->sendCorrecao($resultado[0]->id_pessoa, $idEncontro, Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA);
+                $mail->send($resultado->id_pessoa, $idEncontro, Application_Model_EmailConfirmacao::MSG_RECUPERAR_SENHA);
                 $this->_helper->flashMessenger->addMessage(array('success' => _('E-mail successfully sent, check your e-mail.')));
                 return $this->_helper->redirector->goToRoute(array(), 'login', true);
             } else {
@@ -159,6 +159,60 @@ class IndexController extends Zend_Controller_Action {
             $sessao = Zend_Auth::getInstance()->getIdentity();
             $this->view->menu = new Sige_Desktop_Menu($this->view, 'inicio', $sessao['administrador']);
         }
+    }
+
+    public function definirSenhaAction() {
+        $this->_helper->layout->setLayout('twbs3/front-page');
+
+        $hashedToken = $this->getRequest()->getParam('hashedToken');
+        if (empty($hashedToken)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('warning' => 'Código de verificação não informado.'));
+            return $this->_helper->redirector->goToRoute(
+                            array(), 'login', true);
+        }
+
+        $id = $this->getRequest()->getParam('id');
+        if (empty($id)) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('warning' => 'Usuário não informado.'));
+            return $this->_helper->redirector->goToRoute(
+                            array(), 'login', true);
+        }
+
+        $pessoa = new Application_Model_Pessoa();
+        try {
+            $pessoa->verificarToken($id, $hashedToken);
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
+            return $this->_helper->redirector->goToRoute(array(), 'login', true);
+        }
+
+        $form = new Application_Form_DefinirSenha();
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $values = $form->getValues();
+            try {
+                if (strcmp($values['nova_senha'], $values['repetir_nova_senha']) == 0) {
+                    $pessoa->setNovaSenha($id, $values['nova_senha']);
+                    $pessoa->resetarToken($id);
+
+                    $this->_helper->flashMessenger->addMessage(
+                            array('success' => 'Senha atualizada com sucesso!'));
+                    return $this->_helper->redirector->goToRoute(
+                                    array(), 'login', true);
+                } else {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('danger' => 'Nova senha está diferente da repetição!'));
+                }
+            } catch (Exception $e) {
+                $this->_helper->flashMessenger->addMessage(
+                        array('danger' => $e->getMessage()));
+            }
+        }
+
+        // cria form e envia pra view
+        $this->view->form = $form;
     }
 
     private function _enviarEmailConfirmacaoInscricao($idPessoa, $idEncontro) {
