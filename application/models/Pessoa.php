@@ -112,10 +112,22 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
         ), $where);
     }
 
+	/**
+	 * A partir da senha informada gera um hash blowfish e salva o valor
+	 * Utilização
+	 * 		/index/definir-senha
+	 * 		/participante/alterar-senha
+	 * @param [int] $id_pessoa [description]
+	 * @param [string] $senha     [description]
+	 */
 	public function setNovaSenha($id_pessoa, $senha) {
         $db = $this->getAdapter();
         $where = $db->quoteInto('id_pessoa = ?', $id_pessoa);
-        $this->update(array('senha' => md5($senha)), $where);
+
+		$lib = new PasswordLib\PasswordLib();
+		$hash = $lib->createPasswordHash($senha);
+
+        $this->update(array('senha' => $hash), $where);
     }
 
 	/**
@@ -124,12 +136,18 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 	 * 	/participante/alterar-senha
 	 */
 	public function avaliaLogin($login, $senha) {
-    	$sql = "SELECT id_pessoa, administrador, apelido, (senha = md5(?)) as valido,
+    	$sql = "SELECT id_pessoa, administrador, apelido, senha,
         	twitter, cadastro_validado
         	FROM pessoa WHERE email = ?";
-    	$where = array($senha, $login);
+    	$where = array($login);
 		$result = $this->getAdapter()->fetchRow($sql, $where);
-		return $result;
+
+		$lib = new PasswordLib\PasswordLib();
+		$verified = $lib->verifyPasswordHash($senha, $result['senha']);
+		if ($verified) {
+			return $result;
+		}
+		return NULL;
 	}
 
 	public function buscaPessoas($data){

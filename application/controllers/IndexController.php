@@ -43,71 +43,67 @@ class IndexController extends Zend_Controller_Action {
             $data = $form->getValues();
             $model = new Application_Model_Pessoa();
             $resultadoConsulta = $model->avaliaLogin($data['email'], $data['senha']);
-            if ($resultadoConsulta != null) {
-                if ($resultadoConsulta['valido']) {
-                    $idPessoa = $resultadoConsulta['id_pessoa'];
-                    $administrador = $resultadoConsulta['administrador'];
-                    $apelido = $resultadoConsulta['apelido'];
-                    $twitter = $resultadoConsulta['twitter'];
-                    $cadastro_validado = $resultadoConsulta['cadastro_validado'];
-                    if ($cadastro_validado == false) {
-                        $where = $model->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
-                        $model->update(array('cadastro_validado' => true), $where);
-                    }
-                    $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-                    $idEncontro = $config->encontro->codigo;
-                    $result = $model->buscarUltimoEncontro($idPessoa);
-                    $irParaEditar = false;
-                    // se ultimo encontro do participante for diferente do atual
-                    if ($model->verificaEncontro($idEncontro, $idPessoa) == false) {
-                        $result['id_encontro'] = intval($idEncontro);
-                        // forçar participante validado : issue #32
-                        $result['validado'] = 't'; // true
-                        $result['data_validacao'] = new Zend_Db_Expr('now()');
-                        try {
-                            $model->getAdapter()->insert("encontro_participante", $result);
-                            $this->_helper->flashMessenger->addMessage(array('success' => _('Welcome back. Your registration was confirmed!<br/>Please update your profile data.')));
-                            $irParaEditar = true;
+            if ($resultadoConsulta != NULL) {
+                $idPessoa = $resultadoConsulta['id_pessoa'];
+                $administrador = $resultadoConsulta['administrador'];
+                $apelido = $resultadoConsulta['apelido'];
+                $twitter = $resultadoConsulta['twitter'];
+                $cadastro_validado = $resultadoConsulta['cadastro_validado'];
+                if ($cadastro_validado == false) {
+                    $where = $model->getAdapter()->quoteInto('id_pessoa = ?', $idPessoa);
+                    $model->update(array('cadastro_validado' => true), $where);
+                }
+                $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+                $idEncontro = $config->encontro->codigo;
+                $result = $model->buscarUltimoEncontro($idPessoa);
+                $irParaEditar = false;
+                // se ultimo encontro do participante for diferente do atual
+                if ($model->verificaEncontro($idEncontro, $idPessoa) == false) {
+                    $result['id_encontro'] = intval($idEncontro);
+                    // forçar participante validado : issue #32
+                    $result['validado'] = 't'; // true
+                    $result['data_validacao'] = new Zend_Db_Expr('now()');
+                    try {
+                        $model->getAdapter()->insert("encontro_participante", $result);
+                        $this->_helper->flashMessenger->addMessage(array('success' => _('Welcome back. Your registration was confirmed!<br/>Please update your profile data.')));
+                        $irParaEditar = true;
 
-                            $this->_enviarEmailConfirmacaoInscricao($idEncontro, $idPessoa);
-                        } catch(Exception $e) {
-                            $irParaEditar = false;
-                            $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
-                        }
-                    } else if (!$result['validado']) {
-                        // se participante ainda não está validado no encontro
-                        // devemos validar
-                        $adapter = $model->getAdapter();
-                        $adapter->fetchAll("UPDATE encontro_participante
-                        SET validado = 't', data_validacao = now()
-                        WHERE id_pessoa = {$result['id_pessoa']}
-                        AND id_encontro = {$idEncontro}");
+                        $this->_enviarEmailConfirmacaoInscricao($idEncontro, $idPessoa);
+                    } catch(Exception $e) {
+                        $irParaEditar = false;
+                        $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
                     }
-                    $auth = Zend_Auth::getInstance();
-                    $storage = $auth->getStorage();
-                    $storage->write(array(
-                        "idPessoa" => $idPessoa,
-                        "administrador" => $administrador,
-                        "apelido" => $apelido,
-                        "idEncontro" => $idEncontro, // TODO: remove unsafe idEncontro, get from cache!
-                        "twitter" => $twitter,
-                        "email" => $data['email']
-                    ));
-                    if ($isMobile) {
-                        return $this->_helper->redirector->goToRoute(array(), 'mobile', true);
-                    } else if ($irParaEditar) {
-                        return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'editar'), 'default', true);
-                    } else {
-                        $session = new Zend_Session_Namespace();
-                        if (isset($session->url)) {
-                            $this->_redirect($session->url, array('prependBase' => false));
-                            unset($session->url);
-                        } else {
-                            return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
-                        }
-                    }
+                } else if (!$result['validado']) {
+                    // se participante ainda não está validado no encontro
+                    // devemos validar
+                    $adapter = $model->getAdapter();
+                    $adapter->fetchAll("UPDATE encontro_participante
+                    SET validado = 't', data_validacao = now()
+                    WHERE id_pessoa = {$result['id_pessoa']}
+                    AND id_encontro = {$idEncontro}");
+                }
+                $auth = Zend_Auth::getInstance();
+                $storage = $auth->getStorage();
+                $storage->write(array(
+                    "idPessoa" => $idPessoa,
+                    "administrador" => $administrador,
+                    "apelido" => $apelido,
+                    "idEncontro" => $idEncontro, // TODO: remove unsafe idEncontro, get from cache!
+                    "twitter" => $twitter,
+                    "email" => $data['email']
+                ));
+                if ($isMobile) {
+                    return $this->_helper->redirector->goToRoute(array(), 'mobile', true);
+                } else if ($irParaEditar) {
+                    return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'editar'), 'default', true);
                 } else {
-                    $this->_helper->flashMessenger->addMessage(array('danger' => _('E-mail or Password incorrect.')));
+                    $session = new Zend_Session_Namespace();
+                    if (isset($session->url)) {
+                        $this->_redirect($session->url, array('prependBase' => false));
+                        unset($session->url);
+                    } else {
+                        return $this->_helper->redirector->goToRoute(array('controller' => 'participante', 'action' => 'index'), 'default', true);
+                    }
                 }
             } else {
                 $this->_helper->flashMessenger->addMessage(array('danger' => _('E-mail or Password incorrect.')));

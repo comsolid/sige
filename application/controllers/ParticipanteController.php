@@ -193,24 +193,21 @@ class ParticipanteController extends Sige_Controller_Action {
 
             if ($resultadoConsulta != null) {
 
-                if ($resultadoConsulta['valido']) {
+                if ($data['senhaNova'] == $data['senhaNovaRepeticao']) {
+                    $pessoa->setNovaSenha($resultadoConsulta['id_pessoa'], $data['senhaNova']);
+                    $this->_helper->flashMessenger->addMessage(
+                            array('success' => _('Password successfully updated!')));
 
-                    if ($data['senhaNova'] == $data['senhaNovaRepeticao']) {
-                        $pessoa->setNovaSenha($resultadoConsulta['id_pessoa'], $data['senhaNova']);
-                        $this->_helper->flashMessenger->addMessage(
-                                array('success' => _('Password successfully updated!')));
-
-                        return $this->_helper->redirector->goToRoute(array(
-                                    'controller' => 'participante'
-                                        ), 'default', true);
-                    } else {
-                        $this->_helper->flashMessenger->addMessage(
-                                array('warning' => _('The passwords must match!')));
-                    }
+                    return $this->_helper->redirector->goToRoute(array(
+                                'controller' => 'participante'
+                                    ), 'default', true);
                 } else {
                     $this->_helper->flashMessenger->addMessage(
-                            array('danger' => _('Old password incorrect.')));
+                            array('warning' => _('The passwords must match!')));
                 }
+            } else {
+                $this->_helper->flashMessenger->addMessage(
+                        array('danger' => _('Old password incorrect.')));
             }
         }
 
