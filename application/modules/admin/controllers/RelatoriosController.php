@@ -1,4 +1,5 @@
 <?php
+
 class Admin_RelatoriosController extends Sige_Controller_AdminAction {
 
     public function init() {

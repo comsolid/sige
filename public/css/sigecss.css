@@ -178,6 +178,12 @@ ul.unstyled li {
    margin-top: 5px;
 }
 
+ul.parsley-errors-list {
+   list-style: none;
+   color: #a94442;
+   margin-top: 5px;
+}
+
 #master-container {
     min-height: 512px;
 }

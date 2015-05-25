@@ -35,12 +35,6 @@
         -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
         box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     }
-
-    ul.parsley-errors-list {
-       list-style: none;
-       color: #a94442;
-       margin-top: 5px;
-    }
 </style>
 
 <?php
@@ -94,11 +88,30 @@ $form = $this->form;
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="<?php echo $this->url(array(), 'recuperar-senha', true);?>"
-                                class="btn btn-link">
-                                <i class="fa fa-key"></i>
-                                <?php echo $this->translate("Forgot My Password"); ?>
-                            </a>
+                            <div class="btn-group">
+                                <a href="<?php echo $this->url(array(), 'recuperar-senha', true);?>"
+                                    class="btn btn-link">
+                                    <i class="fa fa-key"></i>
+                                    <?php echo $this->translate("Forgot My Password"); ?>
+                                </a>
+                                <button type="button" class="btn btn-link dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">
+                                        <?php echo $this->translate("More"); ?>
+                                    </span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="<?php echo $this->url(array(
+                                            'controller' => 'index',
+                                            'action' => 'requisitar-mudar-email'
+                                        ), 'default', true) ?>">
+                                            <?php echo $this->translate("Request change e-mail"); ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <a href="<?php echo $this->url(array(), 'participar', true);?>"

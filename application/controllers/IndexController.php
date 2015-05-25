@@ -39,7 +39,6 @@ class IndexController extends Zend_Controller_Action {
         $this->view->form = $form;
         $data = $this->getRequest()->getPost();
         if ($this->getRequest()->isPost() && $form->isValid($data)) {
-            // obtem de maneira segura somente parametros esperados.
             $data = $form->getValues();
             $model = new Application_Model_Pessoa();
             $resultadoConsulta = $model->avaliaLogin($data['email'], $data['senha']);
@@ -208,6 +207,52 @@ class IndexController extends Zend_Controller_Action {
         }
 
         // cria form e envia pra view
+        $this->view->form = $form;
+    }
+
+    public function requisitarMudarEmailAction() {
+        $this->_helper->layout->setLayout('twbs3/layout');
+
+        $form = new Application_Form_RequisitarMudarEmail();
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $data = $form->getValues();
+            unset($data['captcha']);
+            unset($data['submit']);
+
+            $pessoa = new Application_Model_Pessoa();
+            // 1. ver se e-mail existe.
+            $from = $pessoa->select()->from('pessoa', array("id_pessoa"));
+            $select = $from->where("email = ?", $data['email_anterior']);
+            $resultado = $pessoa->fetchRow($select);
+            if (!empty($resultado)) {
+                // 2. ver se novo e-mail já existe. Se sim, não pode ser substituído
+                $from2 = $pessoa->select()->from('pessoa', array("id_pessoa"));
+                $select2 = $from2->where("email = ?", $data['novo_email']);
+                $resultado2 = $pessoa->fetchRow($select2);
+                if (empty($resultado2)) {
+                    try {
+                        $model = new Application_Model_MudarEmail();
+                        $model->insert($data);
+
+                        $this->_helper->flashMessenger->addMessage(
+                                array('success' => _('Your request for change your e-mail was sent. Wait for an approval soon.')));
+
+                        return $this->_helper->redirector->goToRoute(
+                                        array(), 'login', true);
+                    } catch (Exception $e) {
+                        $this->_helper->flashMessenger->addMessage(
+                                array('danger' => $e->getMessage()));
+                    }
+                } else {
+                    $this->_helper->flashMessenger->addMessage(
+                            array('warning' => _('The new E-mail address that you inform already exists!')));
+                }
+            } else {
+                $this->_helper->flashMessenger->addMessage(
+                        array('warning' => _('Your previous E-mail address was not found!')));
+            }
+        }
         $this->view->form = $form;
     }
 

@@ -99,6 +99,26 @@ Pode ser um blog, página do facebook, site...';
 ALTER TABLE pessoa ADD COLUMN token character varying(32);
 ALTER TABLE pessoa ADD COLUMN token_validade timestamp without time zone;
 
+CREATE TABLE pessoa_mudar_email
+(
+	id serial NOT NULL,
+	email_anterior character varying(100) NOT NULL,
+	novo_email character varying(100) NOT NULL,
+	motivo text NOT NULL,
+	data_submissao timestamp without time zone NOT NULL DEFAULT now(),
+	ultima_atualizacao timestamp without time zone,
+	atualizado_por integer,
+	status boolean,
+	CONSTRAINT pessoa_mudar_email_pkey PRIMARY KEY (id),
+	CONSTRAINT pessoa_mudar_email_atualizado_por_fkey FOREIGN KEY (atualizado_por)
+		REFERENCES pessoa (id_pessoa) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+ALTER TABLE pessoa_mudar_email
+  OWNER TO postgres;
+COMMENT ON COLUMN pessoa_mudar_email.status IS 'null para aberto, false para negado e true para atualizado.';
+
 ALTER SEQUENCE artigo_id_artigo_seq
 	OWNED BY artigo.id_artigo;
 
