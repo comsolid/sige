@@ -41,6 +41,13 @@
                     class="list-group-item">
                     <i class="fa fa-lock"></i> <?php echo $this->translate("User permissions"); ?>
                 </a>
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'usuario',
+                    'action' => 'pedidos-mudanca-email'), 'default', true); ?>"
+                    class="list-group-item">
+                    <i class="fa fa-exchange"></i> <?php echo $this->translate("Requests for e-mail change"); ?>
+                </a>
             </div>
         </div>
     </div>

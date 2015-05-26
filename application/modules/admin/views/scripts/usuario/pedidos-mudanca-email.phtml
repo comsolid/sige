@@ -1,0 +1,122 @@
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-langs.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/admin/usuario/pedidos-mudanca-email.js'));
+?>
+
+<style>
+    .box-footer {
+        height: 55px;
+    }
+
+    .reason {
+        height: 100px;
+        overflow: auto;
+    }
+</style>
+
+<div class="row">
+<?php foreach ($this->list as $item): ?>
+    <div class="col-md-6">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label><?php echo $this->translate("Exchange"); ?></label>
+                        <div>
+                            <?php echo $item['email_anterior'] ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <i class="fa fa-long-arrow-right fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <label><?php echo $this->translate("For"); ?></label>
+                        <div>
+                            <?php echo $item['novo_email'] ?>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label><?php echo $this->translate("Reason"); ?></label>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-muted pull-right"
+                            data-moment="<?php echo $item['data_submissao']; ?>"
+                            title="<?php echo $item['data_submissao'] ?>"></span>
+                    </div>
+                </div>
+
+
+                <div class="reason">
+                    <?php echo $item['motivo'] ?>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php if (empty($item['status'])): ?>
+                            <span class="label label-default"><?php echo $this->translate("Open"); ?></span>
+                        <?php elseif ($item['status'] == 'true'): ?>
+                            <span class="label label-success"><?php echo $this->translate("Allowed"); ?></span>
+                        <?php else: ?>
+                            <span class="label label-danger"><?php echo $this->translate("Denied"); ?></span>
+                        <?php endif; ?>
+
+                    </div>
+                    <div class="col-md-8">
+                        <?php if (empty($item['status'])): ?>
+                            <a class="btn btn-default" target="_blank"
+                                href="mailto:<?php echo $item['novo_email']; ?>">
+                                <i class="fa fa-envelope-o"></i>
+                                <?php echo $this->translate("Send e-mail to confirm"); ?>
+                            </a>
+
+                            <div class="btn-group pull-right">
+                                <a class="btn btn-success btn-status"
+                                    href="<?php echo $this->url(array(
+                                        'module' => 'admin',
+                                        'controller' => 'usuario',
+                                        'action' => 'mudar-email',
+                                        'id' => $item['id'],
+                                        'status' => 't'
+                                    ), 'default', true); ?>">
+                                    <i class="fa fa-check"></i>
+                                    <?php echo $this->translate("Allow"); ?>
+                                </a>
+                                <a class="btn btn-danger btn-status"
+                                    href="<?php echo $this->url(array(
+                                        'module' => 'admin',
+                                        'controller' => 'usuario',
+                                        'action' => 'mudar-email',
+                                        'id' => $item['id'],
+                                        'status' => 'f'
+                                    ), 'default', true); ?>">
+                                    <i class="fa fa-times"></i>
+                                    <?php echo $this->translate("Deny"); ?>
+                                </a>
+                            </div>
+                        <?php else: ?>
+                            <div class="pull-right">
+                                <span data-moment="<?php echo $item['ultima_atualizacao']; ?>"
+                                    title="<?php echo $item['ultima_atualizacao']; ?>"></span>
+                                <?php echo $this->translate("by"); ?>
+                                <?php echo $item['nome']; ?>
+                            </div>
+                            <!-- <button type="button" class="btn btn-default pull-right"><?php echo $this->translate("Cancel"); ?></button> -->
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+</div>

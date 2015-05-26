@@ -32,6 +32,7 @@ var locale_data = {
         'Are you sure?': [null, 'Você tem certeza?'],
         'Loging in...': [null, 'Entrando...'],
         'Sending...': [null, 'Enviando...'],
-        'Loading...': [null, 'Carregando...']
+        'Loading...': [null, 'Carregando...'],
+        'This action can not be undone. Do you really wish to continue?': [null, 'Esta ação não pode ser desfeita. Deseja realmente continuar?']
     }
 };
