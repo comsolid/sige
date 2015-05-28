@@ -159,39 +159,39 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
 			LEFT OUTER JOIN caravana c ON (ep.id_caravana = c.id_caravana)
 			WHERE id_encontro = ? ";
 
-		if($data[2]=="nome"){
-			if($data[1] != NULL){
-				$data[1] = "%".$data[1]."%";
-	         	$select = $select.' AND p.nome ilike ? ';
-			}else{
+		if ($data[2] == "nome") {
+			if ($data[1] != NULL) {
+				$data[1] = "%" . $data[1] . "%";
+	        	$select = $select . ' AND p.nome ilike ? ';
+			} else {
 				unset($data[1]);
 			}
 		} else if ($data[2] == "municipio") {
 			if($data[1] != NULL){
-				$data[1] = $data[1]."%";
-	         	$select = $select.' AND nome_municipio ilike ? ';
+				$data[1] = "%" . $data[1] . "%";
+	         	$select = $select . ' AND nome_municipio ilike ? ';
 			}else{
 				unset($data[1]);
 			}
 		} else if ($data[2] == "caravana") {
-			if($data[1] != NULL){
-				$data[1] = $data[1]."%";
-	         	$select = $select.' AND nome_caravana ilike ? ';
-			}else{
+			if ($data[1] != NULL) {
+				$data[1] = "%" . $data[1] . "%";
+	        	$select = $select . ' AND nome_caravana ilike ? ';
+			} else {
 				unset($data[1]);
 			}
 		} else if ($data[2] == "instituicao") {
 			if($data[1] != NULL){
-				$data[1] = $data[1]."%";
-	         	$select = $select.' AND apelido_instituicao ilike ? ';
-			}else{
+				$data[1] = "%" . $data[1] . "%";
+	        	$select = $select . ' AND apelido_instituicao ilike ? ';
+			} else {
 				unset($data[1]);
 			}
-		}else{
-			if($data[1] != NULL){
-				$data[1] = $data[1]."%";
-	         	$select = $select.' AND p.email ilike ? ';
-			}else{
+		} else {
+			if ($data[1] != NULL) {
+				$data[1] = '%' . $data[1] . '%';
+	        	$select = $select.' AND p.email like lower(?) ';
+			} else {
 				unset($data[1]);
 			}
 		}

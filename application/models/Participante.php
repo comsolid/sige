@@ -343,7 +343,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
     }
 
     public function dadosTicketInscricao($id_pessoa, $id_encontro) {
-        $sql = "SELECT '+e' || ep.id_encontro || 'p' || p.id_pessoa as inscricao,
+        $sql = "SELECT '+e' || ep.id_encontro || 'p' || p.id_pessoa || '+' as inscricao,
             UPPER(nome) as nome,
             nome_encontro,
             to_char(data_inicio, 'TMDD/MM') as data_inicio,

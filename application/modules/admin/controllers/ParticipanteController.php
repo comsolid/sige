@@ -31,9 +31,13 @@ class Admin_ParticipanteController extends Sige_Controller_AdminAction {
             return;
         }
 
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $idEncontro = (int) $ps->encontro["id_encontro"];
+
         $pessoas = new Application_Model_Pessoa();
         $termo = $this->_request->getParam("termo");
-        $dataTodosUsuarios = array($this->_request->getParam("idEncontro", 0), $termo, $this->_request->getParam("tipo"));
+        $dataTodosUsuarios = array($idEncontro, $termo, $this->_request->getParam("tipo"));
         $data = $pessoas->buscaPessoas($dataTodosUsuarios);
         $this->view->size = count($data);
         $this->view->aaData = array();
@@ -41,11 +45,11 @@ class Admin_ParticipanteController extends Sige_Controller_AdminAction {
             if ($value['confirmado']) {
                 $isValidado = '<span class="label label-success">' . $this->t->_("Confirmed!") . '</span>';
                 $acao = "<a href=\"#\" class=\"situacao\"
-               data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">" . $this->t->_("Undo") . "</a>";
+                    data-url=\"/u/desfazer-confirmar/{$value["id_pessoa"]}\">" . $this->t->_("Undo") . "</a>";
             } else {
                 $isValidado = '<span class="label label-danger">' . $this->t->_("Not confirmed!") . '</span>';
                 $acao = "<a href=\"#\" class=\"situacao\"
-               data-url=\"/u/confirmar/{$value["id_pessoa"]}\">" . $this->t->_("Confirm") . "</a>";
+                    data-url=\"/u/confirmar/{$value["id_pessoa"]}\">" . $this->t->_("Confirm") . "</a>";
             }
             $this->view->aaData[] = array("{$value['nome']}", "{$value['apelido']}", "{$value['email']}", "{$value['nome_municipio']}", "{$value['apelido_instituicao']}", "{$value['nome_caravana']}", $isValidado, $acao);
         }

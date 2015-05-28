@@ -1,5 +1,5 @@
 
-$(document).ready(function () {
+$(function() {
 
 	var oTablePes = $('table').dataTable({
 		'ordering': false,
@@ -11,11 +11,14 @@ $(document).ready(function () {
 			'url': '/lib/js/data-tables/Portuguese-Brasil.json'
 		}
 	});
-    $('#termo').select();
+
+	var termo = $('#termo');
+	var current_conference = $('#id_encontro');
+    termo.select();
 
 	var loading = $('#loading');
 
-	function startLoading(){
+	function startLoading() {
 		loading.addClass('fa-spinner fa-spin').removeClass('fa-search');
 	}
 
@@ -24,9 +27,27 @@ $(document).ready(function () {
 	}
 
 	function buscar() {
+		var regex = /\+e(\d+)p(\d+)\+/g; // e.g. +e55p123456+
+		var params = regex.exec(termo.val());
+		if (params) {
+			validarTicket(params[1], params[2]);
+		} else {
+			buscarPorTermo();
+		}
+	}
+
+	function validarTicket(id_encontro, id_pessoa) {
+		if (id_encontro !== current_conference.val()) {
+			alertify.warning(_('This ticket is not from this conference.'));
+		} else {
+			var url = '/u/confirmar/' + id_pessoa;
+			presenca(url);
+			termo.val('').focus(); // always clean up the text and focus back!
+		}
+	}
+
+	function buscarPorTermo() {
 		startLoading();
-		var idEncontro = $('#id_encontro').val();
-		var termo = $('#termo').val();
 		var tipo_busca = $('input:radio[name=t_busca]:checked').val();
 
 		$.ajax({
@@ -34,8 +55,7 @@ $(document).ready(function () {
 			type: 'POST',
 			data: {
 				tipo: tipo_busca,
-				idEncontro: idEncontro,
-				termo: termo,
+				termo: termo.val(),
 				format: 'json'
 			},
 			success: function (json) {
@@ -52,15 +72,15 @@ $(document).ready(function () {
 
     buscar();
 
-    $('#termo').autocomplete({
-        source: function () {
+    termo.autocomplete({
+        source: function() {
             buscar();
         }
     });
 
 	// evento Usado quando seleciar uma data do evento
 	$('input:radio').change(function() {
-		$('#termo').select();
+		termo.select();
 		buscar();
 	});
 
@@ -68,7 +88,7 @@ $(document).ready(function () {
 		var params = {
 			format: 'json'
 		};
-		$.getJSON(url, params, function (json) {
+		$.getJSON(url, params, function(json) {
 			if (json.ok) {
 				alertify.success(json.msg);
 			} else if (json.erro !== null) {
@@ -79,9 +99,9 @@ $(document).ready(function () {
 		});
 	}
 
-    $(document).delegate('a.situacao', 'click', function () {
+    $(document).delegate('a.situacao', 'click', function() {
         presenca($(this).attr('data-url'));
-        $('#termo').select();
+        termo.select();
 		return false;
     });
 });

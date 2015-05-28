@@ -33,6 +33,7 @@ var locale_data = {
         'Loging in...': [null, 'Entrando...'],
         'Sending...': [null, 'Enviando...'],
         'Loading...': [null, 'Carregando...'],
-        'This action can not be undone. Do you really wish to continue?': [null, 'Esta ação não pode ser desfeita. Deseja realmente continuar?']
+        'This action can not be undone. Do you really wish to continue?': [null, 'Esta ação não pode ser desfeita. Deseja realmente continuar?'],
+        'This ticket is not from this conference.': [null, 'Este ticket não é deste encontro.']
     }
 };
