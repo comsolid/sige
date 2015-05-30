@@ -7,3 +7,4 @@
 /tests/log/
 /tests/_reports/
 /application/cache/common/*
+/build/

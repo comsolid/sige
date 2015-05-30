@@ -1,9 +1,9 @@
 <?php
-    $this->headScript()->prependFile($this->baseUrl('js/evento/submeter.js'), 'text/javascript');
-    $this->headScript()->prependFile($this->baseUrl('js/jquery.qtip.min.js'), 'text/javascript');
-    $this->headScript()->prependFile($this->baseUrl('js/ckeditor/ckeditor.js'), 'text/javascript');
-    $this->headScript()->prependFile($this->baseUrl('js/parsley.min.js'), 'text/javascript');
-    $this->headScript()->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'), 'text/javascript');
+    $this->headScript()->prependFile($this->baseUrl('js/evento/submeter.js'));
+    $this->headScript()->prependFile($this->baseUrl('js/jquery.qtip.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('js/ckeditor/ckeditor.js'));
+    $this->headScript()->prependFile($this->baseUrl('js/parsley.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('js/parsley.i18n/messages.pt_br.js'));
 
     $this->headLink()->appendStylesheet($this->baseUrl('css/jquery.qtip.min.css'));
 ?>
@@ -14,8 +14,8 @@
 $form = $this->form;
 ?>
 
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo
-    $form->getAction()?>">
+<form method="<?php echo $form->getMethod() ?>"
+    action="<?php echo $form->getAction()?>">
 
 <div class="row">
     <div class="col-md-6">

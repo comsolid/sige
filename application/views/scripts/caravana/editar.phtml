@@ -1,8 +1,10 @@
 <?php
-    $this->headScript()->appendFile($this->baseUrl('js/select2.js'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/select2/select2-bootstrap.css'));
+
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/select2/select2_locale_pt-BR.js'));
     $this->headScript()->appendFile($this->baseUrl('js/caravana/salvar.js'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/select2.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/form.css'));
 ?>
 
 <?php echo $this->form; ?>
