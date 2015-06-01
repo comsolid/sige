@@ -1,0 +1,18 @@
+
+<script id="weather-template" type="text/mustache">
+<h2>
+    <i class="icon-weather icon-{{code}}" title="{{currently}}"></i>
+    {{temp}} &deg;{{units.temp}}
+</h2>
+<h3>
+    <span class="pull-left">{{low}} &deg; / {{high}} &deg;</span>
+    <span class="pull-right">{{city}}, {{region}}</span>
+</h3>
+</script>
+
+<script id="forecast-template" type="text/mustache">
+<div class="col-md-4" style="margin-bottom: 8px;">
+    <span class="pull-left">{{day}}</span>
+    <span class="pull-right">{{low}} &deg; / {{high}} &deg;</span>
+</div>
+</script>

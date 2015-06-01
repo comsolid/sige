@@ -1,11 +1,14 @@
 <?php
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/alertify.min.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/alertifyjs/themes/bootstrap.min.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('css/admin/dashboard/index.css'));
 
     $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/alertifyjs/alertify.override.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/jquery/jquery.ajaxQueue.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/momentjs/moment-with-langs.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/hogan/hogan-3.0.2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery.simpleWeather/jquery.simpleWeather.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/admin/dashboard/index.js'));
 ?>
 
@@ -79,5 +82,25 @@
                 </ul>
             </div>
         </div>
+    </div>
+    <div class="col-md-4">
+        <div class="box box-solid bg-blue-gradient">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $this->translate("Weather"); ?></h3>
+            </div>
+            <div id="weather" class="box-body">
+                <!-- loaded from javascript -->
+            </div>
+            <div class="box-footer text-black">
+                <div id="forecast" class="row">
+                    <!-- loaded from javascript -->
+                </div>
+            </div>
+            <div class="overlay" id="weather-loading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+
+        <?php echo $this->partial('partials/dashboard/index/template-weather.phtml'); ?>
     </div>
 </div>

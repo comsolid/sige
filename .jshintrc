@@ -31,6 +31,7 @@
     "console": false,
     "PDFJS": false,
     "ace": false,
-    "require": false
+    "require": false,
+    "Hogan": false
   }
 }

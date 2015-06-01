@@ -61,4 +61,30 @@ $(function () {
         $.ajaxQueue(ajax_total_events);
     })();
     // _request();
+
+    var weatherTemplate = $('#weather-template').html();
+    var compiledWeatherTemplate = Hogan.compile(weatherTemplate);
+
+    var forecastTemplate = $('#forecast-template').html();
+    var compiledForecastTemplate = Hogan.compile(forecastTemplate);
+
+    $.simpleWeather({
+        location: 'Maracanaú, CE',
+        unit: 'c',
+        success: function(weather) {
+            var renderedTemplate = compiledWeatherTemplate.render(weather);
+            $('#weather').html(renderedTemplate);
+
+            var forecastHtml = '';
+            for(var i = 0; i < weather.forecast.length; i++) {
+                forecastHtml += compiledForecastTemplate.render(weather.forecast[i]);
+            }
+            $('#forecast').html(forecastHtml);
+            $('#weather-loading').css('display', 'none');
+        },
+        error: function(error) {
+            $('#forecast').html('<p>' + error + '</p>');
+            $('#weather-loading').css('display', 'none');
+        }
+    });
 });

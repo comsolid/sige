@@ -6,6 +6,10 @@
     ],
     "patterns": [
         {
+            "match": "$this->baseUrl('lib/js/hogan/hogan-3.0.2.min.js')",
+            "replacement": "'https://cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.2/hogan.min.js'"
+        },
+        {
             "match": "$this->baseUrl('lib/js/sprintfjs/sprintf.min.js')",
             "replacement": "'https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.0.1/sprintf.min.js'"
         },
