@@ -5,6 +5,8 @@ define("MPDF_PATH", APPLICATION_PATH . '/../vendor/mpdf/mpdf/mpdf.php');
 define("INSCRICAO_ENCONTRO", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/inscricao_encontro.html');
 define("ARTIGOS_LISTA", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/artigos_lista.html');
 define("TICKET_INSCRICAO", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/ticket_inscricao.html');
+define("FOLHA_PRESENCA", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/folha_presenca.html');
+define("FOLHA_PRESENCA_ITEM", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/folha_presenca_item.html');
 
 /**
  *
@@ -22,8 +24,8 @@ class Sige_Pdf_Relatorio_Parser {
 
     /**
      *
-     * @param type $tipo - qual dos modelos a carregar
-     * @param type $dados_array - dados que serão preenchidos no relatório
+     * @param string $tipo - (constante) qual dos modelos a carregar
+     * @param array $dados_array - dados que serão preenchidos no relatório
      */
     public function __construct($tipo, $dados_array = array()) {
         $this->tipo = $tipo;
@@ -33,32 +35,30 @@ class Sige_Pdf_Relatorio_Parser {
         $this->doc_criador = "SiGE https://github.com/comsolid/sige";
         $this->doc_logo = APPLICATION_PATH . '/../public/img/logo_ifce_ceara.png';
         $this->doc_subtitulo = $dados_array["nome_relatorio"];
-        $this->parseTipo($tipo);
-        $this->parseDados();
+        $this->template_filepath = $this->parseTipo($tipo);
     }
 
     protected function parseTipo($tipo) {
-        $this->template_filepath = constant($tipo);
+        return constant($tipo);
     }
 
-    protected function parseDados() {
-        $template_str = $this->loadTemplateForFile();
-        $keys = array_keys($this->dados_array);
+    protected function parseDados($template, $dados_array) {
+        $keys = array_keys($dados_array);
         foreach ($keys as $key) {
-            $template_str = preg_replace("/%%{$key}%%/", trim($this->dados_array[$key]), $template_str);
+            $template = preg_replace("/%%{$key}%%/", trim($dados_array[$key]), $template);
         }
-        return $template_str;
+        return $template;
     }
 
     /**
      * Carrega o template do arquivo.
      */
-    protected function loadTemplateForFile() {
-        if (!file_exists($this->template_filepath) || !is_readable($this->template_filepath)) {
+    protected function loadTemplate($template_filepath) {
+        if (!file_exists($template_filepath) || !is_readable($template_filepath)) {
             return false;
         }
-        $handle = fopen($this->template_filepath, 'rb');
-        return fread($handle, filesize($this->template_filepath));
+        $handle = fopen($template_filepath, 'rb');
+        return fread($handle, filesize($template_filepath));
     }
 
     public function gerarPdf() {
@@ -112,7 +112,7 @@ class Sige_Pdf_Relatorio_Parser {
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
 
-' . $this->parseDados() . '
+' . $this->parseDados($this->loadTemplate($this->template_filepath), $this->dados_array) . '
 
 </body>
 </html>

@@ -85,7 +85,18 @@
         <hr>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-2">
+            <div class="col-md-2">
+                <a href="<?php echo $this->url(array(
+                        'module' => 'admin',
+                        'controller' => 'presenca',
+                        'action' => 'folha-presenca-pdf'
+                    ), 'default', true) ?>"
+                    class="btn btn-default">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <?php echo $this->translate("Presence Sheet") . " (PDF)"; ?>
+                </a>
+            </div>
+            <div class="col-md-6">
                 <div class="input-group">
                     <input type="text" id="termo" class="form-control input-lg"
                     placeholder="<?php echo $this->translate("Search..."); ?>"/>

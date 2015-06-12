@@ -138,4 +138,34 @@ class Admin_PresencaController extends Sige_Controller_AdminAction {
         ), 'default', true);
     }
 
+    public function folhaPresencaPdfAction() {
+        $this->autenticacao();
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $sessao = Zend_Auth::getInstance()->getIdentity();
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $id_encontro = (int) $ps->encontro["id_encontro"];
+
+        $id_evento = (int) $this->_request->getParam('id_evento', 0);
+        $id_evento_realizacao = (int) $this->_request->getParam('id_evento_realizacao', 0);
+
+        $model = new Admin_Model_Evento();
+        $rs = $model->dadosEvento($id_encontro, $id_evento_realizacao);
+
+        $pdf = new Sige_Pdf_Relatorio_FolhaPresenca($rs);
+        try {
+            $pdf->gerarPdf();
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        . $e->getMessage()));
+            return $this->_helper->redirector->goToRoute(array(
+                    'module' => 'admin',
+                    'controller' => 'evento',
+                    'action' => 'index'), 'default', true);
+        }
+    }
 }

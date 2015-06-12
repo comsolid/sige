@@ -263,6 +263,19 @@
                                        <i class="fa fa-tasks"></i>
                                     </a>
 
+                                    <a href="<?php echo $this->url(array(
+                                            'module' => 'admin',
+                                            'controller' => 'presenca',
+                                            'action' => 'folha-presenca-pdf',
+                                            'id' => $this->evento['id_evento'],
+                                            'id_evento_realizacao' => $item['evento']
+                                        ), 'default', true) ?>"
+                                        class="btn btn-default"
+                                        data-toggle="tooltip"
+                                        title="<?php echo $this->translate("Presence Sheet") . " (PDF)"; ?>">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                    </a>
+
                                     <a href="<?php echo $this->url(array('module' => 'admin',
                                             'controller' => 'horario',
                                             'action' => 'deletar',

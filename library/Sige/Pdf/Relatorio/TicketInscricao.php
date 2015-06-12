@@ -29,11 +29,10 @@ class Sige_Pdf_Relatorio_TicketInscricao {
      *   * id_pessoa
      *   * id_encontro
      */
-    function __construct($dados) {
+    public function __construct($dados) {
         $this->__mConstruct();
 
         $this->dados = $dados;
-        $this->dados['nome_relatorio'] = $this->t->_('Registration Ticket');
         $this->i18n();
         $this->gerarCodigoBarras();
         $this->pdf = new Sige_Pdf_Relatorio_Parser("TICKET_INSCRICAO", $this->dados);
@@ -54,6 +53,7 @@ class Sige_Pdf_Relatorio_TicketInscricao {
     }
 
     private function i18n() {
+        $this->dados['nome_relatorio'] = $this->t->_('Registration Ticket');
         $this->dados['i18n_nome'] = $this->t->_('Name:');
         $this->dados['i18n_encontro'] = $this->t->_('Conference:');
         $this->dados['i18n_data_hora'] = $this->t->_('Date and time:');

@@ -118,4 +118,29 @@ class Admin_Model_Evento extends Application_Model_Evento {
         //$select = $select.' limit 50';
         return $this->getAdapter()->fetchAll($select, $where);
     }
+
+    public function dadosEvento($id_encontro, $id_evento_realizacao = null) {
+        $sql = "SELECT nome_tipo_evento, nome_evento, nome_encontro,
+            nome, nome_sala, TO_CHAR(data, 'DD/MM/YYYY') as data,
+            TO_CHAR(hora_inicio, 'HH24:MM') as hora_inicio,
+            TO_CHAR(hora_fim, 'HH24:MM') as hora_fim
+            FROM evento e
+            INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
+            INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
+            INNER JOIN evento_realizacao er on e.id_evento = er.id_evento
+            INNER JOIN sala s on er.id_sala = s.id_sala
+            INNER JOIN encontro en ON e.id_encontro = en.id_encontro
+            WHERE e.id_encontro = ? ";
+
+        $params = array(
+            $id_encontro
+        );
+
+        if (intval($id_evento_realizacao) > 0) {
+            $sql .= " AND er.evento = ? ";
+            $params[] = $id_evento_realizacao;
+        }
+
+        return $this->getAdapter()->fetchAll($sql, $params);
+    }
 }
