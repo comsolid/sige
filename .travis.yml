@@ -18,6 +18,6 @@ before_script:
   - chmod 777 application/cache/common
 
 install:
-  - php composer.phar install
+  - composer install
 
 script: phpunit --stderr --configuration tests/phpunit.xml
