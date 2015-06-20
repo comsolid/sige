@@ -19,6 +19,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             'columns' => 'id_encontro',
             'onDelete' => self::RESTRICT,
             'onUpdate' => self::RESTRICT));
+
     protected $_dependentTables = array(
         'pessoa',
         'encontro',
@@ -102,6 +103,8 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
                 return null;
             }
         }
+
+        $sql .= " ORDER BY en.data_inicio DESC ";
         return $this->getAdapter()->fetchAll($sql, array($id_pessoa));
     }
 
@@ -128,7 +131,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             INNER JOIN evento_realizacao er ON er.evento = ep.id_evento_realizacao
             INNER JOIN evento e ON e.id_evento = er.id_evento
             INNER JOIN tipo_evento te ON te.id_tipo_evento = e.id_tipo_evento
-            INNER JOIN encontro_participante enp ON e.id_encontro = enp.id_encontro
+            INNER JOIN encontro_participante enp ON e.id_encontro = enp.id_encontro AND enp.id_pessoa = e.responsavel
             INNER JOIN encontro en ON en.id_encontro = e.id_encontro
             INNER JOIN pessoa p ON p.id_pessoa = ep.id_pessoa
 
@@ -143,7 +146,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
 
             GROUP BY
                 en.id_encontro, p.id_pessoa, p.nome, en.nome_encontro,
-                e.nome_evento, te.nome_tipo_evento, e.nome_evento, e.id_evento;
+                e.nome_evento, te.nome_tipo_evento, e.nome_evento, e.id_evento
         ";
         if (!is_null($id_evento)) {
             $sql = preg_replace("/%%ID_EVENTO%%/", "AND e.id_evento = ?", $sql);
@@ -158,6 +161,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             }
         }
         $sql = preg_replace("/%%ID_EVENTO%%/", "", $sql);
+        $sql .= " ORDER BY en.data_inicio DESC ";
         return $this->getAdapter()->fetchAll($sql, array($id_pessoa));
     }
 
@@ -179,12 +183,11 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
                 e.nome_evento,
                 UPPER(p.nome) as nome,
                 en.nome_encontro,
-		        -- er.hora_fim, er.hora_inicio
                 ROUND(SUM(EXTRACT(epoch FROM er.hora_fim - er.hora_inicio)/3600)::numeric,2) as carga_horaria
 
             FROM evento e
             INNER JOIN pessoa p ON e.responsavel = p.id_pessoa
-            INNER JOIN encontro_participante enp ON e.id_encontro = enp.id_encontro
+            INNER JOIN encontro_participante enp ON e.id_encontro = enp.id_encontro AND enp.id_pessoa = p.id_pessoa
             INNER JOIN tipo_evento te ON te.id_tipo_evento = e.id_tipo_evento
             INNER JOIN encontro en ON e.id_encontro = en.id_encontro
             INNER JOIN evento_realizacao er ON er.id_evento = e.id_evento
@@ -200,7 +203,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
 
             GROUP BY
                 e.id_evento, enp.id_encontro, p.id_pessoa, te.nome_tipo_evento,
-                e.nome_evento, p.nome, en.nome_encontro
+                e.nome_evento, p.nome, en.nome_encontro, en.data_inicio
          ";
         if (!is_null($id_evento)) {
             $sql = preg_replace("/%%ID_EVENTO%%/", "AND e.id_evento = ?", $sql);
@@ -212,6 +215,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
             }
         }
         $sql = preg_replace("/%%ID_EVENTO%%/", "", $sql);
+        $sql .= " ORDER BY en.data_inicio DESC ";
         return $this->getAdapter()->fetchAll($sql, array($id_pessoa));
     }
 
@@ -246,13 +250,12 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
                 e.nome_evento,
                 UPPER(p.nome) as nome,
                 en.nome_encontro,
-                -- er.hora_fim, er.hora_inicio
                 ROUND(SUM(EXTRACT(epoch FROM er.hora_fim - er.hora_inicio)/3600)::numeric,2) as carga_horaria
 
-            FROM evento e
-            INNER JOIN encontro_participante ep ON e.id_encontro = ep.id_encontro
-            INNER JOIN evento_palestrante epa ON e.id_evento = epa.id_evento
+            FROM evento_palestrante epa
             INNER JOIN pessoa p ON epa.id_pessoa = p.id_pessoa
+            INNER JOIN evento e ON epa.id_evento = e.id_evento
+            INNER JOIN encontro_participante ep ON e.id_encontro = ep.id_encontro AND ep.id_pessoa = e.responsavel
             INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
             INNER JOIN encontro en ON e.id_encontro = en.id_encontro
             INNER JOIN evento_realizacao er ON er.id_evento = e.id_evento
@@ -306,7 +309,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
 
             FROM evento e
             INNER JOIN pessoa p ON e.responsavel = p.id_pessoa
-            INNER JOIN encontro_participante enp ON e.id_encontro = enp.id_encontro
+            INNER JOIN encontro_participante enp ON e.id_encontro = enp.id_encontro AND enp.id_pessoa = p.id_pessoa
             INNER JOIN tipo_evento te ON te.id_tipo_evento = e.id_tipo_evento
             INNER JOIN encontro en ON e.id_encontro = en.id_encontro
 
