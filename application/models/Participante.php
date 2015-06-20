@@ -146,7 +146,7 @@ class Application_Model_Participante extends Zend_Db_Table_Abstract {
 
             GROUP BY
                 en.id_encontro, p.id_pessoa, p.nome, en.nome_encontro,
-                e.nome_evento, te.nome_tipo_evento, e.nome_evento, e.id_evento
+                e.nome_evento, te.nome_tipo_evento, e.nome_evento, e.id_evento, en.data_inicio
         ";
         if (!is_null($id_evento)) {
             $sql = preg_replace("/%%ID_EVENTO%%/", "AND e.id_evento = ?", $sql);
