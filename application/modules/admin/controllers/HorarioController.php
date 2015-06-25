@@ -41,6 +41,7 @@ class Admin_HorarioController extends Sige_Controller_AdminAction {
                 ));
 
                 if (!$existe) {
+                    $data['data'] = new Zend_Db_Expr($model->getAdapter()->quoteInto("TO_DATE(?, 'DD/MM/YYYY')", $data['data']));
                     $model->insert($data);
                     $this->_helper->flashMessenger->addMessage(array('success' => 'Horário adicionado com sucesso.'));
                     return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'evento', 'action' => 'detalhes', 'id' => $idEvento), 'default', true);
@@ -86,6 +87,7 @@ class Admin_HorarioController extends Sige_Controller_AdminAction {
 
                     // se id for igual ao id existe, pode atualizar, pois se trata do mesmo evento
                     if (!$existe or ($id == $existe)) {
+                        $data['data'] = new Zend_Db_Expr($model->getAdapter()->quoteInto("TO_DATE(?, 'DD/MM/YYYY')", $data['data']));
                         $model->update($data, 'evento = ' . $id);
                         $this->_helper->flashMessenger->addMessage(array('success' => 'Horário atualizado com sucesso.'));
                         return $this->_helper->redirector->goToRoute(array('module' => 'admin', 'controller' => 'evento', 'action' => 'detalhes', 'id' => $evento), 'default', true);

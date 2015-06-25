@@ -1,114 +1,165 @@
 <?php
-    $this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
-    $this->headLink()->appendStylesheet($this->baseUrl('css/evento/programacao.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('lib/css/bootstrap-admin/AdminLTE-boxes.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('css/evento/programacao.css'));
 
     $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
-    $this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
+    //$this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
+    //$this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/evento/programacao.js'));
 ?>
+
+<style media="screen">
+    .media-body a {
+        color: #fff;
+    }
+
+    .media-body a:hover {
+        text-decoration: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    h3.day {
+        font-weight: bold;
+    }
+
+    .num-bookmarks {
+        margin-right: 6px
+    }
+</style>
 
 <div class="row">
     <div class="col-md-6">
         <h3><?php echo $this->translate("Schedule"); ?></h3>
     </div>
-    <div class="col-md-2">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" id="auto-scroll"/>
-                <?php echo $this->translate("Auto scroll?"); ?>
-            </label>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="btn-group pull-right" data-toggle="buttons">
-            <label class="btn btn-default active">
-                <input type="radio" name="mode" id="normal-mode" autocomplete="off" checked>
-                <?php echo $this->translate("Normal"); ?>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="mode" id="print-mode" autocomplete="off">
-                <?php echo $this->translate("Print"); ?>
-            </label>
-        </div>
-    </div>
 </div>
 
-<hr/>
+<hr>
 
 <?php
 $data_atual = null;
 if (! empty($this->lista)):
-   foreach ($this->lista as $item): ?>
-<div class="row">
-   <div class="col-md-1 col-md-offset-1">
-      <?php
-      if ($item['data'] != $data_atual) {
-         $date = new Zend_Date($item['data'], 'dd/MM/y');
-      ?>
-      <div class="prog-date">
-         <p><?php echo $date->toString('dd') ?> <span><?php echo $date->toString('MMM') ?></span></p>
-      </div>
-      <?php
-         $data_atual = $item['data'];
-      } else {
-         echo "&nbsp;";
-      }
-      ?>
-   </div>
-   <div class="col-md-7 <?php echo $item['dia_mes'] ?>"
-        data-data="<?php echo $item['data'] ?>"
-        data-hora="<?php echo $item['hora_inicio'] ?>">
-      <div class="acc-evento">
-         <div class="header3">
-            <?php echo $item['nome_tipo_evento'] ?>: <?php echo $item['nome_evento'] ?>
-            <?php if (! empty($item['descricao'])) : ?>
-            (<?php echo $item['descricao'] ?>)
-            <?php endif; ?>
-         </div>
-         <div>
-            <div>
-                <?php echo $this->translate("Place"); ?>:
-                <?php echo $item['nome_sala'] ?>
-                -
-                <?php echo $this->translate("from"); ?>
-                <?php echo $item['hora_inicio'] ?>
-                <?php echo $this->translate("to"); ?>
-                <?php echo $item['hora_fim'] ?></div>
-                <hr/>
-                <?php
-                if (! empty($item['twitter'])) {
-                   $id = $item['twitter'];
-                } else {
-                   $id = $item['id_pessoa'];
-                }
-                ?>
-            <div>
-               <?php echo $this->translate("by"); ?>
-               <a href="<?php echo $this->url(array('id' => $id),
-                    'ver', true) ?>" target="blank"><?php echo $item['nome'] ?></a>
-               <?php if ($item['outros'] == 1): ?>
-                  <?php echo $this->translate("and other."); ?>
-               <?php elseif ($item['outros'] > 1): ?>
-                  <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
-               <?php endif; ?>
+    foreach ($this->lista as $item): ?>
+
+    <?php
+    if ($item['data'] != $data_atual) {
+        $date = new Zend_Date($item['data'], 'dd/MM/y');
+    ?>
+    <!-- put a div after the first day -->
+    <?php if (! is_null($data_atual)): ?>
+    </div>
+    <?php endif; ?>
+
+    <h3 class="day"><?php echo $date->toString('dd') ?> de <?php echo $date->toString('MMM') ?></h3><hr>
+    <div class="row">
+    <?php
+        $data_atual = $item['data'];
+    }
+    ?>
+
+    <?php
+    switch ($item['id_tipo_evento']) {
+        case 1:
+            $bg_color = "bg-blue-gradient";
+            break;
+        case 2:
+            $bg_color = "bg-green-gradient";
+            break;
+        case 3:
+            $bg_color = "bg-orange-gradient";
+            break;
+        default:
+            $bg_color = "bg-yellow-gradient";
+            break;
+    }
+    ?>
+
+    <div class="col-md-4">
+        <div class="box box-solid <?php echo $bg_color; ?>">
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $item['nome_tipo_evento'] ?></h3>
+                <span class="pull-right">
+                    <?php echo $item['hora_inicio'] ?>
+                    <?php echo $this->translate("to"); ?>
+                    <?php echo $item['hora_fim'] ?>
+                </span>
             </div>
-            <p><?php echo $item['resumo'] ?></p>
-         </div>
-      </div>
-   </div>
-   <div class="col-md-1">
-      <a href="<?php echo $this->url(array('id' => $item['id_evento']), 'ver_evento', true) ?>#disqus_thread"
-              class="btn btn-default" rel="tooltip"
-              title="<?php echo $this->translate("View and post comments"); ?>">
-              <i class="fa fa-comments-o"></i>
-      </a>
-   </div>
-</div>
+            <div class="box-body">
+                <div class="">
+                    <div class="media-left">
+                        <?php
+                        if (! empty($item['twitter'])) {
+                           $id = $item['twitter'];
+                        } else {
+                           $id = $item['id_pessoa'];
+                        }
+                        $url_usuario = $this->url(array('id' => $id), 'ver', true);
+
+                        // hash for gravatar
+                        $hash = md5(strtolower(trim($item['email'])));
+                        ?>
+                        <a href="<?php echo $url_usuario ?>" target="blank">
+                            <img src="http://www.gravatar.com/avatar/<?php echo $hash; ?>?s=72&d=retro" alt="" class="img-circle" />
+                        </a>
+                    </div>
+                    <?php
+                    $url_evento = $this->url(array('id' => $item['id_evento']), 'ver_evento', true);
+                    ?>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="<?php echo $url_evento; ?>#disqus_thread">
+                                <?php echo $item['nome_evento'] ?>
+                                <?php if (! empty($item['descricao'])) : ?>
+                                (<?php echo $item['descricao'] ?>)
+                                <?php endif; ?>
+                            </a>
+                        </h4>
+                        <h5>
+                            <?php echo $this->translate("by"); ?>
+                            <a href="<?php echo $url_usuario ?>" target="blank"><?php echo $item['nome'] ?></a>
+                            <?php if ($item['outros'] == 1): ?>
+                               <?php echo $this->translate("and other."); ?>
+                            <?php elseif ($item['outros'] > 1): ?>
+                               <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
+                            <?php endif; ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer text-black">
+                <div class="row">
+                    <div class="col-md-6">
+                        <i class="fa fa-map-marker"></i>
+                        <?php echo $this->translate("Place"); ?>:
+                        <?php echo $item['nome_sala'] ?>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <span class="text-muted num-bookmarks"
+                                title="<?php echo sprintf($this->translate(array(
+                                    "one person interested", "%d people interested", $item['count_marcadores'])),
+                                    $item['count_marcadores']); ?>">
+                                <i class="fa fa-bookmark"></i>
+                                <?php echo $item['count_marcadores']; ?>
+                            </span>
+                            <a href="<?php echo $url_evento; ?>#disqus_thread"
+                                class="btn btn-default" title="<?php echo $this->translate("View and post comments"); ?>">
+                                <i class="fa fa-comments-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php
    endforeach;
+   ?>
+   </div><!-- last div -->
+   <?php
 else:
 ?>
 <div class="notice" style="margin-top: 10px;">

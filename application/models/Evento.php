@@ -190,13 +190,16 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
      * @return array
      */
     public function programacao($id_encontro) {
-        $sql = "SELECT er.id_evento, nome_tipo_evento, nome_evento,
-         nome, nome_sala, TO_CHAR(data, 'DD/MM/YYYY') as data,
+        $sql = "SELECT er.id_evento, te.id_tipo_evento, nome_tipo_evento, nome_evento,
+         nome, email, nome_sala, TO_CHAR(data, 'DD/MM/YYYY') as data,
          TO_CHAR(hora_inicio, 'HH24:MI') as hora_inicio,
-         TO_CHAR(hora_fim, 'HH24:MI') as hora_fim, resumo, descricao,
-         id_pessoa, twitter, ( SELECT COUNT(*) FROM evento_palestrante ep
+         TO_CHAR(hora_fim, 'HH24:MI') as hora_fim, descricao,
+         id_pessoa, twitter,
+         ( SELECT COUNT(*) FROM evento_palestrante ep
             WHERE ep.id_evento = er.id_evento ) as outros,
-            TO_CHAR(data, 'DDMM') as dia_mes
+         ( SELECT COUNT(*) FROM evento_demanda ed
+            WHERE ed.evento = er.evento) as count_marcadores,
+         TO_CHAR(data, 'DDMM') as dia_mes
          FROM evento e
          INNER JOIN pessoa p ON (e.responsavel = p.id_pessoa)
          INNER JOIN tipo_evento te ON (te.id_tipo_evento = e.id_tipo_evento)
