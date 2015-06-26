@@ -14,9 +14,17 @@ RUN mkdir -p application/cache/common
 RUN chmod 777 application/cache/common
 RUN mkdir -p library/HTMLPurifier/DefinitionCache/Serializer
 RUN chmod 777 library/HTMLPurifier/DefinitionCache/Serializer
-RUN mkdir public/captcha
+RUN mkdir -p public/captcha
 RUN chmod 777 public/captcha
 VOLUME /usr/share/nginx/html/site/application/cache/common
 VOLUME /usr/share/nginx/html/site/library/HTMLPurifier/DefinitionCache/Serializer
 VOLUME /usr/share/nginx/html/site/public/captcha
+
+RUN mkdir -p vendor/mpdf/mpdf/ttfontdata/
+RUN chmod 777 vendor/mpdf/mpdf/ttfontdata/
+RUN mkdir -p vendor/mpdf/mpdf/tmp/
+RUN chmod 777 vendor/mpdf/mpdf/tmp/
+RUN mkdir -p vendor/mpdf/mpdf/graph_cache/
+RUN chmod 777 vendor/mpdf/mpdf/graph_cache/
+
 VOLUME /usr/share/nginx/html/site/vendor

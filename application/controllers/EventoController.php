@@ -297,11 +297,42 @@ class EventoController extends Sige_Controller_Action {
     }
 
     public function programacaoAction() {
-        $this->view->menu->setAtivo('schedule');
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'staging');
         $idEncontro = $config->encontro->codigo;
         $model = new Application_Model_Evento();
-        $this->view->lista = $model->programacao($idEncontro);
+        $rs = $model->programacao($idEncontro);
+
+        $export_type = $this->getRequest()->getParam('exportar', null);
+        if ($export_type == 'pdf') {
+            return $this->exportarProgramacao($rs);
+        }
+
+        $this->view->menu->setAtivo('schedule');
+        $this->view->lista = $rs;
+
+        $model_encontro = new Application_Model_Encontro();
+        $where = $model_encontro->getAdapter()->quoteInto('id_encontro = ?', $idEncontro);
+        $row = $model_encontro->fetchRow($where);
+        $data_ini = new Zend_Date($row->data_inicio);
+        $data_fim = new Zend_Date($row->data_fim);
+        $datas_encontro = array();
+        while ($data_ini <= $data_fim) {
+            $datas_encontro[] = clone $data_ini;
+            $data_ini->add(1, Zend_Date::DAY);
+        }
+        $this->view->datas_encontro = $datas_encontro;
+    }
+
+    private function exportarProgramacao($resultSet) {
+        $pdf = new Sige_Pdf_Relatorio_Programacao($resultSet);
+        try {
+            $pdf->gerarPdf();
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger->addMessage(
+                    array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
+                        . $e->getMessage()));
+            return $this->_helper->redirector->goToRoute(array(), 'programacao', true);
+        }
     }
 
     public function programacaoTvAction() {

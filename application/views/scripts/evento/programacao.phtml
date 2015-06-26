@@ -1,12 +1,6 @@
 <?php
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/prettify.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('lib/css/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('lib/css/bootstrap-admin/AdminLTE-boxes.css'));
-    //$this->headLink()->appendStylesheet($this->baseUrl('css/evento/programacao.css'));
 
-    $this->headScript()->appendFile($this->baseUrl('lib/js/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.min.js'));
-    //$this->headScript()->appendFile($this->baseUrl('js/prettify.js'));
-    //$this->headScript()->appendFile($this->baseUrl('js/init.prettify.js'));
     $this->headScript()->appendFile($this->baseUrl('js/moment-with-langs.min.js'));
     $this->headScript()->appendFile($this->baseUrl('js/evento/programacao.js'));
 ?>
@@ -28,11 +22,23 @@
     .num-bookmarks {
         margin-right: 6px
     }
+
+    .item {
+        height: 220px;
+    }
 </style>
 
 <div class="row">
     <div class="col-md-6">
         <h3><?php echo $this->translate("Schedule"); ?></h3>
+    </div>
+    <div class="col-md-6">
+        <div class="pull-right">
+            <a href="?exportar=pdf" class="btn btn-default">
+                <i class="fa fa-file-pdf-o"></i>
+                Exportar
+            </a>
+        </div>
     </div>
 </div>
 
@@ -40,7 +46,24 @@
 
 <?php
 $data_atual = null;
-if (! empty($this->lista)):
+if (! empty($this->lista)): ?>
+
+<ul id="date-tabs" class="nav nav-pills" role="tablist">
+<?php foreach ($this->datas_encontro as $date): ?>
+    <li role="presentation">
+        <a href="#<?php echo $date->toString('ddMM') ?>" aria-controls="<?php echo $date->toString('ddMM') ?>" role="tab" data-toggle="tab">
+            <?php echo $date->toString('dd') ?>/<?php echo $date->toString('MMM') ?>
+        </a>
+    </li>
+<?php endforeach; ?>
+</ul>
+
+<hr>
+
+<!-- Tab panes -->
+<div class="tab-content">
+
+<?php
     foreach ($this->lista as $item): ?>
 
     <?php
@@ -49,124 +72,140 @@ if (! empty($this->lista)):
     ?>
     <!-- put a div after the first day -->
     <?php if (! is_null($data_atual)): ?>
-    </div>
+        </div><!-- div.row -->
+    </div><!-- end div.tab-pane -->
     <?php endif; ?>
 
-    <h3 class="day"><?php echo $date->toString('dd') ?> de <?php echo $date->toString('MMM') ?></h3><hr>
-    <div class="row">
-    <?php
-        $data_atual = $item['data'];
-    }
-    ?>
+    <div role="tabpanel" class="tab-pane" id="<?php echo $date->toString('ddMM') ?>">
+        <div class="row">
+        <?php
+            $data_atual = $item['data'];
+        }
+        ?>
 
-    <?php
-    switch ($item['id_tipo_evento']) {
-        case 1:
-            $bg_color = "bg-blue-gradient";
-            break;
-        case 2:
-            $bg_color = "bg-green-gradient";
-            break;
-        case 3:
-            $bg_color = "bg-orange-gradient";
-            break;
-        default:
-            $bg_color = "bg-yellow-gradient";
-            break;
-    }
-    ?>
+        <?php
+        switch ($item['id_tipo_evento']) {
+            case 1:
+                $bg_color = "bg-blue-gradient";
+                break;
+            case 2:
+                $bg_color = "bg-green-gradient";
+                break;
+            case 3:
+                $bg_color = "bg-orange-gradient";
+                break;
+            default:
+                $bg_color = "bg-yellow-gradient";
+                break;
+        }
+        ?>
 
-    <div class="col-md-4">
-        <div class="box box-solid <?php echo $bg_color; ?>">
-            <div class="box-header">
-                <h3 class="box-title"><?php echo $item['nome_tipo_evento'] ?></h3>
-                <span class="pull-right">
-                    <?php echo $item['hora_inicio'] ?>
-                    <?php echo $this->translate("to"); ?>
-                    <?php echo $item['hora_fim'] ?>
-                </span>
-            </div>
-            <div class="box-body">
-                <div class="">
-                    <div class="media-left">
-                        <?php
-                        if (! empty($item['twitter'])) {
-                           $id = $item['twitter'];
-                        } else {
-                           $id = $item['id_pessoa'];
-                        }
-                        $url_usuario = $this->url(array('id' => $id), 'ver', true);
+        <div class="col-md-4 item">
+            <div class="box box-solid <?php echo $bg_color; ?>">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo $item['nome_tipo_evento'] ?></h3>
+                    <span class="pull-right">
+                        <?php echo $item['hora_inicio'] ?>
+                        <?php echo $this->translate("to"); ?>
+                        <?php echo $item['hora_fim'] ?>
+                    </span>
+                </div>
+                <div class="box-body">
+                    <div class="">
+                        <div class="media-left">
+                            <?php
+                            if (! empty($item['twitter'])) {
+                               $id = $item['twitter'];
+                            } else {
+                               $id = $item['id_pessoa'];
+                            }
+                            $url_usuario = $this->url(array('id' => $id), 'ver', true);
 
-                        // hash for gravatar
-                        $hash = md5(strtolower(trim($item['email'])));
-                        ?>
-                        <a href="<?php echo $url_usuario ?>" target="blank">
-                            <img src="http://www.gravatar.com/avatar/<?php echo $hash; ?>?s=72&d=retro" alt="" class="img-circle" />
-                        </a>
-                    </div>
-                    <?php
-                    $url_evento = $this->url(array('id' => $item['id_evento']), 'ver_evento', true);
-                    ?>
-                    <div class="media-body">
-                        <h4 class="media-heading">
-                            <a href="<?php echo $url_evento; ?>#disqus_thread">
-                                <?php echo $item['nome_evento'] ?>
-                                <?php if (! empty($item['descricao'])) : ?>
-                                (<?php echo $item['descricao'] ?>)
-                                <?php endif; ?>
+                            // hash for gravatar
+                            $hash = md5(strtolower(trim($item['email'])));
+                            ?>
+                            <a href="<?php echo $url_usuario ?>" target="blank">
+                                <img src="http://www.gravatar.com/avatar/<?php echo $hash; ?>?s=72&d=retro" alt="" class="img-circle" />
                             </a>
-                        </h4>
-                        <h5>
-                            <?php echo $this->translate("by"); ?>
-                            <a href="<?php echo $url_usuario ?>" target="blank"><?php echo $item['nome'] ?></a>
-                            <?php if ($item['outros'] == 1): ?>
-                               <?php echo $this->translate("and other."); ?>
-                            <?php elseif ($item['outros'] > 1): ?>
-                               <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
-                            <?php endif; ?>
-                        </h5>
+                        </div>
+                        <?php
+                        $url_evento = $this->url(array('id' => $item['id_evento']), 'ver_evento', true);
+                        ?>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="<?php echo $url_evento; ?>#disqus_thread">
+                                    <?php echo $item['nome_evento'] ?>
+                                    <?php if (! empty($item['descricao'])) : ?>
+                                    (<?php echo $item['descricao'] ?>)
+                                    <?php endif; ?>
+                                </a>
+                            </h4>
+                            <h5>
+                                <?php echo $this->translate("by"); ?>
+                                <a href="<?php echo $url_usuario ?>" target="blank"><?php echo $item['nome'] ?></a>
+                                <?php if ($item['outros'] == 1): ?>
+                                   <?php echo $this->translate("and other."); ?>
+                                <?php elseif ($item['outros'] > 1): ?>
+                                   <?php echo sprintf($this->translate("and %d others."), $item['outros']); ?>
+                                <?php endif; ?>
+                            </h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="box-footer text-black">
-                <div class="row">
-                    <div class="col-md-6">
-                        <i class="fa fa-map-marker"></i>
-                        <?php echo $this->translate("Place"); ?>:
-                        <?php echo $item['nome_sala'] ?>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="pull-right">
-                            <span class="text-muted num-bookmarks"
-                                title="<?php echo sprintf($this->translate(array(
-                                    "one person interested", "%d people interested", $item['count_marcadores'])),
-                                    $item['count_marcadores']); ?>">
-                                <i class="fa fa-bookmark"></i>
-                                <?php echo $item['count_marcadores']; ?>
-                            </span>
-                            <a href="<?php echo $url_evento; ?>#disqus_thread"
-                                class="btn btn-default" title="<?php echo $this->translate("View and post comments"); ?>">
-                                <i class="fa fa-comments-o"></i>
-                            </a>
+                <div class="box-footer text-black">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <i class="fa fa-map-marker"></i>
+                                <?php echo $this->translate("Place"); ?>:
+                            </label>
+                            <?php echo $item['nome_sala'] ?>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pull-right">
+                                <span class="text-muted num-bookmarks"
+                                    title="<?php echo sprintf($this->translate(array(
+                                        "one person interested", "%d people interested", $item['count_marcadores'])),
+                                        $item['count_marcadores']); ?>">
+                                    <i class="fa fa-bookmark"></i>
+                                    <?php echo $item['count_marcadores']; ?>
+                                </span>
+                                <a href="<?php echo $url_evento; ?>#disqus_thread"
+                                    class="btn btn-default" title="<?php echo $this->translate("View and post comments"); ?>">
+                                    <i class="fa fa-comments-o"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
 <?php
    endforeach;
-   ?>
-   </div><!-- last div -->
+?>
+        </div><!-- last div.row -->
+    </div><!-- end div.tab-pane -->
+</div><!-- end div.tab-content -->
    <?php
 else:
 ?>
-<div class="notice" style="margin-top: 10px;">
-   <div class="msg-header"><?php echo $this->translate("Attention!"); ?></div>
-   <div><?php echo $this->translate("There are no events on our schedule yet. Be the first to"); ?>
-      <a href="<?php echo $this->url(array('controller'=>'evento',
-    'action'=>'submeter'), 'default');?>"
-    class="no-bottom"><i class="icon-file"></i> <?php echo $this->translate("Submit a paper"); ?></a></div>
+<div class="alert alert-info" role="alert">
+    <strong><?php echo $this->translate("Attention!"); ?></strong>
+    <div>
+        <?php echo $this->translate("There are no events on our schedule yet. Be the first to"); ?>
+        <a href="<?php echo $this->url(array(
+            'controller'=>'evento', 'action'=>'submeter'
+        ), 'default', true);?>" class="btn btn-default">
+            <i class="fa fa-send"></i> <?php echo $this->translate("Submit a paper"); ?>
+        </a>
+    </div>
 </div>
 <?php endif; ?>
+
+<!-- alert for days that has no events -->
+<div id="alert-no-events" class="alert alert-info" role="alert" style="display: none;">
+    <strong><?php echo $this->translate("Attention!"); ?></strong>
+    <div>
+        <?php echo $this->translate("There are no events on this day yet!"); ?>
+    </div>
+</div>

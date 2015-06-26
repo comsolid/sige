@@ -1,12 +1,13 @@
 <?php
 
-//define("MPDF_PATH", APPLICATION_PATH . '/../library/MPDF57/mpdf.php');
 define("MPDF_PATH", APPLICATION_PATH . '/../vendor/mpdf/mpdf/mpdf.php');
 define("INSCRICAO_ENCONTRO", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/inscricao_encontro.html');
 define("ARTIGOS_LISTA", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/artigos_lista.html');
 define("TICKET_INSCRICAO", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/ticket_inscricao.html');
 define("FOLHA_PRESENCA", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/folha_presenca.html');
 define("FOLHA_PRESENCA_ITEM", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/folha_presenca_item.html');
+define("PROGRAMACAO", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/programacao.html');
+define("PROGRAMACAO_ITEM", APPLICATION_PATH . '/../library/Sige/Pdf/Relatorio/Template/programacao_item.html');
 
 /**
  *
