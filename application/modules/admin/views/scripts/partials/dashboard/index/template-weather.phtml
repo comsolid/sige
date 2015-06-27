@@ -12,7 +12,10 @@
 
 <script id="forecast-template" type="text/mustache">
 <div class="col-md-4" style="margin-bottom: 8px;">
-    <span class="pull-left">{{day}}</span>
-    <span class="pull-right">{{low}} &deg; / {{high}} &deg;</span>
+    <span class="label label-primary">{{day}}</span>
+    <span class="pull-right">
+        <i class="icon-weather-forecast icon-{{code}}" title="{{text}}"></i>
+        {{low}} &deg; / {{high}} &deg;
+    </span>
 </div>
 </script>

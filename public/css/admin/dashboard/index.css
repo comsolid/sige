@@ -18,6 +18,15 @@ i.icon-weather {
   line-height: 1.0;
 }
 
+i.icon-weather-forecast {
+  color: #111;
+  font-family: weather;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.0;
+}
+
 .icon-0:before { content: ":"; }
 .icon-1:before { content: "p"; }
 .icon-2:before { content: "S"; }
