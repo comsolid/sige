@@ -7,1608 +7,2000 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SiGE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 06:13+0300\n"
-"PO-Revision-Date: 2015-04-16 19:13-0300\n"
+"POT-Creation-Date: 2015-06-29 18:52-0300\n"
+"PO-Revision-Date: 2015-06-29 19:46-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
-"Language-Team: English (http://www.transifex.com/projects/p/sige/language/en/)\n"
+"Language-Team: English (http://www.transifex.com/projects/p/sige/language/"
+"en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: views/helpers/FlashMessages.php:25
+#: application/views/helpers/FlashMessages.php:25
 msgid "Warning!"
 msgstr "Warning!"
 
-#: views/helpers/FlashMessages.php:28
+#: application/views/helpers/FlashMessages.php:28
 msgid "Heads up!"
 msgstr "Heads up!"
 
-#: views/helpers/FlashMessages.php:31
+#: application/views/helpers/FlashMessages.php:31
 msgid "Error!"
 msgstr "Error!"
 
-#: views/helpers/FlashMessages.php:34
+#: application/views/helpers/FlashMessages.php:34
 msgid "Success!"
 msgstr "Success!"
 
-#: controllers/ErrorController.php:22
-msgid "Page not found."
-msgstr "Page not found."
+#: application/forms/Caravana.php:8 application/forms/DefinirSenha.php:9
+#: application/forms/RecuperarSenha.php:15
+#: application/forms/RequisitarMudarEmail.php:16
+#: application/forms/SubmissaoArtigo.php:19
+#: application/forms/PessoaEdit.php:21 application/forms/AlterarSenha.php:27
+#: application/forms/Evento.php:37 application/forms/Pessoa.php:25
+#: application/modules/admin/forms/Horarios.php:34
+#: application/modules/admin/forms/Encontro.php:15
+#: application/modules/admin/forms/MensagemCertificado.php:7
+#: application/modules/admin/forms/MensagemEmail.php:7
+#: application/modules/admin/forms/Permissao.php:8
+#: application/modules/admin/controllers/ParticipanteController.php:52
+#: application/views/scripts/caravana/participantes.phtml:32
+#: application/views/scripts/evento/outros-palestrantes.phtml:34
+msgid "Confirm"
+msgstr "Confirm"
 
-#: controllers/ErrorController.php:29
-msgid "Application error"
-msgstr "Application error"
+#: application/forms/Caravana.php:23
+msgid "Caravan name:"
+msgstr "Caravan name:"
 
-#: controllers/IndexController.php:66
-msgid "Welcome back. Your registration was confirmed!<br/>Please update your profile data."
-msgstr "Welcome back. Your registration was confirmed!<br/>Please update your profile data."
+#: application/forms/Caravana.php:27
+msgid "You enter a name too small (min. 1) or the name has invalid characters."
+msgstr ""
+"You enter a name too small (min. 1) or the name has invalid characters."
 
-#: controllers/IndexController.php:105
-#: controllers/IndexController.php:108
-msgid "E-mail or Password incorrect."
-msgstr "E-mail or Password incorrect."
+#: application/forms/Caravana.php:36
+msgid "Codename:"
+msgstr "Codename:"
 
-#: controllers/IndexController.php:143
-msgid "E-mail successfully sent, check your e-mail."
-msgstr "E-mail successfully sent, check your e-mail."
+#: application/forms/Caravana.php:40
+msgid "Codename is too small (min. 1)."
+msgstr "Codename is too small (min. 1)."
 
-#: controllers/IndexController.php:146
-msgid "E-mail not found."
-msgstr "E-mail not found."
+#: application/forms/Caravana.php:51 application/forms/Pessoa.php:109
+#: application/views/scripts/caravana/index.phtml:14
+#: application/views/scripts/caravana/index.phtml:67
+msgid "District:"
+msgstr "District:"
 
-#: controllers/EventoController.php:18
-msgid "Permission denied."
-msgstr "Permission denied."
+#: application/forms/Caravana.php:63 application/forms/Pessoa.php:121
+#: application/views/scripts/caravana/index.phtml:18
+#: application/views/scripts/caravana/index.phtml:71
+msgid "Institution:"
+msgstr "Institution:"
 
-#: controllers/EventoController.php:91
-msgid "Bookmark"
-msgstr "Bookmark"
+#: application/forms/DefinirSenha.php:25
+msgid "New Password"
+msgstr "New Password"
 
-#: controllers/EventoController.php:123
-msgid "An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;"
-msgstr "An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;"
+#: application/forms/DefinirSenha.php:40
+msgid "Repeat New Password"
+msgstr "Repeat New Password"
 
-#: controllers/EventoController.php:146
-#: controllers/EventoController.php:264
-#, php-format
-msgid "The submission period goes from %s to %s."
-msgstr "The submission period goes from %s to %s."
+#: application/forms/RecuperarSenha.php:9
+#: application/forms/RequisitarMudarEmail.php:25
+#: application/forms/RequisitarMudarEmail.php:38
+#: application/forms/Login.php:21 application/forms/Pessoa.php:48
+msgid "Invalid E-mail."
+msgstr "Invalid E-mail."
 
-#: controllers/EventoController.php:166
-msgid "Paper was submitted. Wait for a contact by e-mail."
-msgstr "Paper was submitted. Wait for a contact by e-mail."
+#: application/forms/RecuperarSenha.php:11 application/forms/Login.php:23
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:47
+#: application/modules/admin/views/scripts/participante/index.phtml:41
+#: application/modules/admin/views/scripts/participante/index.phtml:70
+#: application/modules/admin/views/scripts/evento/index.phtml:34
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:36
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:53
+msgid "E-mail"
+msgstr "E-mail"
 
-#: controllers/EventoController.php:172
-#: controllers/EventoController.php:304
-#: controllers/EventoController.php:439
-#: controllers/EventoController.php:484
-#: controllers/EventoController.php:506
-#: controllers/EventoController.php:538
-#: controllers/EventoController.php:581
-#: controllers/EventoController.php:613
-#: controllers/EventoController.php:688
-#: controllers/EventoController.php:727
-#: controllers/EventoController.php:754
-#: controllers/ParticipanteController.php:76
-#: controllers/ParticipanteController.php:155
-#: controllers/ParticipanteController.php:368
-#: controllers/ParticipanteController.php:420
-#: controllers/CaravanaController.php:77
-#: controllers/CaravanaController.php:147
-#: controllers/CaravanaController.php:173
-#: controllers/CaravanaController.php:238
-#: controllers/CaravanaController.php:305
-#: modules/admin/controllers/EncontroController.php:57
-#: modules/admin/controllers/EncontroController.php:90
-#: modules/admin/controllers/EncontroController.php:125
-msgid "An unexpected error ocurred.<br/> Details:&nbsp;"
-msgstr "An unexpected error ocurred.<br/> Details:&nbsp;"
+#: application/forms/RecuperarSenha.php:22
+#: application/forms/RequisitarMudarEmail.php:64
+#: application/forms/Pessoa.php:167
+msgid "Prove that you are human, enter the characters below"
+msgstr "Prove that you are human, enter the characters below"
 
-#: controllers/EventoController.php:292
-#: controllers/EventoController.php:318
-msgid "Only the author can edit the Event."
-msgstr "Only the author can edit the Event."
+#: application/forms/RecuperarSenha.php:36
+#: application/forms/RequisitarMudarEmail.php:78
+#: application/forms/Pessoa.php:181
+msgid "Entered value is not valid."
+msgstr "Entered value is not valid."
 
-#: controllers/EventoController.php:299
-msgid "Event successfully updated."
-msgstr "Event successfully updated."
+#: application/forms/RequisitarMudarEmail.php:29
+msgid "Previous E-mail"
+msgstr "Previous E-mail"
 
-#: controllers/EventoController.php:325
-#: controllers/EventoController.php:469
-#: controllers/EventoController.php:495
-#: controllers/EventoController.php:528
-#: controllers/EventoController.php:593
-#: controllers/EventoController.php:776
-msgid "Event not found."
-msgstr "Event not found."
+#: application/forms/RequisitarMudarEmail.php:42
+msgid "New E-mail"
+msgstr "New E-mail"
 
-#: controllers/EventoController.php:443
-msgid "The request can not be completed."
-msgstr "The request can not be completed."
+#: application/forms/RequisitarMudarEmail.php:49
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:49
+msgid "Reason"
+msgstr "Reason"
 
-#: controllers/EventoController.php:481
-msgid "Event was successfully removed from the Bookmarks."
-msgstr "Event was successfully removed from the Bookmarks."
+#: application/forms/RequisitarMudarEmail.php:53
+msgid "Describe why you want to change your e-mail address..."
+msgstr "Describe why you want to change your e-mail address..."
 
-#: controllers/EventoController.php:562
-msgid "No speakers selected."
-msgstr "No speakers selected."
+#: application/forms/SubmissaoArtigo.php:32 application/forms/Evento.php:48
+msgid "Title:"
+msgstr "Title:"
 
-#: controllers/EventoController.php:572
-#, php-format
-msgid "One speaker added to this event successfully."
-msgid_plural "%d speakers added to this event successfully."
-msgstr[0] "One speaker added to this event successfully."
-msgstr[1] "%d speakers added to this event successfully."
+#: application/forms/SubmissaoArtigo.php:53 application/forms/Evento.php:107
+msgid "Abstract:"
+msgstr "Abstract:"
 
-#: controllers/EventoController.php:578
-msgid "Speaker already exists in this event."
-msgid_plural "One or more speakers exists in this event"
-msgstr[0] "Speaker already exists in this event."
-msgstr[1] "One or more speakers exists in this event"
+#: application/forms/SubmissaoArtigo.php:75
+msgid "PDF File:"
+msgstr "PDF File:"
 
-#: controllers/EventoController.php:601
-msgid "You don't have permission to edit this event."
-msgstr "You don't have permission to edit this event."
+#: application/forms/Menu.php:93 library/Sige/Desktop/Menu.php:21
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:20
+#: application/views/scripts/index/index.phtml:96
+#: application/views/scripts/error/error_404.phtml:41
+msgid "Home"
+msgstr "Home"
 
-#: controllers/EventoController.php:724
-msgid "This event could not be deleted."
-msgstr "This event could not be deleted."
+#: application/forms/Menu.php:95 library/Sige/Pdf/Relatorio/Programacao.php:43
+#: library/Sige/Desktop/Menu.php:26
+#: application/views/scripts/evento/programacao.phtml:33
+#: application/views/scripts/error/error_404.phtml:46
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:190
+msgid "Schedule"
+msgstr "Schedule"
 
-#: controllers/EventoController.php:751
-msgid "Speaker was successfuly removed from the event."
-msgstr "Speaker was successfuly removed from the event."
+#: application/forms/Menu.php:97 library/Sige/Desktop/Menu.php:31
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:46
+#: application/modules/admin/views/scripts/menu.phtml:10
+#: application/modules/admin/views/scripts/participante/index.phtml:49
+#: application/modules/admin/views/scripts/participante/index.phtml:73
+msgid "Caravan"
+msgstr "Caravan"
 
-#: controllers/EventoController.php:759
-msgid "No speaker was selected."
-msgstr "No speaker was selected."
+#: application/forms/Menu.php:99 library/Sige/Desktop/Menu.php:36
+msgid "Paper Submission"
+msgstr "Paper Submission"
 
-#: controllers/EventoController.php:825
-msgid "Tag added successfully."
-msgstr "Tag added successfully."
+#: application/forms/Login.php:11
+#: application/views/scripts/participante/sucesso.phtml:11
+#: application/views/scripts/index/recuperar-senha.phtml:111
+#: application/views/scripts/index/index.phtml:122
+#: application/views/scripts/error/error_404.phtml:52
+#: application/layouts/scripts/twbs3/layout.phtml:88
+msgid "Login"
+msgstr "Login"
 
-#: controllers/EventoController.php:828
-msgid "An unexpected error ocurred while saving <b>tag</b>."
-msgstr "An unexpected error ocurred while saving <b>tag</b>."
+#: application/forms/Login.php:33
+msgid "You enter a very small or very large password. Min.: 6, Max.: 20"
+msgstr "You enter a very small or very large password. Min.: 6, Max.: 20"
 
-#: controllers/EventoController.php:832
-msgid "Tag already added."
-msgstr "Tag already added."
+#: application/forms/Login.php:35
+msgid "Password"
+msgstr "Password"
 
-#: controllers/EventoController.php:834
-#: controllers/EventoController.php:865
-#: controllers/EventoController.php:901
-msgid "An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;"
-msgstr "An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;"
+#: application/forms/PessoaEdit.php:36
+msgid "Write a little about yourself..."
+msgstr "Write a little about yourself..."
 
-#: controllers/EventoController.php:863
-msgid "Tag already exists."
-msgstr "Tag already exists."
+#: application/forms/PessoaEdit.php:46
+msgid "Invalid Slideshare username"
+msgstr "Invalid Slideshare username"
 
-#: controllers/EventoController.php:895
-msgid "Tag removed successfully."
-msgstr "Tag removed successfully."
+#: application/forms/AlterarSenha.php:7
+msgid "Current Password:"
+msgstr "Current Password:"
 
-#: controllers/EventoController.php:897
-msgid "Tag not found."
-msgstr "Tag not found."
+#: application/forms/AlterarSenha.php:14
+msgid "New Password:"
+msgstr "New Password:"
 
-#: controllers/EventoController.php:947
-msgid "This paper doesn't belongs to you. You don't have permission to read someone else's papers."
-msgstr "This paper doesn't belongs to you. You don't have permission to read someone else's papers."
+#: application/forms/AlterarSenha.php:19
+msgid "Repeat New Password:"
+msgstr "Repeat New Password:"
 
-#: controllers/EventoController.php:960
-msgid "The file is not a valid PDF document.<br/>Details: "
-msgstr "The file is not a valid PDF document.<br/>Details: "
+#: application/forms/Evento.php:42
+#: application/views/scripts/participante/editar.phtml:86
+#: application/views/scripts/participante/alterar-senha.phtml:79
+#: application/views/scripts/caravana/salvar.phtml:66
+#: application/views/scripts/evento/enviar-artigo.phtml:62
+#: application/views/scripts/evento/salvar.phtml:103
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:114
+msgid "Cancel"
+msgstr "Cancel"
 
-#: controllers/EventoController.php:966
-msgid "The Paper could not be loaded."
-msgstr "The Paper could not be loaded."
+#: application/forms/Evento.php:62
+msgid "Event type:"
+msgstr "Event type:"
 
-#: controllers/EventoController.php:994
-msgid "This PDF file might be corrupted. Please check if this is a valid PDF file."
-msgstr "This PDF file might be corrupted. Please check if this is a valid PDF file."
+#: application/forms/Evento.php:75
+#: application/views/scripts/evento/ver.phtml:83
+msgid "Level:"
+msgstr "Level:"
 
-#: controllers/ParticipanteController.php:73
-msgid "E-mail already registered."
-msgstr "E-mail already registered."
+#: application/forms/Evento.php:88
+msgid "Minimum profile:"
+msgstr "Minimum profile:"
 
-#: controllers/CaravanaController.php:55
-#: controllers/CaravanaController.php:152
+#: application/forms/Evento.php:92
+msgid "Describe what your audience should basically know..."
+msgstr "Describe what your audience should basically know..."
+
+#: application/forms/Evento.php:115
+msgid "Abstract with insufficient number of characters (min. 20)."
+msgstr "Abstract with insufficient number of characters (min. 20)."
+
+#: application/forms/Evento.php:122
+msgid "Time preferences:"
+msgstr "Time preferences:"
+
+#: application/forms/Evento.php:124
+msgid "Date and time more convenient..."
+msgstr "Date and time more convenient..."
+
+#: application/forms/Evento.php:134
+msgid "Technologies involved:"
+msgstr "Technologies involved:"
+
+#: application/forms/Evento.php:136
+msgid "Need of an especific program or tool, distro, IDE, etc..."
+msgstr "Need of an especific program or tool, distro, IDE, etc..."
+
+#: application/forms/Pessoa.php:31
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:57
+msgid "Name:"
+msgstr "Name:"
+
+#: application/forms/Pessoa.php:37
+msgid "Name must have at least 1 character. Or contains invalid characters"
+msgstr "Name must have at least 1 character. Or contains invalid characters"
+
+#: application/forms/Pessoa.php:43
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: application/forms/Pessoa.php:54
+msgid "Nickname:"
+msgstr "Nickname:"
+
+#: application/forms/Pessoa.php:61
+msgid "Nickname must have at least 1, max. 20 characters"
+msgstr "Nickname must have at least 1, max. 20 characters"
+
+#: application/forms/Pessoa.php:69
+msgid "Gender:"
+msgstr "Gender:"
+
+#: application/forms/Pessoa.php:82
+msgid "Invalid Twitter username"
+msgstr "Invalid Twitter username"
+
+#: application/forms/Pessoa.php:90
+msgid "Invalid Facebook username"
+msgstr "Invalid Facebook username"
+
+#: application/forms/Pessoa.php:96
+msgid "Website:"
+msgstr "Website:"
+
+#: application/forms/Pessoa.php:99
+msgid "Invalid website"
+msgstr "Invalid website"
+
+#: application/forms/Pessoa.php:136
+msgid "Birth Date:"
+msgstr "Birth Date:"
+
+#: application/forms/Pessoa.php:190
+msgid "SSN:"
+msgstr "SSN:"
+
+#: application/forms/Pessoa.php:201
+msgid "Phone Number:"
+msgstr "Phone Number:"
+
+#: application/controllers/CaravanaController.php:54
+#: application/controllers/CaravanaController.php:132
 msgid "No participant was selected."
 msgstr "No participant was selected."
 
-#: controllers/CaravanaController.php:67
+#: application/controllers/CaravanaController.php:66
 #, php-format
 msgid "One participant added to this caravan successfully."
 msgid_plural "%d participants added to this caravan successfully."
 msgstr[0] "One participant added to this caravan successfully."
 msgstr[1] "%d participants added to this caravan successfully."
 
-#: controllers/CaravanaController.php:73
+#: application/controllers/CaravanaController.php:72
 msgid "No participant was added to this caravan."
 msgstr "No participant was added to this caravan."
 
-#: controllers/CaravanaController.php:144
-#: controllers/CaravanaController.php:170
+#: application/controllers/CaravanaController.php:76
+#: application/controllers/CaravanaController.php:127
+#: application/controllers/CaravanaController.php:154
+#: application/controllers/CaravanaController.php:223
+#: application/controllers/CaravanaController.php:291
+#: application/controllers/EventoController.php:146
+#: application/controllers/EventoController.php:204
+#: application/controllers/EventoController.php:272
+#: application/controllers/EventoController.php:332
+#: application/controllers/EventoController.php:420
+#: application/controllers/EventoController.php:450
+#: application/controllers/EventoController.php:493
+#: application/controllers/EventoController.php:525
+#: application/controllers/EventoController.php:578
+#: application/controllers/EventoController.php:617
+#: application/controllers/EventoController.php:644
+#: application/controllers/ParticipanteController.php:67
+#: application/controllers/ParticipanteController.php:96
+#: application/controllers/ParticipanteController.php:156
+#: application/controllers/ParticipanteController.php:355
+#: application/controllers/ParticipanteController.php:407
+#: application/controllers/ParticipanteController.php:434
+#: application/modules/admin/controllers/UsuarioController.php:71
+#: application/modules/admin/controllers/PresencaController.php:163
+#: application/modules/admin/controllers/EncontroController.php:54
+#: application/modules/admin/controllers/EncontroController.php:89
+#: application/modules/admin/controllers/EncontroController.php:126
+msgid "An unexpected error ocurred.<br/> Details:&nbsp;"
+msgstr "An unexpected error ocurred.<br/> Details:&nbsp;"
+
+#: application/controllers/CaravanaController.php:124
+#: application/controllers/CaravanaController.php:151
 msgid "Participant was removed from this caravan successfully."
 msgstr "Participant was removed from this caravan successfully."
 
-#: controllers/CaravanaController.php:235
-#: controllers/CaravanaController.php:302
+#: application/controllers/CaravanaController.php:220
+#: application/controllers/CaravanaController.php:288
 msgid "A caravan with this description already exists."
 msgstr "A caravan with this description already exists."
 
-#: controllers/CaravanaController.php:244
+#: application/controllers/CaravanaController.php:229
 msgid "Create Caravan"
 msgstr "Create Caravan"
 
-#: controllers/CaravanaController.php:311
+#: application/controllers/CaravanaController.php:297
 msgid "Edit Caravan"
 msgstr "Edit Caravan"
 
-#: modules/admin/controllers/ConfigController.php:60
-msgid "Edit permission"
-msgstr "Edit permission"
+#: application/controllers/ErrorController.php:22
+msgid "Page not found."
+msgstr "Page not found."
 
-#: modules/admin/controllers/EventoController.php:24
-#: modules/admin/controllers/EventoController.php:30
-#: modules/admin/views/scripts/menu.phtml:14
-msgid "Events"
-msgstr "Events"
+#: application/controllers/ErrorController.php:29
+msgid "Application error"
+msgstr "Application error"
 
-#: modules/admin/controllers/EventoController.php:31
-#: modules/admin/controllers/EventoController.php:125
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:126
-#: modules/admin/views/scripts/evento/detalhes.phtml:155
-msgid "Details"
-msgstr "Details"
+#: application/controllers/IndexController.php:67
+msgid ""
+"Welcome back. Your registration was confirmed!<br/>Please update your "
+"profile data."
+msgstr ""
+"Welcome back. Your registration was confirmed!<br/>Please update your "
+"profile data."
 
-#: modules/admin/controllers/EventoController.php:40
-#: modules/admin/controllers/CaravanaController.php:48
-msgid "Invalidate"
-msgstr "Invalidate"
+#: application/controllers/IndexController.php:108
+msgid "E-mail or Password incorrect."
+msgstr "E-mail or Password incorrect."
 
-#: modules/admin/controllers/EventoController.php:43
-#: modules/admin/controllers/CaravanaController.php:53
-msgid "Validate"
-msgstr "Validate"
+#: application/controllers/IndexController.php:143
+msgid "E-mail successfully sent, check your e-mail."
+msgstr "E-mail successfully sent, check your e-mail."
 
-#: modules/admin/controllers/EventoController.php:49
-msgid "Undo presented"
-msgstr "Undo presented"
+#: application/controllers/IndexController.php:146
+msgid "E-mail not found."
+msgstr "E-mail not found."
 
-#: modules/admin/controllers/EventoController.php:54
-#: modules/admin/views/scripts/evento/detalhes.phtml:73
-#: modules/admin/views/scripts/evento/detalhes.phtml:74
-msgid "Presented"
-msgstr "Presented"
+#: application/controllers/IndexController.php:165
+msgid "Verification token not informed."
+msgstr "Verification token not informed."
 
-#: modules/admin/controllers/EventoController.php:119
-#: modules/admin/controllers/CaravanaController.php:45
-#: modules/admin/views/scripts/evento/detalhes.phtml:323
-msgid "Yes"
-msgstr "Yes"
+#: application/controllers/IndexController.php:173
+msgid "User not informed."
+msgstr "User not informed."
 
-#: modules/admin/controllers/EventoController.php:121
-#: modules/admin/controllers/CaravanaController.php:50
-#: modules/admin/views/scripts/evento/detalhes.phtml:328
-msgid "No"
-msgstr "No"
+#: application/controllers/IndexController.php:196
+#: application/controllers/ParticipanteController.php:199
+msgid "Password successfully updated!"
+msgstr "Password successfully updated!"
 
-#: modules/admin/controllers/EventoController.php:164
-#: modules/admin/views/scripts/evento/index.phtml:100
-msgid "Parcial Schedule"
-msgstr "Parcial Schedule"
+#: application/controllers/IndexController.php:201
+#: application/controllers/ParticipanteController.php:206
+msgid "The passwords must match!"
+msgstr "The passwords must match!"
 
-#: modules/admin/controllers/ParticipanteController.php:27
-#: modules/admin/views/scripts/menu.phtml:3
-msgid "Registration"
-msgstr "Registration"
+#: application/controllers/IndexController.php:239
+msgid ""
+"Your request for change your e-mail was sent. Wait for an approval soon."
+msgstr ""
+"Your request for change your e-mail was sent. Wait for an approval soon."
 
-#: modules/admin/controllers/ParticipanteController.php:49
-msgid "Confirmed!"
-msgstr "Confirmed!"
+#: application/controllers/IndexController.php:249
+msgid "The new E-mail address that you inform already exists!"
+msgstr "The new E-mail address that you inform already exists!"
 
-#: modules/admin/controllers/ParticipanteController.php:53
-msgid "Not confirmed!"
-msgstr "Not confirmed!"
+#: application/controllers/IndexController.php:253
+msgid "Your previous E-mail address was not found!"
+msgstr "Your previous E-mail address was not found!"
 
-#: modules/admin/controllers/ParticipanteController.php:89
-msgid "Participant confirmed."
-msgstr "Participant confirmed."
+#: application/controllers/EventoController.php:79
+msgid "Bookmark"
+msgstr "Bookmark"
 
-#: modules/admin/controllers/ParticipanteController.php:92
-msgid "Participant confirmation undone."
-msgstr "Participant confirmation undone."
+#: application/controllers/EventoController.php:102
+msgid ""
+"An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;"
+msgstr ""
+"An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;"
 
-#: modules/admin/controllers/EncontroController.php:31
-msgid "New Conference"
-msgstr "New Conference"
+#: application/controllers/EventoController.php:120
+#: application/controllers/EventoController.php:166
+#: application/controllers/EventoController.php:234
+#, php-format
+msgid "The submission period goes from %s to %s."
+msgstr "The submission period goes from %s to %s."
 
-#: modules/admin/controllers/EncontroController.php:66
-msgid "Edit Conference"
-msgstr "Edit Conference"
+#: application/controllers/EventoController.php:140
+msgid "Paper was submitted. Wait for a contact by e-mail."
+msgstr "Paper was submitted. Wait for a contact by e-mail."
 
-#: modules/admin/controllers/EncontroController.php:118
-msgid "Message successfully updated."
-msgstr "Message successfully updated."
+#: application/controllers/EventoController.php:199
+msgid "Paper sent. Wait for contact by e-mail."
+msgstr "Paper sent. Wait for contact by e-mail."
 
-#: modules/admin/controllers/EncontroController.php:139
-msgid "Edit e-mail confirmation message"
-msgstr "Edit e-mail confirmation message"
+#: application/controllers/EventoController.php:260
+#: application/controllers/EventoController.php:286
+msgid "Only the author can edit the Event."
+msgstr "Only the author can edit the Event."
 
-#: modules/admin/controllers/EncontroController.php:141
-msgid "Edit e-mail recover password message"
-msgstr "Edit e-mail recover password message"
+#: application/controllers/EventoController.php:267
+msgid "Event successfully updated."
+msgstr "Event successfully updated."
 
-#: modules/admin/controllers/EncontroController.php:149
-msgid "Participant of Conference Template"
-msgstr "Participant of Conference Template"
+#: application/controllers/EventoController.php:293
+#: application/controllers/EventoController.php:440
+#: application/controllers/EventoController.php:505
+#: application/controllers/EventoController.php:666
+msgid "Event not found."
+msgstr "Event not found."
 
-#: modules/admin/controllers/EncontroController.php:156
-msgid "Event Speaker Template"
-msgstr "Event Speaker Template"
+#: application/controllers/EventoController.php:417
+msgid "Bookmark successfully removed."
+msgstr "Bookmark successfully removed."
 
-#: modules/admin/controllers/EncontroController.php:166
-msgid "Participant of Event Template"
-msgstr "Participant of Event Template"
+#: application/controllers/EventoController.php:424
+msgid "The request can not be completed."
+msgstr "The request can not be completed."
 
-#: modules/admin/controllers/EncontroController.php:176
-msgid "Certificate type unknow."
-msgstr "Certificate type unknow."
+#: application/controllers/EventoController.php:474
+msgid "No speakers selected."
+msgstr "No speakers selected."
 
-#: modules/admin/controllers/DashboardController.php:23
-msgid "Dashboard"
-msgstr "Dashboard"
+#: application/controllers/EventoController.php:484
+#, php-format
+msgid "One speaker added to this event successfully."
+msgid_plural "%d speakers added to this event successfully."
+msgstr[0] "One speaker added to this event successfully."
+msgstr[1] "%d speakers added to this event successfully."
 
-#: modules/admin/controllers/DashboardController.php:36
-#: modules/admin/controllers/DashboardController.php:56
-msgid "Request could not be completed."
-msgstr "Request could not be completed."
+#: application/controllers/EventoController.php:490
+msgid "Speaker already exists in this event."
+msgid_plural "One or more speakers exists in this event"
+msgstr[0] "Speaker already exists in this event."
+msgstr[1] "One or more speakers exists in this event"
 
-#: modules/admin/controllers/RelatoriosController.php:22
-msgid "Conference Reports"
-msgstr "Conference Reports"
+#: application/controllers/EventoController.php:513
+msgid "You don't have permission to edit this event."
+msgstr "You don't have permission to edit this event."
 
-#: modules/admin/controllers/RelatoriosController.php:23
-msgid "Current Conference"
-msgstr "Current Conference"
+#: application/controllers/EventoController.php:548
+#: application/modules/admin/controllers/PresencaController.php:61
+msgid "Error on fetching results."
+msgstr "Error on fetching results."
 
-#: modules/admin/controllers/RelatoriosController.php:30
-#: modules/admin/views/scripts/relatorios/index.phtml:15
-msgid "Registrations per day"
-msgstr "Registrations per day"
+#: application/controllers/EventoController.php:614
+msgid "This event could not be deleted."
+msgstr "This event could not be deleted."
 
-#: modules/admin/controllers/RelatoriosController.php:31
-#: modules/admin/controllers/RelatoriosController.php:69
-#: modules/admin/controllers/RelatoriosController.php:106
-#: modules/admin/controllers/RelatoriosController.php:143
-#: modules/admin/controllers/RelatoriosController.php:154
-#: modules/admin/views/scripts/menu.phtml:20
-#: modules/admin/views/scripts/relatorios/index.phtml:59
-msgid "Reports"
-msgstr "Reports"
+#: application/controllers/EventoController.php:641
+msgid "Speaker was successfuly removed from the event."
+msgstr "Speaker was successfuly removed from the event."
 
-#: modules/admin/controllers/RelatoriosController.php:68
-#: modules/admin/views/scripts/relatorios/index.phtml:24
-msgid "Registrations per hour of day"
-msgstr "Registrations per hour of day"
+#: application/controllers/EventoController.php:649
+msgid "No speaker was selected."
+msgstr "No speaker was selected."
 
-#: modules/admin/controllers/RelatoriosController.php:105
-#: modules/admin/views/scripts/relatorios/index.phtml:33
-msgid "Registrations per gender"
-msgstr "Registrations per gender"
+#: application/controllers/EventoController.php:695
+msgid "Tag added successfully."
+msgstr "Tag added successfully."
 
-#: modules/admin/controllers/RelatoriosController.php:142
-#: modules/admin/views/scripts/relatorios/index.phtml:51
-msgid "Registrations per district (All)"
-msgstr "Registrations per district (All)"
+#: application/controllers/EventoController.php:698
+msgid "An unexpected error ocurred while saving <b>tag</b>."
+msgstr "An unexpected error ocurred while saving <b>tag</b>."
 
-#: modules/admin/controllers/RelatoriosController.php:153
-#: modules/admin/views/scripts/relatorios/index.phtml:42
-msgid "Registrations per district (15+)"
-msgstr "Registrations per district (15+)"
+#: application/controllers/EventoController.php:702
+msgid "Tag already added."
+msgstr "Tag already added."
 
-#: modules/admin/controllers/HorarioController.php:22
-msgid "New schedule"
-msgstr "New schedule"
+#: application/controllers/EventoController.php:704
+#: application/controllers/EventoController.php:726
+#: application/controllers/EventoController.php:753
+msgid "An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;"
+msgstr "An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;"
 
-#: modules/admin/controllers/HorarioController.php:71
-msgid "Edit schedule"
-msgstr "Edit schedule"
+#: application/controllers/EventoController.php:724
+msgid "Tag already exists."
+msgstr "Tag already exists."
 
-#: modules/admin/controllers/CaravanaController.php:22
-msgid "Caravans"
-msgstr "Caravans"
+#: application/controllers/EventoController.php:747
+msgid "Tag removed successfully."
+msgstr "Tag removed successfully."
 
-#: modules/admin/forms/MensagemCertificado.php:7
-#: modules/admin/forms/MensagemEmail.php:7
-#: modules/admin/forms/Horarios.php:34
-#: modules/admin/forms/Permissao.php:7
-#: modules/admin/forms/Encontro.php:15
-#: forms/PessoaEdit.php:21
-#: forms/Pessoa.php:22
-#: forms/Caravana.php:8
-#: forms/AlterarSenha.php:27
-#: forms/Evento.php:37
-#: forms/SubmissaoArtigo.php:19
-#: forms/RecuperarSenha.php:15
-#: views/scripts/evento/outros-palestrantes.phtml:34
-#: views/scripts/caravana/participantes.phtml:32
-msgid "Confirm"
-msgstr "Confirm"
+#: application/controllers/EventoController.php:749
+msgid "Tag not found."
+msgstr "Tag not found."
 
-#: modules/admin/forms/MensagemEmail.php:56
-msgid "Message"
-msgstr "Message"
+#: application/controllers/EventoController.php:793
+msgid ""
+"This paper doesn't belongs to you. You don't have permission to read someone "
+"else's papers."
+msgstr ""
+"This paper doesn't belongs to you. You don't have permission to read someone "
+"else's papers."
 
-#: modules/admin/forms/MensagemEmail.php:74
-msgid "Subject"
-msgstr "Subject"
+#: application/controllers/EventoController.php:806
+msgid "The file is not a valid PDF document.<br/>Details: "
+msgstr "The file is not a valid PDF document.<br/>Details: "
 
-#: modules/admin/forms/MensagemEmail.php:93
-msgid "Link"
-msgstr "Link"
+#: application/controllers/EventoController.php:812
+msgid "The Paper could not be loaded."
+msgstr "The Paper could not be loaded."
 
-#: modules/admin/forms/Horarios.php:51
+#: application/controllers/EventoController.php:840
+msgid ""
+"This PDF file might be corrupted. Please check if this is a valid PDF file."
+msgstr ""
+"This PDF file might be corrupted. Please check if this is a valid PDF file."
+
+#: application/controllers/ParticipanteController.php:64
+msgid "E-mail already registered."
+msgstr "E-mail already registered."
+
+#: application/controllers/ParticipanteController.php:210
+msgid "Old password incorrect."
+msgstr "Old password incorrect."
+
+#: application/modules/admin/forms/Horarios.php:51
 msgid "Description:"
 msgstr "Description:"
 
-#: modules/admin/forms/Horarios.php:59
+#: application/modules/admin/forms/Horarios.php:59
 msgid "Class 1 or Part 1..."
 msgstr "Class 1 or Part 1..."
 
-#: modules/admin/forms/Horarios.php:83
+#: application/modules/admin/forms/Horarios.php:83
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:61
+#: library/Sige/Pdf/Relatorio/Programacao.php:49
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:45
 msgid "Place:"
 msgstr "Place:"
 
-#: modules/admin/forms/Permissao.php:9
-#: forms/Evento.php:42
-#: views/scripts/evento/enviar-artigo.phtml:62
-#: views/scripts/evento/salvar.phtml:103
-#: views/scripts/caravana/salvar.phtml:66
-#: views/scripts/participante/editar.phtml:86
-#: views/scripts/participante/alterar-senha.phtml:79
-msgid "Cancel"
-msgstr "Cancel"
-
-#: modules/admin/forms/Permissao.php:20
-msgid "Is administrator?"
-msgstr "Is administrator?"
-
-#: modules/admin/forms/Permissao.php:27
-msgid "User type"
-msgstr "User type"
-
-#: modules/admin/forms/Encontro.php:76
+#: application/modules/admin/forms/Encontro.php:76
 msgid "Conference Name"
 msgstr "Conference Name"
 
-#: modules/admin/forms/Encontro.php:96
-#: modules/admin/views/scripts/caravana/index.phtml:30
+#: application/modules/admin/forms/Encontro.php:96
+#: application/modules/admin/views/scripts/caravana/index.phtml:34
 msgid "Codename"
 msgstr "Codename"
 
-#: modules/admin/forms/Encontro.php:116
+#: application/modules/admin/forms/Encontro.php:116
 msgid "Starts in"
 msgstr "Starts in"
 
-#: modules/admin/forms/Encontro.php:138
+#: application/modules/admin/forms/Encontro.php:138
 msgid "Ends in"
 msgstr "Ends in"
 
-#: modules/admin/forms/Encontro.php:160
+#: application/modules/admin/forms/Encontro.php:160
 msgid "Submission starts in"
 msgstr "Submission starts in"
 
-#: modules/admin/forms/Encontro.php:178
+#: application/modules/admin/forms/Encontro.php:178
 msgid "Submission ends in"
 msgstr "Submission ends in"
 
-#: forms/PessoaEdit.php:36
-msgid "Write a little about yourself..."
-msgstr "Write a little about yourself..."
-
-#: forms/PessoaEdit.php:46
-msgid "Invalid Slideshare username"
-msgstr "Invalid Slideshare username"
-
-#: forms/Pessoa.php:28
-msgid "Name:"
-msgstr "Name:"
-
-#: forms/Pessoa.php:34
-msgid "Name must have at least 1 character. Or contains invalid characters"
-msgstr "Name must have at least 1 character. Or contains invalid characters"
-
-#: forms/Pessoa.php:40
-msgid "E-mail:"
-msgstr "E-mail:"
-
-#: forms/Pessoa.php:45
-#: forms/Login.php:20
-#: forms/RecuperarSenha.php:9
-msgid "Invalid E-mail."
-msgstr "Invalid E-mail."
-
-#: forms/Pessoa.php:51
-msgid "Nickname:"
-msgstr "Nickname:"
-
-#: forms/Pessoa.php:58
-msgid "Nickname must have at least 1, max. 20 characters"
-msgstr "Nickname must have at least 1, max. 20 characters"
-
-#: forms/Pessoa.php:66
-msgid "Gender:"
-msgstr "Gender:"
-
-#: forms/Pessoa.php:79
-msgid "Invalid Twitter username"
-msgstr "Invalid Twitter username"
-
-#: forms/Pessoa.php:87
-msgid "Invalid Facebook username"
-msgstr "Invalid Facebook username"
-
-#: forms/Pessoa.php:93
-msgid "Website:"
-msgstr "Website:"
-
-#: forms/Pessoa.php:96
-msgid "Invalid website"
-msgstr "Invalid website"
-
-#: forms/Pessoa.php:106
-#: forms/Caravana.php:51
-#: views/scripts/caravana/index.phtml:21
-#: views/scripts/caravana/index.phtml:74
-msgid "District:"
-msgstr "District:"
-
-#: forms/Pessoa.php:118
-#: forms/Caravana.php:63
-#: views/scripts/caravana/index.phtml:25
-#: views/scripts/caravana/index.phtml:78
-msgid "Institution:"
-msgstr "Institution:"
-
-#: forms/Pessoa.php:133
-msgid "Birth Date:"
-msgstr "Birth Date:"
-
-#: forms/Pessoa.php:164
-#: forms/RecuperarSenha.php:22
-msgid "Prove that you are human, enter the characters below"
-msgstr "Prove that you are human, enter the characters below"
-
-#: forms/Pessoa.php:178
-#: forms/RecuperarSenha.php:36
-msgid "Entered value is not valid."
-msgstr "Entered value is not valid."
-
-#: forms/Pessoa.php:187
-msgid "SSN:"
-msgstr "SSN:"
-
-#: forms/Pessoa.php:198
-msgid "Phone Number:"
-msgstr "Phone Number:"
-
-#: forms/Caravana.php:23
-msgid "Caravan name:"
-msgstr "Caravan name:"
-
-#: forms/Caravana.php:27
-msgid "You enter a name too small (min. 1) or the name has invalid characters."
-msgstr "You enter a name too small (min. 1) or the name has invalid characters."
-
-#: forms/Caravana.php:36
-msgid "Codename:"
-msgstr "Codename:"
-
-#: forms/Caravana.php:40
-msgid "Codename is too small (min. 1)."
-msgstr "Codename is too small (min. 1)."
-
-#: forms/Menu.php:93
-#: views/scripts/error/error_404.phtml:41
-#: views/scripts/index/index.phtml:96
-msgid "Home"
-msgstr "Home"
-
-#: forms/Menu.php:95
-#: views/scripts/error/error_404.phtml:46
-#: views/scripts/evento/programacao.phtml:15
-#: modules/admin/views/scripts/evento/detalhes.phtml:194
-msgid "Schedule"
-msgstr "Schedule"
-
-#: forms/Menu.php:97
-#: modules/admin/views/scripts/menu.phtml:8
-#: modules/admin/views/scripts/participante/index.phtml:38
-#: modules/admin/views/scripts/participante/index.phtml:72
-msgid "Caravan"
-msgstr "Caravan"
-
-#: forms/Menu.php:99
-msgid "Paper Submission"
-msgstr "Paper Submission"
-
-#: forms/Login.php:10
-#: views/scripts/error/error_404.phtml:52
-#: views/scripts/index/recuperar-senha.phtml:111
-#: views/scripts/index/index.phtml:122
-#: views/scripts/participante/sucesso.phtml:11
-#: layouts/scripts/twbs3/layout.phtml:88
-msgid "Login"
-msgstr "Login"
-
-#: forms/Login.php:22
-#: forms/RecuperarSenha.php:11
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:20
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:40
-#: modules/admin/views/scripts/evento/index.phtml:32
-#: modules/admin/views/scripts/participante/index.phtml:30
-#: modules/admin/views/scripts/participante/index.phtml:69
-msgid "E-mail"
-msgstr "E-mail"
-
-#: forms/Login.php:30
-msgid "You enter a very small or very large password. Min.: 6, Max.: 255"
-msgstr "You enter a very small or very large password. Min.: 6, Max.: 255"
-
-#: forms/Login.php:32
-msgid "Password"
-msgstr "Password"
-
-#: forms/AlterarSenha.php:7
-msgid "Current Password:"
-msgstr "Current Password:"
-
-#: forms/AlterarSenha.php:14
-msgid "New Password:"
-msgstr "New Password:"
-
-#: forms/AlterarSenha.php:19
-msgid "Repeat New Password:"
-msgstr "Repeat New Password:"
-
-#: forms/Evento.php:48
-#: forms/SubmissaoArtigo.php:32
-msgid "Title:"
-msgstr "Title:"
-
-#: forms/Evento.php:62
-msgid "Event type:"
-msgstr "Event type:"
-
-#: forms/Evento.php:75
-#: views/scripts/evento/ver.phtml:86
-msgid "Level:"
-msgstr "Level:"
-
-#: forms/Evento.php:88
-msgid "Minimum profile:"
-msgstr "Minimum profile:"
-
-#: forms/Evento.php:92
-msgid "Describe what your audience should basically know..."
-msgstr "Describe what your audience should basically know..."
-
-#: forms/Evento.php:107
-#: forms/SubmissaoArtigo.php:53
-msgid "Abstract:"
-msgstr "Abstract:"
-
-#: forms/Evento.php:115
-msgid "Abstract with insufficient number of characters (min. 20)."
-msgstr "Abstract with insufficient number of characters (min. 20)."
-
-#: forms/Evento.php:122
-msgid "Time preferences:"
-msgstr "Time preferences:"
-
-#: forms/Evento.php:124
-msgid "Date and time more convenient..."
-msgstr "Date and time more convenient..."
-
-#: forms/Evento.php:134
-msgid "Technologies involved:"
-msgstr "Technologies involved:"
-
-#: forms/Evento.php:136
-msgid "Need of an especific program or tool, distro, IDE, etc..."
-msgstr "Need of an especific program or tool, distro, IDE, etc..."
-
-#: forms/SubmissaoArtigo.php:75
-msgid "PDF File:"
-msgstr "PDF File:"
-
-#: views/scripts/error/error_404.phtml:43
-msgid "Click here to go back to the home page."
-msgstr "Click here to go back to the home page."
-
-#: views/scripts/error/error_404.phtml:49
-msgid "Check the schedule of the conference which has Lectures, Mini courses and Workshops."
-msgstr "Check the schedule of the conference which has Lectures, Mini courses and Workshops."
-
-#: views/scripts/error/error_404.phtml:55
-msgid "Login on SiGE to have access to your page of interest, paper submission, etc."
-msgstr "Login on SiGE to have access to your page of interest, paper submission, etc."
-
-#: views/scripts/error/error_404.phtml:59
-msgid "Get Involved"
-msgstr "Get Involved"
-
-#: views/scripts/error/error_404.phtml:62
-msgid "Join us and get involved in the conference. To do that just sign up and bring 1Kg of food on the conference day."
-msgstr "Join us and get involved in the conference. To do that just sign up and bring 1Kg of food on the conference day."
-
-#: views/scripts/error/error.phtml:11
-msgid "An error occurred"
-msgstr "An error occurred"
-
-#: views/scripts/error/error.phtml:16
-msgid "Exception information:"
-msgstr "Exception information:"
-
-#: views/scripts/error/error.phtml:18
-msgid "Message:"
-msgstr "Message:"
-
-#: views/scripts/index/index.phtml:99
-#: modules/admin/views/scripts/config/index.phtml:10
-msgid "Conference"
-msgstr "Conference"
-
-#: views/scripts/index/index.phtml:102
-#: views/scripts/evento/programacao.phtml:73
-#: views/scripts/evento/salvar.phtml:122
-#: views/scripts/participante/index.phtml:70
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:71
-#: modules/admin/views/scripts/evento/detalhes.phtml:220
-msgid "Place"
-msgstr "Place"
-
-#: views/scripts/index/index.phtml:105
-#: views/scripts/index/index.phtml:185
-msgid "Social Network"
-msgstr "Social Network"
-
-#: views/scripts/index/index.phtml:118
-msgid "If you already participated once click on"
-msgstr "If you already participated once click on"
-
-#: views/scripts/index/index.phtml:126
-msgid "If it's your first time click on"
-msgstr "If it's your first time click on"
-
-#: views/scripts/index/index.phtml:130
-msgid "I want to participate!"
-msgstr "I want to participate!"
-
-#: views/scripts/index/index.phtml:137
-msgid "It's getting closer ..."
-msgstr "It's getting closer ..."
-
-#: views/scripts/index/index.phtml:141
-msgid "It started!"
-msgstr "It started!"
-
-#: views/scripts/index/index.phtml:149
-msgid "Learn More"
-msgstr "Learn More"
-
-#: views/scripts/index/index.phtml:171
-msgid "Our conference will take place at:"
-msgstr "Our conference will take place at:"
-
-#: views/scripts/index/index.phtml:186
-msgid "Keep inform about our conference on our channels"
-msgstr "Keep inform about our conference on our channels"
-
-#: views/scripts/index/index.phtml:197
-msgid "I wanna be there!"
-msgstr "I wanna be there!"
-
-#: views/scripts/index/login.phtml:86
-msgid "Forgot My Password"
-msgstr "Forgot My Password"
-
-#: views/scripts/index/login.phtml:93
-msgid "Participate Now"
-msgstr "Participate Now"
-
-#: views/scripts/evento/interesse.phtml:14
-msgid "Add events of your interest"
-msgstr "Add events of your interest"
-
-#: views/scripts/evento/interesse.phtml:26
-#: views/scripts/evento/interesse.phtml:47
-#: modules/admin/views/scripts/evento/index.phtml:45
-#: modules/admin/views/scripts/evento/index.phtml:67
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:30
-msgid "All"
-msgstr "All"
-
-#: views/scripts/evento/interesse.phtml:67
-msgid "Search event..."
-msgstr "Search event..."
-
-#: views/scripts/evento/interesse.phtml:78
-#: modules/admin/views/scripts/evento/detalhes.phtml:217
-msgid "Description"
-msgstr "Description"
-
-#: views/scripts/evento/interesse.phtml:79
-#: views/scripts/evento/salvar.phtml:121
-#: views/scripts/participante/index.phtml:62
-#: modules/admin/views/scripts/evento/detalhes.phtml:218
-msgid "Date"
-msgstr "Date"
-
-#: views/scripts/evento/interesse.phtml:80
-#: views/scripts/participante/index.phtml:66
-#: modules/admin/views/scripts/evento/detalhes.phtml:219
-msgid "Time"
-msgstr "Time"
-
-#: views/scripts/evento/interesse.phtml:93
-#: views/scripts/evento/programacao.phtml:115
-#: views/scripts/participante/ver.phtml:197
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:94
-msgid "Attention!"
-msgstr "Attention!"
-
-#: views/scripts/evento/interesse.phtml:94
-msgid "Bookmark an event do not guarantee your spot. So arrive early."
-msgstr "Bookmark an event do not guarantee your spot. So arrive early."
-
-#: views/scripts/evento/interesse.phtml:95
-msgid "Bookmark events it's only a way to organize the places depending on demand."
-msgstr "Bookmark events it's only a way to organize the places depending on demand."
-
-#: views/scripts/evento/outros-palestrantes.phtml:18
-msgid "Add other speakers:"
-msgstr "Add other speakers:"
-
-#: views/scripts/evento/outros-palestrantes.phtml:43
-msgid "Speakers"
-msgstr "Speakers"
-
-#: views/scripts/evento/outros-palestrantes.phtml:52
-msgid "Remove the speaker from this event"
-msgstr "Remove the speaker from this event"
-
-#: views/scripts/evento/outros-palestrantes.phtml:59
-#: views/scripts/evento/index.phtml:116
-#: views/scripts/evento/index.phtml:155
-#: views/scripts/caravana/participantes.phtml:56
-#: modules/admin/views/scripts/evento/detalhes.phtml:275
-msgid "Delete"
-msgstr "Delete"
-
-#: views/scripts/evento/outros-palestrantes.phtml:63
-#: modules/admin/views/scripts/evento/detalhes.phtml:115
-msgid "Send e-mail"
-msgstr "Send e-mail"
-
-#: views/scripts/evento/index.phtml:22
-msgid "Submited Papers"
-msgstr "Submited Papers"
-
-#: views/scripts/evento/index.phtml:27
-msgid "Submit"
-msgstr "Submit"
-
-#: views/scripts/evento/index.phtml:36
-msgid "Lecture"
-msgstr "Lecture"
-
-#: views/scripts/evento/index.phtml:45
-msgid "Paper"
-msgstr "Paper"
-
-#: views/scripts/evento/index.phtml:76
-#: views/scripts/evento/ver.phtml:79
-#: modules/admin/views/scripts/evento/detalhes.phtml:128
-msgid "Submited"
-msgstr "Submited"
-
-#: views/scripts/evento/index.phtml:83
-#: modules/admin/views/scripts/evento/detalhes.phtml:46
-#: modules/admin/views/scripts/evento/detalhes.phtml:47
-#: modules/admin/views/scripts/evento/detalhes.phtml:138
-msgid "Validated"
-msgstr "Validated"
-
-#: views/scripts/evento/index.phtml:88
-#: modules/admin/views/scripts/evento/detalhes.phtml:143
-msgid "Not validated yet"
-msgstr "Not validated yet"
-
-#: views/scripts/evento/index.phtml:104
-msgid "Download PDF"
-msgstr "Download PDF"
-
-#: views/scripts/evento/index.phtml:124
-#: views/scripts/caravana/index.phtml:93
-#: views/scripts/participante/certificados.phtml:20
-#: views/scripts/participante/editar.phtml:25
-#: views/scripts/participante/alterar-senha.phtml:14
-#: views/scripts/participante/ver.phtml:18
-#: modules/admin/views/scripts/encontro/index.phtml:74
-#: modules/admin/views/scripts/encontro/index.phtml:83
-#: modules/admin/views/scripts/evento/detalhes.phtml:31
-#: modules/admin/views/scripts/evento/detalhes.phtml:251
-msgid "Edit"
-msgstr "Edit"
-
-#: views/scripts/evento/index.phtml:137
-msgid "Add other speakers"
-msgstr "Add other speakers"
-
-#: views/scripts/evento/index.phtml:145
-msgid "Create/Edit tags"
-msgstr "Create/Edit tags"
-
-#: views/scripts/evento/index.phtml:173
-msgid "What about submit a paper and participate?"
-msgstr "What about submit a paper and participate?"
-
-#: views/scripts/evento/index.phtml:185
-msgid "Submit Lecture"
-msgstr "Submit Lecture"
-
-#: views/scripts/evento/index.phtml:195
-msgid "Submit Paper"
-msgstr "Submit Paper"
-
-#: views/scripts/evento/programacao.phtml:21
-msgid "Auto scroll?"
-msgstr "Auto scroll?"
-
-#: views/scripts/evento/programacao.phtml:29
-msgid "Normal"
-msgstr "Normal"
-
-#: views/scripts/evento/programacao.phtml:33
-msgid "Print"
-msgstr "Print"
-
-#: views/scripts/evento/programacao.phtml:76
-#: views/scripts/evento/salvar.phtml:129
-#: modules/admin/views/scripts/encontro/index.phtml:47
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:112
-msgid "from"
-msgstr "from"
-
-#: views/scripts/evento/programacao.phtml:78
-#: views/scripts/evento/salvar.phtml:131
-#: modules/admin/views/scripts/encontro/index.phtml:49
-#: modules/admin/views/scripts/encontro/index.phtml:58
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:114
-msgid "to"
-msgstr "to"
-
-#: views/scripts/evento/programacao.phtml:89
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:88
+#: application/modules/admin/forms/MensagemEmail.php:56
+msgid "Message"
+msgstr "Message"
+
+#: application/modules/admin/forms/MensagemEmail.php:72
+msgid "Subject"
+msgstr "Subject"
+
+#: application/modules/admin/forms/MensagemEmail.php:91
+msgid "Link"
+msgstr "Link"
+
+#: application/modules/admin/forms/Permissao.php:24
+msgid "Is administrator?"
+msgstr "Is administrator?"
+
+#: application/modules/admin/forms/Permissao.php:27
+#: application/modules/admin/controllers/CaravanaController.php:43
+#: application/modules/admin/controllers/EventoController.php:118
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:330
+msgid "Yes"
+msgstr "Yes"
+
+#: application/modules/admin/forms/Permissao.php:28
+#: application/modules/admin/controllers/CaravanaController.php:48
+#: application/modules/admin/controllers/EventoController.php:120
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:335
+msgid "No"
+msgstr "No"
+
+#: application/modules/admin/forms/Permissao.php:35
+msgid "User type"
+msgstr "User type"
+
+#: application/modules/admin/controllers/CaravanaController.php:22
+msgid "Caravans"
+msgstr "Caravans"
+
+#: application/modules/admin/controllers/CaravanaController.php:46
+#: application/modules/admin/controllers/EventoController.php:35
+msgid "Invalidate"
+msgstr "Invalidate"
+
+#: application/modules/admin/controllers/CaravanaController.php:51
+#: application/modules/admin/controllers/EventoController.php:38
+msgid "Validate"
+msgstr "Validate"
+
+#: application/modules/admin/controllers/DashboardController.php:18
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:25
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: application/modules/admin/controllers/DashboardController.php:37
+#: application/modules/admin/controllers/DashboardController.php:51
+msgid "Request could not be completed."
+msgstr "Request could not be completed."
+
+#: application/modules/admin/controllers/EventoController.php:17
+#: application/modules/admin/controllers/EventoController.php:25
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:38
+#: application/modules/admin/views/scripts/menu.phtml:16
+msgid "Events"
+msgstr "Events"
+
+#: application/modules/admin/controllers/EventoController.php:26
+#: application/modules/admin/controllers/EventoController.php:124
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:154
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:126
+msgid "Details"
+msgstr "Details"
+
+#: application/modules/admin/controllers/EventoController.php:44
+msgid "Undo presented"
+msgstr "Undo presented"
+
+#: application/modules/admin/controllers/EventoController.php:49
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:75
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:76
+msgid "Presented"
+msgstr "Presented"
+
+#: application/modules/admin/controllers/EventoController.php:161
+#: application/modules/admin/views/scripts/evento/index.phtml:114
+msgid "Parcial Schedule"
+msgstr "Parcial Schedule"
+
+#: application/modules/admin/controllers/UsuarioController.php:17
+#: application/modules/admin/views/scripts/config/index.phtml:45
+msgid "Requests for e-mail change"
+msgstr "Requests for e-mail change"
+
+#: application/modules/admin/controllers/UsuarioController.php:31
+msgid "Parameters not set correctly."
+msgstr "Parameters not set correctly."
+
+#: application/modules/admin/controllers/UsuarioController.php:61
+msgid "Request status changed successfully."
+msgstr "Request status changed successfully."
+
+#: application/modules/admin/controllers/UsuarioController.php:68
+msgid "Another person has the new e-mail requested."
+msgstr "Another person has the new e-mail requested."
+
+#: application/modules/admin/controllers/PresencaController.php:17
+msgid "Presence List"
+msgstr "Presence List"
+
+#: application/modules/admin/controllers/HorarioController.php:12
+msgid "New schedule"
+msgstr "New schedule"
+
+#: application/modules/admin/controllers/HorarioController.php:61
+msgid "Edit schedule"
+msgstr "Edit schedule"
+
+#: application/modules/admin/controllers/ConfigController.php:17
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:90
+#: application/modules/admin/views/scripts/menu.phtml:27
+msgid "Configurations"
+msgstr "Configurations"
+
+#: application/modules/admin/controllers/ConfigController.php:23
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:122
+#: application/modules/admin/views/scripts/config/index.phtml:38
+msgid "User permissions"
+msgstr "User permissions"
+
+#: application/modules/admin/controllers/ConfigController.php:56
+msgid "Edit permission"
+msgstr "Edit permission"
+
+#: application/modules/admin/controllers/ConfigController.php:74
+msgid "Edit Permission"
+msgstr "Edit Permission"
+
+#: application/modules/admin/controllers/ConfigController.php:161
+#: application/modules/admin/views/scripts/config/index.phtml:61
+msgid "System Info"
+msgstr "System Info"
+
+#: application/modules/admin/controllers/EncontroController.php:12
+msgid "Conferences"
+msgstr "Conferences"
+
+#: application/modules/admin/controllers/EncontroController.php:26
+msgid "New Conference"
+msgstr "New Conference"
+
+#: application/modules/admin/controllers/EncontroController.php:65
+msgid "Edit Conference"
+msgstr "Edit Conference"
+
+#: application/modules/admin/controllers/EncontroController.php:119
+msgid "Message successfully updated."
+msgstr "Message successfully updated."
+
+#: application/modules/admin/controllers/EncontroController.php:138
+msgid "Edit e-mail confirmation message"
+msgstr "Edit e-mail confirmation message"
+
+#: application/modules/admin/controllers/EncontroController.php:141
+msgid "Edit e-mail recover password message"
+msgstr "Edit e-mail recover password message"
+
+#: application/modules/admin/controllers/EncontroController.php:144
+msgid "Edit e-mail submission confirmation message"
+msgstr "Edit e-mail submission confirmation message"
+
+#: application/modules/admin/controllers/EncontroController.php:147
+msgid "Edit e-mail registration confirmation message"
+msgstr "Edit e-mail registration confirmation message"
+
+#: application/modules/admin/controllers/EncontroController.php:150
+msgid "E-mail message not find."
+msgstr "E-mail message not find."
+
+#: application/modules/admin/controllers/EncontroController.php:170
+msgid "Participant of Conference Template"
+msgstr "Participant of Conference Template"
+
+#: application/modules/admin/controllers/EncontroController.php:177
+msgid "Event Speaker Template"
+msgstr "Event Speaker Template"
+
+#: application/modules/admin/controllers/EncontroController.php:187
+msgid "Participant of Event Template"
+msgstr "Participant of Event Template"
+
+#: application/modules/admin/controllers/EncontroController.php:197
+#: application/modules/admin/models/Encontro.php:127
+msgid "Certificate type unknow."
+msgstr "Certificate type unknow."
+
+#: application/modules/admin/controllers/EncontroController.php:245
+msgid "Conference not found."
+msgstr "Conference not found."
+
+#: application/modules/admin/controllers/RelatoriosController.php:20
+msgid "Conference Reports"
+msgstr "Conference Reports"
+
+#: application/modules/admin/controllers/RelatoriosController.php:21
+msgid "Current Conference"
+msgstr "Current Conference"
+
+#: application/modules/admin/controllers/RelatoriosController.php:30
+#: application/modules/admin/views/scripts/relatorios/index.phtml:15
+msgid "Registrations per day"
+msgstr "Registrations per day"
+
+#: application/modules/admin/controllers/RelatoriosController.php:31
+#: application/modules/admin/controllers/RelatoriosController.php:65
+#: application/modules/admin/controllers/RelatoriosController.php:98
+#: application/modules/admin/controllers/RelatoriosController.php:131
+#: application/modules/admin/controllers/RelatoriosController.php:144
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:51
+#: application/modules/admin/views/scripts/menu.phtml:22
+#: application/modules/admin/views/scripts/relatorios/index.phtml:59
+msgid "Reports"
+msgstr "Reports"
+
+#: application/modules/admin/controllers/RelatoriosController.php:64
+#: application/modules/admin/views/scripts/relatorios/index.phtml:24
+msgid "Registrations per hour of day"
+msgstr "Registrations per hour of day"
+
+#: application/modules/admin/controllers/RelatoriosController.php:97
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:67
+#: application/modules/admin/views/scripts/relatorios/index.phtml:33
+msgid "Registrations per gender"
+msgstr "Registrations per gender"
+
+#: application/modules/admin/controllers/RelatoriosController.php:130
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:83
+#: application/modules/admin/views/scripts/relatorios/index.phtml:51
+msgid "Registrations per district (All)"
+msgstr "Registrations per district (All)"
+
+#: application/modules/admin/controllers/RelatoriosController.php:143
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:75
+#: application/modules/admin/views/scripts/relatorios/index.phtml:42
+msgid "Registrations per district (15+)"
+msgstr "Registrations per district (15+)"
+
+#: application/modules/admin/controllers/ParticipanteController.php:21
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:30
+#: application/modules/admin/views/scripts/menu.phtml:5
+msgid "Registration"
+msgstr "Registration"
+
+#: application/modules/admin/controllers/ParticipanteController.php:46
+msgid "Confirmed!"
+msgstr "Confirmed!"
+
+#: application/modules/admin/controllers/ParticipanteController.php:48
+msgid "Undo"
+msgstr "Undo"
+
+#: application/modules/admin/controllers/ParticipanteController.php:50
+msgid "Not confirmed!"
+msgstr "Not confirmed!"
+
+#: application/modules/admin/controllers/ParticipanteController.php:78
+msgid "Participant confirmed."
+msgstr "Participant confirmed."
+
+#: application/modules/admin/controllers/ParticipanteController.php:81
+msgid "Participant confirmation undone."
+msgstr "Participant confirmation undone."
+
+#: application/modules/admin/models/MensagemEmail.php:77
+msgid "The html templates files must be at /public/email-templates directory."
+msgstr "The html templates files must be at /public/email-templates directory."
+
+#: application/models/EmailConfirmacao.php:78
+msgid "Send e-mail option not defined."
+msgstr "Send e-mail option not defined."
+
+#: application/models/Pessoa.php:98
+msgid "Verification Token to Recover Password invalid or doesn't exists."
+msgstr "Verification Token to Recover Password invalid or doesn't exists."
+
+#: application/models/Pessoa.php:102
+msgid ""
+"Verification Token to Recover Password expired. Try again accessing Forgot "
+"My Password."
+msgstr ""
+"Verification Token to Recover Password expired. Try again accessing Forgot "
+"My Password."
+
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:56
+msgid "Registration Ticket"
+msgstr "Registration Ticket"
+
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:58
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:41
+msgid "Conference:"
+msgstr "Conference:"
+
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:59
+#: library/Sige/Pdf/Relatorio/Programacao.php:45
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:43
+msgid "Date and time:"
+msgstr "Date and time:"
+
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:60
+#: library/Sige/Pdf/Relatorio/Programacao.php:46
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:44
+msgid "starting from"
+msgstr "starting from"
+
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:62
+msgid "Entrance:"
+msgstr "Entrance:"
+
+#: library/Sige/Pdf/Relatorio/TicketInscricao.php:63
+msgid "Registration:"
+msgstr "Registration:"
+
+#: library/Sige/Pdf/Relatorio/Programacao.php:47
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:42
+msgid "Event:"
+msgstr "Event:"
+
+#: library/Sige/Pdf/Relatorio/Programacao.php:48
+#: application/views/scripts/evento/programacao.phtml:144
+#: application/layouts/scripts/twbs3-admin/footer.phtml:2
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:111
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:88
 msgid "by"
 msgstr "by"
 
-#: views/scripts/evento/programacao.phtml:93
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:93
-msgid "and other."
-msgstr "and other."
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:39
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:275
+#: application/modules/admin/views/scripts/evento/index.phtml:96
+msgid "Presence Sheet"
+msgstr "Presence Sheet"
 
-#: views/scripts/evento/programacao.phtml:95
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:95
-#, php-format
-msgid "and %d others."
-msgstr "and %d others."
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:46
+#: application/modules/admin/views/scripts/participante/index.phtml:37
+#: application/modules/admin/views/scripts/participante/index.phtml:68
+#: application/modules/admin/views/scripts/caravana/index.phtml:33
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:317
+#: application/modules/admin/views/scripts/evento/index.phtml:28
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:32
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:51
+msgid "Name"
+msgstr "Name"
 
-#: views/scripts/evento/programacao.phtml:105
-msgid "View and post comments"
-msgstr "View and post comments"
+#: library/Sige/Pdf/Relatorio/FolhaPresenca.php:48
+msgid "Signature"
+msgstr "Signature"
 
-#: views/scripts/evento/programacao.phtml:116
-msgid "There are no events on our schedule yet. Be the first to"
-msgstr "There are no events on our schedule yet. Be the first to"
+#: library/Sige/Controller/AdminAction.php:14
+#: library/Sige/Controller/Action.php:24
+msgid "Permission denied."
+msgstr "Permission denied."
 
-#: views/scripts/evento/programacao.phtml:119
-#: views/scripts/evento/salvar.phtml:11
-msgid "Submit a paper"
-msgstr "Submit a paper"
+#: library/Sige/Controller/AdminAction.php:29
+msgid "Unauthorized."
+msgstr "Unauthorized."
 
-#: views/scripts/evento/tags.phtml:21
-msgid "Search tag"
-msgstr "Search tag"
+#: library/Sige/Desktop/Menu.php:44
+msgid "Admin"
+msgstr "Admin"
 
-#: views/scripts/evento/tags.phtml:34
-msgid "Create Tag"
-msgstr "Create Tag"
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:59
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:98
+msgid "View All"
+msgstr "View All"
 
-#: views/scripts/evento/tags.phtml:54
-#: views/scripts/participante/index.phtml:54
-msgid "Remove"
-msgstr "Remove"
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:106
+#: application/modules/admin/views/scripts/config/index.phtml:14
+msgid "Manage Conferences"
+msgstr "Manage Conferences"
 
-#: views/scripts/evento/tags.phtml:63
-msgid "No tags found."
-msgstr "No tags found."
+#: library/Sige/Desktop/AdminSidebarLeftMenu.php:114
+#: application/modules/admin/views/scripts/config/index.phtml:22
+#: application/modules/admin/views/scripts/encontro/index.phtml:19
+msgid "Create Conference"
+msgstr "Create Conference"
 
-#: views/scripts/evento/ver.phtml:75
-msgid "Speaker:"
-msgstr "Speaker:"
-
-#: views/scripts/evento/ver.phtml:100
-#: modules/admin/views/scripts/evento/detalhes.phtml:164
-msgid "Abstract"
-msgstr "Abstract"
-
-#: views/scripts/evento/ver.phtml:105
-#: modules/admin/views/scripts/evento/detalhes.phtml:294
-msgid "Other Speakers"
-msgstr "Other Speakers"
-
-#: views/scripts/evento/ver.phtml:110
-#: views/scripts/participante/editar.phtml:52
-#: layouts/scripts/twbs3-admin/navbar-right.phtml:49
-msgid "Profile"
-msgstr "Profile"
-
-#: views/scripts/evento/ver.phtml:115
-msgid "Bio"
-msgstr "Bio"
-
-#: views/scripts/evento/ver.phtml:120
-msgid "Tags"
-msgstr "Tags"
-
-#: views/scripts/caravana/participantes.phtml:17
-msgid "Add participants to caravan:"
-msgstr "Add participants to caravan:"
-
-#: views/scripts/caravana/participantes.phtml:42
-msgid "Participants"
-msgstr "Participants"
-
-#: views/scripts/caravana/index.phtml:13
-msgid "You are registered on this caravan"
-msgstr "You are registered on this caravan"
-
-#: views/scripts/caravana/index.phtml:17
-#: views/scripts/caravana/index.phtml:70
-msgid "Caravan:"
-msgstr "Caravan:"
-
-#: views/scripts/caravana/index.phtml:29
-msgid "Responsable:"
-msgstr "Responsable:"
-
-#: views/scripts/caravana/index.phtml:37
-msgid "Leave this caravan?"
-msgstr "Leave this caravan?"
-
-#: views/scripts/caravana/index.phtml:49
-msgid "Are you responsable for a Caravan?"
-msgstr "Are you responsable for a Caravan?"
-
-#: views/scripts/caravana/index.phtml:59
-msgid "Create caravan"
-msgstr "Create caravan"
-
-#: views/scripts/caravana/index.phtml:68
-msgid "You are responsable for a Caravan"
-msgstr "You are responsable for a Caravan"
-
-#: views/scripts/caravana/index.phtml:87
-msgid "Add participants"
-msgstr "Add participants"
-
-#: views/scripts/participante/certificados.phtml:13
-#: views/scripts/participante/editar.phtml:18
-#: views/scripts/participante/alterar-senha.phtml:7
-#: views/scripts/participante/ver.phtml:11
-#: views/scripts/participante/ver.phtml:40
+#: application/views/scripts/participante/editar.phtml:18
+#: application/views/scripts/participante/alterar-senha.phtml:7
+#: application/views/scripts/participante/ver.phtml:9
+#: application/views/scripts/participante/ver.phtml:38
+#: application/views/scripts/participante/certificados.phtml:13
 #, php-format
 msgid "%s's page"
 msgstr "%s's page"
 
-#: views/scripts/participante/certificados.phtml:27
-#: views/scripts/participante/editar.phtml:32
-#: views/scripts/participante/alterar-senha.phtml:21
-#: views/scripts/participante/alterar-senha.phtml:35
-#: views/scripts/participante/ver.phtml:25
+#: application/views/scripts/participante/editar.phtml:25
+#: application/views/scripts/participante/alterar-senha.phtml:14
+#: application/views/scripts/participante/ver.phtml:16
+#: application/views/scripts/participante/certificados.phtml:20
+#: application/views/scripts/caravana/index.phtml:86
+#: application/views/scripts/evento/index.phtml:124
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:33
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:249
+#: application/modules/admin/views/scripts/encontro/index.phtml:74
+#: application/modules/admin/views/scripts/encontro/index.phtml:83
+msgid "Edit"
+msgstr "Edit"
+
+#: application/views/scripts/participante/editar.phtml:32
+#: application/views/scripts/participante/alterar-senha.phtml:21
+#: application/views/scripts/participante/alterar-senha.phtml:35
+#: application/views/scripts/participante/ver.phtml:23
+#: application/views/scripts/participante/certificados.phtml:27
 msgid "Alter Password"
 msgstr "Alter Password"
 
-#: views/scripts/participante/certificados.phtml:34
-#: views/scripts/participante/editar.phtml:39
-#: views/scripts/participante/alterar-senha.phtml:28
-#: views/scripts/participante/ver.phtml:32
+#: application/views/scripts/participante/editar.phtml:39
+#: application/views/scripts/participante/alterar-senha.phtml:28
+#: application/views/scripts/participante/ver.phtml:30
+#: application/views/scripts/participante/certificados.phtml:34
 msgid "Certificates"
 msgstr "Certificates"
 
-#: views/scripts/participante/certificados.phtml:44
-msgid "Participant in Conference Certificates"
-msgstr "Participant in Conference Certificates"
+#: application/views/scripts/participante/editar.phtml:52
+#: application/views/scripts/evento/ver.phtml:107
+#: application/layouts/scripts/twbs3-admin/navbar-right.phtml:49
+msgid "Profile"
+msgstr "Profile"
 
-#: views/scripts/participante/certificados.phtml:47
-msgid "You have no participant in conference certificates yet."
-msgstr "You have no participant in conference certificates yet."
-
-#: views/scripts/participante/certificados.phtml:65
-msgid "Speaker Certificates"
-msgstr "Speaker Certificates"
-
-#: views/scripts/participante/certificados.phtml:68
-msgid "You have no speaker certificates yet."
-msgstr "You have no speaker certificates yet."
-
-#: views/scripts/participante/certificados.phtml:95
-msgid "Participant in Event Certificates"
-msgstr "Participant in Event Certificates"
-
-#: views/scripts/participante/certificados.phtml:98
-msgid "You have no participant in event certificates yet."
-msgstr "You have no participant in event certificates yet."
-
-#: views/scripts/participante/sucesso.phtml:3
-msgid "Signup successfully performed, verify you e-mail!"
-msgstr "Signup successfully performed, verify you e-mail!"
-
-#: views/scripts/participante/sucesso.phtml:4
-msgid "There you will find your default password. Your login will be your e-mail address."
-msgstr "There you will find your default password. Your login will be your e-mail address."
-
-#: views/scripts/participante/sucesso.phtml:8
-msgid "Then you just need to"
-msgstr "Then you just need to"
-
-#: views/scripts/participante/index.phtml:18
-msgid "Interest List"
-msgstr "Interest List"
-
-#: views/scripts/participante/index.phtml:24
-msgid "Events of Interest"
-msgstr "Events of Interest"
-
-#: views/scripts/participante/index.phtml:33
-msgid "You don't have any events added. Click in 'Events of Interest' and browse to see date, time and place of events of interest."
-msgstr "You don't have any events added. Click in 'Events of Interest' and browse to see date, time and place of events of interest."
-
-#: views/scripts/participante/index.phtml:78
-msgid "This event was invalidated and could not be given."
-msgstr "This event was invalidated and could not be given."
-
-#: views/scripts/participante/criar.phtml:21
-msgid "Create an account"
-msgstr "Create an account"
-
-#: views/scripts/participante/editar.phtml:57
+#: application/views/scripts/participante/editar.phtml:57
 msgid "Social Networks"
 msgstr "Social Networks"
 
-#: views/scripts/participante/ver.phtml:69
+#: application/views/scripts/participante/criar.phtml:21
+msgid "Create an account"
+msgstr "Create an account"
+
+#: application/views/scripts/participante/sucesso.phtml:3
+msgid "Signup successfully performed, verify you e-mail!"
+msgstr "Signup successfully performed, verify you e-mail!"
+
+#: application/views/scripts/participante/sucesso.phtml:4
+msgid ""
+"There you will find instructions to set your password. Your login will be "
+"your e-mail address."
+msgstr ""
+"There you will find instructions to set your password. Your login will be "
+"your e-mail address."
+
+#: application/views/scripts/participante/sucesso.phtml:8
+msgid "Then you just need to"
+msgstr "Then you just need to"
+
+#: application/views/scripts/participante/index.phtml:18
+msgid "Interest List"
+msgstr "Interest List"
+
+#: application/views/scripts/participante/index.phtml:24
+msgid "Events of Interest"
+msgstr "Events of Interest"
+
+#: application/views/scripts/participante/index.phtml:33
+msgid ""
+"You don't have any events added. Click in 'Events of Interest' and browse to "
+"see date, time and place of events of interest."
+msgstr ""
+"You don't have any events added. Click in 'Events of Interest' and browse to "
+"see date, time and place of events of interest."
+
+#: application/views/scripts/participante/index.phtml:54
+#: application/views/scripts/evento/tags.phtml:58
+msgid "Remove"
+msgstr "Remove"
+
+#: application/views/scripts/participante/index.phtml:62
+#: application/views/scripts/evento/interesse.phtml:79
+#: application/views/scripts/evento/salvar.phtml:121
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:216
+msgid "Date"
+msgstr "Date"
+
+#: application/views/scripts/participante/index.phtml:66
+#: application/views/scripts/evento/interesse.phtml:80
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:217
+msgid "Time"
+msgstr "Time"
+
+#: application/views/scripts/participante/index.phtml:70
+#: application/views/scripts/evento/programacao.phtml:160
+#: application/views/scripts/evento/salvar.phtml:122
+#: application/views/scripts/index/index.phtml:102
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:218
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:71
+msgid "Place"
+msgstr "Place"
+
+#: application/views/scripts/participante/index.phtml:78
+msgid "This event was invalidated and could not be given."
+msgstr "This event was invalidated and could not be given."
+
+#: application/views/scripts/participante/ver.phtml:57
 msgid "SiGE uses Gravatar for profile avatar."
 msgstr "SiGE uses Gravatar for profile avatar."
 
-#: views/scripts/participante/ver.phtml:75
+#: application/views/scripts/participante/ver.phtml:63
 msgid "Configure Gravatar"
 msgstr "Configure Gravatar"
 
-#: views/scripts/participante/ver.phtml:84
+#: application/views/scripts/participante/ver.phtml:72
 msgid "About me:"
 msgstr "About me:"
 
-#: views/scripts/participante/ver.phtml:90
+#: application/views/scripts/participante/ver.phtml:79
 msgid "No description yet..."
 msgstr "No description yet..."
 
-#: views/scripts/participante/ver.phtml:130
+#: application/views/scripts/participante/ver.phtml:109
 #, php-format
 msgid "Follow me on %s"
 msgstr "Follow me on %s"
 
-#: views/scripts/participante/ver.phtml:133
+#: application/views/scripts/participante/ver.phtml:112
 #, php-format
 msgid "I still don't have %s"
 msgstr "I still don't have %s"
 
-#: views/scripts/participante/ver.phtml:148
+#: application/views/scripts/participante/ver.phtml:147
 msgid "Slideshows of"
 msgstr "Slideshows of"
 
-#: views/scripts/participante/ver.phtml:182
+#: application/views/scripts/participante/ver.phtml:181
 msgid "Create an account on"
 msgstr "Create an account on"
 
-#: views/scripts/participante/ver.phtml:187
+#: application/views/scripts/participante/ver.phtml:186
 msgid "so your presentations can appear here."
 msgstr "so your presentations can appear here."
 
-#: views/scripts/participante/ver.phtml:192
+#: application/views/scripts/participante/ver.phtml:191
 msgid "Participant not found."
 msgstr "Participant not found."
 
-#: views/scripts/participante/ver.phtml:199
+#: application/views/scripts/participante/ver.phtml:196
+#: application/views/scripts/evento/interesse.phtml:93
+#: application/views/scripts/evento/programacao.phtml:193
+#: application/views/scripts/evento/programacao.phtml:207
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:32
+msgid "Attention!"
+msgstr "Attention!"
+
+#: application/views/scripts/participante/ver.phtml:198
 msgid "Slideshare user"
 msgstr "Slideshare user"
 
-#: views/scripts/participante/ver.phtml:201
+#: application/views/scripts/participante/ver.phtml:200
 msgid "not found."
 msgstr "not found."
 
-#: views/scripts/participante/ver.phtml:204
+#: application/views/scripts/participante/ver.phtml:203
 msgid "Details:"
 msgstr "Details:"
 
-#: modules/admin/views/scripts/menu.phtml:25
-msgid "Configurations"
-msgstr "Configurations"
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:37
-#: modules/admin/views/scripts/encontro/salvar.phtml:120
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:81
-#: modules/admin/views/scripts/evento/detalhes.phtml:24
-#: modules/admin/views/scripts/horario/salvar.phtml:79
-#: modules/admin/views/scripts/presenca/index.phtml:26
-msgid "Back"
-msgstr "Back"
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:56
-msgid "The message must contain some attributes that will be replaced in the certificate. They are:"
-msgstr "The message must contain some attributes that will be replaced in the certificate. They are:"
-
-#: modules/admin/views/scripts/encontro/index.phtml:11
-msgid "Conferences"
-msgstr "Conferences"
-
-#: modules/admin/views/scripts/encontro/index.phtml:19
-#: modules/admin/views/scripts/config/index.phtml:26
-msgid "Create Conference"
-msgstr "Create Conference"
-
-#: modules/admin/views/scripts/encontro/index.phtml:55
-msgid "Submission Period"
-msgstr "Submission Period"
-
-#: modules/admin/views/scripts/encontro/index.phtml:94
-msgid "E-mail confirmation message"
-msgstr "E-mail confirmation message"
-
-#: modules/admin/views/scripts/encontro/index.phtml:104
-msgid "E-mail recover password message"
-msgstr "E-mail recover password message"
-
-#: modules/admin/views/scripts/encontro/index.phtml:114
-msgid "E-mail submission confirmation message"
-msgstr "E-mail submission confirmation message"
-
-#: modules/admin/views/scripts/encontro/index.phtml:126
-msgid "Edit Certificate"
-msgstr "Edit Certificate"
-
-#: modules/admin/views/scripts/encontro/index.phtml:137
-msgid "Conference participant"
-msgstr "Conference participant"
-
-#: modules/admin/views/scripts/encontro/index.phtml:147
-msgid "Speaker of event"
-msgstr "Speaker of event"
-
-#: modules/admin/views/scripts/encontro/index.phtml:157
-msgid "Participant of event"
-msgstr "Participant of event"
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:95
-msgid "Some features of the message"
-msgstr "Some features of the message"
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:97
-msgid "The message can be written in HTML."
-msgstr "The message can be written in HTML."
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:98
-msgid "The message must contain some attributes that will be replaced in the e-mail. They are:"
-msgstr "The message must contain some attributes that will be replaced in the e-mail. They are:"
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:109
-msgid "Is not necessary write headers, write only the content of the"
-msgstr "Is not necessary write headers, write only the content of the"
-
-#: modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:113
-msgid "Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"
-msgstr "Is not possible to import Cascading Style Sheets (CSS) or Javascript files, the e-mail servers themselves will block them. To use CSS use the HTML attribute"
-
-#: modules/admin/views/scripts/relatorios/inscricoes-sexo.phtml:23
-#: modules/admin/views/scripts/relatorios/inscricoes-municipio-15-mais.phtml:22
-#: modules/admin/views/scripts/relatorios/inscricoes-por-dia.phtml:22
-#: modules/admin/views/scripts/relatorios/inscricoes-horario.phtml:22
-msgid "Reload"
-msgstr "Reload"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:6
-msgid "Graphs"
-msgstr "Graphs"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:71
-msgid "All registrations (PDF)"
-msgstr "All registrations (PDF)"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:82
-msgid "All registrations (XLS)"
-msgstr "All registrations (XLS)"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:93
-msgid "Registrations not confirmed"
-msgstr "Registrations not confirmed"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:104
-msgid "Registrations confirmed"
-msgstr "Registrations confirmed"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:114
-msgid "List of submitted papers (PDF)"
-msgstr "List of submitted papers (PDF)"
-
-#: modules/admin/views/scripts/relatorios/index.phtml:124
-msgid "List of submitted papers (XLS)"
-msgstr "List of submitted papers (XLS)"
-
-#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:16
-#: modules/admin/views/scripts/caravana/index.phtml:32
-#: modules/admin/views/scripts/participante/index.phtml:34
-#: modules/admin/views/scripts/participante/index.phtml:70
-msgid "District"
-msgstr "District"
-
-#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:17
-msgid "Num. registries"
-msgstr "Num. registries"
-
-#: modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:18
-msgid "Num. Confirmed"
-msgstr "Num. Confirmed"
-
-#: modules/admin/views/scripts/config/index.phtml:18
-msgid "Manage Conferences"
-msgstr "Manage Conferences"
-
-#: modules/admin/views/scripts/config/index.phtml:34
-msgid "Users"
-msgstr "Users"
-
-#: modules/admin/views/scripts/config/index.phtml:42
-msgid "User permissions"
-msgstr "User permissions"
-
-#: modules/admin/views/scripts/config/index.phtml:50
-msgid "System"
-msgstr "System"
-
-#: modules/admin/views/scripts/config/index.phtml:58
-msgid "Clean Cache"
-msgstr "Clean Cache"
-
-#: modules/admin/views/scripts/config/editar-permissao.phtml:10
-msgid "Edit permission of"
-msgstr "Edit permission of"
-
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:16
-#: modules/admin/views/scripts/evento/index.phtml:14
-#: modules/admin/views/scripts/participante/index.phtml:21
-msgid "Search by"
-msgstr "Search by"
-
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:18
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:38
-#: modules/admin/views/scripts/evento/index.phtml:26
-#: modules/admin/views/scripts/evento/detalhes.phtml:310
-#: modules/admin/views/scripts/caravana/index.phtml:29
-#: modules/admin/views/scripts/participante/index.phtml:26
-#: modules/admin/views/scripts/participante/index.phtml:67
-msgid "Name"
-msgstr "Name"
-
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:27
-msgid "Search user..."
-msgstr "Search user..."
-
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:39
-#: modules/admin/views/scripts/participante/index.phtml:68
-msgid "Nickname"
-msgstr "Nickname"
-
-#: modules/admin/views/scripts/config/permissao-usuarios.phtml:41
-msgid "Permission"
-msgstr "Permission"
-
-#: modules/admin/views/scripts/evento/index.phtml:20
-msgid "Title"
-msgstr "Title"
-
-#: modules/admin/views/scripts/evento/index.phtml:39
-#: modules/admin/views/scripts/evento/index.phtml:111
-msgid "Event"
-msgstr "Event"
-
-#: modules/admin/views/scripts/evento/index.phtml:61
-#: modules/admin/views/scripts/participante/index.phtml:73
-msgid "Status"
-msgstr "Status"
-
-#: modules/admin/views/scripts/evento/index.phtml:72
-#: modules/admin/views/scripts/evento/index.phtml:112
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:18
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:62
-#: modules/admin/views/scripts/caravana/index.phtml:34
-msgid "Valid"
-msgstr "Valid"
-
-#: modules/admin/views/scripts/evento/index.phtml:77
-msgid "Not valid"
-msgstr "Not valid"
-
-#: modules/admin/views/scripts/evento/index.phtml:89
-msgid "Search..."
-msgstr "Search..."
-
-#: modules/admin/views/scripts/evento/index.phtml:110
-msgid "Type"
-msgstr "Type"
-
-#: modules/admin/views/scripts/evento/index.phtml:113
-msgid "Submission"
-msgstr "Submission"
-
-#: modules/admin/views/scripts/evento/index.phtml:114
-#: modules/admin/views/scripts/caravana/index.phtml:31
-msgid "Responsable"
-msgstr "Responsable"
-
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:21
-msgid "Undefined"
-msgstr "Undefined"
-
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:35
-msgid "Only Valid"
-msgstr "Only Valid"
-
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:40
-msgid "Only Undefined"
-msgstr "Only Undefined"
-
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:62
-msgid "Waiting"
-msgstr "Waiting"
-
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:74
-msgid "Not informed"
-msgstr "Not informed"
-
-#: modules/admin/views/scripts/evento/programacao-parcial.phtml:106
-msgid "Schedule not defined"
-msgstr "Schedule not defined"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:45
-msgid "Invalidate?"
-msgstr "Invalidate?"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:57
-msgid "Validate?"
-msgstr "Validate?"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:58
-#: modules/admin/views/scripts/evento/detalhes.phtml:59
-msgid "Invalidated"
-msgstr "Invalidated"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:72
-msgid "Undo presented?"
-msgstr "Undo presented?"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:84
-msgid "Set as presented?"
-msgstr "Set as presented?"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:85
-#: modules/admin/views/scripts/evento/detalhes.phtml:86
-msgid "Not presented"
-msgstr "Not presented"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:109
-msgid "Speaker"
-msgstr "Speaker"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:167
-msgid "Time preferences"
-msgstr "Time preferences"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:170
-msgid "Technologies involved"
-msgstr "Technologies involved"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:202
-msgid "New Schedule"
-msgstr "New Schedule"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:211
-msgid "No schedule added yet."
-msgstr "No schedule added yet."
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:240
-msgid "Send E-mail"
-msgstr "Send E-mail"
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:304
-msgid "No others speakers."
-msgstr "No others speakers."
-
-#: modules/admin/views/scripts/evento/detalhes.phtml:311
-msgid "Confirmed"
-msgstr "Confirmed"
-
-#: modules/admin/views/scripts/dashboard/index.phtml:17
-msgid "User Registration"
-msgstr "User Registration"
-
-#: modules/admin/views/scripts/dashboard/index.phtml:25
-#: modules/admin/views/scripts/dashboard/index.phtml:46
-msgid "More info"
-msgstr "More info"
-
-#: modules/admin/views/scripts/dashboard/index.phtml:35
-msgid "Total Events"
-msgstr "Total Events"
-
-#: modules/admin/views/scripts/caravana/index.phtml:14
-msgid "Search caravan..."
-msgstr "Search caravan..."
-
-#: modules/admin/views/scripts/caravana/index.phtml:33
-#: modules/admin/views/scripts/participante/index.phtml:42
-#: modules/admin/views/scripts/participante/index.phtml:71
-msgid "Institution"
-msgstr "Institution"
-
-#: modules/admin/views/scripts/caravana/index.phtml:35
-msgid "Men"
-msgstr "Men"
-
-#: modules/admin/views/scripts/caravana/index.phtml:36
-msgid "Women"
-msgstr "Women"
-
-#: modules/admin/views/scripts/participante/index.phtml:54
-msgid "Search participant..."
-msgstr "Search participant..."
-
-#: layouts/scripts/layout.phtml:45
-msgid "Welcome:"
-msgstr "Welcome:"
-
-#: layouts/scripts/layout.phtml:51
-#: layouts/scripts/twbs3/layout.phtml:79
-#: layouts/scripts/twbs3-admin/navbar-right.phtml:55
-msgid "Logout"
-msgstr "Logout"
-
-#: layouts/scripts/rodape.phtml:5
+#: application/views/scripts/participante/certificados.phtml:44
+msgid "Participant in Conference Certificates"
+msgstr "Participant in Conference Certificates"
+
+#: application/views/scripts/participante/certificados.phtml:47
+msgid "You have no participant in conference certificates yet."
+msgstr "You have no participant in conference certificates yet."
+
+#: application/views/scripts/participante/certificados.phtml:65
+msgid "Speaker Certificates"
+msgstr "Speaker Certificates"
+
+#: application/views/scripts/participante/certificados.phtml:68
+msgid "You have no speaker certificates yet."
+msgstr "You have no speaker certificates yet."
+
+#: application/views/scripts/participante/certificados.phtml:95
+msgid "Participant in Event Certificates"
+msgstr "Participant in Event Certificates"
+
+#: application/views/scripts/participante/certificados.phtml:98
+msgid "You have no participant in event certificates yet."
+msgstr "You have no participant in event certificates yet."
+
+#: application/views/scripts/caravana/participantes.phtml:17
+msgid "Add participants to caravan:"
+msgstr "Add participants to caravan:"
+
+#: application/views/scripts/caravana/participantes.phtml:42
+msgid "Participants"
+msgstr "Participants"
+
+#: application/views/scripts/caravana/participantes.phtml:56
+#: application/views/scripts/evento/outros-palestrantes.phtml:59
+#: application/views/scripts/evento/index.phtml:116
+#: application/views/scripts/evento/index.phtml:155
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:286
+msgid "Delete"
+msgstr "Delete"
+
+#: application/views/scripts/caravana/index.phtml:6
+msgid "You are registered on this caravan"
+msgstr "You are registered on this caravan"
+
+#: application/views/scripts/caravana/index.phtml:10
+#: application/views/scripts/caravana/index.phtml:63
+msgid "Caravan:"
+msgstr "Caravan:"
+
+#: application/views/scripts/caravana/index.phtml:22
+msgid "Responsable:"
+msgstr "Responsable:"
+
+#: application/views/scripts/caravana/index.phtml:30
+msgid "Leave this caravan?"
+msgstr "Leave this caravan?"
+
+#: application/views/scripts/caravana/index.phtml:42
+msgid "Are you responsable for a Caravan?"
+msgstr "Are you responsable for a Caravan?"
+
+#: application/views/scripts/caravana/index.phtml:52
+msgid "Create caravan"
+msgstr "Create caravan"
+
+#: application/views/scripts/caravana/index.phtml:61
+msgid "You are responsable for a Caravan"
+msgstr "You are responsable for a Caravan"
+
+#: application/views/scripts/caravana/index.phtml:80
+msgid "Add participants"
+msgstr "Add participants"
+
+#: application/views/scripts/evento/interesse.phtml:14
+msgid "Add events of your interest"
+msgstr "Add events of your interest"
+
+#: application/views/scripts/evento/interesse.phtml:26
+#: application/views/scripts/evento/interesse.phtml:47
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:30
+#: application/modules/admin/views/scripts/evento/index.phtml:47
+#: application/modules/admin/views/scripts/evento/index.phtml:69
+msgid "All"
+msgstr "All"
+
+#: application/views/scripts/evento/interesse.phtml:67
+msgid "Search event..."
+msgstr "Search event..."
+
+#: application/views/scripts/evento/interesse.phtml:78
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:215
+msgid "Description"
+msgstr "Description"
+
+#: application/views/scripts/evento/interesse.phtml:94
+msgid "Bookmark an event do not guarantee your spot. So arrive early."
+msgstr "Bookmark an event do not guarantee your spot. So arrive early."
+
+#: application/views/scripts/evento/interesse.phtml:95
+msgid ""
+"Bookmark events it's only a way to organize the places depending on demand."
+msgstr ""
+"Bookmark events it's only a way to organize the places depending on demand."
+
+#: application/views/scripts/evento/outros-palestrantes.phtml:18
+msgid "Add other speakers:"
+msgstr "Add other speakers:"
+
+#: application/views/scripts/evento/outros-palestrantes.phtml:43
+msgid "Speakers"
+msgstr "Speakers"
+
+#: application/views/scripts/evento/outros-palestrantes.phtml:52
+msgid "Remove the speaker from this event"
+msgstr "Remove the speaker from this event"
+
+#: application/views/scripts/evento/outros-palestrantes.phtml:63
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:114
+msgid "Send e-mail"
+msgstr "Send e-mail"
+
+#: application/views/scripts/evento/programacao.phtml:109
+#: application/views/scripts/evento/salvar.phtml:131
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:114
+#: application/modules/admin/views/scripts/encontro/index.phtml:49
+#: application/modules/admin/views/scripts/encontro/index.phtml:58
+msgid "to"
+msgstr "to"
+
+#: application/views/scripts/evento/programacao.phtml:147
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:93
+msgid "and other."
+msgstr "and other."
+
+#: application/views/scripts/evento/programacao.phtml:149
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:95
+#, php-format
+msgid "and %d others."
+msgstr "and %d others."
+
+#: application/views/scripts/evento/programacao.phtml:174
+msgid "View and post comments"
+msgstr "View and post comments"
+
+#: application/views/scripts/evento/programacao.phtml:195
+msgid "There are no events on our schedule yet. Be the first to"
+msgstr "There are no events on our schedule yet. Be the first to"
+
+#: application/views/scripts/evento/programacao.phtml:199
+#: application/views/scripts/evento/salvar.phtml:11
+msgid "Submit a paper"
+msgstr "Submit a paper"
+
+#: application/views/scripts/evento/programacao.phtml:209
+msgid "There are no events on this day yet!"
+msgstr "There are no events on this day yet!"
+
+#: application/views/scripts/evento/salvar.phtml:129
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:112
+#: application/modules/admin/views/scripts/encontro/index.phtml:47
+msgid "from"
+msgstr "from"
+
+#: application/views/scripts/evento/index.phtml:22
+msgid "Submited Papers"
+msgstr "Submited Papers"
+
+#: application/views/scripts/evento/index.phtml:27
+msgid "Submit"
+msgstr "Submit"
+
+#: application/views/scripts/evento/index.phtml:36
+msgid "Lecture"
+msgstr "Lecture"
+
+#: application/views/scripts/evento/index.phtml:45
+msgid "Paper"
+msgstr "Paper"
+
+#: application/views/scripts/evento/index.phtml:76
+#: application/views/scripts/evento/ver.phtml:76
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:127
+msgid "Submited"
+msgstr "Submited"
+
+#: application/views/scripts/evento/index.phtml:83
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:48
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:49
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:137
+msgid "Validated"
+msgstr "Validated"
+
+#: application/views/scripts/evento/index.phtml:88
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:142
+msgid "Not validated yet"
+msgstr "Not validated yet"
+
+#: application/views/scripts/evento/index.phtml:104
+msgid "Download PDF"
+msgstr "Download PDF"
+
+#: application/views/scripts/evento/index.phtml:137
+msgid "Add other speakers"
+msgstr "Add other speakers"
+
+#: application/views/scripts/evento/index.phtml:145
+msgid "Create/Edit tags"
+msgstr "Create/Edit tags"
+
+#: application/views/scripts/evento/index.phtml:173
+msgid "What about submit a paper and participate?"
+msgstr "What about submit a paper and participate?"
+
+#: application/views/scripts/evento/index.phtml:185
+msgid "Submit Lecture"
+msgstr "Submit Lecture"
+
+#: application/views/scripts/evento/index.phtml:195
+msgid "Submit Paper"
+msgstr "Submit Paper"
+
+#: application/views/scripts/evento/ver.phtml:72
+msgid "Speaker:"
+msgstr "Speaker:"
+
+#: application/views/scripts/evento/ver.phtml:97
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:160
+msgid "Abstract"
+msgstr "Abstract"
+
+#: application/views/scripts/evento/ver.phtml:102
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:305
+msgid "Other Speakers"
+msgstr "Other Speakers"
+
+#: application/views/scripts/evento/ver.phtml:112
+msgid "Bio"
+msgstr "Bio"
+
+#: application/views/scripts/evento/ver.phtml:117
+msgid "Tags"
+msgstr "Tags"
+
+#: application/views/scripts/evento/ver.phtml:141
+msgid "Single speaker."
+msgstr "Single speaker."
+
+#: application/views/scripts/evento/ver.phtml:154
+msgid "Not defined."
+msgstr "Not defined."
+
+#: application/views/scripts/evento/ver.phtml:174
+msgid "No tags defined."
+msgstr "No tags defined."
+
+#: application/views/scripts/evento/tags.phtml:26
+msgid "Search tag"
+msgstr "Search tag"
+
+#: application/views/scripts/evento/tags.phtml:39
+msgid "Create Tag"
+msgstr "Create Tag"
+
+#: application/views/scripts/evento/tags.phtml:67
+msgid "No tags found."
+msgstr "No tags found."
+
+#: application/views/scripts/index/login.phtml:95
+msgid "Forgot My Password"
+msgstr "Forgot My Password"
+
+#: application/views/scripts/index/login.phtml:101
+msgid "More"
+msgstr "More"
+
+#: application/views/scripts/index/login.phtml:110
+#: application/views/scripts/index/requisitar-mudar-email.phtml:9
+msgid "Request change e-mail"
+msgstr "Request change e-mail"
+
+#: application/views/scripts/index/login.phtml:120
+msgid "Participate Now"
+msgstr "Participate Now"
+
+#: application/views/scripts/index/definir-senha.phtml:65
+msgid "Set new password"
+msgstr "Set new password"
+
+#: application/views/scripts/index/index.phtml:99
+#: application/modules/admin/views/scripts/config/index.phtml:6
+msgid "Conference"
+msgstr "Conference"
+
+#: application/views/scripts/index/index.phtml:105
+#: application/views/scripts/index/index.phtml:185
+msgid "Social Network"
+msgstr "Social Network"
+
+#: application/views/scripts/index/index.phtml:118
+msgid "If you already participated once click on"
+msgstr "If you already participated once click on"
+
+#: application/views/scripts/index/index.phtml:126
+msgid "If it's your first time click on"
+msgstr "If it's your first time click on"
+
+#: application/views/scripts/index/index.phtml:130
+msgid "I want to participate!"
+msgstr "I want to participate!"
+
+#: application/views/scripts/index/index.phtml:137
+msgid "It's getting closer ..."
+msgstr "It's getting closer ..."
+
+#: application/views/scripts/index/index.phtml:141
+msgid "It started!"
+msgstr "It started!"
+
+#: application/views/scripts/index/index.phtml:149
+msgid "Learn More"
+msgstr "Learn More"
+
+#: application/views/scripts/index/index.phtml:171
+msgid "Our conference will take place at:"
+msgstr "Our conference will take place at:"
+
+#: application/views/scripts/index/index.phtml:186
+msgid "Keep inform about our conference on our channels"
+msgstr "Keep inform about our conference on our channels"
+
+#: application/views/scripts/index/index.phtml:197
+msgid "I wanna be there!"
+msgstr "I wanna be there!"
+
+#: application/views/scripts/error/error.phtml:11
+msgid "An error occurred"
+msgstr "An error occurred"
+
+#: application/views/scripts/error/error.phtml:16
+msgid "Exception information:"
+msgstr "Exception information:"
+
+#: application/views/scripts/error/error.phtml:18
+msgid "Message:"
+msgstr "Message:"
+
+#: application/views/scripts/error/error_404.phtml:43
+msgid "Click here to go back to the home page."
+msgstr "Click here to go back to the home page."
+
+#: application/views/scripts/error/error_404.phtml:49
+msgid ""
+"Check the schedule of the conference which has Lectures, Mini courses and "
+"Workshops."
+msgstr ""
+"Check the schedule of the conference which has Lectures, Mini courses and "
+"Workshops."
+
+#: application/views/scripts/error/error_404.phtml:55
+msgid ""
+"Login on SiGE to have access to your page of interest, paper submission, etc."
+msgstr ""
+"Login on SiGE to have access to your page of interest, paper submission, etc."
+
+#: application/views/scripts/error/error_404.phtml:59
+msgid "Get Involved"
+msgstr "Get Involved"
+
+#: application/views/scripts/error/error_404.phtml:62
+msgid ""
+"Join us and get involved in the conference. To do that just sign up and "
+"bring 1Kg of food on the conference day."
+msgstr ""
+"Join us and get involved in the conference. To do that just sign up and "
+"bring 1Kg of food on the conference day."
+
+#: application/layouts/scripts/rodape.phtml:5
 msgid "SiGE by"
 msgstr "SiGE by"
 
-#: layouts/scripts/rodape.phtml:8
-#: layouts/scripts/twbs3/footer.phtml:8
+#: application/layouts/scripts/rodape.phtml:8
+#: application/layouts/scripts/twbs3/footer.phtml:8
 msgid "About"
 msgstr "About"
 
-#: layouts/scripts/twbs3/footer.phtml:14
+#: application/layouts/scripts/layout.phtml:45
+msgid "Welcome:"
+msgstr "Welcome:"
+
+#: application/layouts/scripts/layout.phtml:51
+#: application/layouts/scripts/twbs3-admin/navbar-right.phtml:55
+#: application/layouts/scripts/twbs3/layout.phtml:79
+msgid "Logout"
+msgstr "Logout"
+
+#: application/layouts/scripts/twbs3/footer.phtml:14
 msgid "Source Code on Github"
 msgstr "Source Code on Github"
 
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:29
+msgid "Exchange"
+msgstr "Exchange"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:38
+msgid "For"
+msgstr "For"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:67
+msgid "Open"
+msgstr "Open"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:69
+msgid "Allowed"
+msgstr "Allowed"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:71
+msgid "Denied"
+msgstr "Denied"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:80
+msgid "Send e-mail to confirm"
+msgstr "Send e-mail to confirm"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:93
+msgid "Allow"
+msgstr "Allow"
+
+#: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:104
+msgid "Deny"
+msgstr "Deny"
+
+#: application/modules/admin/views/scripts/horario/salvar.phtml:79
+#: application/modules/admin/views/scripts/presenca/index.phtml:28
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:26
+#: application/modules/admin/views/scripts/config/editar-permissao.phtml:52
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:47
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:124
+#: application/modules/admin/views/scripts/encontro/salvar.phtml:120
+msgid "Back"
+msgstr "Back"
+
+#: application/modules/admin/views/scripts/participante/index.phtml:23
+msgid "Search participant..."
+msgstr "Search participant..."
+
+#: application/modules/admin/views/scripts/participante/index.phtml:32
+#: application/modules/admin/views/scripts/evento/index.phtml:16
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:27
+msgid "Search by"
+msgstr "Search by"
+
+#: application/modules/admin/views/scripts/participante/index.phtml:45
+#: application/modules/admin/views/scripts/participante/index.phtml:71
+#: application/modules/admin/views/scripts/caravana/index.phtml:36
+#: application/modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:16
+msgid "District"
+msgstr "District"
+
+#: application/modules/admin/views/scripts/participante/index.phtml:53
+#: application/modules/admin/views/scripts/participante/index.phtml:72
+#: application/modules/admin/views/scripts/caravana/index.phtml:37
+msgid "Institution"
+msgstr "Institution"
+
+#: application/modules/admin/views/scripts/participante/index.phtml:69
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:52
+msgid "Nickname"
+msgstr "Nickname"
+
+#: application/modules/admin/views/scripts/participante/index.phtml:74
+#: application/modules/admin/views/scripts/evento/index.phtml:63
+msgid "Status"
+msgstr "Status"
+
+#: application/modules/admin/views/scripts/caravana/index.phtml:16
+msgid "Search caravan..."
+msgstr "Search caravan..."
+
+#: application/modules/admin/views/scripts/caravana/index.phtml:35
+#: application/modules/admin/views/scripts/evento/index.phtml:131
+msgid "Responsable"
+msgstr "Responsable"
+
+#: application/modules/admin/views/scripts/caravana/index.phtml:38
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:18
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:62
+#: application/modules/admin/views/scripts/evento/index.phtml:74
+#: application/modules/admin/views/scripts/evento/index.phtml:129
+msgid "Valid"
+msgstr "Valid"
+
+#: application/modules/admin/views/scripts/caravana/index.phtml:39
+msgid "Men"
+msgstr "Men"
+
+#: application/modules/admin/views/scripts/caravana/index.phtml:40
+msgid "Women"
+msgstr "Women"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:47
+msgid "Invalidate?"
+msgstr "Invalidate?"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:59
+msgid "Validate?"
+msgstr "Validate?"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:60
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:61
+msgid "Invalidated"
+msgstr "Invalidated"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:74
+msgid "Undo presented?"
+msgstr "Undo presented?"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:86
+msgid "Set as presented?"
+msgstr "Set as presented?"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:87
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:88
+msgid "Not presented"
+msgstr "Not presented"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:108
+msgid "Speaker"
+msgstr "Speaker"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:163
+msgid "Time preferences"
+msgstr "Time preferences"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:166
+msgid "Technologies involved"
+msgstr "Technologies involved"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:198
+msgid "New Schedule"
+msgstr "New Schedule"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:206
+msgid "No schedule added yet."
+msgstr "No schedule added yet."
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:238
+msgid "Send E-mail"
+msgstr "Send E-mail"
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:311
+msgid "No others speakers."
+msgstr "No others speakers."
+
+#: application/modules/admin/views/scripts/evento/detalhes.phtml:318
+msgid "Confirmed"
+msgstr "Confirmed"
+
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:21
+msgid "Not defined"
+msgstr "Not defined"
+
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:35
+msgid "Only Valid"
+msgstr "Only Valid"
+
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:40
+msgid "Only Not Defined"
+msgstr "Only Not Defined"
+
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:62
+msgid "Waiting"
+msgstr "Waiting"
+
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:74
+msgid "Not informed"
+msgstr "Not informed"
+
+#: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:106
+msgid "Schedule not defined"
+msgstr "Schedule not defined"
+
+#: application/modules/admin/views/scripts/evento/index.phtml:22
+msgid "Title"
+msgstr "Title"
+
+#: application/modules/admin/views/scripts/evento/index.phtml:41
+#: application/modules/admin/views/scripts/evento/index.phtml:128
+msgid "Event"
+msgstr "Event"
+
+#: application/modules/admin/views/scripts/evento/index.phtml:79
+msgid "Not valid"
+msgstr "Not valid"
+
+#: application/modules/admin/views/scripts/evento/index.phtml:102
+msgid "Search..."
+msgstr "Search..."
+
+#: application/modules/admin/views/scripts/evento/index.phtml:130
+msgid "Submission"
+msgstr "Submission"
+
+#: application/modules/admin/views/scripts/relatorios/inscricoes-sexo.phtml:23
+#: application/modules/admin/views/scripts/relatorios/inscricoes-por-dia.phtml:23
+#: application/modules/admin/views/scripts/relatorios/inscricoes-horario.phtml:23
+#: application/modules/admin/views/scripts/relatorios/inscricoes-municipio-15-mais.phtml:23
+msgid "Reload"
+msgstr "Reload"
+
+#: application/modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:17
+msgid "Num. registries"
+msgstr "Num. registries"
+
+#: application/modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:18
+msgid "Num. Confirmed"
+msgstr "Num. Confirmed"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:6
+msgid "Graphs"
+msgstr "Graphs"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:71
+msgid "All registrations (PDF)"
+msgstr "All registrations (PDF)"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:82
+msgid "All registrations (XLS)"
+msgstr "All registrations (XLS)"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:93
+msgid "Registrations not confirmed"
+msgstr "Registrations not confirmed"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:104
+msgid "Registrations confirmed"
+msgstr "Registrations confirmed"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:114
+msgid "List of submitted papers (PDF)"
+msgstr "List of submitted papers (PDF)"
+
+#: application/modules/admin/views/scripts/relatorios/index.phtml:124
+msgid "List of submitted papers (XLS)"
+msgstr "List of submitted papers (XLS)"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:20
+msgid "Host Info"
+msgstr "Host Info"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:26
+msgid "OS Version"
+msgstr "OS Version"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:30
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:73
+msgid "Date/Time"
+msgstr "Date/Time"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:34
+msgid "Uptime"
+msgstr "Uptime"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:37
+#, php-format
+msgid "%d days, %d hours, %d minutes, %d seconds"
+msgstr "%d days, %d hours, %d minutes, %d seconds"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:40
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:50
+msgid "Uptime library requires php 5.4+"
+msgstr "Uptime library requires php 5.4+"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:45
+msgid "Boot time"
+msgstr "Boot time"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:63
+msgid "PostgreSQL Info"
+msgstr "PostgreSQL Info"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:69
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:91
+msgid "Version"
+msgstr "Version"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:85
+msgid "PHP Info"
+msgstr "PHP Info"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:95
+msgid "Loaded Extensions"
+msgstr "Loaded Extensions"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:109
+msgid "Cache Info"
+msgstr "Cache Info"
+
+#: application/modules/admin/views/scripts/config/info-sistema.phtml:130
+msgid "SiGE Info"
+msgstr "SiGE Info"
+
+#: application/modules/admin/views/scripts/config/editar-permissao.phtml:8
+msgid "Edit permission of"
+msgstr "Edit permission of"
+
+#: application/modules/admin/views/scripts/config/index.phtml:30
+msgid "Users"
+msgstr "Users"
+
+#: application/modules/admin/views/scripts/config/index.phtml:53
+msgid "System"
+msgstr "System"
+
+#: application/modules/admin/views/scripts/config/index.phtml:68
+msgid "Clean Cache"
+msgstr "Clean Cache"
+
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:18
+msgid "Search user..."
+msgstr "Search user..."
+
+#: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:54
+msgid "Permission"
+msgstr "Permission"
+
+#: application/modules/admin/views/scripts/dashboard/index.phtml:21
+msgid "User Registration"
+msgstr "User Registration"
+
+#: application/modules/admin/views/scripts/dashboard/index.phtml:29
+#: application/modules/admin/views/scripts/dashboard/index.phtml:50
+msgid "More info"
+msgstr "More info"
+
+#: application/modules/admin/views/scripts/dashboard/index.phtml:39
+msgid "Total Events"
+msgstr "Total Events"
+
+#: application/modules/admin/views/scripts/dashboard/index.phtml:61
+msgid "Latest Members"
+msgstr "Latest Members"
+
+#: application/modules/admin/views/scripts/dashboard/index.phtml:89
+msgid "Weather"
+msgstr "Weather"
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:66
+msgid ""
+"The message must contain some attributes that will be replaced in the "
+"certificate. They are:"
+msgstr ""
+"The message must contain some attributes that will be replaced in the "
+"certificate. They are:"
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:81
+msgid "Certificate Preview"
+msgstr "Certificate Preview"
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:33
+msgid "Some features of the message"
+msgstr "Some features of the message"
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:35
+msgid "The message can be written in HTML."
+msgstr "The message can be written in HTML."
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:36
+msgid ""
+"The message must contain some attributes that will be replaced in the e-"
+"mail. They are:"
+msgstr ""
+"The message must contain some attributes that will be replaced in the e-"
+"mail. They are:"
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:47
+msgid "Is not necessary write headers, write only the content of the"
+msgstr "Is not necessary write headers, write only the content of the"
+
+#: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:51
+msgid ""
+"Is not possible to import Cascading Style Sheets (CSS) or Javascript files, "
+"the e-mail servers themselves will block them. To use CSS use the HTML "
+"attribute"
+msgstr ""
+"Is not possible to import Cascading Style Sheets (CSS) or Javascript files, "
+"the e-mail servers themselves will block them. To use CSS use the HTML "
+"attribute"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:55
+msgid "Submission Period"
+msgstr "Submission Period"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:94
+msgid "E-mail confirmation message"
+msgstr "E-mail confirmation message"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:104
+msgid "E-mail recover password message"
+msgstr "E-mail recover password message"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:114
+msgid "E-mail submission confirmation message"
+msgstr "E-mail submission confirmation message"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:124
+msgid "E-mail registration confirmation message"
+msgstr "E-mail registration confirmation message"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:136
+msgid "Edit Certificate"
+msgstr "Edit Certificate"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:147
+msgid "Conference participant"
+msgstr "Conference participant"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:157
+msgid "Speaker of event"
+msgstr "Speaker of event"
+
+#: application/modules/admin/views/scripts/encontro/index.phtml:167
+msgid "Participant of event"
+msgstr "Participant of event"

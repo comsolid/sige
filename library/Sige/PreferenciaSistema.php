@@ -25,8 +25,8 @@ class Sige_PreferenciaSistema extends Zend_Controller_Plugin_Abstract {
             ));
             $id_encontro = $config->encontro->codigo;
             $sql = "
-            SELECT * FROM encontro WHERE id_encontro=? ;
-                ";
+            SELECT * FROM encontro WHERE id_encontro = ? ;
+            ";
             $this->encontro = $db->fetchRow($sql, $id_encontro);
         } catch (Exception $e) {
             throw new Exception("Erro ao se conectar com o banco de dados.<br>Detalhes: "

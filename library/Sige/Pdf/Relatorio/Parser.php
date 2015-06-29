@@ -31,9 +31,13 @@ class Sige_Pdf_Relatorio_Parser {
     public function __construct($tipo, $dados_array = array()) {
         $this->tipo = $tipo;
         $this->dados_array = $dados_array;
-        $this->doc_titulo = "SEMANA DA INTEGRAÇÃO CIENTÍFICA " . date("Y");
-        $this->doc_autor = "Instituto Federal de Educação, Ciência e Tecnologia do Ceará - Campus Maracanaú";
-        $this->doc_criador = "SiGE https://github.com/comsolid/sige";
+
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $apelido_encontro = $ps->encontro["apelido_encontro"];
+
+        $this->doc_titulo = $apelido_encontro . " - " . date("Y");
+        $this->doc_autor = $this->doc_criador = "SiGE https://github.com/comsolid/sige";
         $this->doc_logo = APPLICATION_PATH . '/../public/img/logo_ifce_ceara.png';
         $this->doc_subtitulo = $dados_array["nome_relatorio"];
         $this->template_filepath = $this->parseTipo($tipo);
@@ -77,7 +81,7 @@ class Sige_Pdf_Relatorio_Parser {
         $cabecalho = '
             <div style="text-align: center">
                 <div class="row" style="text-align: center;">
-                    <img src="' . $this->doc_logo . '" style="width: 5cm" />
+                    <img src="' . $this->doc_logo . '" style="width: 4cm" />
                 </div>
                 <div class="row" style="text-align: center; margin-top: 10px;">
                     ' . $this->doc_titulo . '
@@ -86,11 +90,11 @@ class Sige_Pdf_Relatorio_Parser {
                     text-align: center;
                     margin-top: 2px;
                     font-size: 16px;
-                    font-weight: bold; ">
+                    font-weight: bold;">
                     ' . $this->doc_subtitulo . '
                 </div>
             </div>
-            ';
+        ';
         $rodape = '<p style="font-size: 9pt; text-align: center">';
         $rodape .= 'Página {PAGENO} de {nbpg} - Gerado pelo SiGE em '.date("d/m/Y H:i");
         $rodape .= '</p>';

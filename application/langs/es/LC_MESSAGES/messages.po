@@ -3,9 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Átila Camurça Alves <camurca.home@gmail.com>, 2015
-# Darlildo Lima <darlildo.cefetce@gmail.com>, 2014
-# Samir Costa <samirfor@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: SiGE\n"
@@ -13,30 +10,30 @@ msgstr ""
 "POT-Creation-Date: 2015-06-29 18:52-0300\n"
 "PO-Revision-Date: 2015-06-29 19:46-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/sige/"
-"language/pt_BR/)\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/sige/language/"
+"es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
 #: application/views/helpers/FlashMessages.php:25
 msgid "Warning!"
-msgstr "Atenção!"
+msgstr ""
 
 #: application/views/helpers/FlashMessages.php:28
 msgid "Heads up!"
-msgstr "Cuidado!"
+msgstr ""
 
 #: application/views/helpers/FlashMessages.php:31
 msgid "Error!"
-msgstr "Erro!"
+msgstr ""
 
 #: application/views/helpers/FlashMessages.php:34
 msgid "Success!"
-msgstr "Sucesso!"
+msgstr ""
 
 #: application/forms/Caravana.php:8 application/forms/DefinirSenha.php:9
 #: application/forms/RecuperarSenha.php:15
@@ -53,52 +50,50 @@ msgstr "Sucesso!"
 #: application/views/scripts/caravana/participantes.phtml:32
 #: application/views/scripts/evento/outros-palestrantes.phtml:34
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr ""
 
 #: application/forms/Caravana.php:23
 msgid "Caravan name:"
-msgstr "Nome da caravana:"
+msgstr ""
 
 #: application/forms/Caravana.php:27
 msgid "You enter a name too small (min. 1) or the name has invalid characters."
 msgstr ""
-"Você digitou um nome muito pequeno (mín. 1) ou o nome contém caracteres "
-"inválidos."
 
 #: application/forms/Caravana.php:36
 msgid "Codename:"
-msgstr "Codinome:"
+msgstr ""
 
 #: application/forms/Caravana.php:40
 msgid "Codename is too small (min. 1)."
-msgstr "Codinome é muito pequeno (mín. 1)."
+msgstr ""
 
 #: application/forms/Caravana.php:51 application/forms/Pessoa.php:109
 #: application/views/scripts/caravana/index.phtml:14
 #: application/views/scripts/caravana/index.phtml:67
 msgid "District:"
-msgstr "Município:"
+msgstr ""
 
 #: application/forms/Caravana.php:63 application/forms/Pessoa.php:121
 #: application/views/scripts/caravana/index.phtml:18
 #: application/views/scripts/caravana/index.phtml:71
 msgid "Institution:"
-msgstr "Instituição:"
+msgstr ""
 
 #: application/forms/DefinirSenha.php:25
 msgid "New Password"
-msgstr "Nova Senha"
+msgstr ""
 
 #: application/forms/DefinirSenha.php:40
 msgid "Repeat New Password"
-msgstr "Repetir Nova Senha"
+msgstr ""
 
 #: application/forms/RecuperarSenha.php:9
 #: application/forms/RequisitarMudarEmail.php:25
 #: application/forms/RequisitarMudarEmail.php:38
 #: application/forms/Login.php:21 application/forms/Pessoa.php:48
 msgid "Invalid E-mail."
-msgstr "E-mail inválido."
+msgstr ""
 
 #: application/forms/RecuperarSenha.php:11 application/forms/Login.php:23
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:47
@@ -108,55 +103,55 @@ msgstr "E-mail inválido."
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:36
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:53
 msgid "E-mail"
-msgstr "E-mail"
+msgstr ""
 
 #: application/forms/RecuperarSenha.php:22
 #: application/forms/RequisitarMudarEmail.php:64
 #: application/forms/Pessoa.php:167
 msgid "Prove that you are human, enter the characters below"
-msgstr "Prove que você é humano, digite os caracteres abaixo"
+msgstr ""
 
 #: application/forms/RecuperarSenha.php:36
 #: application/forms/RequisitarMudarEmail.php:78
 #: application/forms/Pessoa.php:181
 msgid "Entered value is not valid."
-msgstr "Valor digitado não é válido."
+msgstr ""
 
 #: application/forms/RequisitarMudarEmail.php:29
 msgid "Previous E-mail"
-msgstr "E-mail anterior"
+msgstr ""
 
 #: application/forms/RequisitarMudarEmail.php:42
 msgid "New E-mail"
-msgstr "Novo e-mail"
+msgstr ""
 
 #: application/forms/RequisitarMudarEmail.php:49
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:49
 msgid "Reason"
-msgstr "Motivo"
+msgstr ""
 
 #: application/forms/RequisitarMudarEmail.php:53
 msgid "Describe why you want to change your e-mail address..."
-msgstr "Descreva porque você deseja mudar seu endereço de e-mail..."
+msgstr ""
 
 #: application/forms/SubmissaoArtigo.php:32 application/forms/Evento.php:48
 msgid "Title:"
-msgstr "Título:"
+msgstr ""
 
 #: application/forms/SubmissaoArtigo.php:53 application/forms/Evento.php:107
 msgid "Abstract:"
-msgstr "Resumo:"
+msgstr ""
 
 #: application/forms/SubmissaoArtigo.php:75
 msgid "PDF File:"
-msgstr "Arquivo PDF:"
+msgstr ""
 
 #: application/forms/Menu.php:93 library/Sige/Desktop/Menu.php:21
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:20
 #: application/views/scripts/index/index.phtml:96
 #: application/views/scripts/error/error_404.phtml:41
 msgid "Home"
-msgstr "Início"
+msgstr ""
 
 #: application/forms/Menu.php:95 library/Sige/Pdf/Relatorio/Programacao.php:43
 #: library/Sige/Desktop/Menu.php:26
@@ -164,7 +159,7 @@ msgstr "Início"
 #: application/views/scripts/error/error_404.phtml:46
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:190
 msgid "Schedule"
-msgstr "Programação"
+msgstr ""
 
 #: application/forms/Menu.php:97 library/Sige/Desktop/Menu.php:31
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:46
@@ -172,11 +167,11 @@ msgstr "Programação"
 #: application/modules/admin/views/scripts/participante/index.phtml:49
 #: application/modules/admin/views/scripts/participante/index.phtml:73
 msgid "Caravan"
-msgstr "Caravana"
+msgstr ""
 
 #: application/forms/Menu.php:99 library/Sige/Desktop/Menu.php:36
 msgid "Paper Submission"
-msgstr "Submissão de Trabalhos"
+msgstr ""
 
 #: application/forms/Login.php:11
 #: application/views/scripts/participante/sucesso.phtml:11
@@ -185,36 +180,35 @@ msgstr "Submissão de Trabalhos"
 #: application/views/scripts/error/error_404.phtml:52
 #: application/layouts/scripts/twbs3/layout.phtml:88
 msgid "Login"
-msgstr "Entrar"
+msgstr ""
 
 #: application/forms/Login.php:33
 msgid "You enter a very small or very large password. Min.: 6, Max.: 20"
 msgstr ""
-"Você digitou uma senha muito grande ou muito pequena. Mín.: 6, Máx.: 20"
 
 #: application/forms/Login.php:35
 msgid "Password"
-msgstr "Senha"
+msgstr ""
 
 #: application/forms/PessoaEdit.php:36
 msgid "Write a little about yourself..."
-msgstr "Escreva um pouco sobre você..."
+msgstr ""
 
 #: application/forms/PessoaEdit.php:46
 msgid "Invalid Slideshare username"
-msgstr "Usuário do Slideshare inválido"
+msgstr ""
 
 #: application/forms/AlterarSenha.php:7
 msgid "Current Password:"
-msgstr "Senha atual:"
+msgstr ""
 
 #: application/forms/AlterarSenha.php:14
 msgid "New Password:"
-msgstr "Nova senha:"
+msgstr ""
 
 #: application/forms/AlterarSenha.php:19
 msgid "Repeat New Password:"
-msgstr "Repetir nova senha:"
+msgstr ""
 
 #: application/forms/Evento.php:42
 #: application/views/scripts/participante/editar.phtml:86
@@ -224,115 +218,113 @@ msgstr "Repetir nova senha:"
 #: application/views/scripts/evento/salvar.phtml:103
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:114
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 #: application/forms/Evento.php:62
 msgid "Event type:"
-msgstr "Tipo do Evento:"
+msgstr ""
 
 #: application/forms/Evento.php:75
 #: application/views/scripts/evento/ver.phtml:83
 msgid "Level:"
-msgstr "Nível:"
+msgstr ""
 
 #: application/forms/Evento.php:88
 msgid "Minimum profile:"
-msgstr "Perfil mínimo:"
+msgstr ""
 
 #: application/forms/Evento.php:92
 msgid "Describe what your audience should basically know..."
-msgstr "Descreva o que seu público deve saber basicamente..."
+msgstr ""
 
 #: application/forms/Evento.php:115
 msgid "Abstract with insufficient number of characters (min. 20)."
-msgstr "Resumo contém número de caracteres insuficiente (mín. 20)."
+msgstr ""
 
 #: application/forms/Evento.php:122
 msgid "Time preferences:"
-msgstr "Preferência de horário:"
+msgstr ""
 
 #: application/forms/Evento.php:124
 msgid "Date and time more convenient..."
-msgstr "Dia e hora mais conveniente..."
+msgstr ""
 
 #: application/forms/Evento.php:134
 msgid "Technologies involved:"
-msgstr "Tecnologias envolvidas:"
+msgstr ""
 
 #: application/forms/Evento.php:136
 msgid "Need of an especific program or tool, distro, IDE, etc..."
 msgstr ""
-"Necessidade de um programa ou ferramenta específica, distribuição, IDE, "
-"etc..."
 
 #: application/forms/Pessoa.php:31
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:57
 msgid "Name:"
-msgstr "Nome:"
+msgstr ""
 
 #: application/forms/Pessoa.php:37
 msgid "Name must have at least 1 character. Or contains invalid characters"
-msgstr "Nome deve ter no mínimo 1 caractere. Ou contém caracteres inválidos"
+msgstr ""
 
 #: application/forms/Pessoa.php:43
 msgid "E-mail:"
-msgstr "E-mail:"
+msgstr ""
 
 #: application/forms/Pessoa.php:54
 msgid "Nickname:"
-msgstr "Apelido:"
+msgstr ""
 
 #: application/forms/Pessoa.php:61
 msgid "Nickname must have at least 1, max. 20 characters"
-msgstr "Apelido deve ter no mín. 1, max. 20 caracteres"
+msgstr ""
 
 #: application/forms/Pessoa.php:69
 msgid "Gender:"
-msgstr "Sexo:"
+msgstr ""
 
 #: application/forms/Pessoa.php:82
 msgid "Invalid Twitter username"
-msgstr "Nome de usuário do Twitter inválido"
+msgstr ""
 
 #: application/forms/Pessoa.php:90
 msgid "Invalid Facebook username"
-msgstr "Nome de usuário do Facebook inválido"
+msgstr ""
 
 #: application/forms/Pessoa.php:96
 msgid "Website:"
-msgstr "Website:"
+msgstr ""
 
 #: application/forms/Pessoa.php:99
 msgid "Invalid website"
-msgstr "Site inválido"
+msgstr ""
 
 #: application/forms/Pessoa.php:136
 msgid "Birth Date:"
-msgstr "Ano de Nascimento:"
+msgstr ""
 
 #: application/forms/Pessoa.php:190
 msgid "SSN:"
-msgstr "CPF:"
+msgstr ""
 
 #: application/forms/Pessoa.php:201
 msgid "Phone Number:"
-msgstr "Número do Telefone:"
+msgstr ""
 
 #: application/controllers/CaravanaController.php:54
 #: application/controllers/CaravanaController.php:132
 msgid "No participant was selected."
-msgstr "Nenhum participante foi selecionado."
+msgstr ""
 
 #: application/controllers/CaravanaController.php:66
 #, php-format
 msgid "One participant added to this caravan successfully."
 msgid_plural "%d participants added to this caravan successfully."
-msgstr[0] "Um participante adicionado a esta caravana com sucesso."
-msgstr[1] "%d participantes adicionados a esta caravana com sucesso."
+msgstr[0] ""
+msgstr[1] ""
 
 #: application/controllers/CaravanaController.php:72
 msgid "No participant was added to this caravan."
-msgstr "Nenhum participante foi adicionado a esta caravana."
+msgstr ""
 
 #: application/controllers/CaravanaController.php:76
 #: application/controllers/CaravanaController.php:127
@@ -362,484 +354,476 @@ msgstr "Nenhum participante foi adicionado a esta caravana."
 #: application/modules/admin/controllers/EncontroController.php:89
 #: application/modules/admin/controllers/EncontroController.php:126
 msgid "An unexpected error ocurred.<br/> Details:&nbsp;"
-msgstr "Ocorreu um erro inesperado.<br/>Detalhes:&nbsp;"
+msgstr ""
 
 #: application/controllers/CaravanaController.php:124
 #: application/controllers/CaravanaController.php:151
 msgid "Participant was removed from this caravan successfully."
-msgstr "Participante removido desta caravana com sucesso."
+msgstr ""
 
 #: application/controllers/CaravanaController.php:220
 #: application/controllers/CaravanaController.php:288
 msgid "A caravan with this description already exists."
-msgstr "Uma caravana com esta descrição já existe."
+msgstr ""
 
 #: application/controllers/CaravanaController.php:229
 msgid "Create Caravan"
-msgstr "Criar Caravana"
+msgstr ""
 
 #: application/controllers/CaravanaController.php:297
 msgid "Edit Caravan"
-msgstr "Editar Caravana"
+msgstr ""
 
 #: application/controllers/ErrorController.php:22
 msgid "Page not found."
-msgstr "Página não encontrada."
+msgstr ""
 
 #: application/controllers/ErrorController.php:29
 msgid "Application error"
-msgstr "Erro na aplicação"
+msgstr ""
 
 #: application/controllers/IndexController.php:67
 msgid ""
 "Welcome back. Your registration was confirmed!<br/>Please update your "
 "profile data."
 msgstr ""
-"Bem-vindo de volta. Sua inscrição foi confirmada!<br/>Por favor, atualize os "
-"dados do seu perfil."
 
 #: application/controllers/IndexController.php:108
 msgid "E-mail or Password incorrect."
-msgstr "E-mail ou Senha incorreto."
+msgstr ""
 
 #: application/controllers/IndexController.php:143
 msgid "E-mail successfully sent, check your e-mail."
-msgstr "E-mail enviado com sucesso, verifique sua conta de e-mail."
+msgstr ""
 
 #: application/controllers/IndexController.php:146
 msgid "E-mail not found."
-msgstr "E-mail não encontrado."
+msgstr ""
 
 #: application/controllers/IndexController.php:165
 msgid "Verification token not informed."
-msgstr "Token de verificação não informado."
+msgstr ""
 
 #: application/controllers/IndexController.php:173
 msgid "User not informed."
-msgstr "Usuário não informado."
+msgstr ""
 
 #: application/controllers/IndexController.php:196
 #: application/controllers/ParticipanteController.php:199
 msgid "Password successfully updated!"
-msgstr "Senha atualizada com sucesso!"
+msgstr ""
 
 #: application/controllers/IndexController.php:201
 #: application/controllers/ParticipanteController.php:206
 msgid "The passwords must match!"
-msgstr "As senhas devem coincidir!"
+msgstr ""
 
 #: application/controllers/IndexController.php:239
 msgid ""
 "Your request for change your e-mail was sent. Wait for an approval soon."
 msgstr ""
-"Seu pedido de mudança de e-mail foi enviado. Espere por uma aprovação em "
-"breve."
 
 #: application/controllers/IndexController.php:249
 msgid "The new E-mail address that you inform already exists!"
-msgstr "O novo endereço de E-mail que você informou já existe!"
+msgstr ""
 
 #: application/controllers/IndexController.php:253
 msgid "Your previous E-mail address was not found!"
-msgstr "Seu endereço de E-mail anterior não foi encontrado!"
+msgstr ""
 
 #: application/controllers/EventoController.php:79
 msgid "Bookmark"
-msgstr "Favoritar"
+msgstr ""
 
 #: application/controllers/EventoController.php:102
 msgid ""
 "An unexpected error ocurred while bookmarking the event.<br/> Details:&nbsp;"
-msgstr "Ocorreu um erro inesperado ao favoritar o evento.<br/> Detalhes:&nbsp;"
+msgstr ""
 
 #: application/controllers/EventoController.php:120
 #: application/controllers/EventoController.php:166
 #: application/controllers/EventoController.php:234
 #, php-format
 msgid "The submission period goes from %s to %s."
-msgstr "O período de submissão vai de %s a %s."
+msgstr ""
 
 #: application/controllers/EventoController.php:140
 msgid "Paper was submitted. Wait for a contact by e-mail."
-msgstr "Trabalho foi submetido. Espere contato por e-mail."
+msgstr ""
 
 #: application/controllers/EventoController.php:199
 msgid "Paper sent. Wait for contact by e-mail."
-msgstr "Artigo enviado. Aguarde contato por e-mail."
+msgstr ""
 
 #: application/controllers/EventoController.php:260
 #: application/controllers/EventoController.php:286
 msgid "Only the author can edit the Event."
-msgstr "Somente o autor pode editar o Evento."
+msgstr ""
 
 #: application/controllers/EventoController.php:267
 msgid "Event successfully updated."
-msgstr "Evento atualizado com sucesso."
+msgstr ""
 
 #: application/controllers/EventoController.php:293
 #: application/controllers/EventoController.php:440
 #: application/controllers/EventoController.php:505
 #: application/controllers/EventoController.php:666
 msgid "Event not found."
-msgstr "Evento não encontrado."
+msgstr ""
 
 #: application/controllers/EventoController.php:417
 msgid "Bookmark successfully removed."
-msgstr "Favorito removido com sucesso."
+msgstr ""
 
 #: application/controllers/EventoController.php:424
 msgid "The request can not be completed."
-msgstr "A requisição não pode ser completada."
+msgstr ""
 
 #: application/controllers/EventoController.php:474
 msgid "No speakers selected."
-msgstr "Nenhum palestrante foi selecionado."
+msgstr ""
 
 #: application/controllers/EventoController.php:484
 #, php-format
 msgid "One speaker added to this event successfully."
 msgid_plural "%d speakers added to this event successfully."
-msgstr[0] "Um palestrante foi adicionado a este evento com sucesso."
-msgstr[1] "%d palestrantes foram adicionados a este evento com sucesso."
+msgstr[0] ""
+msgstr[1] ""
 
 #: application/controllers/EventoController.php:490
 msgid "Speaker already exists in this event."
 msgid_plural "One or more speakers exists in this event"
-msgstr[0] "Palestrante já está neste evento."
-msgstr[1] "Um ou mais palestrantes já estão neste evento"
+msgstr[0] ""
+msgstr[1] ""
 
 #: application/controllers/EventoController.php:513
 msgid "You don't have permission to edit this event."
-msgstr "Você não tem permissão para editar este evento."
+msgstr ""
 
 #: application/controllers/EventoController.php:548
 #: application/modules/admin/controllers/PresencaController.php:61
 msgid "Error on fetching results."
-msgstr "Erro ao trazer os resultados."
+msgstr ""
 
 #: application/controllers/EventoController.php:614
 msgid "This event could not be deleted."
-msgstr "Este evento não pode ser deletado."
+msgstr ""
 
 #: application/controllers/EventoController.php:641
 msgid "Speaker was successfuly removed from the event."
-msgstr "Palestrante foi removido deste evento com sucesso."
+msgstr ""
 
 #: application/controllers/EventoController.php:649
 msgid "No speaker was selected."
-msgstr "Nenhum palestrante foi selecionado."
+msgstr ""
 
 #: application/controllers/EventoController.php:695
 msgid "Tag added successfully."
-msgstr "Tag adicionada com sucesso."
+msgstr ""
 
 #: application/controllers/EventoController.php:698
 msgid "An unexpected error ocurred while saving <b>tag</b>."
-msgstr "Ocorreu um erro inesperado ao salvar <b>tag</b>."
+msgstr ""
 
 #: application/controllers/EventoController.php:702
 msgid "Tag already added."
-msgstr "Tag já existe."
+msgstr ""
 
 #: application/controllers/EventoController.php:704
 #: application/controllers/EventoController.php:726
 #: application/controllers/EventoController.php:753
 msgid "An unexpected error ocurred while saving <b>tag</b>. Details:&nbsp;"
-msgstr "Ocorreu um erro inesperado ao salvar <b>tag</b>. Detalhes:&nbsp;"
+msgstr ""
 
 #: application/controllers/EventoController.php:724
 msgid "Tag already exists."
-msgstr "Tag já existe."
+msgstr ""
 
 #: application/controllers/EventoController.php:747
 msgid "Tag removed successfully."
-msgstr "Tag removida com sucesso."
+msgstr ""
 
 #: application/controllers/EventoController.php:749
 msgid "Tag not found."
-msgstr "Tag não encontrada."
+msgstr ""
 
 #: application/controllers/EventoController.php:793
 msgid ""
 "This paper doesn't belongs to you. You don't have permission to read someone "
 "else's papers."
 msgstr ""
-"Este artigo não pertence a você. Você não tem permissão de ver artigos de "
-"outra pessoa."
 
 #: application/controllers/EventoController.php:806
 msgid "The file is not a valid PDF document.<br/>Details: "
-msgstr "O arquivo não é um documento PDF.<br/>Detalhes:"
+msgstr ""
 
 #: application/controllers/EventoController.php:812
 msgid "The Paper could not be loaded."
-msgstr "O artigo não pode ser carregado."
+msgstr ""
 
 #: application/controllers/EventoController.php:840
 msgid ""
 "This PDF file might be corrupted. Please check if this is a valid PDF file."
 msgstr ""
-"Este arquivo PDF pode estar corrompido. Por favor, verifique se este é um "
-"documento PDF válido."
 
 #: application/controllers/ParticipanteController.php:64
 msgid "E-mail already registered."
-msgstr "E-mail já cadastrado."
+msgstr ""
 
 #: application/controllers/ParticipanteController.php:210
 msgid "Old password incorrect."
-msgstr "Senha antiga incorreta."
+msgstr ""
 
 #: application/modules/admin/forms/Horarios.php:51
 msgid "Description:"
-msgstr "Descrição:"
+msgstr ""
 
 #: application/modules/admin/forms/Horarios.php:59
 msgid "Class 1 or Part 1..."
-msgstr "Turma 1 ou Parte 1..."
+msgstr ""
 
 #: application/modules/admin/forms/Horarios.php:83
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:61
 #: library/Sige/Pdf/Relatorio/Programacao.php:49
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:45
 msgid "Place:"
-msgstr "Local:"
+msgstr ""
 
 #: application/modules/admin/forms/Encontro.php:76
 msgid "Conference Name"
-msgstr "Nome do Encontro"
+msgstr ""
 
 #: application/modules/admin/forms/Encontro.php:96
 #: application/modules/admin/views/scripts/caravana/index.phtml:34
 msgid "Codename"
-msgstr "Codenome"
+msgstr ""
 
 #: application/modules/admin/forms/Encontro.php:116
 msgid "Starts in"
-msgstr "Inicia em"
+msgstr ""
 
 #: application/modules/admin/forms/Encontro.php:138
 msgid "Ends in"
-msgstr "Termina em"
+msgstr ""
 
 #: application/modules/admin/forms/Encontro.php:160
 msgid "Submission starts in"
-msgstr "Submissão inicia em"
+msgstr ""
 
 #: application/modules/admin/forms/Encontro.php:178
 msgid "Submission ends in"
-msgstr "Submissão termina em"
+msgstr ""
 
 #: application/modules/admin/forms/MensagemEmail.php:56
 msgid "Message"
-msgstr "Mensagem"
+msgstr ""
 
 #: application/modules/admin/forms/MensagemEmail.php:72
 msgid "Subject"
-msgstr "Assunto"
+msgstr ""
 
 #: application/modules/admin/forms/MensagemEmail.php:91
 msgid "Link"
-msgstr "Link"
+msgstr ""
 
 #: application/modules/admin/forms/Permissao.php:24
 msgid "Is administrator?"
-msgstr "É administrador?"
+msgstr ""
 
 #: application/modules/admin/forms/Permissao.php:27
 #: application/modules/admin/controllers/CaravanaController.php:43
 #: application/modules/admin/controllers/EventoController.php:118
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:330
 msgid "Yes"
-msgstr "Sim"
+msgstr ""
 
 #: application/modules/admin/forms/Permissao.php:28
 #: application/modules/admin/controllers/CaravanaController.php:48
 #: application/modules/admin/controllers/EventoController.php:120
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:335
 msgid "No"
-msgstr "Não"
+msgstr ""
 
 #: application/modules/admin/forms/Permissao.php:35
 msgid "User type"
-msgstr "Tipo de usuário"
+msgstr ""
 
 #: application/modules/admin/controllers/CaravanaController.php:22
 msgid "Caravans"
-msgstr "Caravanas"
+msgstr ""
 
 #: application/modules/admin/controllers/CaravanaController.php:46
 #: application/modules/admin/controllers/EventoController.php:35
 msgid "Invalidate"
-msgstr "Invalidar"
+msgstr ""
 
 #: application/modules/admin/controllers/CaravanaController.php:51
 #: application/modules/admin/controllers/EventoController.php:38
 msgid "Validate"
-msgstr "Validar"
+msgstr ""
 
 #: application/modules/admin/controllers/DashboardController.php:18
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:25
 msgid "Dashboard"
-msgstr "Painel"
+msgstr ""
 
 #: application/modules/admin/controllers/DashboardController.php:37
 #: application/modules/admin/controllers/DashboardController.php:51
 msgid "Request could not be completed."
-msgstr "Requisição não pode ser completada."
+msgstr ""
 
 #: application/modules/admin/controllers/EventoController.php:17
 #: application/modules/admin/controllers/EventoController.php:25
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:38
 #: application/modules/admin/views/scripts/menu.phtml:16
 msgid "Events"
-msgstr "Eventos"
+msgstr ""
 
 #: application/modules/admin/controllers/EventoController.php:26
 #: application/modules/admin/controllers/EventoController.php:124
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:154
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:126
 msgid "Details"
-msgstr "Detalhes"
+msgstr ""
 
 #: application/modules/admin/controllers/EventoController.php:44
 msgid "Undo presented"
-msgstr "Desfazer apresentado"
+msgstr ""
 
 #: application/modules/admin/controllers/EventoController.php:49
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:75
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:76
 msgid "Presented"
-msgstr "Apresentado"
+msgstr ""
 
 #: application/modules/admin/controllers/EventoController.php:161
 #: application/modules/admin/views/scripts/evento/index.phtml:114
 msgid "Parcial Schedule"
-msgstr "Programação Parcial"
+msgstr ""
 
 #: application/modules/admin/controllers/UsuarioController.php:17
 #: application/modules/admin/views/scripts/config/index.phtml:45
 msgid "Requests for e-mail change"
-msgstr "Requisições de mudança de e-mail"
+msgstr ""
 
 #: application/modules/admin/controllers/UsuarioController.php:31
 msgid "Parameters not set correctly."
-msgstr "Parâmetros não configurados corretamente."
+msgstr ""
 
 #: application/modules/admin/controllers/UsuarioController.php:61
 msgid "Request status changed successfully."
-msgstr "Status da requisição alterado com sucesso."
+msgstr ""
 
 #: application/modules/admin/controllers/UsuarioController.php:68
 msgid "Another person has the new e-mail requested."
-msgstr "Outra pessoa tem o novo e-mail requisitado."
+msgstr ""
 
 #: application/modules/admin/controllers/PresencaController.php:17
 msgid "Presence List"
-msgstr "Lista de Presença"
+msgstr ""
 
 #: application/modules/admin/controllers/HorarioController.php:12
 msgid "New schedule"
-msgstr "Novo horário"
+msgstr ""
 
 #: application/modules/admin/controllers/HorarioController.php:61
 msgid "Edit schedule"
-msgstr "Editar horário"
+msgstr ""
 
 #: application/modules/admin/controllers/ConfigController.php:17
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:90
 #: application/modules/admin/views/scripts/menu.phtml:27
 msgid "Configurations"
-msgstr "Configurações"
+msgstr ""
 
 #: application/modules/admin/controllers/ConfigController.php:23
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:122
 #: application/modules/admin/views/scripts/config/index.phtml:38
 msgid "User permissions"
-msgstr "Permissões de usuário"
+msgstr ""
 
 #: application/modules/admin/controllers/ConfigController.php:56
 msgid "Edit permission"
-msgstr "Editar permissão"
+msgstr ""
 
 #: application/modules/admin/controllers/ConfigController.php:74
 msgid "Edit Permission"
-msgstr "Editar Permissão"
+msgstr ""
 
 #: application/modules/admin/controllers/ConfigController.php:161
 #: application/modules/admin/views/scripts/config/index.phtml:61
 msgid "System Info"
-msgstr "Informações do Sistema"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:12
 msgid "Conferences"
-msgstr "Encontros"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:26
 msgid "New Conference"
-msgstr "Novo Encontro"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:65
 msgid "Edit Conference"
-msgstr "Editar Encontro"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:119
 msgid "Message successfully updated."
-msgstr "Mensagem atualizada com sucesso."
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:138
 msgid "Edit e-mail confirmation message"
-msgstr "Editar mensagem de e-mail de confirmação"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:141
 msgid "Edit e-mail recover password message"
-msgstr "Editar mensagem de e-mail para recuperar senha"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:144
 msgid "Edit e-mail submission confirmation message"
-msgstr "Editar mensagem de e-mail de confirmação de submissão"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:147
 msgid "Edit e-mail registration confirmation message"
-msgstr "Editar mensagem de e-mail de confirmação de inscrição"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:150
 msgid "E-mail message not find."
-msgstr "Mensagem de e-mail não encontrada."
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:170
 msgid "Participant of Conference Template"
-msgstr "Template de Participante de Encontro"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:177
 msgid "Event Speaker Template"
-msgstr "Template de Palestrante de Evento"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:187
 msgid "Participant of Event Template"
-msgstr "Template de Participante de Evento"
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:197
 #: application/modules/admin/models/Encontro.php:127
 msgid "Certificate type unknow."
-msgstr "Tipo de certificado desconhecido."
+msgstr ""
 
 #: application/modules/admin/controllers/EncontroController.php:245
 msgid "Conference not found."
-msgstr "Encontro não encontrado."
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:20
 msgid "Conference Reports"
-msgstr "Relatórios do Encontro"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:21
 msgid "Current Conference"
-msgstr "Encontro Atual"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:30
 #: application/modules/admin/views/scripts/relatorios/index.phtml:15
 msgid "Registrations per day"
-msgstr "Inscrições por dia"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:31
 #: application/modules/admin/controllers/RelatoriosController.php:65
@@ -850,110 +834,108 @@ msgstr "Inscrições por dia"
 #: application/modules/admin/views/scripts/menu.phtml:22
 #: application/modules/admin/views/scripts/relatorios/index.phtml:59
 msgid "Reports"
-msgstr "Relatórios"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:64
 #: application/modules/admin/views/scripts/relatorios/index.phtml:24
 msgid "Registrations per hour of day"
-msgstr "Inscrições por hora do dia"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:97
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:67
 #: application/modules/admin/views/scripts/relatorios/index.phtml:33
 msgid "Registrations per gender"
-msgstr "Inscrições por sexo"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:130
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:83
 #: application/modules/admin/views/scripts/relatorios/index.phtml:51
 msgid "Registrations per district (All)"
-msgstr "Inscrições por município (Todos)"
+msgstr ""
 
 #: application/modules/admin/controllers/RelatoriosController.php:143
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:75
 #: application/modules/admin/views/scripts/relatorios/index.phtml:42
 msgid "Registrations per district (15+)"
-msgstr "Inscrições por município (15+)"
+msgstr ""
 
 #: application/modules/admin/controllers/ParticipanteController.php:21
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:30
 #: application/modules/admin/views/scripts/menu.phtml:5
 msgid "Registration"
-msgstr "Inscrições"
+msgstr ""
 
 #: application/modules/admin/controllers/ParticipanteController.php:46
 msgid "Confirmed!"
-msgstr "Confirmado!"
+msgstr ""
 
 #: application/modules/admin/controllers/ParticipanteController.php:48
 msgid "Undo"
-msgstr "Desfazer"
+msgstr ""
 
 #: application/modules/admin/controllers/ParticipanteController.php:50
 msgid "Not confirmed!"
-msgstr "Não confirmado!"
+msgstr ""
 
 #: application/modules/admin/controllers/ParticipanteController.php:78
 msgid "Participant confirmed."
-msgstr "Participante confirmado."
+msgstr ""
 
 #: application/modules/admin/controllers/ParticipanteController.php:81
 msgid "Participant confirmation undone."
-msgstr "Confirmação do participante desfeita."
+msgstr ""
 
 #: application/modules/admin/models/MensagemEmail.php:77
 msgid "The html templates files must be at /public/email-templates directory."
-msgstr "Os templates html devem estar no diretório /public/email-templates."
+msgstr ""
 
 #: application/models/EmailConfirmacao.php:78
 msgid "Send e-mail option not defined."
-msgstr "Opção de envio de e-mail não definida."
+msgstr ""
 
 #: application/models/Pessoa.php:98
 msgid "Verification Token to Recover Password invalid or doesn't exists."
-msgstr "Token de Verificação para Recuperar Senha é inválido ou não existe."
+msgstr ""
 
 #: application/models/Pessoa.php:102
 msgid ""
 "Verification Token to Recover Password expired. Try again accessing Forgot "
 "My Password."
 msgstr ""
-"Token de Verificação para Recuperar Senha expirou. Tente outra vez acessando "
-"Esqueci Minha Senha."
 
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:56
 msgid "Registration Ticket"
-msgstr "Ticket de Inscrição"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:58
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:41
 msgid "Conference:"
-msgstr "Encontro:"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:59
 #: library/Sige/Pdf/Relatorio/Programacao.php:45
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:43
 msgid "Date and time:"
-msgstr "Date e hora:"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:60
 #: library/Sige/Pdf/Relatorio/Programacao.php:46
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:44
 msgid "starting from"
-msgstr "inicia às"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:62
 msgid "Entrance:"
-msgstr "Entrada:"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/TicketInscricao.php:63
 msgid "Registration:"
-msgstr "Inscrição:"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/Programacao.php:47
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:42
 msgid "Event:"
-msgstr "Evento:"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/Programacao.php:48
 #: application/views/scripts/evento/programacao.phtml:144
@@ -961,13 +943,13 @@ msgstr "Evento:"
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:111
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:88
 msgid "by"
-msgstr "por"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:39
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:275
 #: application/modules/admin/views/scripts/evento/index.phtml:96
 msgid "Presence Sheet"
-msgstr "Lista de Presença"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:46
 #: application/modules/admin/views/scripts/participante/index.phtml:37
@@ -978,40 +960,40 @@ msgstr "Lista de Presença"
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:32
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:51
 msgid "Name"
-msgstr "Nome"
+msgstr ""
 
 #: library/Sige/Pdf/Relatorio/FolhaPresenca.php:48
 msgid "Signature"
-msgstr "Assinatura"
+msgstr ""
 
 #: library/Sige/Controller/AdminAction.php:14
 #: library/Sige/Controller/Action.php:24
 msgid "Permission denied."
-msgstr "Permissão negada."
+msgstr ""
 
 #: library/Sige/Controller/AdminAction.php:29
 msgid "Unauthorized."
-msgstr "Não autorizado."
+msgstr ""
 
 #: library/Sige/Desktop/Menu.php:44
 msgid "Admin"
-msgstr "Admin"
+msgstr ""
 
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:59
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:98
 msgid "View All"
-msgstr "Ver todos"
+msgstr ""
 
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:106
 #: application/modules/admin/views/scripts/config/index.phtml:14
 msgid "Manage Conferences"
-msgstr "Gerenciar Encontros"
+msgstr ""
 
 #: library/Sige/Desktop/AdminSidebarLeftMenu.php:114
 #: application/modules/admin/views/scripts/config/index.phtml:22
 #: application/modules/admin/views/scripts/encontro/index.phtml:19
 msgid "Create Conference"
-msgstr "Criar Encontro"
+msgstr ""
 
 #: application/views/scripts/participante/editar.phtml:18
 #: application/views/scripts/participante/alterar-senha.phtml:7
@@ -1020,7 +1002,7 @@ msgstr "Criar Encontro"
 #: application/views/scripts/participante/certificados.phtml:13
 #, php-format
 msgid "%s's page"
-msgstr "Página de %s"
+msgstr ""
 
 #: application/views/scripts/participante/editar.phtml:25
 #: application/views/scripts/participante/alterar-senha.phtml:14
@@ -1033,7 +1015,7 @@ msgstr "Página de %s"
 #: application/modules/admin/views/scripts/encontro/index.phtml:74
 #: application/modules/admin/views/scripts/encontro/index.phtml:83
 msgid "Edit"
-msgstr "Editar"
+msgstr ""
 
 #: application/views/scripts/participante/editar.phtml:32
 #: application/views/scripts/participante/alterar-senha.phtml:21
@@ -1041,78 +1023,74 @@ msgstr "Editar"
 #: application/views/scripts/participante/ver.phtml:23
 #: application/views/scripts/participante/certificados.phtml:27
 msgid "Alter Password"
-msgstr "Alterar senha"
+msgstr ""
 
 #: application/views/scripts/participante/editar.phtml:39
 #: application/views/scripts/participante/alterar-senha.phtml:28
 #: application/views/scripts/participante/ver.phtml:30
 #: application/views/scripts/participante/certificados.phtml:34
 msgid "Certificates"
-msgstr "Certificados"
+msgstr ""
 
 #: application/views/scripts/participante/editar.phtml:52
 #: application/views/scripts/evento/ver.phtml:107
 #: application/layouts/scripts/twbs3-admin/navbar-right.phtml:49
 msgid "Profile"
-msgstr "Perfil"
+msgstr ""
 
 #: application/views/scripts/participante/editar.phtml:57
 msgid "Social Networks"
-msgstr "Redes Sociais"
+msgstr ""
 
 #: application/views/scripts/participante/criar.phtml:21
 msgid "Create an account"
-msgstr "Crie uma conta"
+msgstr ""
 
 #: application/views/scripts/participante/sucesso.phtml:3
 msgid "Signup successfully performed, verify you e-mail!"
-msgstr "Cadastro realizado com sucesso, verifique seu e-mail!"
+msgstr ""
 
 #: application/views/scripts/participante/sucesso.phtml:4
 msgid ""
 "There you will find instructions to set your password. Your login will be "
 "your e-mail address."
 msgstr ""
-"Lá você irá encontrar instruções para configurar sua senha. Seu login será "
-"seu endereço de e-mail."
 
 #: application/views/scripts/participante/sucesso.phtml:8
 msgid "Then you just need to"
-msgstr "Depois você só precisa"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:18
 msgid "Interest List"
-msgstr "Lista de Interesses"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:24
 msgid "Events of Interest"
-msgstr "Eventos de Interesse"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:33
 msgid ""
 "You don't have any events added. Click in 'Events of Interest' and browse to "
 "see date, time and place of events of interest."
 msgstr ""
-"Você não tem eventos adicionados. Clique em 'Eventos de Interesse' e procure "
-"ver a data, hora e local de eventos de interesse."
 
 #: application/views/scripts/participante/index.phtml:54
 #: application/views/scripts/evento/tags.phtml:58
 msgid "Remove"
-msgstr "Remover"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:62
 #: application/views/scripts/evento/interesse.phtml:79
 #: application/views/scripts/evento/salvar.phtml:121
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:216
 msgid "Date"
-msgstr "Data"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:66
 #: application/views/scripts/evento/interesse.phtml:80
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:217
 msgid "Time"
-msgstr "Hora"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:70
 #: application/views/scripts/evento/programacao.phtml:160
@@ -1121,53 +1099,53 @@ msgstr "Hora"
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:218
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:71
 msgid "Place"
-msgstr "Local"
+msgstr ""
 
 #: application/views/scripts/participante/index.phtml:78
 msgid "This event was invalidated and could not be given."
-msgstr "Este evento foi invalidado e poderá não acontecer."
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:57
 msgid "SiGE uses Gravatar for profile avatar."
-msgstr "SiGE usa o Gravatar para a foto do perfil."
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:63
 msgid "Configure Gravatar"
-msgstr "Configurar Gravatar"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:72
 msgid "About me:"
-msgstr "Sobre mim:"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:79
 msgid "No description yet..."
-msgstr "Sem descrição ainda..."
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:109
 #, php-format
 msgid "Follow me on %s"
-msgstr "Me siga no %s"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:112
 #, php-format
 msgid "I still don't have %s"
-msgstr "Eu ainda não possuo %s"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:147
 msgid "Slideshows of"
-msgstr "Apresentações de"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:181
 msgid "Create an account on"
-msgstr "Crie uma conta em"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:186
 msgid "so your presentations can appear here."
-msgstr "para que suas apresentações de slides possam aparecer aqui."
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:191
 msgid "Participant not found."
-msgstr "Participante não encontrado."
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:196
 #: application/views/scripts/evento/interesse.phtml:93
@@ -1175,51 +1153,51 @@ msgstr "Participante não encontrado."
 #: application/views/scripts/evento/programacao.phtml:207
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:32
 msgid "Attention!"
-msgstr "Atenção!"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:198
 msgid "Slideshare user"
-msgstr "Usuário do Slideshare"
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:200
 msgid "not found."
-msgstr "não encontrado."
+msgstr ""
 
 #: application/views/scripts/participante/ver.phtml:203
 msgid "Details:"
-msgstr "Detalhes:"
+msgstr ""
 
 #: application/views/scripts/participante/certificados.phtml:44
 msgid "Participant in Conference Certificates"
-msgstr "Certificados de Participante em Encontro"
+msgstr ""
 
 #: application/views/scripts/participante/certificados.phtml:47
 msgid "You have no participant in conference certificates yet."
-msgstr "Você não tem nenhum certificado de participação de encontro ainda."
+msgstr ""
 
 #: application/views/scripts/participante/certificados.phtml:65
 msgid "Speaker Certificates"
-msgstr "Certificados de Palestrantes"
+msgstr ""
 
 #: application/views/scripts/participante/certificados.phtml:68
 msgid "You have no speaker certificates yet."
-msgstr "Você não tem nenhum certificado de palestrante ainda."
+msgstr ""
 
 #: application/views/scripts/participante/certificados.phtml:95
 msgid "Participant in Event Certificates"
-msgstr "Certificados de Participante em Evento"
+msgstr ""
 
 #: application/views/scripts/participante/certificados.phtml:98
 msgid "You have no participant in event certificates yet."
-msgstr "Você não tem certificado de participante de evento ainda."
+msgstr ""
 
 #: application/views/scripts/caravana/participantes.phtml:17
 msgid "Add participants to caravan:"
-msgstr "Adicionar participantes à caravana:"
+msgstr ""
 
 #: application/views/scripts/caravana/participantes.phtml:42
 msgid "Participants"
-msgstr "Participantes"
+msgstr ""
 
 #: application/views/scripts/caravana/participantes.phtml:56
 #: application/views/scripts/evento/outros-palestrantes.phtml:59
@@ -1227,44 +1205,44 @@ msgstr "Participantes"
 #: application/views/scripts/evento/index.phtml:155
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:286
 msgid "Delete"
-msgstr "Deletar"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:6
 msgid "You are registered on this caravan"
-msgstr "Você está registrado nesta caravana"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:10
 #: application/views/scripts/caravana/index.phtml:63
 msgid "Caravan:"
-msgstr "Caravana:"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:22
 msgid "Responsable:"
-msgstr "Responsável:"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:30
 msgid "Leave this caravan?"
-msgstr "Sair desta caravana?"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:42
 msgid "Are you responsable for a Caravan?"
-msgstr "Você é responsável por uma Caravana?"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:52
 msgid "Create caravan"
-msgstr "Criar caravana"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:61
 msgid "You are responsable for a Caravan"
-msgstr "Você é responsável por uma Caravana"
+msgstr ""
 
 #: application/views/scripts/caravana/index.phtml:80
 msgid "Add participants"
-msgstr "Adicionar participantes"
+msgstr ""
 
 #: application/views/scripts/evento/interesse.phtml:14
 msgid "Add events of your interest"
-msgstr "Adicionar eventos de seu interesse"
+msgstr ""
 
 #: application/views/scripts/evento/interesse.phtml:26
 #: application/views/scripts/evento/interesse.phtml:47
@@ -1272,45 +1250,42 @@ msgstr "Adicionar eventos de seu interesse"
 #: application/modules/admin/views/scripts/evento/index.phtml:47
 #: application/modules/admin/views/scripts/evento/index.phtml:69
 msgid "All"
-msgstr "Todos"
+msgstr ""
 
 #: application/views/scripts/evento/interesse.phtml:67
 msgid "Search event..."
-msgstr "Buscar evento..."
+msgstr ""
 
 #: application/views/scripts/evento/interesse.phtml:78
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:215
 msgid "Description"
-msgstr "Descrição"
+msgstr ""
 
 #: application/views/scripts/evento/interesse.phtml:94
 msgid "Bookmark an event do not guarantee your spot. So arrive early."
 msgstr ""
-"Marcar interesse numa palestra não garante sua vaga. Então chegue cedo."
 
 #: application/views/scripts/evento/interesse.phtml:95
 msgid ""
 "Bookmark events it's only a way to organize the places depending on demand."
 msgstr ""
-"Marcar eventos é apenas uma forma de organizar melhor os locais dependendo "
-"da demanda."
 
 #: application/views/scripts/evento/outros-palestrantes.phtml:18
 msgid "Add other speakers:"
-msgstr "Adicionar outros palestrantes:"
+msgstr ""
 
 #: application/views/scripts/evento/outros-palestrantes.phtml:43
 msgid "Speakers"
-msgstr "Palestrantes"
+msgstr ""
 
 #: application/views/scripts/evento/outros-palestrantes.phtml:52
 msgid "Remove the speaker from this event"
-msgstr "Remover o palestrante deste evento"
+msgstr ""
 
 #: application/views/scripts/evento/outros-palestrantes.phtml:63
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:114
 msgid "Send e-mail"
-msgstr "Enviar e-mail"
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:109
 #: application/views/scripts/evento/salvar.phtml:131
@@ -1318,310 +1293,304 @@ msgstr "Enviar e-mail"
 #: application/modules/admin/views/scripts/encontro/index.phtml:49
 #: application/modules/admin/views/scripts/encontro/index.phtml:58
 msgid "to"
-msgstr "até"
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:147
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:93
 msgid "and other."
-msgstr "e outro."
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:149
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:95
 #, php-format
 msgid "and %d others."
-msgstr "e %d outros."
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:174
 msgid "View and post comments"
-msgstr "Ver e postar comentários"
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:195
 msgid "There are no events on our schedule yet. Be the first to"
-msgstr "Ainda não há eventos na programação. Seja o primeiro a"
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:199
 #: application/views/scripts/evento/salvar.phtml:11
 msgid "Submit a paper"
-msgstr "Submeter um trabalho"
+msgstr ""
 
 #: application/views/scripts/evento/programacao.phtml:209
 msgid "There are no events on this day yet!"
-msgstr "Não há eventos neste dia ainda!"
+msgstr ""
 
 #: application/views/scripts/evento/salvar.phtml:129
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:112
 #: application/modules/admin/views/scripts/encontro/index.phtml:47
 msgid "from"
-msgstr "de"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:22
 msgid "Submited Papers"
-msgstr "Artigos Submetidos"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:27
 msgid "Submit"
-msgstr "Enviar"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:36
 msgid "Lecture"
-msgstr "Palestra"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:45
 msgid "Paper"
-msgstr "Artigo"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:76
 #: application/views/scripts/evento/ver.phtml:76
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:127
 msgid "Submited"
-msgstr "Submetido"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:83
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:48
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:49
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:137
 msgid "Validated"
-msgstr "Validado"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:88
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:142
 msgid "Not validated yet"
-msgstr "Não validado ainda"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:104
 msgid "Download PDF"
-msgstr "Baixar PDF"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:137
 msgid "Add other speakers"
-msgstr "Adicionar outros palestrantes"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:145
 msgid "Create/Edit tags"
-msgstr "Criar/Editar tags"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:173
 msgid "What about submit a paper and participate?"
-msgstr "O que acha de submeter um trabalho e participar?"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:185
 msgid "Submit Lecture"
-msgstr "Submeter Palestra"
+msgstr ""
 
 #: application/views/scripts/evento/index.phtml:195
 msgid "Submit Paper"
-msgstr "Submeter um trabalho"
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:72
 msgid "Speaker:"
-msgstr "Palestrante:"
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:97
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:160
 msgid "Abstract"
-msgstr "Resumo"
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:102
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:305
 msgid "Other Speakers"
-msgstr "Outros palestrantes"
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:112
 msgid "Bio"
-msgstr "Bio"
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:117
 msgid "Tags"
-msgstr "Tags"
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:141
 msgid "Single speaker."
-msgstr "Palestrante único."
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:154
 msgid "Not defined."
-msgstr "Não definido."
+msgstr ""
 
 #: application/views/scripts/evento/ver.phtml:174
 msgid "No tags defined."
-msgstr "Nenhuma tag definida."
+msgstr ""
 
 #: application/views/scripts/evento/tags.phtml:26
 msgid "Search tag"
-msgstr "Buscar tag"
+msgstr ""
 
 #: application/views/scripts/evento/tags.phtml:39
 msgid "Create Tag"
-msgstr "Criar tag"
+msgstr ""
 
 #: application/views/scripts/evento/tags.phtml:67
 msgid "No tags found."
-msgstr "Nenhuma tag encontrada."
+msgstr ""
 
 #: application/views/scripts/index/login.phtml:95
 msgid "Forgot My Password"
-msgstr "Esqueci Minha Senha"
+msgstr ""
 
 #: application/views/scripts/index/login.phtml:101
 msgid "More"
-msgstr "Mais"
+msgstr ""
 
 #: application/views/scripts/index/login.phtml:110
 #: application/views/scripts/index/requisitar-mudar-email.phtml:9
 msgid "Request change e-mail"
-msgstr "Requisição de mudança de e-mail"
+msgstr ""
 
 #: application/views/scripts/index/login.phtml:120
 msgid "Participate Now"
-msgstr "Participe Agora"
+msgstr ""
 
 #: application/views/scripts/index/definir-senha.phtml:65
 msgid "Set new password"
-msgstr "Definir nova senha"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:99
 #: application/modules/admin/views/scripts/config/index.phtml:6
 msgid "Conference"
-msgstr "Encontro"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:105
 #: application/views/scripts/index/index.phtml:185
 msgid "Social Network"
-msgstr "Rede Social"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:118
 msgid "If you already participated once click on"
-msgstr "Se você já participou clique em"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:126
 msgid "If it's your first time click on"
-msgstr "Se é sua primeira vez clique em"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:130
 msgid "I want to participate!"
-msgstr "Quero participar!"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:137
 msgid "It's getting closer ..."
-msgstr "Falta pouco ..."
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:141
 msgid "It started!"
-msgstr "Começou!"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:149
 msgid "Learn More"
-msgstr "Saiba Mais"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:171
 msgid "Our conference will take place at:"
-msgstr "Nosso encontro ocorrerá no endereço:"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:186
 msgid "Keep inform about our conference on our channels"
-msgstr "Mantenha-se informado sobre nosso encontro em nossos canais"
+msgstr ""
 
 #: application/views/scripts/index/index.phtml:197
 msgid "I wanna be there!"
-msgstr "Eu quero estar lá!"
+msgstr ""
 
 #: application/views/scripts/error/error.phtml:11
 msgid "An error occurred"
-msgstr "Um erro ocorreu"
+msgstr ""
 
 #: application/views/scripts/error/error.phtml:16
 msgid "Exception information:"
-msgstr "Informação da exceção:"
+msgstr ""
 
 #: application/views/scripts/error/error.phtml:18
 msgid "Message:"
-msgstr "Mensagem:"
+msgstr ""
 
 #: application/views/scripts/error/error_404.phtml:43
 msgid "Click here to go back to the home page."
-msgstr "Clique aqui para ir para página inicial."
+msgstr ""
 
 #: application/views/scripts/error/error_404.phtml:49
 msgid ""
 "Check the schedule of the conference which has Lectures, Mini courses and "
 "Workshops."
 msgstr ""
-"Verifique a programação do encontro que contém Palestras, Minicursos e "
-"Oficinas."
 
 #: application/views/scripts/error/error_404.phtml:55
 msgid ""
 "Login on SiGE to have access to your page of interest, paper submission, etc."
 msgstr ""
-"Faça login no SiGE para ter acesso a sua página de interesse, submissão de "
-"trabalhos, etc."
 
 #: application/views/scripts/error/error_404.phtml:59
 msgid "Get Involved"
-msgstr "Participe"
+msgstr ""
 
 #: application/views/scripts/error/error_404.phtml:62
 msgid ""
 "Join us and get involved in the conference. To do that just sign up and "
 "bring 1Kg of food on the conference day."
 msgstr ""
-"Junte-se a nós e participe do nosso encontro. Para isso basta se cadastrar e "
-"trazer 1Kg de alimento não perecível no dia do encontro."
 
 #: application/layouts/scripts/rodape.phtml:5
 msgid "SiGE by"
-msgstr "SiGE por"
+msgstr ""
 
 #: application/layouts/scripts/rodape.phtml:8
 #: application/layouts/scripts/twbs3/footer.phtml:8
 msgid "About"
-msgstr "Sobre"
+msgstr ""
 
 #: application/layouts/scripts/layout.phtml:45
 msgid "Welcome:"
-msgstr "Bem-vindo:"
+msgstr ""
 
 #: application/layouts/scripts/layout.phtml:51
 #: application/layouts/scripts/twbs3-admin/navbar-right.phtml:55
 #: application/layouts/scripts/twbs3/layout.phtml:79
 msgid "Logout"
-msgstr "Sair"
+msgstr ""
 
 #: application/layouts/scripts/twbs3/footer.phtml:14
 msgid "Source Code on Github"
-msgstr "Código-fonte no Github"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:29
 msgid "Exchange"
-msgstr "Mudar de"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:38
 msgid "For"
-msgstr "Para"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:67
 msgid "Open"
-msgstr "Aberto"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:69
 msgid "Allowed"
-msgstr "Permitido"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:71
 msgid "Denied"
-msgstr "Negado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:80
 msgid "Send e-mail to confirm"
-msgstr "Enviar e-mail para confirmação"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:93
 msgid "Allow"
-msgstr "Permitir"
+msgstr ""
 
 #: application/modules/admin/views/scripts/usuario/pedidos-mudanca-email.phtml:104
 msgid "Deny"
-msgstr "Negar"
+msgstr ""
 
 #: application/modules/admin/views/scripts/horario/salvar.phtml:79
 #: application/modules/admin/views/scripts/presenca/index.phtml:28
@@ -1631,49 +1600,49 @@ msgstr "Negar"
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:124
 #: application/modules/admin/views/scripts/encontro/salvar.phtml:120
 msgid "Back"
-msgstr "Voltar"
+msgstr ""
 
 #: application/modules/admin/views/scripts/participante/index.phtml:23
 msgid "Search participant..."
-msgstr "Buscar participante..."
+msgstr ""
 
 #: application/modules/admin/views/scripts/participante/index.phtml:32
 #: application/modules/admin/views/scripts/evento/index.phtml:16
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:27
 msgid "Search by"
-msgstr "Buscar por"
+msgstr ""
 
 #: application/modules/admin/views/scripts/participante/index.phtml:45
 #: application/modules/admin/views/scripts/participante/index.phtml:71
 #: application/modules/admin/views/scripts/caravana/index.phtml:36
 #: application/modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:16
 msgid "District"
-msgstr "Município"
+msgstr ""
 
 #: application/modules/admin/views/scripts/participante/index.phtml:53
 #: application/modules/admin/views/scripts/participante/index.phtml:72
 #: application/modules/admin/views/scripts/caravana/index.phtml:37
 msgid "Institution"
-msgstr "Instituição"
+msgstr ""
 
 #: application/modules/admin/views/scripts/participante/index.phtml:69
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:52
 msgid "Nickname"
-msgstr "Apelido"
+msgstr ""
 
 #: application/modules/admin/views/scripts/participante/index.phtml:74
 #: application/modules/admin/views/scripts/evento/index.phtml:63
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: application/modules/admin/views/scripts/caravana/index.phtml:16
 msgid "Search caravan..."
-msgstr "Buscar caravana..."
+msgstr ""
 
 #: application/modules/admin/views/scripts/caravana/index.phtml:35
 #: application/modules/admin/views/scripts/evento/index.phtml:131
 msgid "Responsable"
-msgstr "Responsável"
+msgstr ""
 
 #: application/modules/admin/views/scripts/caravana/index.phtml:38
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:18
@@ -1681,294 +1650,290 @@ msgstr "Responsável"
 #: application/modules/admin/views/scripts/evento/index.phtml:74
 #: application/modules/admin/views/scripts/evento/index.phtml:129
 msgid "Valid"
-msgstr "Válido"
+msgstr ""
 
 #: application/modules/admin/views/scripts/caravana/index.phtml:39
 msgid "Men"
-msgstr "Homens"
+msgstr ""
 
 #: application/modules/admin/views/scripts/caravana/index.phtml:40
 msgid "Women"
-msgstr "Mulheres"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:47
 msgid "Invalidate?"
-msgstr "Invalidar?"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:59
 msgid "Validate?"
-msgstr "Validar?"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:60
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:61
 msgid "Invalidated"
-msgstr "Invalidado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:74
 msgid "Undo presented?"
-msgstr "Desfazer apresentado?"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:86
 msgid "Set as presented?"
-msgstr "Definir com apresentado?"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:87
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:88
 msgid "Not presented"
-msgstr "Não apresentado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:108
 msgid "Speaker"
-msgstr "Palestrante"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:163
 msgid "Time preferences"
-msgstr "Preferência de horário"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:166
 msgid "Technologies involved"
-msgstr "Tecnologias envolvidas"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:198
 msgid "New Schedule"
-msgstr "Novo Horário"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:206
 msgid "No schedule added yet."
-msgstr "Nenhum horário adicionado ainda."
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:238
 msgid "Send E-mail"
-msgstr "Enviar E-mail"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:311
 msgid "No others speakers."
-msgstr "Sem outros palestrantes."
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/detalhes.phtml:318
 msgid "Confirmed"
-msgstr "Confirmado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:21
 msgid "Not defined"
-msgstr "Não definido"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:35
 msgid "Only Valid"
-msgstr "Somente Validado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:40
 msgid "Only Not Defined"
-msgstr "Somente não definido"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:62
 msgid "Waiting"
-msgstr "Aguardando"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:74
 msgid "Not informed"
-msgstr "Não informado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/programacao-parcial.phtml:106
 msgid "Schedule not defined"
-msgstr "Programação não definida"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/index.phtml:22
 msgid "Title"
-msgstr "Título"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/index.phtml:41
 #: application/modules/admin/views/scripts/evento/index.phtml:128
 msgid "Event"
-msgstr "Evento"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/index.phtml:79
 msgid "Not valid"
-msgstr "Não válido"
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/index.phtml:102
 msgid "Search..."
-msgstr "Buscar..."
+msgstr ""
 
 #: application/modules/admin/views/scripts/evento/index.phtml:130
 msgid "Submission"
-msgstr "Submissão"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/inscricoes-sexo.phtml:23
 #: application/modules/admin/views/scripts/relatorios/inscricoes-por-dia.phtml:23
 #: application/modules/admin/views/scripts/relatorios/inscricoes-horario.phtml:23
 #: application/modules/admin/views/scripts/relatorios/inscricoes-municipio-15-mais.phtml:23
 msgid "Reload"
-msgstr "Recarregar"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:17
 msgid "Num. registries"
-msgstr "Núm. inscrições"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/inscricoes-municipio.phtml:18
 msgid "Num. Confirmed"
-msgstr "Núm. Confirmados"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:6
 msgid "Graphs"
-msgstr "Gráficos"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:71
 msgid "All registrations (PDF)"
-msgstr "Todos os inscritos (PDF)"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:82
 msgid "All registrations (XLS)"
-msgstr "Todos os inscritos (XLS)"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:93
 msgid "Registrations not confirmed"
-msgstr "Inscrições não confirmadas"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:104
 msgid "Registrations confirmed"
-msgstr "Inscrições confirmadas"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:114
 msgid "List of submitted papers (PDF)"
-msgstr "Lista de artigos submetidos (PDF)"
+msgstr ""
 
 #: application/modules/admin/views/scripts/relatorios/index.phtml:124
 msgid "List of submitted papers (XLS)"
-msgstr "Lista de artigos submetidos (XLS)"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:20
 msgid "Host Info"
-msgstr "Informações do Host"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:26
 msgid "OS Version"
-msgstr "Versão do SO"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:30
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:73
 msgid "Date/Time"
-msgstr "Data/Hora"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:34
 msgid "Uptime"
-msgstr "Tempo ligado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:37
 #, php-format
 msgid "%d days, %d hours, %d minutes, %d seconds"
-msgstr "%d dias, %d horas, %d minutos, %d segundos"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:40
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:50
 msgid "Uptime library requires php 5.4+"
-msgstr "Biblioteca Uptime necessita do php 5.4+"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:45
 msgid "Boot time"
-msgstr "Último boot às"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:63
 msgid "PostgreSQL Info"
-msgstr "Informações do PostgreSQL"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:69
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:91
 msgid "Version"
-msgstr "Versão"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:85
 msgid "PHP Info"
-msgstr "Informações do PHP"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:95
 msgid "Loaded Extensions"
-msgstr "Extensões carregadas"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:109
 msgid "Cache Info"
-msgstr "Informações da Cache"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/info-sistema.phtml:130
 msgid "SiGE Info"
-msgstr "Informações do SiGE"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/editar-permissao.phtml:8
 msgid "Edit permission of"
-msgstr "Editar permissões de"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/index.phtml:30
 msgid "Users"
-msgstr "Usuários"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/index.phtml:53
 msgid "System"
-msgstr "Sistema"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/index.phtml:68
 msgid "Clean Cache"
-msgstr "Limpar Cache"
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:18
 msgid "Search user..."
-msgstr "Buscar usuário..."
+msgstr ""
 
 #: application/modules/admin/views/scripts/config/permissao-usuarios.phtml:54
 msgid "Permission"
-msgstr "Permissão"
+msgstr ""
 
 #: application/modules/admin/views/scripts/dashboard/index.phtml:21
 msgid "User Registration"
-msgstr "Inscrição de Usuário"
+msgstr ""
 
 #: application/modules/admin/views/scripts/dashboard/index.phtml:29
 #: application/modules/admin/views/scripts/dashboard/index.phtml:50
 msgid "More info"
-msgstr "Mais informações"
+msgstr ""
 
 #: application/modules/admin/views/scripts/dashboard/index.phtml:39
 msgid "Total Events"
-msgstr "Total de Eventos"
+msgstr ""
 
 #: application/modules/admin/views/scripts/dashboard/index.phtml:61
 msgid "Latest Members"
-msgstr "Últimos membros"
+msgstr ""
 
 #: application/modules/admin/views/scripts/dashboard/index.phtml:89
 msgid "Weather"
-msgstr "Previsão do Tempo"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:66
 msgid ""
 "The message must contain some attributes that will be replaced in the "
 "certificate. They are:"
 msgstr ""
-"A mensagem deve conter alguns atributos que serão substituídos no "
-"certificado. Eles são:"
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-certificado.phtml:81
 msgid "Certificate Preview"
-msgstr "Pré-visualizar certificado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:33
 msgid "Some features of the message"
-msgstr "Algumas características da mensagem"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:35
 msgid "The message can be written in HTML."
-msgstr "A mensagem abaixo pode ser escrita em HTML."
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:36
 msgid ""
 "The message must contain some attributes that will be replaced in the e-"
 "mail. They are:"
 msgstr ""
-"A mensagem deve conter alguns atributos que serão substituídos no e-mail. "
-"Eles são:"
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:47
 msgid "Is not necessary write headers, write only the content of the"
-msgstr "Não é necessário escrever cabeçalhos, escreva apenas o conteúdo do"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/editar-mensagem-email-confirmacao.phtml:51
 msgid ""
@@ -1976,42 +1941,39 @@ msgid ""
 "the e-mail servers themselves will block them. To use CSS use the HTML "
 "attribute"
 msgstr ""
-"Não é possível importar folhas de estilo (CSS) ou arquivos Javascript, pois "
-"os próprios servidores de e-mail irão bloqueá-los. Para utilizar CSS você "
-"deve usar o atributo"
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:55
 msgid "Submission Period"
-msgstr "Período de Submissão"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:94
 msgid "E-mail confirmation message"
-msgstr "Mensagem e-mail confirmação"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:104
 msgid "E-mail recover password message"
-msgstr "Mensagem e-mail recuperar senha"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:114
 msgid "E-mail submission confirmation message"
-msgstr "Mensagem de e-mail de confirmação de submissão"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:124
 msgid "E-mail registration confirmation message"
-msgstr "Mensagem de e-mail de confirmação de inscrição"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:136
 msgid "Edit Certificate"
-msgstr "Editar Certificado"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:147
 msgid "Conference participant"
-msgstr "Participante do encontro"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:157
 msgid "Speaker of event"
-msgstr "Palestrante do evento"
+msgstr ""
 
 #: application/modules/admin/views/scripts/encontro/index.phtml:167
 msgid "Participant of event"
-msgstr "Participante do evento"
+msgstr ""
