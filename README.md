@@ -13,7 +13,7 @@ A licença utilizada é a GPL v3 (totalmente aberto e livre). Por favor, sinta-s
 This project is a system to manage the conference type events. Such events can consist of lectures, short courses and workshops.
 The license used is the GPL v3 (fully open and free). Please feel free to contribute and improve this project.
 
-Como instalar | How to install
+Documentação | Documentation
 ====
 
-Veja [aqui](sige/master/docs/INSTALACAO/README.md)
+Veja [aqui](http://comsolid.github.io/sige-docs/). See [here](http://comsolid.github.io/sige-docs/). 
