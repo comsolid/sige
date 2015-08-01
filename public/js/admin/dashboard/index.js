@@ -1,5 +1,6 @@
 
 $(function () {
+    moment.lang('pt-br');
     $('span[data-moment]').each(function(idx, item) {
 		var $item = $(item);
 		var date = $item.attr('data-moment');

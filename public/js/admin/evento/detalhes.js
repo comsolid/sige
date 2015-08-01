@@ -1,6 +1,7 @@
 
 $(function() {
 
+	moment.lang('pt-br');
 	$('span[data-moment]').each(function(idx, item) {
 		var $item = $(item);
 		var date = $item.attr('data-moment');
@@ -21,7 +22,7 @@ $(function() {
 		var title = btnValidated.attr('data-btn-default-title');
 		btnValidated.removeClass(action).addClass(defaultAction).html(title);
 	});
-    
+
     var btnPresented = $('#btn-presented');
 	btnPresented.on('mouseover', function () {
 		var action = btnPresented.attr('data-btn-action');

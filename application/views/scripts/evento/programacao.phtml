@@ -81,9 +81,7 @@ if (! empty($this->lista)): ?>
         <?php
             $data_atual = $item['data'];
         }
-        ?>
 
-        <?php
         switch ($item['id_tipo_evento']) {
             case 1:
                 $bg_color = "bg-blue-gradient";
@@ -133,7 +131,7 @@ if (! empty($this->lista)): ?>
                         ?>
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <a href="<?php echo $url_evento; ?>#disqus_thread">
+                                <a href="<?php echo $url_evento; ?>">
                                     <?php echo $item['nome_evento'] ?>
                                     <?php if (! empty($item['descricao'])) : ?>
                                     (<?php echo $item['descricao'] ?>)
@@ -170,7 +168,7 @@ if (! empty($this->lista)): ?>
                                     <i class="fa fa-bookmark"></i>
                                     <?php echo $item['count_marcadores']; ?>
                                 </span>
-                                <a href="<?php echo $url_evento; ?>#disqus_thread"
+                                <a href="<?php echo $url_evento; ?>"
                                     class="btn btn-default" title="<?php echo $this->translate("View and post comments"); ?>">
                                     <i class="fa fa-comments-o"></i>
                                 </a>
