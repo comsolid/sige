@@ -41,7 +41,13 @@ class IndexController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost() && $form->isValid($data)) {
             $data = $form->getValues();
             $model = new Application_Model_Pessoa();
-            $resultadoConsulta = $model->avaliaLogin($data['email'], $data['senha']);
+            try {
+                $resultadoConsulta = $model->avaliaLogin($data['email'], $data['senha']);
+            } catch (Exception $e) {
+                $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
+                return;
+            }
+
             if ($resultadoConsulta != NULL) {
                 $idPessoa = $resultadoConsulta['id_pessoa'];
                 $administrador = $resultadoConsulta['administrador'];
