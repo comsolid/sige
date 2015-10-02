@@ -1,7 +1,5 @@
 <?php
 
-use Dinesh\BarcodeAll\DNS1D;
-
 /**
  * Classe que gera ticket de incrição do participante
  * com seus dados pessoais, dados do evento, código de barras
@@ -47,9 +45,17 @@ class Sige_Pdf_Relatorio_TicketInscricao {
     }
 
     private function gerarCodigoBarras() {
-        $barcode = new DNS1D();
-        $barcode->setStorPath(getcwd());
-        $this->dados['barcode'] = $barcode->getBarcodePNG($this->dados['inscricao'], "C128");
+        $barcode = new Zend_Barcode_Object_Code128();
+        $barcode->setText($this->dados['inscricao']);
+        $barcode->setFactor(1.2);
+        $renderer = new Zend_Barcode_Renderer_Image();
+        $renderer->setBarcode($barcode);
+        $resource = $renderer->draw();
+        ob_start();
+        imagepng($resource);
+        $data = ob_get_clean();
+
+        $this->dados['barcode'] = base64_encode($data);
     }
 
     private function i18n() {
