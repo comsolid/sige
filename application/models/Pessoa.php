@@ -141,6 +141,9 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
         	FROM pessoa WHERE email = ?";
     	$where = array($login);
 		$result = $this->getAdapter()->fetchRow($sql, $where);
+		if (! $result) {
+			throw new Exception(_("E-mail not found."));
+		}
 
 		$lib = new PasswordLib\PasswordLib();
 		$verified = $lib->verifyPasswordHash($senha, $result['senha']);
