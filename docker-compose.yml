@@ -22,3 +22,8 @@ php:
 
 pg:
   image: sige/pg
+  ports:
+    - "5434:5432"
+  volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
