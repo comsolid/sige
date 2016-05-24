@@ -6,7 +6,7 @@ START TRANSACTION;
 
 -- Dumped from database version 9.3.6
 -- Dumped by pg_dump version 9.3.6
--- Started on 2015-02-19 19:30:12 BRT
+-- Started on 2016-05-24 19:29:00 BRT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,6 +14,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 --
 -- TOC entry 214 (class 3079 OID 11791)
@@ -293,21 +294,12 @@ CREATE TABLE encontro (
     periodo_submissao_inicio date NOT NULL,
     periodo_submissao_fim date NOT NULL,
     certificados_liberados boolean DEFAULT false NOT NULL,
-    certificados_template_participante_encontro text DEFAULT 'Certificamos que %s participou do(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
-    certificados_template_palestrante_evento text DEFAULT 'Certificamos que %s apresentou o(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
-    certificados_template_participante_evento text DEFAULT 'Certificamos que %s participou do(a) %s: %s no(a) %s durante a I Semana de Integração Científica (SIC) do IFCE campus de Maracanaú no período de 15 a 19 de dezembro de 2014.'::text,
-    id_municipio integer DEFAULT 101 NOT NULL,
+    certificados_template_participante_encontro text DEFAULT 'Certificamos que {nome} participou do(a) {encontro}.'::text,
+    certificados_template_palestrante_evento text DEFAULT 'Certificamos que {nome} apresentou o(a) {tipo_evento}: {nome_evento} no(a) {encontro}, com carga horária de {carga_horaria}.'::text,
+    certificados_template_participante_evento text DEFAULT 'Certificamos que {nome} participou do(a) {tipo_evento}: {nome_evento} no(a) {encontro}, com carga horária de {carga_horaria}.'::text,
+    id_municipio integer DEFAULT 1 NOT NULL,
     id_tipo_horario integer DEFAULT 1 NOT NULL
 );
-
-
---
--- TOC entry 2275 (class 0 OID 0)
--- Dependencies: 180
--- Name: COLUMN encontro.id_municipio; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN encontro.id_municipio IS 'Padrão Maracanaú';
 
 
 --
@@ -634,9 +626,9 @@ COMMENT ON TABLE instituicao IS 'Instituição de origem da pessoa. Escola, Comu
 -- Name: COLUMN instituicao.apelido_instituicao; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN instituicao.apelido_instituicao IS 'EEMF Adauto Bezerra.
+COMMENT ON COLUMN instituicao.apelido_instituicao IS 'Escola Fulano de Tal.
 
-Essa informação pode estar no CRACHÁ.';
+Essa informação pode ser utilizada no CRACHÁ.';
 
 
 --
@@ -729,13 +721,15 @@ CREATE TABLE pessoa (
     data_cadastro timestamp without time zone DEFAULT now(),
     id_sexo integer DEFAULT 0 NOT NULL,
     nascimento date NOT NULL,
+    telefone character varying(16),
     administrador boolean DEFAULT false NOT NULL,
     facebook character varying(50),
     email_enviado boolean DEFAULT false NOT NULL,
     bio text,
     slideshare character varying(32),
-    cpf bigint,
-    telefone bigint
+    token character varying(32),
+    token_validade timestamp without time zone,
+    cpf bigint
 );
 
 
@@ -822,7 +816,48 @@ ALTER SEQUENCE pessoa_id_pessoa_seq OWNED BY pessoa.id_pessoa;
 
 
 --
--- TOC entry 203 (class 1259 OID 40043)
+-- Name: pessoa_mudar_email; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE pessoa_mudar_email (
+    id integer NOT NULL,
+    email_anterior character varying(100) NOT NULL,
+    novo_email character varying(100) NOT NULL,
+    motivo text NOT NULL,
+    data_submissao timestamp without time zone DEFAULT now() NOT NULL,
+    ultima_atualizacao timestamp without time zone,
+    atualizado_por integer,
+    status boolean
+);
+
+
+--
+-- Name: COLUMN pessoa_mudar_email.status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN pessoa_mudar_email.status IS 'null para aberto, false para negado e true para atualizado.';
+
+
+--
+-- Name: pessoa_mudar_email_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE pessoa_mudar_email_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: pessoa_mudar_email_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE pessoa_mudar_email_id_seq OWNED BY pessoa_mudar_email.id;
+
+
+--
 -- Name: sala; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1079,7 +1114,13 @@ ALTER TABLE ONLY pessoa ALTER COLUMN id_pessoa SET DEFAULT nextval('pessoa_id_pe
 
 
 --
--- TOC entry 2053 (class 2604 OID 40079)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pessoa_mudar_email ALTER COLUMN id SET DEFAULT nextval('pessoa_mudar_email_id_seq'::regclass);
+
+
+--
 -- Name: id_sala; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1291,7 +1332,14 @@ ALTER TABLE ONLY pessoa
 
 
 --
--- TOC entry 2103 (class 2606 OID 40134)
+-- Name: pessoa_mudar_email_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pessoa_mudar_email
+    ADD CONSTRAINT pessoa_mudar_email_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pessoa_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1404,7 +1452,13 @@ CREATE UNIQUE INDEX evento_arquivomd5_uidx ON evento_arquivo USING btree (nome_a
 
 
 --
--- TOC entry 2094 (class 1259 OID 40153)
+-- Name: index_pessoa_on_nome; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pessoa_on_nome ON pessoa USING btree (nome);
+
+
+--
 -- Name: instituicao_indx_unq; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1412,7 +1466,26 @@ CREATE UNIQUE INDEX instituicao_indx_unq ON instituicao USING btree (apelido_ins
 
 
 --
--- TOC entry 2122 (class 2606 OID 40156)
+-- Name: trgrvalidaevento; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trgrvalidaevento
+    BEFORE UPDATE ON evento
+    FOR EACH ROW
+    EXECUTE PROCEDURE funcvalidaevento();
+
+
+--
+-- Name: trgrvalidausuario; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trgrvalidausuario
+    BEFORE UPDATE ON pessoa
+    FOR EACH ROW
+    EXECUTE PROCEDURE funcvalidausuario();
+
+
+--
 -- Name: artigo_id_encontro_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1673,7 +1746,14 @@ ALTER TABLE ONLY evento_participacao
 
 
 --
--- TOC entry 2151 (class 2606 OID 40291)
+-- Name: pessoa_mudar_email_atualizado_por_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pessoa_mudar_email
+    ADD CONSTRAINT pessoa_mudar_email_atualizado_por_fkey FOREIGN KEY (atualizado_por) REFERENCES pessoa(id_pessoa);
+
+
+--
 -- Name: sala_evento_realizacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1717,10 +1797,10 @@ ALTER TABLE ONLY encontro_participante
     ADD CONSTRAINT tipo_usuario_encontro_participante_fk FOREIGN KEY (id_tipo_usuario) REFERENCES tipo_usuario(id_tipo_usuario);
 
 
--- Completed on 2015-02-19 19:30:12 BRT
+-- Completed on 2016-05-24 19:30:00 BRT
 
 --
 -- PostgreSQL database dump complete
 --
 
-ROLLBACK;
+COMMIT;

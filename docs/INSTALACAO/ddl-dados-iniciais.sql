@@ -26,7 +26,7 @@ INSERT INTO instituicao(id_instituicao, nome_instituicao, apelido_instituicao)
 --
 INSERT INTO municipio(nome_municipio, id_estado)
     VALUES ('Não informado', 1);
-   
+
 --
 -- Tabela: sala
 -- obs.: Salas ainda são cadastradas manualmente e possuem tipo serial.
@@ -59,5 +59,52 @@ INSERT INTO tipo_mensagem_email(
 INSERT INTO tipo_usuario(
             id_tipo_usuario, descricao_tipo_usuario)
     VALUES (1, 'Coordenação'), (2, 'Organização'), (3, 'Participante');
-    
-ROLLBACK;
+
+--
+-- Tabela: tipo_horario
+--
+INSERT INTO tipo_horario(
+            id_tipo_horario, intervalo_minutos, horario_inicial, horario_final)
+    VALUES (1, 30, '00:00:00', '23:00:00');
+
+--
+-- Tabela: encontro
+--
+INSERT INTO encontro(
+            id_encontro, nome_encontro, apelido_encontro, data_inicio, data_fim,
+            periodo_submissao_inicio, periodo_submissao_fim)
+    VALUES (1, 'I Encontro de Software Livre', 'I ESL', CURRENT_DATE + 30, CURRENT_DATE + 33,
+    CURRENT_DATE, CURRENT_DATE + 33);
+
+--
+-- Tabela: mensagem_email
+--
+INSERT INTO mensagem_email(
+            id_encontro, id_tipo_mensagem_email, mensagem, assunto, link)
+    VALUES (1, 1, 'Nome: {nome}, E-mail: {email}, Senha: {senha},
+    	<a href="{href_link}" target="_blank">Clique aqui</a>',
+    	'I ESL - Cadastro Encontro',
+    	'http://www.esl.org/login');
+
+INSERT INTO mensagem_email(
+            id_encontro, id_tipo_mensagem_email, mensagem, assunto, link)
+    VALUES (1, 2, 'Nome: {nome}, E-mail: {email}, Senha: {senha},
+    	<a href="{href_link}" target="_blank">Clique aqui</a>',
+    	'I ESL - Recuperar Senha',
+    	'http://www.esl.org/login');
+
+INSERT INTO mensagem_email(
+            id_encontro, id_tipo_mensagem_email, mensagem, assunto, link)
+    VALUES (1, 3, 'Nome: {nome}, E-mail: {email}, Senha: {senha},
+    	<a href="{href_link}" target="_blank">Clique aqui</a>',
+    	'I ESL - Confirmação de Submissão',
+    	'http://www.esl.org/login');
+
+INSERT INTO mensagem_email(
+            id_encontro, id_tipo_mensagem_email, mensagem, assunto, link)
+    VALUES (1, 4, 'Nome: {nome}, E-mail: {email}, Senha: {senha},
+    	<a href="{href_link}" target="_blank">Clique aqui</a>',
+    	'I ESL - Confirmação de Inscrição',
+    	'http://www.esl.org/login');
+
+COMMIT;
