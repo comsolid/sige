@@ -51,7 +51,8 @@ INSERT INTO tipo_evento(nome_tipo_evento)
 --
 INSERT INTO tipo_mensagem_email(
             id_tipo_mensagem_email, descricao_tipo_mensagem_email)
-    VALUES (1, 'Confirmação de cadastro'), (2, 'Recuperar senha');
+    VALUES (1, 'Confirmação de cadastro'), (2, 'Recuperar senha'),
+           (3, 'Confirmação de submissão'), (4, 'Confirmação de inscrição');
 
 --
 -- Tabela: tipo_usuario
@@ -106,5 +107,12 @@ INSERT INTO mensagem_email(
     	<a href="{href_link}" target="_blank">Clique aqui</a>',
     	'I ESL - Confirmação de Inscrição',
     	'http://www.esl.org/login');
+
+--
+-- Tabela: mensagem_email
+--
+INSERT INTO pessoa(
+            nome, email, apelido, senha, nascimento, administrador)
+    VALUES ('Admin', 'esl@esl.org', 'Admin', md5('123456'), CURRENT_DATE, 'T');
 
 COMMIT;

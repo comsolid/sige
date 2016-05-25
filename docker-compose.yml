@@ -12,7 +12,8 @@ web:
     - php
 
 php:
-  image: main/sige
+  build: .
+  container_name: sige-php
   volumes:
     - ./docker/php56/php.ini:/etc/php5/fpm/php.ini
     - ./docker/php56/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
@@ -21,9 +22,12 @@ php:
     - pg
 
 pg:
-  image: sige/pg
+  build: ./docker/pg
+  container_name: sige-pg
   ports:
     - "5434:5432"
   volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+      - ./docs/INSTALACAO/ddl-schema.sql:/docker-entrypoint-initdb.d/01-ddl-schema.sql
+      - ./docs/INSTALACAO/ddl-dados-iniciais.sql:/docker-entrypoint-initdb.d/02-ddl-dados-iniciais.sql
