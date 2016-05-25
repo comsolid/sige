@@ -2,6 +2,7 @@
 
 class Admin_Form_Horarios extends Zend_Form {
 
+    private $id_encontro;
     private  $descricao;
     const HORA_INI = 'hora_inicio';
     const HORA_FIM = 'hora_fim';
@@ -21,7 +22,11 @@ class Admin_Form_Horarios extends Zend_Form {
         $this->descricao = $descricao;
     }
 
-    public function init(){
+    public function init() {
+        $cache = Zend_Registry::get('cache_common');
+        $ps = $cache->load('prefsis');
+        $this->id_encontro = (int) $ps->encontro["id_encontro"];
+
         $this->setMethod("post");
 
         $this->addElement($this->_descricao())
@@ -43,15 +48,9 @@ class Admin_Form_Horarios extends Zend_Form {
     }
 
     protected function _descricao() {
-        //$descricao = $this->createElement('text', 'descricao', array('label' => 'Descrição: '));
-        //$descricao->setValue($this->getDescricao())
-        //->setAttrib('placeholder', 'Turma 1 ou Parte 1...');
-
         $e = new Zend_Form_Element_Text('descricao');
         $e->setLabel(_('Description:'));
-        //$e->setRequired(true);
         $e->addValidator('StringLength', false, array(1,100));
-        //$e->setAttrib("data-required", "true");
         $e->setAttrib("data-rangelength", "[1,100]");
         $e->addFilter('StripTags');
         $e->addFilter('StringTrim');
@@ -69,15 +68,6 @@ class Admin_Form_Horarios extends Zend_Form {
     }
 
     protected function _id_sala() {
-        /*$salas = new Application_Model_Sala();
-        $salas->fetchAll();
-
-        $salasForm = $this->createElement('select', 'id_sala', array('label'=>'Salas: '));
-
-        foreach ($salas->fetchAll() as $sala){
-            $salasForm->addMultiOptions(array($sala->id_sala => $sala->nome_sala));
-        }*/
-
         $e = new Zend_Form_Element_Select('id_sala');
         $e->setRequired(true);
         $e->setLabel(_('Place:'));
@@ -100,17 +90,16 @@ class Admin_Form_Horarios extends Zend_Form {
 
     protected function _data() {
         $model = new Application_Model_Encontro();
-        $sessao = Zend_Auth::getInstance()->getIdentity();
-        $where = $model->getAdapter()->quoteInto('id_encontro = ?', $sessao["idEncontro"]);
+        $where = $model->getAdapter()->quoteInto('id_encontro = ?', $this->id_encontro);
         $row = $model->fetchRow($where);
         $element = $this->createElement('radio', 'data', array('label' => 'Data: '));
-        $data_ini = new Zend_Date($row->data_inicio);
-        $data_fim = new Zend_Date($row->data_fim);
+        $data_ini = new Zend_Date($row->data_inicio, 'YYYY-MM-dd');
+        $data_fim = new Zend_Date($row->data_fim, 'YYYY-MM-dd');
         while ($data_ini <= $data_fim) {
             $element->addMultiOption($data_ini->toString('dd/MM/YYYY'), $data_ini->toString('dd/MM/YYYY'));
             $data_ini->add(1, Zend_Date::DAY);
         }
-        $element->setRequired(true)->addErrorMessage("Escolha uma data para realização do evento");
+        $element->setRequired(true)->addErrorMessage(_("Choose a date to the event."));
 
         $element->setDecorators(array(
             'ViewHelper',
