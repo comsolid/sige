@@ -24,15 +24,16 @@ INSERT INTO instituicao(id_instituicao, nome_instituicao, apelido_instituicao)
 -- Tabela: municipio
 -- obs.: Municípios ainda são cadastrados manualmente e possuem tipo serial.
 --
-INSERT INTO municipio(nome_municipio, id_estado)
-    VALUES ('Não informado', 1);
+INSERT INTO municipio(
+            id_municipio, nome_municipio, id_estado)
+    VALUES (1, 'Não informado', 1);
 
 --
 -- Tabela: sala
 -- obs.: Salas ainda são cadastradas manualmente e possuem tipo serial.
 --
-INSERT INTO sala(nome_sala)
-    VALUES ('Auditório');
+INSERT INTO sala(id_sala, nome_sala)
+    VALUES (1, 'Auditório');
 
 --
 -- Tabela: sexo
@@ -109,10 +110,22 @@ INSERT INTO mensagem_email(
     	'http://www.esl.org/login');
 
 --
--- Tabela: mensagem_email
+-- Tabela: pessoa
 --
 INSERT INTO pessoa(
-            nome, email, apelido, senha, nascimento, administrador)
-    VALUES ('Admin', 'esl@esl.org', 'Admin', md5('123456'), CURRENT_DATE, 'T');
+            id_pessoa, nome, email, apelido, senha, nascimento, administrador)
+    VALUES (1, 'Admin', 'esl@esl.org', 'Admin', md5('123456'), CURRENT_DATE, 'T');
+
+--
+-- Tabela: encontro_participante
+--
+INSERT INTO encontro_participante(
+            id_encontro, id_pessoa, id_instituicao, id_municipio, id_caravana,
+            id_tipo_usuario, validado, data_validacao, data_cadastro, confirmado,
+            data_confirmacao)
+    VALUES (1, 1, 1, 1, NULL,
+            1, 'T', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'T',
+            CURRENT_TIMESTAMP);
+
 
 COMMIT;
