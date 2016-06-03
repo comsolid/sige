@@ -72,7 +72,8 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
 
                 break;
             case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_REINSCRICAO:
-                $link = "";
+            case Application_Model_EmailConfirmacao::MSG_CONFIRMACAO_SUBMISSAO:
+                $link = "http://" . $_SERVER["SERVER_NAME"] . "/login";
                 break;
             default:
                 throw new Exception(_("Send e-mail option not defined."));

@@ -59,7 +59,7 @@ class IndexController extends Zend_Controller_Action {
                     $model->update(array('cadastro_validado' => true), $where);
                 }
                 $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-                $idEncontro = $config->encontro->codigo;
+                $idEncontro = (int) $config->encontro->codigo;
                 $result = $model->buscarUltimoEncontro($idPessoa);
                 $irParaEditar = false;
                 // se ultimo encontro do participante for diferente do atual
@@ -73,7 +73,7 @@ class IndexController extends Zend_Controller_Action {
                         $this->_helper->flashMessenger->addMessage(array('success' => _('Welcome back. Your registration was confirmed!<br/>Please update your profile data.')));
                         $irParaEditar = true;
 
-                        $this->_enviarEmailConfirmacaoInscricao($idEncontro, $idPessoa);
+                        $this->_enviarEmailConfirmacaoInscricao($idPessoa, $idEncontro);
                     } catch(Exception $e) {
                         $irParaEditar = false;
                         $this->_helper->flashMessenger->addMessage(array('danger' => $e->getMessage()));
