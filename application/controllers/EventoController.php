@@ -261,7 +261,6 @@ class EventoController extends Sige_Controller_Action {
                         return $this->redirecionar();
                     } else {
                         $data['id_encontro'] = $id_encontro;
-                        $data['responsavel'] = $idPessoa;
                         $evento->update($data, $select);
                         $this->_helper->flashMessenger->addMessage(
                                 array('success' => _('Event successfully updated.')));
@@ -313,8 +312,8 @@ class EventoController extends Sige_Controller_Action {
         $model_encontro = new Application_Model_Encontro();
         $where = $model_encontro->getAdapter()->quoteInto('id_encontro = ?', $idEncontro);
         $row = $model_encontro->fetchRow($where);
-        $data_ini = new Zend_Date($row->data_inicio);
-        $data_fim = new Zend_Date($row->data_fim);
+        $data_ini = new Zend_Date($row->data_inicio, 'YYYY-MM-dd');
+        $data_fim = new Zend_Date($row->data_fim, 'YYYY-MM-dd');
         $datas_encontro = array();
         while ($data_ini <= $data_fim) {
             $datas_encontro[] = clone $data_ini;
