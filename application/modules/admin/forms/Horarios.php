@@ -117,18 +117,26 @@ class Admin_Form_Horarios extends Zend_Form {
         $e->setRequired(true);
         $e->setLabel($label);
         $e->setAttrib('class', 'form-control');
-        $hora_aux = $hora_min = new Zend_Date('08:00', 'HH:mm');
-        $hora_max = new Zend_Date('17:00', 'HH:mm');
+
+        $model = new Application_Model_Encontro();
+        $sql = "SELECT intervalo_minutos, horario_inicial, horario_final
+            FROM encontro e
+            INNER JOIN tipo_horario th ON e.id_tipo_horario = th.id_tipo_horario
+            WHERE e.id_encontro = ?";
+        $row = $model->getAdapter()->fetchRow($sql, array($this->id_encontro));
+
+        $hora_aux = $hora_min = new Zend_Date($row['horario_inicial'], 'HH:mm:ss');
+        $hora_max = new Zend_Date($row['horario_final'], 'HH:mm:ss');
         while ($hora_aux <= $hora_max) {
             if (self::HORA_INI == $id and $hora_aux == $hora_max) {
-                $hora_aux->add(1, Zend_Date::HOUR);
+                $hora_aux->add($row['intervalo_minutos'], Zend_Date::MINUTE);
                 continue;
-            } else if (self::HORA_FIM == $id and $hora_aux == new Zend_Date('08:00', 'HH:mm')) {
-                $hora_aux->add(1, Zend_Date::HOUR);
+            } else if (self::HORA_FIM == $id and $hora_aux == new Zend_Date($row['horario_inicial'], 'HH:mm:ss')) {
+                $hora_aux->add($row['intervalo_minutos'], Zend_Date::MINUTE);
                 continue;
             }
             $e->addMultiOption($hora_aux->toString('HH:mm'), $hora_aux->toString('HH:mm'));
-            $hora_aux->add(1, Zend_Date::HOUR);
+            $hora_aux->add($row['intervalo_minutos'], Zend_Date::MINUTE);
         }
         return $e;
     }
