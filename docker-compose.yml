@@ -12,14 +12,14 @@ web:
     - php
 
 php:
-  build: .
+  build: ./docker/php56
   container_name: sige-php
   volumes:
-    - ./docker/php56/php.ini:/etc/php5/fpm/php.ini
-    - ./docker/php56/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
-    - .:/usr/share/nginx/html/site
+    - .:/var/www/html
   links:
     - pg
+  entrypoint:
+    - /docker-sige-php-entrypoint.sh
 
 pg:
   build: ./docker/pg

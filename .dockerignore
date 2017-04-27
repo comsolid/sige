@@ -2,7 +2,6 @@
 tests/
 docs/
 db.backup/
-docker/
 gulp/
 .gitignore
 .jshintrc
