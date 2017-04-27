@@ -20,6 +20,8 @@ chmod ${PERM} vendor/mpdf/mpdf/tmp/
 mkdir -p vendor/mpdf/mpdf/graph_cache/
 chmod ${PERM} vendor/mpdf/mpdf/graph_cache/
 
+[ ! -f "/etc/ssl/certs/sige/sige.crt" ] && /gen-ssl-certificate.sh
+
 docker-php-entrypoint $@
 
 php-fpm --nodaemonize

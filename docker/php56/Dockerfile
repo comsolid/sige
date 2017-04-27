@@ -13,6 +13,8 @@ RUN set -xe && \
     gettext-dev \
     # for mcrypt extension
     libmcrypt-dev \
+    # for SSL certificate
+    openssl \
     # for postgres
     postgresql-dev
 
@@ -51,6 +53,7 @@ RUN set -xe && \
 # COPY ./php-fpm.conf /.../conf.d/sige-php-fpm.conf
 COPY ./php.ini $PHP_INI_DIR/conf.d/sige.conf
 
+COPY ./gen-ssl-certificate.sh /
 COPY ./docker-sige-php-entrypoint.sh /
 
 ENTRYPOINT ["/docker-sige-php-entrypoint.sh"]
