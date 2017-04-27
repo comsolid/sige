@@ -35,8 +35,14 @@ class Sige_Pdf_Relatorio_Parser {
         $cache = Zend_Registry::get('cache_common');
         $ps = $cache->load('prefsis');
         $apelido_encontro = $ps->encontro["apelido_encontro"];
+        $ano_encontro = date('Y'); // ano padrão
+        try {
+            // tenta obter ano do encontro
+            $ano_encontro = explode('-', $ps->encontro["data_inicio"])[0];
+        } catch (Exception $e) {
+        }
 
-        $this->doc_titulo = $apelido_encontro . " - " . date("Y");
+        $this->doc_titulo = $apelido_encontro . " - " . $ano_encontro;
         $this->doc_autor = $this->doc_criador = "SiGE https://github.com/comsolid/sige";
         $this->doc_logo = APPLICATION_PATH . '/../public/img/logo_ifce_ceara.png';
         $this->doc_subtitulo = $dados_array["nome_relatorio"];
