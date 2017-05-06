@@ -300,14 +300,18 @@ class EventoController extends Sige_Controller_Action {
         $idEncontro = $config->encontro->codigo;
         $model = new Application_Model_Evento();
         $rs = $model->programacao($idEncontro);
+        $this->view->lista = $rs;
 
         $export_type = $this->getRequest()->getParam('exportar', null);
         if ($export_type == 'pdf') {
             return $this->exportarProgramacao($rs);
         }
 
-        $this->view->menu->setAtivo('schedule');
-        $this->view->lista = $rs;
+        if(Zend_Auth::getInstance()->hasIdentity()) {
+            $this->view->menu->setAtivo('schedule');
+        } else {
+            $this->view->menu = "";
+        }
 
         $model_encontro = new Application_Model_Encontro();
         $where = $model_encontro->getAdapter()->quoteInto('id_encontro = ?', $idEncontro);
