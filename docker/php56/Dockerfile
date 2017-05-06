@@ -8,6 +8,7 @@ RUN set -xe && \
     gd-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    freetype dev \
     # for intl extension
     icu-dev \
     gettext-dev \
