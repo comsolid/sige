@@ -18,7 +18,7 @@ php:
   container_name: sige-php
   volumes:
     - .:/var/www/html
-    - certs:/etc/ssl/certs/sige
+    - ./certs:/etc/ssl/certs/sige
   links:
     - pg
   entrypoint:

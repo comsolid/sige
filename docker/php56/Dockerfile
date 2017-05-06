@@ -16,7 +16,8 @@ RUN set -xe && \
     # for SSL certificate
     openssl \
     # for postgres
-    postgresql-dev
+    postgresql-dev \
+    git
 
 RUN set -xe && \
   apk add --no-cache --virtual .build-deps \
