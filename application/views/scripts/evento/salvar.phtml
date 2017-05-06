@@ -15,7 +15,7 @@ $form = $this->form;
 ?>
 
 <form method="<?php echo $form->getMethod() ?>"
-    action="<?php echo $form->getAction()?>">
+    action="<?php echo $form->getAction() ?>">
 
 <div class="row">
     <div class="col-md-6">
@@ -99,7 +99,8 @@ $form = $this->form;
 
 <div class="row">
     <div class="col-md-6">
-        <a href="<?php echo $this->url(array(), 'submissao', true)?>" class="btn btn-default">
+        <a href="<?php echo $this->url(array(), 'submissao', true) ?>"
+            class="btn btn-default">
             <?php echo $this->translate("Cancel"); ?>
         </a>
         <?php echo $form->submit->renderViewHelper() ?>

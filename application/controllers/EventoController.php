@@ -253,19 +253,22 @@ class EventoController extends Sige_Controller_Action {
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($data)) {
                 $data = $form->getValues();
-                $select = $evento->getAdapter()->quoteInto('id_evento = ?', $idEvento);
+                $where = $evento->getAdapter()->quoteInto('id_evento = ?', $idEvento);
                 try {
-                    if ($idPessoa != $data['responsavel'] and ! $admin) {
+                    $temPermissao = $evento->temPermissao($idEvento, $idPessoa);
+                    if (! ($temPermissao or $admin)) {
                         $this->_helper->flashMessenger->addMessage(
                                 array('danger' => _('Only the author can edit the Event.')));
                         return $this->redirecionar();
-                    } else {
-                        $data['id_encontro'] = $id_encontro;
-                        $evento->update($data, $select);
-                        $this->_helper->flashMessenger->addMessage(
-                                array('success' => _('Event successfully updated.')));
-                        return $this->redirecionar($admin, $idEvento);
                     }
+
+                    // não atualizar id_encontro e responsavel
+                    unset($data['id_encontro']);
+                    unset($data['responsavel']);
+                    $evento->update($data, $where);
+                    $this->_helper->flashMessenger->addMessage(
+                            array('success' => _('Event successfully updated.')));
+                    return $this->redirecionar($admin, $idEvento);
                 } catch (Zend_Db_Exception $ex) {
                     $this->_helper->flashMessenger->addMessage(
                             array('danger' => _('An unexpected error ocurred.<br/> Details:&nbsp;')
@@ -290,7 +293,7 @@ class EventoController extends Sige_Controller_Action {
             } else {
                 $this->_helper->flashMessenger->addMessage(
                         array('danger' => _('Event not found.')));
-                return $this->redirecionar($admin, $idEvento);
+                return $this->redirecionar();
             }
         }
     }

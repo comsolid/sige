@@ -299,12 +299,10 @@ class Application_Model_Evento extends Zend_Db_Table_Abstract {
      */
     public function temPermissao($id_evento, $responsavel) {
         $sql = "
-            SELECT EXIST(
-                SELECT *
-                FROM evento e
-                WHERE id_evento = ? AND responsavel = ?
-            )";
-        return $this->getAdapter()->fetchOne($sql, array($id_evento, $responsavel));
+            SELECT responsavel
+            FROM evento
+            WHERE id_evento = ? AND responsavel = ?";
+        return $this->getAdapter()->fetchOne($sql, array($id_evento, $responsavel)) != null;
     }
 
     public function getResponsavel($id_evento) {
