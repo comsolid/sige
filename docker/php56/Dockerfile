@@ -34,6 +34,12 @@ RUN set -xe && \
   docker-php-ext-enable xdebug
 
 RUN set -xe && \
+  docker-php-ext-configure gd \
+    --with-freetype-dir=/usr/include/freetype/ \
+    --with-png-dir=/usr/include/libpng16/ \
+    --with-jpeg-dir=/usr/include/
+
+RUN set -xe && \
   docker-php-ext-install \
     intl \
     gd \
