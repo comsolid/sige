@@ -8,6 +8,8 @@ RUN set -xe && \
     gd-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    freetype \
+    freetype-dev \
     # for intl extension
     icu-dev \
     gettext-dev \
@@ -32,6 +34,12 @@ RUN set -xe && \
   docker-php-ext-enable xdebug
 
 RUN set -xe && \
+  docker-php-ext-configure gd \
+    --with-freetype-dir=/usr/include/freetype/ \
+    --with-png-dir=/usr/include/libpng16/ \
+    --with-jpeg-dir=/usr/include/
+
+RUN set -xe && \
   docker-php-ext-install \
     intl \
     gd \
@@ -51,10 +59,25 @@ RUN set -xe && \
   apk del .build-deps && \
   rm -rf /tmp/* /var/cache/apk/*
 
-# COPY ./php-fpm.conf /.../conf.d/sige-php-fpm.conf
 COPY ./php.ini $PHP_INI_DIR/conf.d/sige.conf
 
 COPY ./gen-ssl-certificate.sh /
 COPY ./docker-sige-php-entrypoint.sh /
 
 ENTRYPOINT ["/docker-sige-php-entrypoint.sh"]
+
+# Allow Composer to be run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+################################################################################
+# Health check                                                                 #
+################################################################################
+
+RUN apk add --no-cache fcgi
+
+HEALTHCHECK --interval=10s --timeout=3s \
+    CMD \
+    SCRIPT_NAME=/ping \
+    SCRIPT_FILENAME=/ping \
+    REQUEST_METHOD=GET \
+    cgi-fcgi -bind -connect 127.0.0.1:9000 || exit 1
