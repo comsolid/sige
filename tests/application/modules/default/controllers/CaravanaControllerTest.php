@@ -1,6 +1,6 @@
 <?php
 
-class Default_CaravanaControllerTest extends Default_AbstractControllerTest {
+class Default_CaravanaControllerTest extends AbstractControllerTest {
 
     public function testAccessIndexAction() {
         $this->mockLogin();
@@ -21,6 +21,7 @@ class Default_CaravanaControllerTest extends Default_AbstractControllerTest {
         $urlParams = $this->urlizeOptions($params);
         $url = $this->url($urlParams);
         $this->dispatch($url);
+
         // assertions
         $this->assertModule($urlParams['module']);
         $this->assertController($urlParams['controller']);

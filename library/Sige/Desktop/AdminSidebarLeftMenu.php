@@ -29,6 +29,11 @@ class Sige_Desktop_AdminSidebarLeftMenu {
                 'icon' => 'fa-pencil',
                 'text' => $this->t->_('Registration'),
             ),
+            'pre-registration' => array(
+                'url' => $view->url(array(), 'pre-inscricao', true),
+                'icon' => 'fa-sign-in',
+                'text' => $this->t->_('Pre-Registration'),
+            ),
             'events' => array(
                 'url' => $view->url(array(
                     'module' => 'admin',

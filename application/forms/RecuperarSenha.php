@@ -11,7 +11,9 @@ class Application_Form_RecuperarSenha extends Zend_Form {
         $login->setAttrib('placeholder', _('E-mail'));
 
         $this->addElement($login);
-        $this->addElement($this->_captcha());
+		if (!\Zend_Session::$_unitTestEnabled) {
+			$this->addElement($this->_captcha());
+		}
         $submit = $this->createElement('submit', 'submit', array('label' => _('Confirm')));
         $submit->setAttrib('class', 'btn btn-lg btn-info btn-block');
         $this->addElement($submit);

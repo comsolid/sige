@@ -75,7 +75,7 @@ class Admin_Form_Encontro extends Zend_Form {
         $e = new Zend_Form_Element_Text('nome_encontro');
         $e->setLabel(_('Conference Name') . ":")
                 ->setRequired(true)
-                ->addValidator('StringLength', false, array(1, 100))
+                ->addValidator('StringLength', false, array(1, 255))
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
                 ->setAttrib('class', 'form-control')
@@ -95,7 +95,7 @@ class Admin_Form_Encontro extends Zend_Form {
         $e = new Zend_Form_Element_Text('apelido_encontro');
         $e->setLabel(_('Codename') . ":")
                 ->setRequired(true)
-                ->addValidator('StringLength', false, array(1, 10))
+                ->addValidator('StringLength', false, array(1, 50))
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
                 ->setAttrib('class', 'form-control')

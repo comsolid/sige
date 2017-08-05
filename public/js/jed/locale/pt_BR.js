@@ -34,6 +34,12 @@ var locale_data = {
         'Sending...': [null, 'Enviando...'],
         'Loading...': [null, 'Carregando...'],
         'This action can not be undone. Do you really wish to continue?': [null, 'Esta ação não pode ser desfeita. Deseja realmente continuar?'],
-        'This ticket is not from this conference.': [null, 'Este ticket não é deste encontro.']
+        'This ticket is not from this conference.': [null, 'Este ticket não é deste encontro.'],
+        'Search by': [null, 'Buscar por'],
+        'Name': [null, 'Nome'],
+        'District': [null, 'Município'],
+        'Caravan': [null, 'Caravana'],
+        'Institution': [null, 'Instituto'],
+        'Search participant...': [null, 'Buscar participante...']
     }
 };

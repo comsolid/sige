@@ -75,7 +75,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN apk add --no-cache fcgi
 
-HEALTHCHECK --interval=10s --timeout=3s \
+HEALTHCHECK --interval=30s --timeout=3s \
     CMD \
     SCRIPT_NAME=/ping \
     SCRIPT_FILENAME=/ping \

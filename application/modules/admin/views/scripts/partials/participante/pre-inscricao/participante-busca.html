@@ -1,0 +1,38 @@
+<script id="participante-busca" type="text/x-template">
+    <div class="box box-solid">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+    					<input type="text" v-model="form.termo"
+                            class="form-control input-lg"
+    						autofocus="autofocus"
+                            ref="termo"
+    						:placeholder="$t('Search participant...')"/>
+    					<span class="input-group-addon">
+    						<i class="fa fa-2x"
+                                :class="[isLoading ? 'fa-spinner fa-spin' : 'fa-search']"></i>
+    					</span>
+    				</div>
+                </div>
+                <div class="col-md-6">
+                    <hr class="hidden-md hidden-lg" />
+                    <span style="margin-right: 10px;">
+    					<i class="fa fa-search"></i>
+    					{{ $t('Search by') }}:
+    				</span>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label @click="form.buscar_por = 'nome'" class="btn btn-default active">
+    						<input type="radio" v-model="form.buscar_por" value="nome"/>
+    						{{ $t('Name') }}
+    					</label>
+                        <label @click="form.buscar_por = 'email'" class="btn btn-default">
+    						<input type="radio" v-model="form.buscar_por" value="email"/>
+    						E-mail
+    					</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
