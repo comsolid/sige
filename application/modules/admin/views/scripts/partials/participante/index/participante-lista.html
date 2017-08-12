@@ -1,0 +1,10 @@
+<script id="participante-lista" type="text/x-template">
+    <div class="row">
+    	<div class="col-md-12">
+            <participante-item :key="item.id"
+                :item="item"
+                :index="index"
+                v-for="(item, index) in lista"></participante-item>
+    	</div>
+    </div>
+</script>

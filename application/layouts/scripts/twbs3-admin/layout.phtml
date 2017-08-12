@@ -55,8 +55,14 @@
                     <small><?php echo (isset($this->subtitle) ? $this->subtitle : 'Control panel') ?></small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Blank page</li>
+                    <li>
+                        <a href="<?php echo $this->url(array(), 'admin', true); ?>">
+                            <i class="fa fa-dashboard"></i> <?php echo $this->translate('Dashboard'); ?>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <?php echo (isset($this->title) ? $this->title : 'Blank page') ?>
+                    </li>
                 </ol>
             </section>
 

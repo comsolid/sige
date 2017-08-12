@@ -1,6 +1,6 @@
 <?php
 
-abstract class Default_AbstractControllerTest extends Zend_Test_PHPUnit_ControllerTestCase {
+abstract class AbstractControllerTest extends Zend_Test_PHPUnit_ControllerTestCase {
 
     public function setUp() {
         $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');

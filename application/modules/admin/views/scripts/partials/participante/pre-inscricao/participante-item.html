@@ -1,0 +1,43 @@
+<script id="participante-item" type="text/x-template">
+    <div class="box" :class="[box.kind]">
+        <div class="box-header">
+            <h3 class="box-title">{{ item.nome }} ({{ item.apelido }})</h3>
+            <div class="box-tools pull-right">
+                <h4><span class="label" :class="[label.kind]">{{ label.text }}</span></h4>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('E-mail') }}</strong>
+                    <div>
+                        {{ item.email }}
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('Registration Date') }}</strong>
+                    <div :title="item.data_cadastro">
+                        {{ item.data_cadastro | fromNow }}
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('Registration validation') }}</strong>
+                    <div :title="item.data_validacao_cadastro">
+                        {{ item.data_validacao_cadastro | fromNow }}
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <button class="btn btn-default pull-right"
+                        @click.prevent="changeStatus"
+                        :disabled="!item.cadastro_validado">
+                        <i class="fa fa-check"></i>
+                        {{ $t('Register and Confirm') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" v-show="isSaving">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</script>

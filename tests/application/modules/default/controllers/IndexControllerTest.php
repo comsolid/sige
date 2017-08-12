@@ -1,6 +1,6 @@
 <?php
 
-class Default_IndexControllerTest extends Default_AbstractControllerTest {
+class Default_IndexControllerTest extends AbstractControllerTest {
 
     public function testAccessIndexAction() {
         $params = array('action' => 'index', 'controller' => 'Index', 'module' => 'default');

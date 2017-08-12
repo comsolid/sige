@@ -72,8 +72,11 @@ $form = $this->form;
                             <?php endforeach; ?>
                             <?php endif; ?>
 
-                            <?php $captcha = $form->captcha->getCaptcha()->generate(); ?>
                             <div class="row">
+                                <?php
+                                if (isset($form->captcha)):
+                                    $captcha = $form->captcha->getCaptcha()->generate();
+                                ?>
                                 <div class="col-md-12">
                                     <?php echo $form->captcha->renderLabel(); ?>
                                 </div>
@@ -87,11 +90,12 @@ $form = $this->form;
                                     <input type="text" name="captcha[input]" id="captcha-input"
                                     class="form-control input-lg">
                                 </div>
+                            <?php endif; ?>
                                 <div class="col-md-4">
                                     <?php echo $form->submit->renderViewHelper(); ?>
                                 </div>
                                 <div class="col-md-8 col-md-offset-4">
-                                    <?php if ($form->captcha->hasErrors()): ?>
+                                    <?php if (isset($form->captcha) && $form->captcha->hasErrors()): ?>
                                     <?php foreach($form->captcha->getMessages() as $item): ?>
                                         <p class="text-danger"><?php echo $item; ?></p>
                                     <?php endforeach; ?>

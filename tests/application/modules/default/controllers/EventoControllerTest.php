@@ -1,6 +1,6 @@
 <?php
 
-class Default_EventoControllerTest extends Default_AbstractControllerTest {
+class Default_EventoControllerTest extends AbstractControllerTest {
 
     public function testAccessIndexAction() {
         $this->mockLogin();

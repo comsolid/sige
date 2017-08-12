@@ -1,0 +1,9 @@
+<script id="template-pre-inscricao" type="text/x-template">
+    <div>
+        <participante-busca
+            @buscar="buscar"
+            :is-loading="busca.isLoading"></participante-busca>
+        <participante-lista :lista="lista"
+            @changeStatus="changeStatus"></participante-lista>
+    </div>
+</script>

@@ -1,0 +1,64 @@
+<script id="participante-item" type="text/x-template">
+    <div class="box" :class="[box.kind]">
+        <div class="box-header">
+            <h3 class="box-title">{{ item.nome }} ({{ item.apelido }})</h3>
+            <div class="box-tools pull-right">
+                <h4><span class="label" :class="[label.kind]">{{ label.text }}</span></h4>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('E-mail') }}</strong>
+                    <div>
+                        {{ item.email }}
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('District') }}</strong>
+                    <div>
+                        {{ item.nome_municipio }}
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('Caravan') }}</strong>
+                    <div>
+                        {{ item.nome_caravana }}
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <strong>{{ $t('Institution') }}</strong>
+                    <div>
+                        {{ item.apelido_instituicao }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div v-if="item.data_cadastro"
+                         :title="item.data_cadastro">
+                        Cadastrado
+                        {{ item.data_cadastro | fromNow }}
+                    </div>
+                    <div v-if="item.data_confirmacao"
+                        :title="item.data_confirmacao">
+                        Confirmado
+                        {{ item.data_confirmacao | fromNow }}
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-6">
+                    <button class="btn btn-default pull-right"
+                        @click.prevent="changeStatus">
+                        <i class="fa" :class="[button.icon]"></i>
+                        {{ button.label }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" v-show="isSaving">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</script>

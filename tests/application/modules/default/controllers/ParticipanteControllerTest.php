@@ -1,6 +1,6 @@
 <?php
 
-class Default_ParticipanteControllerTest extends Default_AbstractControllerTest {
+class Default_ParticipanteControllerTest extends AbstractControllerTest {
 
     public function testAccessCriarAction() {
         $params = array('action' => 'criar', 'controller' => 'Participante', 'module' => 'default');
