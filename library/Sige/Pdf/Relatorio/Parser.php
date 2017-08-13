@@ -155,7 +155,9 @@ mpdf-->
 //            $mpdf->SetAutoFont(0); // deprecated
             $mpdf->autoScriptToLang = FALSE;
 
-            $mpdf->WriteHTML($css, 1);
+            if (! empty($css)) {
+                $mpdf->WriteHTML($css, 1);
+            }
             $mpdf->WriteHTML($html);
             $pdf_binary = $mpdf->Output('', 'S'); // With the binary PDF data in $pdf we can do whatever we want - attach it to email, save to filesystem, push to browser's PDF plugin or offer it to user for download
 //        ob_get_contents(); // Here we catch out previous output from buffer (and can log it, email it, or throw it away as I do :-) )

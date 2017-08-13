@@ -41,15 +41,27 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
     }
 
     private function obterMensagem($id_encontro, $id_tipo_mensagem_email) {
-        return $this->find($id_encontro, $id_tipo_mensagem_email)->current();
+        $sql = 'SELECT mensagem, assunto, e.apelido_encontro,
+        assinatura_email, assinatura_siteoficial
+        FROM public.mensagem_email me
+        INNER JOIN encontro e ON me.id_encontro = e.id_encontro
+        WHERE me.id_encontro = ? AND id_tipo_mensagem_email = ?
+        ';
+        return $this->getAdapter()->fetchRow($sql, array($id_encontro, $id_tipo_mensagem_email));
     }
 
     /**
-     * Envia e-mail para usuário com dados iniciais, como username (e-mail) e senha.
+     * Envia e-mail para usuário com dados iniciais.
      * @param int $idpessoa
      * @param int $idEncrontro
-     * @param int $tipoMensagem use as constantes definidas acima [ MSG_CONFIRMACAO, MSG_RECUPERAR_SENHA ].
-     * @param binary $pdf arquivo PDF em string binária, se não for null será enviado ao usuário em anexo
+     * @param int $tipoMensagem use as constantes definidas acima
+     * <ul>
+     *  <li>MSG_CONFIRMACAO</li>
+     *  <li>MSG_RECUPERAR_SENHA</li>
+     *  <li>MSG_CONFIRMACAO_REINSCRICAO</li>
+     *  <li>MSG_CONFIRMACAO_SUBMISSAO</li>
+     * </ul>
+     * @param binary|null $pdf arquivo PDF em string binária, se não for null será enviado ao usuário em anexo
      * @throws Exception
      */
     public function send(
@@ -79,13 +91,14 @@ class Application_Model_EmailConfirmacao extends Zend_Db_Table_Abstract {
                 throw new Exception(_("Send e-mail option not defined."));
         }
 
-        $emailText->mensagem = str_replace('{nome}', $linha->nome, $emailText->mensagem);
-        $emailText->mensagem = str_replace('{email}', $linha->email, $emailText->mensagem);
-        $emailText->mensagem = str_replace('{href_link}', $link, $emailText->mensagem);
+        $emailText['mensagem'] = str_replace('{nome}', $linha->nome, $emailText['mensagem']);
+        $emailText['mensagem'] = str_replace('{email}', $linha->email, $emailText['mensagem']);
+        $emailText['mensagem'] = str_replace('{href_link}', $link, $emailText['mensagem']);
+        $emailText['mensagem'] = str_replace('{encontro}', $emailText['apelido_encontro'], $emailText['mensagem']);
 
-        $mail->setBodyHtml(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText->mensagem));
+        $mail->setBodyHtml(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText['mensagem']));
         $mail->addTo($linha->email, $linha->nome);
-        $mail->setSubject(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText->assunto));
+        $mail->setSubject(iconv($this->config->email->in_charset, $this->config->email->out_charset, $emailText['assunto']));
 
 		if ($pdf != null) {
 			$at = new Zend_Mime_Part($pdf);
