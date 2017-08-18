@@ -2,53 +2,12 @@
     $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/parsley.min.js'));
     $this->headScript()->appendFile($this->baseUrl('lib/js/parsley/i18n/pt-br.js'));
     $this->headScript()->appendFile($this->baseUrl('js/index/definir-senha.js'));
-?>
+    $this->headLink()->appendStylesheet($this->baseUrl('css/index/login.css'));
 
-<style>
-    body {
-        background: url('/img/background-login.png');
-    }
-
-    .form-signin input[type="text"] {
-        margin-bottom: 10px;
-    }
-    .form-signin input[type="password"] {
-        margin-bottom: 10px;
-    }
-
-    .vertical-offset-100 {
-        padding-top: 100px;
-    }
-
-    .img-responsive {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        margin: auto;
-    }
-
-    .panel {
-        margin-bottom: 20px;
-        background-color: rgba(255, 255, 255, 0.75);
-        border: 1px solid transparent;
-        border-radius: 4px;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    }
-
-    ul.parsley-errors-list {
-       list-style: none;
-       color: #a94442;
-       margin-top: 5px;
-    }
-</style>
-
-<?php
-$form = $this->form;
+    $form = $this->form;
 ?>
 
 <div class="container">
-
     <div class="row vertical-offset-100">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">

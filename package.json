@@ -4,6 +4,7 @@
   "description": "Sistema de Gerência de Eventos",
   "scripts": {
     "build": "gulp",
+    "dev": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
