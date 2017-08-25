@@ -310,7 +310,7 @@ class EventoController extends Sige_Controller_Action {
             return $this->exportarProgramacao($rs);
         }
 
-        if(Zend_Auth::getInstance()->hasIdentity()) {
+        if (Zend_Auth::getInstance()->hasIdentity()) {
             $this->view->menu->setAtivo('schedule');
         } else {
             $this->view->menu = "";
@@ -436,7 +436,11 @@ class EventoController extends Sige_Controller_Action {
      *    /e/:id
      */
     public function verAction() {
-        $this->view->menu->setAtivo('schedule');
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $this->view->menu->setAtivo('schedule');
+        } else {
+            $this->view->menu = "";
+        }
         try {
             $idEvento = $this->_request->getParam('id', 0);
             $evento = new Application_Model_Evento();
