@@ -21,10 +21,11 @@
         "php": ">=5.4",
         "zendframework/zendframework1": "1.x",
         "uptime/uptime": "~0.1",
-        "passwordlib/passwordlib": "dev-master"
+        "passwordlib/passwordlib": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "mpdf/mpdf": "6.*"
-    }
+    },
+    "minimum-stability": "dev"
 }
