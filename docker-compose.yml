@@ -15,9 +15,9 @@ services:
       - php
     links:
       - php
-    depends_on:
-      php:
-        condition: service_healthy
+    # depends_on:
+    #   php:
+    #     condition: service_healthy
 
   php:
     build: ./docker/php56
@@ -29,9 +29,9 @@ services:
       - pg
     entrypoint:
       - /docker-sige-php-entrypoint.sh
-    depends_on:
-      pg:
-        condition: service_healthy
+    # depends_on:
+    #   pg:
+    #     condition: service_healthy
 
   pg:
     build: ./docker/pg

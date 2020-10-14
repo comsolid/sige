@@ -1,7 +1,7 @@
 
 FROM postgres:9.4.4
 
-MAINTAINER Átila Camurça, Samir Coutinho
+LABEL author="Átila Camurça, Samir Coutinho"
 
 ENV POSTGRES_DB postgres
 ENV POSTGRES_PASSWORD **secret**
