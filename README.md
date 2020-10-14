@@ -16,4 +16,4 @@ The license used is the GPL v3 (fully open and free). Please feel free to contri
 Documentação | Documentation
 ====
 
-Veja [aqui](http://comsolid.github.io/sige-docs/). See [here](http://comsolid.github.io/sige-docs/). 
+Veja [aqui](https://comsolid.gitbook.io/sige-documentacao/). See [here](https://comsolid.gitbook.io/sige-documentacao/). 
